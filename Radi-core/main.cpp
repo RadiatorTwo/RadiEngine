@@ -12,18 +12,7 @@ int main()
 	Window window("Radi!", 800, 600);
 
 	glClearColor(0.2f, 0.3f, 0.8f, 1.0f);
-
-	GLuint vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-
-	vec4 a(1.0f, 2.0f, 5.0f, 4.0f);
-	vec4 b(2, 4, 6, 4.0f);
-
-	vec4 c = a + b;
-
-	std::cout << a << std::endl;
-
+	
 	while (!window.closed())
 	{
 		window.clear();
