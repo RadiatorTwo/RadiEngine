@@ -14,11 +14,12 @@ namespace radi
 
 		public:
 			IndexBuffer(GLushort* data, GLsizei count);
+			~IndexBuffer();
 
 			void bind() const;
 			void unbind() const;
 
-			GLuint getCount() const { return m_count; }
+			inline GLuint getCount() const { return m_count; }
 		};
 
 	}

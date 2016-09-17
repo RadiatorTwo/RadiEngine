@@ -2,6 +2,7 @@
 
 #include <deque>
 #include "renderer2d.h"
+#include "static_sprite.h"
 
 namespace radi
 {
@@ -10,7 +11,7 @@ namespace radi
 		class Simple2DRenderer : public Renderer2D
 		{
 		private:
-			std::deque<const Renderable2D*> m_renderQueue;
+			std::deque<const StaticSprite*> m_renderQueue;
 		public:
 			void submit(const Renderable2D* renderable) override;
 			void flush() override;
