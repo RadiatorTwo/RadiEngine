@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include "renderer2d.h"
 #include "buffers/indexbuffer.h"
 
@@ -22,9 +23,9 @@ namespace radi
 		private:
 			GLuint m_VAO;
 			GLuint m_VBO;
-			VertexData* m_buffer;
 			IndexBuffer* m_IBO;
 			GLsizei m_indexCount;
+			VertexData* m_buffer;
 		public:
 			BatchRenderer2D();
 			~BatchRenderer2D();

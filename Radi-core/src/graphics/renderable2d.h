@@ -13,7 +13,8 @@ namespace radi
 		struct VertexData
 		{
 			maths::vec3 vertex;
-			maths::vec4 color;
+			//maths::vec4 color;
+			unsigned int color;
 		};
 
 		class Renderable2D
@@ -30,9 +31,9 @@ namespace radi
 
 			virtual ~Renderable2D() { }
 
-			const maths::vec3& getPosition() const { return m_position; }
-			const maths::vec2& getSize() const { return m_size; }
-			const maths::vec4& getColor() const { return m_color; }
+			inline const maths::vec3& getPosition() const { return m_position; }
+			inline const maths::vec2& getSize() const { return m_size; }
+			inline const maths::vec4& getColor() const { return m_color; }
 		};
 	}
 }

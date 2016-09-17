@@ -1,6 +1,9 @@
 #pragma once
 
+#include <iostream>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
 namespace radi
 {
 	namespace graphics
@@ -21,7 +24,7 @@ namespace radi
 		public:
 			Window(const char *name, int width, int height);
 			~Window();
-			static void clear();
+			void clear() const;
 			void update();
 			bool closed() const;
 

@@ -1,9 +1,4 @@
-#pragma once
-
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include "window.h"
-#include <iostream>
 
 namespace radi
 {
@@ -43,7 +38,7 @@ namespace radi
 				return false;
 			}
 
-			m_window = glfwCreateWindow(m_width, m_height, m_title, nullptr, nullptr);
+			m_window = glfwCreateWindow(m_width, m_height, m_title, NULL, NULL);
 			if (!m_window)
 			{
 				glfwTerminate();
@@ -57,7 +52,7 @@ namespace radi
 			glfwSetKeyCallback(m_window, key_callback);
 			glfwSetMouseButtonCallback(m_window, mouse_button_callback);
 			glfwSetCursorPosCallback(m_window, cursor_position_callback);
-
+			glfwSwapInterval(0.0);
 
 			if (glewInit() != GLEW_OK)
 			{
@@ -93,7 +88,7 @@ namespace radi
 			y = my;
 		}
 
-		void Window::clear()
+		void Window::clear() const
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
@@ -102,9 +97,7 @@ namespace radi
 		{
 			GLenum error = glGetError();
 			if (error != GL_NO_ERROR)
-			{
-				std::cout << "OpenGL Error:" << error << std::endl;
-			}
+				std::cout << "OpenGL Error: " << error << std::endl;
 			glfwPollEvents();
 			glfwSwapBuffers(m_window);
 		}

@@ -1,5 +1,4 @@
 #include "mat4.h"
-#include "maths.h"
 
 namespace radi
 {
@@ -29,6 +28,7 @@ namespace radi
 
 		mat4& mat4::multiply(const mat4& other)
 		{
+			float data[16];
 			for (int y = 0; y < 4; y++)
 			{
 				for (int x = 0; x < 4; x++)
@@ -38,9 +38,10 @@ namespace radi
 					{
 						sum += elements[x + e * 4] * other.elements[e + y * 4];
 					}
-					elements[x + y * 4] = sum;
+					data[x + y * 4] = sum;
 				}
 			}
+			memcpy(elements, data, 4 * 4 * sizeof(float));
 
 			return *this;
 		}
@@ -115,7 +116,7 @@ namespace radi
 
 			result.elements[0 + 0 * 4] = x * omc + c;
 			result.elements[1 + 0 * 4] = y * x * omc + z * s;
-			result.elements[2 + 0 * 4] = x * z + omc - y * s;
+			result.elements[2 + 0 * 4] = x * z * omc - y * s;
 
 			result.elements[0 + 1 * 4] = x * y * omc - z * s;
 			result.elements[1 + 1 * 4] = y * omc + c;

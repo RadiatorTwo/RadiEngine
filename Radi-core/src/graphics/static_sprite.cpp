@@ -11,10 +11,10 @@ namespace radi
 			m_vertexArray = new VertexArray();
 			GLfloat vertices[] =
 			{
-					0,      0, 0,
-					0, height, 0,
+				0, 0, 0,
+				0, height, 0,
 				width, height, 0,
-				width,      0, 0
+				width, 0, 0
 			};
 
 			GLfloat colors[] =
@@ -28,7 +28,7 @@ namespace radi
 			m_vertexArray->addBuffer(new Buffer(vertices, 4 * 3, 3), 0);
 			m_vertexArray->addBuffer(new Buffer(colors, 4 * 4, 4), 1);
 
-			GLushort indices[] = { 0,1,2,2,3,0 };
+			GLushort indices[] = { 0, 1, 2, 2, 3, 0 };
 			m_indexBuffer = new IndexBuffer(indices, 6);
 		}
 		

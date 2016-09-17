@@ -107,6 +107,9 @@
     <ClInclude Include="src\graphics\sprite.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\timer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\basic.frag" />
