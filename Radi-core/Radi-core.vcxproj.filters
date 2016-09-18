@@ -62,6 +62,9 @@
     <ClCompile Include="src\graphics\layers\group.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphics\texture.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\window.h" />
@@ -126,6 +129,12 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\layers\group.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\texture.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\image_load.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

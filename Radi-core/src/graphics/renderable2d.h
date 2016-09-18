@@ -14,7 +14,7 @@ namespace radi
 		struct VertexData
 		{
 			maths::vec3 vertex;
-			//maths::vec4 color;
+			maths::vec2 uv;
 			unsigned int color;
 		};
 
@@ -24,12 +24,15 @@ namespace radi
 			maths::vec3 m_position;
 			maths::vec2 m_size;
 			maths::vec4 m_color;
+			std::vector<maths::vec2> m_uv;
 		protected:
-			Renderable2D() { }
+			Renderable2D() { setUVDefaults(); }
 		public:
 			Renderable2D(maths::vec3 position, maths::vec2 size, maths::vec4 color)
 				: m_position(position), m_size(size), m_color(color)
-			{ }
+			{
+				setUVDefaults();
+			}
 
 			virtual ~Renderable2D() { }
 
@@ -41,6 +44,15 @@ namespace radi
 			inline const maths::vec3& getPosition() const { return m_position; }
 			inline const maths::vec2& getSize() const { return m_size; }
 			inline const maths::vec4& getColor() const { return m_color; }
+			inline const std::vector<maths::vec2>& getUV() const { return m_uv; }
+		private:
+			void setUVDefaults()
+			{
+				m_uv.push_back(maths::vec2(0, 0));
+				m_uv.push_back(maths::vec2(0, 1));
+				m_uv.push_back(maths::vec2(1, 1));
+				m_uv.push_back(maths::vec2(1, 0));
+			}
 		};
 	}
 }
