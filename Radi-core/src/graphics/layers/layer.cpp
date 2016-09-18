@@ -23,7 +23,7 @@ namespace radi
 			}
 		}
 
-		void Layer::Add(Renderable2D* renderable)
+		void Layer::add(Renderable2D* renderable)
 		{
 			m_renderables.push_back(renderable);
 		}
@@ -32,9 +32,12 @@ namespace radi
 		{
 			m_shader->enable();
 			m_renderer->begin();
-			for (const Renderable2D* renderable : m_renderables)
-				m_renderer->submit(renderable);
 
+			for (const Renderable2D* renderable : m_renderables)
+			{
+				renderable->submit(m_renderer);
+			}
+			
 			m_renderer->end();
 
 			m_renderer->flush();

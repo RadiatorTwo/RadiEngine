@@ -21,7 +21,7 @@ namespace radi
 			Layer(Renderer2D* renderer, Shader* shader, mat4 projectionMatrix);
 		public:
 			virtual ~Layer();
-			virtual void Add(Renderable2D* renderable);
+			virtual void add(Renderable2D* renderable);
 			virtual void render();
 		};
 

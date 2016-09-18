@@ -104,7 +104,7 @@ namespace radi
 
 		std::ostream& operator<<(std::ostream& stream, const vec4& vector)
 		{
-			stream << "vec2: (" << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << ")";
+			stream << "vec4: (" << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << ")";
 			return stream;
 		}
 	}
