@@ -5,6 +5,7 @@
 #include "renderer2d.h"
 #include "../maths/maths.h"
 #include "shader.h"
+#include "texture.h"
 
 
 namespace radi
@@ -15,6 +16,7 @@ namespace radi
 		{
 			maths::vec3 vertex;
 			maths::vec2 uv;
+			float tid;
 			unsigned int color;
 		};
 
@@ -25,6 +27,7 @@ namespace radi
 			maths::vec2 m_size;
 			maths::vec4 m_color;
 			std::vector<maths::vec2> m_uv;
+			Texture* m_texture;
 		protected:
 			Renderable2D() { setUVDefaults(); }
 		public:
@@ -45,6 +48,8 @@ namespace radi
 			inline const maths::vec2& getSize() const { return m_size; }
 			inline const maths::vec4& getColor() const { return m_color; }
 			inline const std::vector<maths::vec2>& getUV() const { return m_uv; }
+
+			inline const GLuint getTID() const { return m_texture == nullptr ? 0 : m_texture->getID(); }
 		private:
 			void setUVDefaults()
 			{

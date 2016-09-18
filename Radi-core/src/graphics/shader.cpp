@@ -8,13 +8,13 @@ namespace radi
 		Shader::Shader(const char* vertPath, const char* fragPath)
 			:m_vertPath(vertPath), m_fragPath(fragPath)
 		{
-			m_shaderID = load();
+			m_shaderID = load();			
 		}
 
 		Shader::~Shader()
 		{
 			glDeleteProgram(m_shaderID);
-		}
+		}		
 
 		GLuint Shader::load()
 		{
@@ -81,10 +81,20 @@ namespace radi
 		{
 			glUniform1f(getUniformLocation(name), value);
 		}
+		
+		void Shader::setUniform1fv(const GLchar* name, int count, float* value)
+		{
+			glUniform1fv(getUniformLocation(name), count, value);
+		}
 
 		void Shader::setUniform1i(const GLchar* name, int value)
 		{
 			glUniform1i(getUniformLocation(name), value);
+		}
+
+		void Shader::setUniform1iv(const GLchar* name, int count, int* value)
+		{
+			glUniform1iv(getUniformLocation(name), count, value);
 		}
 
 		void Shader::setUniform2f(const GLchar* name, const maths::vec2& vector)

@@ -20,7 +20,8 @@ namespace radi
 			~Texture();
 			void bind() const;
 			void unbind() const;
-			
+
+			inline const unsigned int getID() { return m_tID; }
 			inline const unsigned int getWidth() { return m_width; }
 			inline const unsigned int getHeight() { return m_height; }
 

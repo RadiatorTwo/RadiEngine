@@ -17,7 +17,8 @@ namespace radi
 
 #define SHADER_VERTEX_INDEX 0
 #define SHADER_UV_INDEX 1
-#define SHADER_COLOR_INDEX 2
+#define SHADER_TID_INDEX 2
+#define SHADER_COLOR_INDEX 3
 
 		class BatchRenderer2D : public Renderer2D
 		{
@@ -28,6 +29,8 @@ namespace radi
 			IndexBuffer* m_IBO;
 			GLsizei m_indexCount;
 			VertexData* m_buffer;
+
+			std::vector<GLuint> m_textureSlots;
 		public:
 			BatchRenderer2D();
 			~BatchRenderer2D();
