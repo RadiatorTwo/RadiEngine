@@ -29,10 +29,10 @@ namespace radi
 			std::vector<maths::vec2> m_uv;
 			Texture* m_texture;
 		protected:
-			Renderable2D() { setUVDefaults(); }
+			Renderable2D() :m_texture(nullptr) { setUVDefaults(); }
 		public:
 			Renderable2D(maths::vec3 position, maths::vec2 size, maths::vec4 color)
-				: m_position(position), m_size(size), m_color(color)
+				: m_position(position), m_size(size), m_color(color), m_texture(nullptr)
 			{
 				setUVDefaults();
 			}

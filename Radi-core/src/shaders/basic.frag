@@ -13,7 +13,7 @@ in DATA
 	vec4 color;
 } fs_in;
 
-uniform sampler2D textures[32];
+uniform sampler2D textures[16];
 
 void main()
 {
@@ -24,5 +24,5 @@ void main()
 		int tid = int(fs_in.tid - 0.5);
 		texColor = texture(textures[tid], fs_in.uv);
 	}
-	color = texColor * intensity;
+	color = texColor;
 }
