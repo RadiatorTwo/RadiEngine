@@ -5,15 +5,11 @@
 #include "src/graphics/shader.h"
 #include "src/maths/maths.h"
 
-#include "src/graphics/buffers/buffer.h"
-#include "src/graphics/buffers/indexbuffer.h"
 #include "src/graphics/buffers/vertexarray.h"
 
-#include "src/graphics/renderer2d.h"
 #include "src/graphics/simple2drenderer.h"
 #include "src/graphics/batchrenderer2d.h"
 
-#include "src/graphics/static_sprite.h"
 #include "src/graphics/sprite.h"
 
 #include  "src/graphics/layers/layer.h"
@@ -23,8 +19,9 @@
 #include "src/graphics/texture.h"
 #include "src/graphics/label.h"
 
-#define BENCHMODE 1
+#define BENCHMODE 0
 
+#if 1
 int main()
 {
 	using namespace radi;
@@ -33,7 +30,7 @@ int main()
 	using namespace utils;
 
 	Window window("Radi-Engine!", 960, 540);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 	mat4 ortho = mat4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
 
@@ -57,8 +54,10 @@ int main()
 	{
 		for (float x = -16.0f; x < 16.0f; x += 0.1f)
 		{
+			int r = rand() % 256;
+			int col = 0xffff00 << 8 | r;
 			if (rand() % 4 == 0)
-				layer.add(new Sprite(x, y, 0.09f, 0.09f, maths::vec4(rand() % 1000 / 1000.0f, 0, 1, 1)));
+				layer.add(new Sprite(x, y, 0.09f, 0.09f, col));
 			else
 				layer.add(new Sprite(x, y, 0.09f, 0.09f, textures[rand() % 3]));
 		}
@@ -69,8 +68,10 @@ int main()
 	{
 		for (float x = -16.0f; x < 16.0f; x++)
 		{
+			int r = rand() % 256;
+			int col = 0xffff00 << 8 | r;
 			if (rand() % 4 == 0)
-				layer.add(new Sprite(x, y, 0.9f, 0.9f, maths::vec4(rand() % 1000 / 1000.0f, 0, 1, 1)));
+				layer.add(new Sprite(x, y, 0.9f, 0.9f, col));
 			else
 				layer.add(new Sprite(x, y, 0.9f, 0.9f, textures[rand() % 3]));
 		}
@@ -79,8 +80,8 @@ int main()
 #endif
 
 	Group* g = new Group(maths::mat4::translation(maths::vec3(-15.8f, 7.0f, 0.0f)));
-	Label* fps = new Label("", 0.4f, 0.4f, maths::vec4(1, 1, 1, 1));
-	g->add(new Sprite(0, 0, 5, 1.5f, maths::vec4(0.3f, 0.3f, 0.3f, 0.9f)));
+	Label* fps = new Label("", 0.4f, 0.4f, 0xffffffff);
+	g->add(new Sprite(0, 0, 5, 1.5f, 0x505050DD));
 	g->add(fps);
 
 	layer.add(g);
@@ -97,24 +98,34 @@ int main()
 	Timer time;
 	float timer = 0;
 	unsigned int frames = 0;
+	float t = 0.0f;
 	while (!window.closed())
 	{
+		t += 0.001f;
 		window.clear();
 		double x, y;
 		window.getMousePosition(x, y);
 		shader.enable();
-		shader.setUniform2f("light_pos", vec2((float)(x * 32.0f / 960.0f - 16.0f), (float)(9.0f - y * 18.0f / 540.0f)));
+		shader.setUniform2f("light_pos", vec2((float)(x * 32.0f / window.getWidth() - 16.0f), (float)(9.0f - y * 18.0f / window.getHeight())));
 
 		layer.render();
+
+		const std::vector<Renderable2D*>& rs = layer.getRenderables();
+
+		for (int i = 0; i < rs.size(); i++)
+		{
+			float c = sin(t) / 2 + 0.5f;
+			rs[i]->setColor(maths::vec4(c, 0, 0, 1));
+		}
 
 		window.update();
 
 		frames++;
 		if (time.elapsed() - timer > 1.0f)
 		{
-			timer += 0.5f;
-			fps->text = std::to_string(frames * 2) + " fps";
-			printf("%d fps\n", frames * 2);
+			timer += 1.0f;
+			fps->text = std::to_string(frames) + " fps";
+			printf("%d fps\n", frames);
 			frames = 0;
 		}
 	}
@@ -126,3 +137,4 @@ int main()
 
 	return 0;
 }
+#endif

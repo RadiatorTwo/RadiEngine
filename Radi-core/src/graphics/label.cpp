@@ -3,7 +3,7 @@
 namespace radi {
 	namespace graphics {
 
-		Label::Label(std::string text, float x, float y, maths::vec4 color)
+		Label::Label(std::string text, float x, float y, unsigned int color)
 			: Renderable2D(), text(text), position(m_position)
 		{
 			m_position = maths::vec3(x, y, 0.0f);

@@ -23,5 +23,12 @@ namespace radi
 
 			renderer->pop();
 		}
+
+
+		Group::~Group()
+		{
+			for (int i = 0; i < m_renderables.size(); i++)
+				delete m_renderables[i];
+		}
 	}
 }

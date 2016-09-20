@@ -1,11 +1,19 @@
 #pragma once
 
+#define WINDOWS_TIMER 1
+
+#if WINDOWS_TIMER
 #include <Windows.h>
+#else
+#include <chrono>
+#endif
+
 
 namespace radi
 {
 	namespace utils
 	{
+#if WINDOWS_TIMER
 		class Timer
 		{
 		private:
@@ -33,5 +41,30 @@ namespace radi
 				return (float)(cycles * m_frequency);
 			}
 		};
+#else
+		class Timer
+		{
+		private:
+			typedef std::chrono::high_resolution_clock HighResolutionClock;
+			typedef std::chrono::duration<float, std::milli> milliseconds_type;
+			std::chrono::time_point<HighResolutionClock> m_start;
+		public:
+			Timer()
+			{
+				reset();
+			}
+
+			void reset()
+			{
+				m_start = HighResolutionClock::now();
+			}
+
+			float elapsed()
+			{
+				return std::chrono::duration_cast<milliseconds_type>(HighResolutionClock::now() - m_start).count() / 1000.0f;
+			}
+		};
+#endif
+
 	}
 }

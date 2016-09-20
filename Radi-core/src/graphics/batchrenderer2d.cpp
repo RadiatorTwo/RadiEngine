@@ -70,11 +70,9 @@ namespace radi
 		{
 			const maths::vec3& position = renderable->getPosition();
 			const maths::vec2& size = renderable->getSize();
-			const maths::vec4& color = renderable->getColor();
+			const unsigned int color = renderable->getColor();
 			const std::vector<maths::vec2>& uv = renderable->getUV();
 			const GLuint tid = renderable->getTID();
-
-			unsigned int c = 0;
 
 			float ts = 0.0f;
 			if (tid > 0)
@@ -103,54 +101,38 @@ namespace radi
 					ts = (float)(m_textureSlots.size());
 				}
 			}
-			else
-			{
-				int r = color.x * 255.0f;
-				int g = color.y * 255.0f;
-				int b = color.z * 255.0f;
-				int a = color.w * 255.0f;
-
-				c = a << 24 | b << 16 | g << 8 | r;
-			}
 
 			m_buffer->vertex = *m_transformationBack * position;
 			m_buffer->uv = uv[0];
 			m_buffer->tid = ts;
-			m_buffer->color = c;
+			m_buffer->color = color;
 			m_buffer++;
 
 			m_buffer->vertex = *m_transformationBack * maths::vec3(position.x, position.y + size.y, position.z);
 			m_buffer->uv = uv[1];
 			m_buffer->tid = ts;
-			m_buffer->color = c;
+			m_buffer->color = color;
 			m_buffer++;
 
 			m_buffer->vertex = *m_transformationBack * maths::vec3(position.x + size.x, position.y + size.y, position.z);
 			m_buffer->uv = uv[2];
 			m_buffer->tid = ts;
-			m_buffer->color = c;
+			m_buffer->color = color;
 			m_buffer++;
 
 			m_buffer->vertex = *m_transformationBack * maths::vec3(position.x + size.x, position.y, position.z);
 			m_buffer->uv = uv[3];
 			m_buffer->tid = ts;
-			m_buffer->color = c;
+			m_buffer->color = color;
 			m_buffer++;
 
 			m_indexCount += 6;
 		}
 
-		void BatchRenderer2D::drawString(const std::string& text, const maths::vec3& position, const maths::vec4& color)
+		void BatchRenderer2D::drawString(const std::string& text, const maths::vec3& position, unsigned int color)
 		{
 			using namespace ftgl;
-
-			int r = color.x * 255.0f;
-			int g = color.y * 255.0f;
-			int b = color.z * 255.0f;
-			int a = color.w * 255.0f;
-
-			unsigned int col = a << 24 | b << 16 | g << 8 | r;
-
+			
 			float ts = 0.0f;
 			bool found = false;
 			for (int i = 0; i < m_textureSlots.size(); i++)
@@ -206,25 +188,25 @@ namespace radi
 					m_buffer->vertex = *m_transformationBack * maths::vec3(x0, y0, 0);
 					m_buffer->uv = maths::vec2(u0, v0);
 					m_buffer->tid = ts;
-					m_buffer->color = col;
+					m_buffer->color = color;
 					m_buffer++;
 
 					m_buffer->vertex = *m_transformationBack * maths::vec3(x0, y1, 0);
 					m_buffer->uv = maths::vec2(u0, v1);
 					m_buffer->tid = ts;
-					m_buffer->color = col;
+					m_buffer->color = color;
 					m_buffer++;
 
 					m_buffer->vertex = *m_transformationBack * maths::vec3(x1, y1, 0);
 					m_buffer->uv = maths::vec2(u1, v1);
 					m_buffer->tid = ts;
-					m_buffer->color = col;
+					m_buffer->color = color;
 					m_buffer++;
 
 					m_buffer->vertex = *m_transformationBack * maths::vec3(x1, y0, 0);
 					m_buffer->uv = maths::vec2(u1, v0);
 					m_buffer->tid = ts;
-					m_buffer->color = col;
+					m_buffer->color = color;
 					m_buffer++;
 
 					m_indexCount += 6;

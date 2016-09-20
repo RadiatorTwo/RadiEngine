@@ -23,8 +23,8 @@ namespace radi
 			GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
 			GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
 
-			std::string vertSourceString = utils::FileUtils::read_file(m_vertPath);
-			std::string fragSourceString = utils::FileUtils::read_file(m_fragPath);
+			std::string vertSourceString = utils::read_file(m_vertPath);
+			std::string fragSourceString = utils::read_file(m_fragPath);
 
 			const char* vertSource = vertSourceString.c_str();
 			const char* fragSource = fragSourceString.c_str();

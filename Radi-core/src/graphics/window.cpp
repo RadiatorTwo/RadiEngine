@@ -4,8 +4,6 @@ namespace radi
 {
 	namespace graphics
 	{
-		void resize_window(GLFWwindow* window, int width, int height);
-
 		Window::Window(const char *title, int width, int height)
 		{
 			m_title = title;
@@ -17,11 +15,15 @@ namespace radi
 			for (int i = 0; i < MAX_KEYS; i++)
 			{
 				m_keys[i] = false;
+				m_keyState[i] = false;
+				m_keyTyped[i] = false;
 			}
 
 			for (int i = 0; i < MAX_BUTTONS; i++)
 			{
-				m_buttons[i] = false;
+				m_mouseButtons[i] = false;
+				m_mouseState[i] = false;
+				m_mouseClicked[i] = false;
 			}
 		}
 
@@ -48,7 +50,7 @@ namespace radi
 
 			glfwMakeContextCurrent(m_window);
 			glfwSetWindowUserPointer(m_window, this);
-			glfwSetWindowSizeCallback(m_window, resize_window);
+			glfwSetFramebufferSizeCallback(m_window, window_resize);
 			glfwSetKeyCallback(m_window, key_callback);
 			glfwSetMouseButtonCallback(m_window, mouse_button_callback);
 			glfwSetCursorPosCallback(m_window, cursor_position_callback);
@@ -77,12 +79,30 @@ namespace radi
 			return m_keys[keycode];
 		}
 
+
+		bool Window::isKeyTyped(unsigned int keycode) const
+		{
+			//TODO: Log this!
+			if (keycode >= MAX_KEYS)
+				return false;
+
+			return m_keyTyped[keycode];
+		}
+
 		bool Window::isMouseButtonPressed(unsigned int button) const
 		{
 			//TODO: Log this!
 			if (button >= MAX_BUTTONS)
 				return false;
-			return m_buttons[button];
+			return m_mouseButtons[button];
+		}
+		
+		bool Window::isMouseButtonClicked(unsigned int button) const
+		{
+			//TODO: Log this!
+			if (button >= MAX_BUTTONS)
+				return false;
+			return m_mouseClicked[button];
 		}
 
 		void Window::getMousePosition(double& x, double& y) const
@@ -98,6 +118,15 @@ namespace radi
 
 		void Window::update()
 		{
+			for (int i = 0; i < MAX_KEYS; i++)
+				m_keyTyped[i] = m_keys[i] && !m_keyState[i];
+
+			for (int i = 0; i < MAX_BUTTONS; i++)
+				m_mouseClicked[i] = m_mouseButtons[i] && !m_mouseState[i];
+
+			memcpy(m_keyState, m_keys, MAX_KEYS);
+			memcpy(m_mouseState, m_mouseButtons, MAX_BUTTONS);
+
 			GLenum error = glGetError();
 			if (error != GL_NO_ERROR)
 				std::cout << "OpenGL Error: " << error << std::endl;
@@ -110,9 +139,13 @@ namespace radi
 			return glfwWindowShouldClose(m_window) == 1;
 		}
 
-		void resize_window(GLFWwindow* window, int width, int height)
+		void window_resize(GLFWwindow* window, int width, int height)
 		{
 			glViewport(0, 0, width, height);
+			Window* win = (Window*)glfwGetWindowUserPointer(window);
+
+			win->m_width = width;
+			win->m_height = height;
 		}
 
 		void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -126,7 +159,7 @@ namespace radi
 		{
 			Window* win = (Window*)glfwGetWindowUserPointer(window);
 
-			win->m_buttons[button] = action != GLFW_RELEASE;
+			win->m_mouseButtons[button] = action != GLFW_RELEASE;
 		}
 
 		void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)

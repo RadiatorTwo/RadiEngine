@@ -27,6 +27,8 @@ namespace radi
 
 			buffer->unbind();
 			unbind();
+
+			m_buffers.push_back(buffer);
 		}
 
 		void VertexArray::bind() const
