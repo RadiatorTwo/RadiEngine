@@ -73,6 +73,12 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{21510e16-65b4-4d45-bd0a-f75e1da78361}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\graphics\fonts">
+      <UniqueIdentifier>{8c390d09-d04d-4fca-a891-7a7de89e8344}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\graphics\fonts">
+      <UniqueIdentifier>{239b8aaa-f81b-4981-80fe-189fa2261878}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ext\freetype\src\autofit\autofit.c">
@@ -267,6 +273,12 @@
     <ClCompile Include="src\graphics\window.cpp">
       <Filter>Quelldateien\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphics\font.cpp">
+      <Filter>Quelldateien\graphics\fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\font_manager.cpp">
+      <Filter>Quelldateien\graphics\fonts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ext\freetype\include\ft2build.h">
@@ -394,6 +406,12 @@
     </ClInclude>
     <ClInclude Include="src\graphics\window.h">
       <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\font.h">
+      <Filter>Headerdateien\graphics\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\font_manager.h">
+      <Filter>Headerdateien\graphics\fonts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
