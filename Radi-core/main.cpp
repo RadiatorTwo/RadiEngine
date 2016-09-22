@@ -105,6 +105,7 @@ int main()
 	shader.setUniform1iv("textures", 10, texIDs);
 	shader.setUniformMat4("pr_matrix", maths::mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
 
+	SoundManager::init();
 	SoundManager::add(new Sound("Test", "test.ogg"));
 
 	Timer time;
