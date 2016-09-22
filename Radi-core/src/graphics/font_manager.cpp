@@ -11,6 +11,11 @@ namespace radi
 			m_fonts.push_back(font);
 		}
 
+		Font* FontManager::get()
+		{
+			return m_fonts[0];
+		}
+
 		Font* FontManager::get(const std::string& name)
 		{
 			for(Font* font : m_fonts)

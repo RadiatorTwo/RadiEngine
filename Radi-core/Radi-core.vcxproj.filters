@@ -85,6 +85,9 @@
     <Filter Include="Quelldateien\ext\gorilla-audio">
       <UniqueIdentifier>{c86d65b8-8500-4436-838c-9ad7bcf872cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\audio">
+      <UniqueIdentifier>{af86887e-a74e-44ae-b894-66b03499edb8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ext\freetype\src\autofit\autofit.c">
@@ -246,20 +249,11 @@
     <ClCompile Include="src\maths\mat4.cpp">
       <Filter>Quelldateien\maths</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\simple2drenderer.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphics\sprite.cpp">
-      <Filter>Quelldateien\graphics\renderables</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\static_sprite.cpp">
       <Filter>Quelldateien\graphics\renderables</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\texture.cpp">
       <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\layers\tilelayer.cpp">
-      <Filter>Quelldateien\graphics\layers</Filter>
     </ClCompile>
     <ClCompile Include="src\maths\vec3.cpp">
       <Filter>Quelldateien\maths</Filter>
@@ -285,12 +279,6 @@
     <ClCompile Include="src\graphics\font_manager.cpp">
       <Filter>Quelldateien\graphics\fonts</Filter>
     </ClCompile>
-    <ClCompile Include="src\audio\sound.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\audio\sound_manager.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="ext\gorilla-audio\ga.c">
       <Filter>Quelldateien\ext\gorilla-audio</Filter>
     </ClCompile>
@@ -308,6 +296,18 @@
     </ClCompile>
     <ClCompile Include="ext\gorilla-audio\common\gc_thread.c">
       <Filter>Quelldateien\ext\gorilla-audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\audio\sound.cpp">
+      <Filter>Quelldateien\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\audio\sound_manager.cpp">
+      <Filter>Quelldateien\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="tilelayer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="examples\game.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -371,9 +371,6 @@
     <ClInclude Include="src\graphics\shader.h">
       <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\simple2drenderer.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\graphics\texture.h">
       <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
@@ -413,9 +410,6 @@
     <ClInclude Include="src\graphics\layers\layer.h">
       <Filter>Headerdateien\graphics\layers</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\layers\tilelayer.h">
-      <Filter>Headerdateien\graphics\layers</Filter>
-    </ClInclude>
     <ClInclude Include="src\graphics\buffers\vertexarray.h">
       <Filter>Headerdateien\graphics\buffers</Filter>
     </ClInclude>
@@ -426,9 +420,6 @@
       <Filter>Headerdateien\graphics\renderables</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\sprite.h">
-      <Filter>Headerdateien\graphics\renderables</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\static_sprite.h">
       <Filter>Headerdateien\graphics\renderables</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\renderable2d.h">
@@ -472,6 +463,12 @@
     </ClInclude>
     <ClInclude Include="src\utils\stringutils.h">
       <Filter>Headerdateien\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="tilelayer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

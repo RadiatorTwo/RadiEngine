@@ -11,5 +11,11 @@ namespace radi
 			m_FTAtlas = ftgl::texture_atlas_new(512, 512, 2);
 			m_FTFont = ftgl::texture_font_new_from_file(m_FTAtlas, size, m_filename.c_str());
 		}
+
+
+		void Font::setScale(float x, float y)
+		{
+			m_scale = maths::vec2(x, y);
+		}
 	}
 }

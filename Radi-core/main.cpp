@@ -6,14 +6,11 @@
 #include "src/maths/maths.h"
 
 #include "src/graphics/buffers/vertexarray.h"
-
-#include "src/graphics/simple2drenderer.h"
 #include "src/graphics/batchrenderer2d.h"
 
 #include "src/graphics/sprite.h"
 
 #include  "src/graphics/layers/layer.h"
-#include  "src/graphics/layers/tilelayer.h"
 
 #include "src/graphics/layers/group.h"
 #include "src/graphics/texture.h"
@@ -21,14 +18,13 @@
 
 #include "src/graphics/font_manager.h"
 
-#include "ext/gorilla-audio/ga.h"
-#include "ext/gorilla-audio/gau.h"
-
 #include "src/audio/sound_manager.h"
 
-#define BENCHMODE 1
+#include "tilelayer.h"
 
-#if 1
+#define BENCHMODE 0
+
+#if 0
 int main()
 {
 	using namespace radi;
@@ -105,7 +101,6 @@ int main()
 	shader.setUniform1iv("textures", 10, texIDs);
 	shader.setUniformMat4("pr_matrix", maths::mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
 
-	SoundManager::init();
 	SoundManager::add(new Sound("Test", "test.ogg"));
 
 	Timer time;
@@ -150,17 +145,8 @@ int main()
 			gain -= 0.05f;
 			SoundManager::get("Test")->setGain(gain);
 		}
-
-		window.update();
-
-		frames++;
-		if (time.elapsed() - timer > 1.0f)
-		{
-			timer += 1.0f;
-			fps->text = std::to_string(frames) + " fps";
-			printf("%d fps\n", frames);
-			frames = 0;
-		}
+		
+		
 	}
 
 	for (int i = 0; i < 3; i++)

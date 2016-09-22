@@ -13,6 +13,7 @@ namespace radi
 				glfwTerminate();
 
 			FontManager::add(new Font("SourceSansPro", "SourceSansPro-Light.ttf", 32));
+			audio::SoundManager::init();
 
 			for (int i = 0; i < MAX_KEYS; i++)
 			{
@@ -31,8 +32,9 @@ namespace radi
 
 		Window::~Window()
 		{
-			glfwTerminate();
+			audio::SoundManager::clean();
 			FontManager::clean();
+			glfwTerminate();
 		}
 
 		bool Window::init()
@@ -135,6 +137,8 @@ namespace radi
 				std::cout << "OpenGL Error: " << error << std::endl;
 			glfwPollEvents();
 			glfwSwapBuffers(m_window);
+
+			audio::SoundManager::update();
 		}
 
 		bool Window::closed() const

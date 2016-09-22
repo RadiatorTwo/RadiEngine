@@ -1,13 +1,14 @@
 #pragma once
 
-#define WINDOWS_TIMER 1
+#define WINDOWS_TIMER 0
 
 #if WINDOWS_TIMER
 #include <Windows.h>
+#include <minwindef.h>
+#include <profileapi.h>
 #else
 #include <chrono>
 #endif
-
 
 namespace radi
 {
