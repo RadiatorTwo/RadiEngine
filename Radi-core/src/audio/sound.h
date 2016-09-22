@@ -16,6 +16,8 @@ namespace radi { namespace audio {
 		std::string m_Name;
 		std::string m_Filename;
 
+		unsigned int m_Count;
+
 		ga_Sound* m_Sound;
 		ga_Handle* m_Handle;
 		gc_int32 m_Position;

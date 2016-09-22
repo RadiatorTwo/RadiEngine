@@ -88,6 +88,9 @@
     <Filter Include="Quelldateien\audio">
       <UniqueIdentifier>{af86887e-a74e-44ae-b894-66b03499edb8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\audio">
+      <UniqueIdentifier>{9b2f105b-4883-4378-bfdb-b7a9acd004f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ext\freetype\src\autofit\autofit.c">
@@ -303,10 +306,13 @@
     <ClCompile Include="src\audio\sound_manager.cpp">
       <Filter>Quelldateien\audio</Filter>
     </ClCompile>
-    <ClCompile Include="tilelayer.cpp">
+    <ClCompile Include="examples\game.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="examples\game.cpp">
+    <ClCompile Include="examples\tilelayer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\texture_manager.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -434,12 +440,6 @@
     <ClInclude Include="src\graphics\font_manager.h">
       <Filter>Headerdateien\graphics\fonts</Filter>
     </ClInclude>
-    <ClInclude Include="src\audio\sound.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio\sound_manager.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="ext\gorilla-audio\ga.h">
       <Filter>Headerdateien\ext\gorilla-audio</Filter>
     </ClInclude>
@@ -464,10 +464,22 @@
     <ClInclude Include="src\utils\stringutils.h">
       <Filter>Headerdateien\utils</Filter>
     </ClInclude>
-    <ClInclude Include="tilelayer.h">
+    <ClInclude Include="src\radi.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\radi.h">
+    <ClInclude Include="src\utils\log.h">
+      <Filter>Headerdateien\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\audio\sound.h">
+      <Filter>Headerdateien\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\audio\sound_manager.h">
+      <Filter>Headerdateien\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="examples\tilelayer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\texture_manager.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

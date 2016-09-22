@@ -2,10 +2,11 @@
 
 #include <string>
 #include <FreeImage.h>
+#include <GL/glew.h>
 
 namespace radi
 {
-	static BYTE* load_image(const char* filename, GLsizei* width, GLsizei* height)
+	static BYTE* load_image(const char* filename, GLsizei* width, GLsizei* height, unsigned int* bits)
 	{
 		FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
 		FIBITMAP* dib = nullptr;
@@ -26,8 +27,8 @@ namespace radi
 		
 		*width = FreeImage_GetWidth(dib);
 		*height = FreeImage_GetHeight(dib);
-		int bits = FreeImage_GetBPP(dib);
-		int size = *width * * height * (bits / 8);
+		*bits = FreeImage_GetBPP(dib);
+		int size = *width * * height * (*bits / 8);
 
 		BYTE* result = new BYTE[size];
 		memcpy(result, pixels, size);

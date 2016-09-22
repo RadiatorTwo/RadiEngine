@@ -5,6 +5,7 @@ namespace radi
 	namespace graphics
 	{
 		BatchRenderer2D::BatchRenderer2D()
+			: m_indexCount(0)
 		{
 			init();
 		}
@@ -13,6 +14,7 @@ namespace radi
 		{
 			delete m_IBO;
 			glDeleteBuffers(1, &m_VBO);
+			glDeleteVertexArrays(1, &m_VAO);
 		}
 
 		void BatchRenderer2D::init()

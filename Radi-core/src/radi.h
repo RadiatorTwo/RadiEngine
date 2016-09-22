@@ -4,7 +4,12 @@
 #include "graphics/batchrenderer2d.h"
 #include "graphics/window.h"
 #include "graphics/layers/layer.h"
+#include "graphics/layers/group.h"
+#include "graphics/texture_manager.h"
 #include "graphics/label.h"
+
+#include "audio/sound.h"
+#include "audio/sound_manager.h"
 
 #include "maths/maths.h"
 #include "utils/timer.h"
@@ -69,6 +74,7 @@ namespace radi
 				m_window->clear();
 				if (m_timer->elapsed() - updateTimer > updateTick)
 				{
+					m_window->updateInput();
 					update();
 					updates++;
 					updateTimer += updateTick;

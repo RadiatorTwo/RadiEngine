@@ -34,6 +34,7 @@ namespace radi
 		{
 			audio::SoundManager::clean();
 			FontManager::clean();
+			TextureManager::clean();
 			glfwTerminate();
 		}
 
@@ -110,10 +111,9 @@ namespace radi
 			return m_mouseClicked[button];
 		}
 
-		void Window::getMousePosition(double& x, double& y) const
+		const maths::vec2& Window::getMousePosition() const
 		{
-			x = mx;
-			y = my;
+			return m_mousePosition;;
 		}
 
 		void Window::clear() const
@@ -122,6 +122,18 @@ namespace radi
 		}
 
 		void Window::update()
+		{			
+			GLenum error = glGetError();
+			if (error != GL_NO_ERROR)
+				std::cout << "OpenGL Error: " << error << std::endl;
+
+			glfwPollEvents();
+			glfwSwapBuffers(m_window);
+
+			audio::SoundManager::update();
+		}
+
+		void Window::updateInput()
 		{
 			for (int i = 0; i < MAX_KEYS; i++)
 				m_keyTyped[i] = m_keys[i] && !m_keyState[i];
@@ -131,14 +143,6 @@ namespace radi
 
 			memcpy(m_keyState, m_keys, MAX_KEYS);
 			memcpy(m_mouseState, m_mouseButtons, MAX_BUTTONS);
-
-			GLenum error = glGetError();
-			if (error != GL_NO_ERROR)
-				std::cout << "OpenGL Error: " << error << std::endl;
-			glfwPollEvents();
-			glfwSwapBuffers(m_window);
-
-			audio::SoundManager::update();
 		}
 
 		bool Window::closed() const
@@ -173,8 +177,8 @@ namespace radi
 		{
 			Window* win = (Window*)glfwGetWindowUserPointer(window);
 
-			win->mx = xpos;
-			win->my = ypos;
+			win->m_mousePosition.x = (float)xpos;
+			win->m_mousePosition.y = (float)ypos;
 		}
 	}
 }

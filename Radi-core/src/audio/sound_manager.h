@@ -21,7 +21,7 @@ namespace radi { namespace audio {
 		static std::vector<Sound*> m_Sounds;
 	public:
 		static void init();
-		static void add(Sound* sound);
+		static Sound* add(Sound* sound);
 		static Sound* get(const std::string& name);
 		static void update();
 		static void clean();

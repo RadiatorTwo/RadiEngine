@@ -5,7 +5,7 @@ namespace radi {
 	namespace audio {
 
 		Sound::Sound(const std::string& name, const std::string& filename)
-			: m_Name(name), m_Filename(filename), m_Playing(false)
+			: m_Name(name), m_Filename(filename), m_Playing(false), m_Count(0)
 		{
 			std::vector<std::string> split = split_string(m_Filename, '.');
 			if (split.size() < 2)
@@ -30,6 +30,8 @@ namespace radi {
 			m_Handle = gau_create_handle_sound(SoundManager::m_Mixer, m_Sound, &destroy_on_finish, &quit, NULL);
 			m_Handle->sound = this;
 			ga_handle_play(m_Handle);
+			m_Count++;
+
 			m_Playing = true;
 		}
 
@@ -83,7 +85,9 @@ namespace radi {
 		void destroy_on_finish(ga_Handle* in_handle, void* in_context)
 		{
 			Sound* sound = (Sound*)in_handle->sound;
-			sound->stop();
+			sound->m_Count--;
+			if (sound->m_Count == 0)
+				sound->stop();
 		}
 
 		void loop_on_finish(ga_Handle* in_handle, void* in_context)

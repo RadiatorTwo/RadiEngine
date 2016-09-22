@@ -16,6 +16,8 @@ namespace radi
 			~Group();
 			void add(Renderable2D* renderable);
 			void submit(Renderer2D* renderer) const override;
+
+			maths::mat4& getTransformRef() { return m_transformationMatrix; }
 		};
 	}
 }

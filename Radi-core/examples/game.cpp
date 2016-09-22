@@ -28,7 +28,7 @@ public:
 		FontManager::get()->setScale(window->getWidth() / 32.0f, window->getHeight() / 18.0f);
 		shader = new Shader("src/shaders/basic.vert", "src/shaders/basic.frag");
 		layer = new Layer(new BatchRenderer2D(), shader, mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
-		sprite = new Sprite(0.0f, 0.0f, 4, 4, new Texture("test.png"));
+		sprite = new Sprite(0.0f, 0.0f, 4, 4, new Texture("Tex","test.png"));
 		layer->add(sprite);
 
 		fps = new Label("", -15.5f, 7.8f, 0xffffffff);
@@ -53,11 +53,9 @@ public:
 		if (window->isKeyPressed(GLFW_KEY_RIGHT))
 			sprite->position.x += speed;
 
-		double x, y;
-		window->getMousePosition(x, y);
-		shader->setUniform2f("light_pos", maths::vec2((float)(x * 32.0f / window->getWidth() - 16.0f), (float)(9.0f - y * 18.0f / window->getHeight())));
+		maths::vec2 mouse = window->getMousePosition();
+		shader->setUniform2f("light_pos", maths::vec2((float)(mouse.x * 32.0f / window->getWidth() - 16.0f), (float)(9.0f - mouse.y * 18.0f / window->getHeight())));
 	}
-
 
 	void render() override
 	{

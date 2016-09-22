@@ -14,9 +14,10 @@ namespace radi { namespace audio {
 		m_Mixer = gau_manager_mixer(m_Manager);
 	}
 
-	void SoundManager::add(Sound* sound)
+	Sound* SoundManager::add(Sound* sound)
 	{
 		m_Sounds.push_back(sound);
+		return sound;
 	}
 
 	Sound* SoundManager::get(const std::string& name)

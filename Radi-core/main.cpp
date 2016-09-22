@@ -20,8 +20,6 @@
 
 #include "src/audio/sound_manager.h"
 
-#include "tilelayer.h"
-
 #define BENCHMODE 0
 
 #if 0
