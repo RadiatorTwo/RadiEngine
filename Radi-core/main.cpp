@@ -21,7 +21,12 @@
 
 #include "src/graphics/font_manager.h"
 
-#define BENCHMODE 0
+#include "ext/gorilla-audio/ga.h"
+#include "ext/gorilla-audio/gau.h"
+
+#include "src/audio/sound_manager.h"
+
+#define BENCHMODE 1
 
 #if 1
 int main()
@@ -30,6 +35,7 @@ int main()
 	using namespace graphics;
 	using namespace maths;
 	using namespace utils;
+	using namespace audio;
 
 	Window window("Radi-Engine!", 960, 540);
 	//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -99,13 +105,16 @@ int main()
 	shader.setUniform1iv("textures", 10, texIDs);
 	shader.setUniformMat4("pr_matrix", maths::mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
 
+	SoundManager::add(new Sound("Test", "test.ogg"));
+
 	Timer time;
 	float timer = 0;
 	unsigned int frames = 0;
-	float t = 0.0f;
+
+	float gain = 0.5f;
+	SoundManager::get("Test")->setGain(gain);
 	while (!window.closed())
 	{
-		t += 0.001f;
 		window.clear();
 		double x, y;
 		window.getMousePosition(x, y);
@@ -114,12 +123,31 @@ int main()
 
 		layer.render();
 
-		const std::vector<Renderable2D*>& rs = layer.getRenderables();
+		if (window.isKeyTyped(GLFW_KEY_P))
+			SoundManager::get("Test")->play();
 
-		for (int i = 0; i < rs.size(); i++)
+		if (window.isKeyTyped(GLFW_KEY_L))
+			SoundManager::get("Test")->loop();
+
+		if (window.isKeyTyped(GLFW_KEY_S))
+			SoundManager::get("Test")->stop();
+
+		if (window.isKeyTyped(GLFW_KEY_1))
+			SoundManager::get("Test")->pause();
+
+		if (window.isKeyTyped(GLFW_KEY_2))
+			SoundManager::get("Test")->resume();
+
+		if (window.isKeyTyped(GLFW_KEY_UP))
 		{
-			float c = sin(t) / 2 + 0.5f;
-			rs[i]->setColor(maths::vec4(c, 0, 0, 1));
+			gain += 0.05f;
+			SoundManager::get("Test")->setGain(gain);
+		}
+
+		if (window.isKeyTyped(GLFW_KEY_DOWN))
+		{
+			gain -= 0.05f;
+			SoundManager::get("Test")->setGain(gain);
 		}
 
 		window.update();

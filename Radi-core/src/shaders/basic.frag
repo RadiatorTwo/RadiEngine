@@ -13,7 +13,7 @@ in DATA
 	vec4 color;
 } fs_in;
 
-uniform sampler2D textures[32];
+uniform sampler2D textures[16];
 
 void main()
 {
