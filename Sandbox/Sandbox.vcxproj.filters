@@ -23,12 +23,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\basic.es3.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="shaders\basic.es3.vert">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="shaders\basic.frag">
       <Filter>Shaders</Filter>
     </None>

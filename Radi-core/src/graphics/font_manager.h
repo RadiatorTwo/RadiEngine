@@ -1,5 +1,8 @@
 #pragma once
+
 #include <vector>
+#include <radi_types.h>
+
 #include "font.h"
 
 namespace radi
@@ -17,7 +20,7 @@ namespace radi
 			static Font* get(const std::string& name, unsigned int size);
 			static void clean();
 		private:
-			FontManager();
+			FontManager() {}
 		};
 	}
 }

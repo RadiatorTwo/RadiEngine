@@ -4,6 +4,11 @@ namespace radi
 {
 	namespace graphics
 	{
+		void window_resize(GLFWwindow* window, int width, int height);
+		void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+		void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+		void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
+
 		Window::Window(const char *title, int width, int height)
 		{
 			m_title = title;
@@ -60,7 +65,7 @@ namespace radi
 			glfwSetKeyCallback(m_window, key_callback);
 			glfwSetMouseButtonCallback(m_window, mouse_button_callback);
 			glfwSetCursorPosCallback(m_window, cursor_position_callback);
-			glfwSwapInterval(1);
+			glfwSwapInterval(0.0);
 
 			if (glewInit() != GLEW_OK)
 			{

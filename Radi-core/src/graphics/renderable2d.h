@@ -1,12 +1,16 @@
 #pragma once
+
+#include <radi_types.h>
+
 #include "buffers/buffer.h"
 #include "buffers/indexbuffer.h"
 #include "buffers/vertexarray.h"
+
 #include "renderer2d.h"
-#include "../maths/maths.h"
-#include "shader.h"
 #include "texture.h"
 
+#include "../maths/maths.h"
+#include "shaders/shader.h"
 
 namespace radi
 {
@@ -47,10 +51,10 @@ namespace radi
 			void setColor(unsigned int color) { m_color = color; }
 			void setColor(const maths::vec4& color)
 			{
-				int r = color.x * 255.0f;
-				int g = color.y * 255.0f;
-				int b = color.z * 255.0f;
-				int a = color.w * 255.0f;
+				uint r = (uint)(color.x * 255.0f);
+				uint g = (uint)(color.y * 255.0f);
+				uint b = (uint)(color.z * 255.0f);
+				uint a = (uint)(color.w * 255.0f);
 
 				m_color = a << 24 | b << 16 | g << 8 | r;
 			}

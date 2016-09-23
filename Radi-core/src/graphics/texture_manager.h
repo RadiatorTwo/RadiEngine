@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <radi_types.h>
 #include "texture.h"
 
 namespace radi {

@@ -4,7 +4,7 @@ namespace radi
 {
 	namespace graphics
 	{
-		Font::Font(std::string name, std::string filename, int size)
+		Font::Font(std::string name, std::string filename, float size)
 			: m_name(name),m_filename(filename),m_size(size), m_scale(maths::vec2(1, 1))
 		{
 

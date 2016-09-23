@@ -22,7 +22,7 @@ namespace radi {
 
 		void TextureManager::clean()
 		{
-			for (int i = 0; i < m_textures.size(); i++)
+			for (uint i = 0; i < m_textures.size(); i++)
 				delete m_textures[i];
 		}
 

@@ -17,7 +17,7 @@ namespace radi
 			Sprite(float x, float y, float width, float height, maths::vec4 color);
 			Sprite(float x, float y, float width, float height, Texture* texture);
 
-			void setUV(std::vector<maths::vec2> uv);
+			void setUV(const std::vector<maths::vec2>& uv);
 		};
 	}
 }

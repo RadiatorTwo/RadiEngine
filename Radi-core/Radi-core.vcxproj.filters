@@ -85,6 +85,12 @@
     <Filter Include="Headerdateien\audio">
       <UniqueIdentifier>{9b2f105b-4883-4378-bfdb-b7a9acd004f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\graphics\shaders">
+      <UniqueIdentifier>{4945611f-9f47-42c6-bdfb-7322e0a47cd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\graphics\shaders">
+      <UniqueIdentifier>{35aed47e-6cd9-464e-bd91-552a3029ed45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ext\freetype\src\autofit\autofit.c">
@@ -237,9 +243,6 @@
     <ClCompile Include="src\graphics\layers\layer.cpp">
       <Filter>Quelldateien\graphics\layers</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\shader.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphics\batchrenderer2d.cpp">
       <Filter>Quelldateien\graphics</Filter>
     </ClCompile>
@@ -300,6 +303,12 @@
     <ClCompile Include="src\graphics\texture_manager.cpp">
       <Filter>Quelldateien\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphics\shaders\shader.cpp">
+      <Filter>Quelldateien\graphics\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\shaders\shader_factory.cpp">
+      <Filter>Quelldateien\graphics\shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ext\freetype\include\ft2build.h">
@@ -357,9 +366,6 @@
       <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\renderer2d.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\shader.h">
       <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\texture.h">
@@ -466,6 +472,15 @@
     </ClInclude>
     <ClInclude Include="src\graphics\texture_manager.h">
       <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\shaders\shader.h">
+      <Filter>Headerdateien\graphics\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\shaders\shader_factory.h">
+      <Filter>Headerdateien\graphics\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi_types.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

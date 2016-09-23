@@ -1,12 +1,15 @@
 #pragma once
+#include "graphics/label.h"
 #include "graphics/sprite.h"
 #include "graphics/renderer2d.h"
 #include "graphics/batchrenderer2d.h"
-#include "graphics/window.h"
 #include "graphics/layers/layer.h"
 #include "graphics/layers/group.h"
 #include "graphics/texture_manager.h"
-#include "graphics/label.h"
+#include "graphics/window.h"
+
+#include "graphics/shaders/Shader.h"
+#include "graphics/shaders/shader_factory.h"
 
 #include "audio/sound.h"
 #include "audio/sound_manager.h"
@@ -80,9 +83,9 @@ namespace radi
 					updateTimer += updateTick;
 				}
 
-				render();
-				frames++;
-				m_window->update();
+					render();
+					frames++;
+					m_window->update();
 
 				if (m_timer->elapsed() - timer > 1.0f)
 				{

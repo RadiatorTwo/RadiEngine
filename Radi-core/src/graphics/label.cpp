@@ -3,8 +3,9 @@
 
 namespace radi {
 	namespace graphics {
-		Label::Label(std::string text, float x, float y, unsigned color)
-			:Renderable2D(), m_font(FontManager::get("SourceSansPro")), text(text), position(m_position)
+		
+		Label::Label(std::string text, float x, float y, unsigned int color)
+			: Renderable2D(), text(text), position(m_position), m_font(FontManager::get("SourceSansPro"))
 		{
 			m_position = maths::vec3(x, y, 0.0f);
 			m_color = color;
@@ -17,7 +18,7 @@ namespace radi {
 			m_color = color;
 		}
 
-		Label::Label(std::string text, float x, float y, const std::string& font, unsigned color)
+		Label::Label(std::string text, float x, float y, const std::string& font, unsigned int color)
 			: Renderable2D(), text(text), position(m_position), m_font(FontManager::get(font))
 		{
 			m_position = maths::vec3(x, y, 0.0f);
@@ -26,7 +27,7 @@ namespace radi {
 			validateFont(font);
 		}
 
-		Label::Label(std::string text, float x, float y, const std::string& font, unsigned size, unsigned color)
+		Label::Label(std::string text, float x, float y, const std::string& font, unsigned int size, unsigned int color)
 			: Renderable2D(), text(text), position(m_position), m_font(FontManager::get(font, size))
 		{
 			m_position = maths::vec3(x, y, 0.0f);
@@ -40,18 +41,18 @@ namespace radi {
 			renderer->drawString(text, position, *m_font, m_color);
 		}
 
-		void Label::validateFont(const std::string font, int size)
+		void Label::validateFont(const std::string& name, int size)
 		{
 			if (m_font != nullptr)
 				return;
 
-			std::cout << "NULL FONT! Font=" << font;
+			std::cout << "NULL FONT! Font=" << name;
 			if (size > 0)
 				std::cout << ", Size=" << size;
-
 			std::cout << std::endl;
 
 			m_font = FontManager::get("SourceSansPro");
 		}
+
 	}
 }

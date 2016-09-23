@@ -12,9 +12,20 @@ namespace radi
 {
 	namespace graphics
 	{
+		enum TextureWrap
+		{
+			REPEAT = GL_REPEAT,
+			CLAMP = GL_CLAMP,
+			MIRRORED_REPEAT = GL_MIRRORED_REPEAT,
+			CLAMP_TO_EDGE = GL_CLAMP_TO_EDGE,
+			CLAMP_TO_BORDER = GL_CLAMP_TO_BORDER
+		};
+
 		class Texture
 		{
 		private:
+			static TextureWrap s_wrapMode;
+
 			std::string m_name, m_filename;
 			GLuint m_tID;
 			GLsizei m_width, m_height;
@@ -30,6 +41,7 @@ namespace radi
 			inline const unsigned int getWidth() { return m_width; }
 			inline const unsigned int getHeight() { return m_height; }
 
+			inline static void SetWrap(TextureWrap mode) { s_wrapMode = mode; }
 		private:
 			GLuint load();
 		};

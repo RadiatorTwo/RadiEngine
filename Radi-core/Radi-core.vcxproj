@@ -77,7 +77,8 @@
     <ClCompile Include="src\graphics\label.cpp" />
     <ClCompile Include="src\graphics\layers\group.cpp" />
     <ClCompile Include="src\graphics\layers\layer.cpp" />
-    <ClCompile Include="src\graphics\shader.cpp" />
+    <ClCompile Include="src\graphics\shaders\shader.cpp" />
+    <ClCompile Include="src\graphics\shaders\shader_factory.cpp" />
     <ClCompile Include="src\graphics\sprite.cpp" />
     <ClCompile Include="src\graphics\texture.cpp" />
     <ClCompile Include="src\graphics\texture_manager.cpp" />
@@ -125,7 +126,8 @@
     <ClInclude Include="src\graphics\layers\layer.h" />
     <ClInclude Include="src\graphics\renderable2d.h" />
     <ClInclude Include="src\graphics\renderer2d.h" />
-    <ClInclude Include="src\graphics\shader.h" />
+    <ClInclude Include="src\graphics\shaders\shader.h" />
+    <ClInclude Include="src\graphics\shaders\shader_factory.h" />
     <ClInclude Include="src\graphics\sprite.h" />
     <ClInclude Include="src\graphics\texture.h" />
     <ClInclude Include="src\graphics\texture_manager.h" />
@@ -138,6 +140,7 @@
     <ClInclude Include="src\maths\vec4.h" />
     <ClInclude Include="src\radi.h" />
     <ClInclude Include="src\radigl.h" />
+    <ClInclude Include="src\radi_types.h" />
     <ClInclude Include="src\utils\fileutils.h" />
     <ClInclude Include="src\utils\image_load.h" />
     <ClInclude Include="src\utils\log.h" />

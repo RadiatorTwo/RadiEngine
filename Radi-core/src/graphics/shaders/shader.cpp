@@ -5,31 +5,51 @@ namespace radi
 {
 	namespace graphics
 	{
-		Shader::Shader(const char* vertPath, const char* fragPath)
-			:m_vertPath(vertPath), m_fragPath(fragPath)
+		Shader::Shader(const char* name, const char* vertSrc, const char* fragSrc)
+			: m_name(name), m_vertSrc(vertSrc), m_fragSrc(fragSrc)
 		{
-			m_shaderID = load();			
+			m_shaderID = load(m_vertSrc, m_fragSrc);
+		}
+
+		Shader::Shader(const char* vertPath, const char* fragPath)
+			: m_name(vertPath), m_vertPath(vertPath), m_fragPath(fragPath)
+		{
+			std::string vertSourceString = utils::read_file(m_vertPath);
+			std::string fragSourceString = utils::read_file(m_fragPath);
+
+			m_vertSrc = vertSourceString.c_str();
+			m_fragSrc = fragSourceString.c_str();
+			m_shaderID = load(m_vertSrc, m_fragSrc);
+		}
+
+		Shader* Shader::FromFile(const char* vertPath, const char* fragPath)
+		{
+			return new Shader(vertPath, fragPath);
+		}
+
+		Shader* Shader::FromSource(const char* vertSrc, const char* fragSrc)
+		{
+			return new Shader(vertSrc, vertSrc, fragSrc);
+		}
+
+		Shader* Shader::FromSource(const char* name, const char* vertSrc, const char* fragSrc)
+		{
+			return new Shader(name, vertSrc, fragSrc);
 		}
 
 		Shader::~Shader()
 		{
 			glDeleteProgram(m_shaderID);
-		}		
+		}
 
-		GLuint Shader::load()
+		GLuint Shader::load(const char* vertSrc, const char* fragSrc)
 		{
 			GLuint program = glCreateProgram();
 
 			GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
 			GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
 
-			std::string vertSourceString = utils::read_file(m_vertPath);
-			std::string fragSourceString = utils::read_file(m_fragPath);
-
-			const char* vertSource = vertSourceString.c_str();
-			const char* fragSource = fragSourceString.c_str();
-
-			glShaderSource(vertex, 1, &vertSource, NULL);
+			glShaderSource(vertex, 1, &vertSrc, NULL);
 			glCompileShader(vertex);
 
 			GLint result;
@@ -45,7 +65,7 @@ namespace radi
 				return 0;
 			}
 
-			glShaderSource(fragment, 1, &fragSource, NULL);
+			glShaderSource(fragment, 1, &fragSrc, NULL);
 			glCompileShader(fragment);
 
 			glGetShaderiv(fragment, GL_COMPILE_STATUS, &result);
@@ -74,14 +94,18 @@ namespace radi
 
 		GLint Shader::getUniformLocation(const GLchar* name)
 		{
-			return glGetUniformLocation(m_shaderID, name);
+			GLint result = glGetUniformLocation(m_shaderID, name);
+			if (result == -1)
+				RADI_ERROR(m_name, ": could not find uniform ", name, " in shader!");
+
+			return result;
 		}
 
 		void Shader::setUniform1f(const GLchar* name, float value)
 		{
 			glUniform1f(getUniformLocation(name), value);
 		}
-		
+
 		void Shader::setUniform1fv(const GLchar* name, int count, float* value)
 		{
 			glUniform1fv(getUniformLocation(name), count, value);

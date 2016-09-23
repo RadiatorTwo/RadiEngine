@@ -1,8 +1,9 @@
 #pragma once
 
-#include <radigl.h>
-#include "buffer.h"
 #include <vector>
+#include <radigl.h>
+#include <radi_types.h>
+#include "buffer.h"
 
 namespace radi
 {

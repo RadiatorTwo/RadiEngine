@@ -32,9 +32,9 @@ namespace radi
 			glEnableVertexAttribArray(SHADER_COLOR_INDEX);
 
 			glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)0);
-			glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::uv)));
-			glVertexAttribPointer(SHADER_TID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::tid)));
-			glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::color)));
+			glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, uv)));
+			glVertexAttribPointer(SHADER_TID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, tid)));
+			glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, color)));
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -77,7 +77,7 @@ namespace radi
 			if (tid > 0)
 			{
 				bool found = false;
-				for (int i = 0; i < m_textureSlots.size(); i++)
+				for (uint i = 0; i < m_textureSlots.size(); i++)
 				{
 					if (m_textureSlots[i] == tid)
 					{
@@ -128,13 +128,13 @@ namespace radi
 			m_indexCount += 6;
 		}
 
-		void BatchRenderer2D::drawString( const std::string& text, const maths::vec3& position, const Font font, unsigned int color)
+		void BatchRenderer2D::drawString(const std::string& text, const maths::vec3& position, const Font font, unsigned int color)
 		{
 			using namespace ftgl;
-			
+
 			float ts = 0.0f;
 			bool found = false;
-			for (int i = 0; i < m_textureSlots.size(); i++)
+			for (uint i = 0; i < m_textureSlots.size(); i++)
 			{
 				if (m_textureSlots[i] == font.getID())
 				{
@@ -164,7 +164,7 @@ namespace radi
 
 			texture_font_t* ft_font = font.getFTFont();
 
-			for (int i = 0; i < text.length(); i++)
+			for (uint i = 0; i < text.length(); i++)
 			{
 				char c = text[i];
 				texture_glyph_t* glyph = texture_font_get_glyph(ft_font, c);
@@ -227,17 +227,23 @@ namespace radi
 
 		void BatchRenderer2D::flush()
 		{
-			for (int i = 0; i < m_textureSlots.size(); i++)
+			for (uint i = 0; i < m_textureSlots.size(); i++)
 			{
 				glActiveTexture(GL_TEXTURE0 + i);
 				glBindTexture(GL_TEXTURE_2D, m_textureSlots[i]);
+			}
+
+			if (m_mask != nullptr)
+			{
+				glActiveTexture(GL_TEXTURE31);
+				m_mask->bind();
 			}
 
 			glBindVertexArray(m_VAO);
 			m_IBO->bind();
 
 			glDrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, NULL);
-			
+
 			m_IBO->unbind();
 			glBindVertexArray(0);
 

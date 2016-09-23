@@ -4,6 +4,8 @@ namespace radi
 {
 	namespace graphics
 	{
+		TextureWrap Texture::s_wrapMode = REPEAT;
+
 		Texture::Texture(const std::string& name, const std::string& filename)
 			:m_name(name), m_filename(filename)
 		{
@@ -15,15 +17,6 @@ namespace radi
 			glDeleteTextures(1, &m_tID);
 		}
 
-		void Texture::bind() const
-		{
-			glBindTexture(GL_TEXTURE_2D, m_tID);
-		}
-
-		void Texture::unbind() const
-		{
-			glBindTexture(GL_TEXTURE_2D, 0);
-		}
 
 		GLuint Texture::load()
 		{
@@ -34,6 +27,8 @@ namespace radi
 			glBindTexture(GL_TEXTURE_2D, result);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, (GLint)s_wrapMode);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, (GLint)s_wrapMode);
 
 			if (m_bits != 24 && m_bits != 32)
 				RADI_ERROR("[Texture] Unsupported image bit-depth! (%d)", m_bits);
@@ -49,6 +44,16 @@ namespace radi
 			delete[] pixels;
 
 			return result;
+		}
+
+		void Texture::bind() const
+		{
+			glBindTexture(GL_TEXTURE_2D, m_tID);
+		}
+
+		void Texture::unbind() const
+		{
+			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 	}
 }

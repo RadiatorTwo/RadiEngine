@@ -1,9 +1,10 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
 #include <radigl.h>
-#include "../maths/maths.h"
-#include "../utils/fileutils.h"
+#include "../../maths/maths.h"
+#include "../../utils/fileutils.h"
 
 namespace radi
 {
@@ -11,12 +12,16 @@ namespace radi
 	{
 		class Shader
 		{
-		public:
-			GLuint m_shaderID;
+		private:
+			const char* m_name;
 			const char* m_vertPath;
 			const char* m_fragPath;
+			const char* m_vertSrc;
+			const char* m_fragSrc;
 		public:
-			Shader(const char* vertPath, const char* fragPath);
+			GLuint m_shaderID;
+			Shader(const char* name, const char* vertSrc, const char* fragSrc);
+			Shader(const char* vertPath, const char* fragPath);		
 			~Shader();
 
 			void setUniform1f(const GLchar* name, float value);
@@ -31,8 +36,12 @@ namespace radi
 			void enable() const;
 			void disable() const;
 		private:
-			GLuint load();
+			GLuint load(const char* vertSrc, const char* fragSrc);
 			GLint getUniformLocation(const GLchar* name);
+		public:
+			static Shader* FromFile(const char* vertPath, const char* fragPath);
+			static Shader* FromSource(const char* vertSrc, const char* fragSrc);
+			static Shader* FromSource(const char* name, const char* vertSrc, const char* fragSrc);
 		};
 	}
 }

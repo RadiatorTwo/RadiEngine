@@ -44,12 +44,8 @@ namespace radi
 
 		void FontManager::clean()
 		{
-			for (int i = 0; i < m_fonts.size(); i++)
+			for (uint i = 0; i < m_fonts.size(); i++)
 				delete m_fonts[i];
-		}
-		
-		FontManager::FontManager()
-		{
 		}
 	}
 }
