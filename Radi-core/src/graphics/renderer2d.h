@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GL/glew.h>
+#include <radigl.h>
 #include "../maths/maths.h"
 #include <vector>
 #include "font.h"

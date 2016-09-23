@@ -1,8 +1,8 @@
 #pragma once
 
-#include <GL/glew.h>
-#include <vector>
+#include <radigl.h>
 #include "buffer.h"
+#include <vector>
 
 namespace radi
 {

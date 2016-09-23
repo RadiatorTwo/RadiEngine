@@ -67,12 +67,6 @@
     <Filter Include="Quelldateien\graphics\renderables">
       <UniqueIdentifier>{99ca655b-bb50-43b8-99e9-2241ac33a8be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ressourcendateien\shader">
-      <UniqueIdentifier>{6af06a84-4afa-475a-8f78-bd6a81b155f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{21510e16-65b4-4d45-bd0a-f75e1da78361}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\graphics\fonts">
       <UniqueIdentifier>{8c390d09-d04d-4fca-a891-7a7de89e8344}</UniqueIdentifier>
     </Filter>
@@ -270,9 +264,6 @@
     <ClCompile Include="src\graphics\buffers\vertexarray.cpp">
       <Filter>Quelldateien\graphics\buffers</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphics\window.cpp">
       <Filter>Quelldateien\graphics</Filter>
     </ClCompile>
@@ -306,14 +297,8 @@
     <ClCompile Include="src\audio\sound_manager.cpp">
       <Filter>Quelldateien\audio</Filter>
     </ClCompile>
-    <ClCompile Include="examples\game.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="examples\tilelayer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphics\texture_manager.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -476,19 +461,11 @@
     <ClInclude Include="src\audio\sound_manager.h">
       <Filter>Headerdateien\audio</Filter>
     </ClInclude>
-    <ClInclude Include="examples\tilelayer.h">
+    <ClInclude Include="src\radigl.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\texture_manager.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\shaders\basic.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="src\shaders\basic.vert">
-      <Filter>Shaders</Filter>
-    </None>
   </ItemGroup>
 </Project>

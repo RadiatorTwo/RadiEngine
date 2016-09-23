@@ -19,7 +19,7 @@ namespace std
 	template <typename T>
 	string to_string(const T& t)
 	{
-		return "[Unsupported type!] (to_string)";
+		return std::string("[Unsupported type (") + typeid(T).name() + std::string(")!] (to_string)");
 	}
 }
 
@@ -52,6 +52,30 @@ namespace radi
 		static const char* to_string(const T& t)
 		{
 			return to_string_internal<T>(t, std::integral_constant<bool, has_iterator<T>::value>());
+		}
+
+		template <>
+		static const char* to_string<char>(char const & t)
+		{
+			return &t;
+		}
+
+		template <>
+		static const char* to_string<char*>(char* const & t)
+		{
+			return t;
+		}
+
+		template <>
+		static const char* to_string<char const*>(char const * const & t)
+		{
+			return t;
+		}
+
+		template <>
+		static const char* to_string<std::string>(std::string const & t)
+		{
+			return t.c_str();
 		}
 
 		template <typename T>
@@ -106,7 +130,7 @@ namespace radi
 		}
 
 		template<>
-		static  const char* to_string_internal<const char*>(const char* const& v, const std::false_type& ignored)
+		static const char* to_string_internal<const char*>(const char* const& v, const std::false_type& ignored)
 		{
 			return v;
 		}
@@ -134,13 +158,14 @@ namespace radi
 		}
 
 		template <typename... Args>
-		static void log_message(int level, Args... args)
+		static void log_message(int level, bool newline, Args... args)
 		{
 			char buffer[1024 * 10];
 			int position = 0;
 			print_log_internal(buffer, position, std::forward<Args>(args)...);
 
-			buffer[position++] = '\n';
+			if (newline)
+				buffer[position++] = '\n';
 			buffer[position] = 0;
 
 			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -165,33 +190,6 @@ namespace radi
 	}
 }
 
-#define RADI_ASSERT(x, m) \
-	do { \
-	if (!(x)) \
-	{ \
-		char* file = __FILE__; \
-		unsigned int last = 0; \
-		char* c; \
-		for (c = file; *c != '\0'; c++) \
-		{ \
-			if (*c == '\\' || *c == '/') \
-				last = c - file; \
-		} \
-		printf("\n"); \
-		printf("*************************\n"); \
-		printf("    ASSERTION FAILED!    \n"); \
-		printf("*************************\n"); \
-		printf("%s\n", #x); \
-		char* message = m; \
-		if (message[0] != '\0') \
-			printf("%s\n", m); \
-		printf("-> "); \
-		for (int i = last + 1; i < c - file; i++) \
-			printf("%c", file[i]); \
-		printf(":%d\n", __LINE__); \
-		*(int*)NULL = 8; \
-	} \
-	} while(0)
 
 #ifndef RADI_LOG_LEVEL
 #define RADI_LOG_LEVEL RADI_LOG_LEVEL_INFO
@@ -199,24 +197,51 @@ namespace radi
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_FATAL
 #define RADI_FATAL(...) radi::internal::log_message(RADI_LOG_LEVEL_FATAL, "RADI:    ", __VA_ARGS__)
+#define _RADI_FATAL(...) radi::internal::log_message(RADI_LOG_LEVEL_FATAL, false, __VA_ARGS__)
 #else
 #define RADI_FATAL(...)
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_ERROR
-#define RADI_ERROR(...) radi::internal::log_message(RADI_LOG_LEVEL_ERROR, "RADI:    ", __VA_ARGS__)
+#define RADI_ERROR(...) radi::internal::log_message(RADI_LOG_LEVEL_ERROR, true, "RADI:    ", __VA_ARGS__)
 #else
 #define RADI_ERROR(...)
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_WARN
-#define RADI_WARN(...) radi::internal::log_message(RADI_LOG_LEVEL_WARN, "RADI:    ", __VA_ARGS__)
+#define RADI_WARN(...) radi::internal::log_message(RADI_LOG_LEVEL_WARN, true, "RADI:    ", __VA_ARGS__)
 #else
 #define RADI_WARN(...)
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_INFO
-#define RADI_INFO(...) radi::internal::log_message(RADI_LOG_LEVEL_INFO, "RADI:    ", __VA_ARGS__)
+#define RADI_INFO(...) radi::internal::log_message(RADI_LOG_LEVEL_INFO, true, "RADI:    ", __VA_ARGS__)
 #else
 #define RADI_INFO(...)
-#endif 
+#endif
+
+#define RADI_ASSERT(x, ...) \
+	do { \
+	if (!(x)) \
+		{ \
+		char* file = __FILE__; \
+		unsigned int last = 0; \
+		char* c; \
+		for (c = file; *c != '\0'; c++) \
+				{ \
+			if (*c == '\\' || *c == '/') \
+				last = c - file; \
+				} \
+		RADI_FATAL(""); \
+		RADI_FATAL("*************************"); \
+		RADI_FATAL("    ASSERTION FAILED!    "); \
+		RADI_FATAL("*************************"); \
+		RADI_FATAL(#x); \
+		RADI_FATAL(__VA_ARGS__); \
+		_RADI_FATAL("-> "); \
+		for (int i = last + 1; i < c - file; i++) \
+			_RADI_FATAL(file[i]); \
+		_RADI_FATAL(":", __LINE__, "\n"); \
+		*(int*)NULL = 8; \
+		} \
+	} while(0)

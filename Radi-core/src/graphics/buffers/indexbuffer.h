@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GL/glew.h>
+#include <radigl.h>
 
 namespace radi
 {

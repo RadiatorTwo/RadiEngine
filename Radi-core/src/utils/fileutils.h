@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-#include <iostream>
 #include <fstream>
+#include <utils/Log.h>
 
 namespace radi
 {
@@ -11,6 +11,9 @@ namespace radi
 		{
 			// ReSharper disable once CppDeprecatedEntity
 			FILE* file = fopen(filepath, "rt");
+			if (file == nullptr)
+				RADI_ASSERT(file, "Could not open file '", filepath, "'!");
+
 			fseek(file, 0, SEEK_END);
 			unsigned long length = ftell(file);
 			char* data = new char[length + 1];

@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvorbis", "libvorbis\libv
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libogg", "libogg\libogg.vcxproj", "{54CE06E0-6313-4F5E-8BDA-4E7815C8743C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -27,6 +29,10 @@ Global
 		{54CE06E0-6313-4F5E-8BDA-4E7815C8743C}.Debug|Win32.Build.0 = Debug|Win32
 		{54CE06E0-6313-4F5E-8BDA-4E7815C8743C}.Release|Win32.ActiveCfg = Release|Win32
 		{54CE06E0-6313-4F5E-8BDA-4E7815C8743C}.Release|Win32.Build.0 = Release|Win32
+		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Debug|Win32.Build.0 = Debug|Win32
+		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Release|Win32.ActiveCfg = Release|Win32
+		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

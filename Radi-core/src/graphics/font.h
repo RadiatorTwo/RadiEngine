@@ -1,5 +1,6 @@
 #pragma once
 
+#include <utils/Log.h>
 #include "../../ext/freetype-gl/freetype-gl.h"
 #include "../maths/vec2.h"
 #include <string>

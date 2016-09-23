@@ -3,6 +3,7 @@
 #include <string>
 #include <FreeImage.h>
 #include <GL/glew.h>
+#include <utils/Log.h>
 
 namespace radi
 {
@@ -19,8 +20,8 @@ namespace radi
 		//check that the plugin has reading capabilities and load the file
 		if (FreeImage_FIFSupportsReading(fif))
 			dib = FreeImage_Load(fif, filename);
-		if (!dib)
-			return nullptr;
+
+		RADI_ASSERT(dib, "Could not load image '", filename, "'!");
 
 		
 		BYTE* pixels = FreeImage_GetBits(dib);

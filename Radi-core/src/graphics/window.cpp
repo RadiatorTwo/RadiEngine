@@ -12,7 +12,7 @@ namespace radi
 			if (!init())
 				glfwTerminate();
 
-			FontManager::add(new Font("SourceSansPro", "SourceSansPro-Light.ttf", 32));
+			FontManager::add(new Font("SourceSansPro", "res/SourceSansPro-Light.ttf", 32));
 			audio::SoundManager::init();
 
 			for (int i = 0; i < MAX_KEYS; i++)

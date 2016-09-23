@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <utils/log.h>
-#include <GL/glew.h>
+#include <radigl.h>
 #include <FreeImage.h>
 #include "utils/image_load.h"
 
