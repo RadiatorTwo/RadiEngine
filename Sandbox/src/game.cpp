@@ -1,6 +1,6 @@
 # include "../src/radi.h"
 
-#define GAME_MODE 0
+#define GAME_MODE 1
 
 using namespace radi;
 using namespace graphics;
@@ -50,16 +50,16 @@ public:
 		window = createWindow("Test Game", 960, 540);
 		FontManager::get()->setScale(window->getWidth() / 32.0f, window->getHeight() / 18.0f);
 
-		shader1 = ShaderFactory::DefaultShader();
-		shader2 = ShaderFactory::DefaultShader();
-		shader3 = ShaderFactory::DefaultShader();
+		shader1 = ShaderFactory::BasicShader();
+		shader2 = ShaderFactory::BasicShader();
+		shader3 = ShaderFactory::BasicShader();
 		layer1 = new Layer(new BatchRenderer2D(), shader1, mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
 		layer2 = new Layer(new BatchRenderer2D(), shader2, mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
 		layer3 = new Layer(new BatchRenderer2D(), shader3, mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
 
 		for (float i = -16.0f; i < 16.0f; i += (5.12f * 4))
 		{
-			layer1->add(new Sprite(i, -9.0f, 5.12f * 4, 4.32f * 4, new Texture("ground", "res/background.png")));
+			layer1->add(new Sprite(i, -9.0f + (0.16f * 4), 5.12f * 4, (9.0f * 2) - (0.16f * 4), new Texture("ground", "res/background.png")));
 		}
 
 		for (float i = -16.0f; i < 16.0f; i += (0.16f * 4))
@@ -67,23 +67,11 @@ public:
 			layer2->add(new Sprite(i, -9.0f, 0.16f * 4, 0.16f * 4, new Texture("ground", "res/ground_tile.png")));
 		}
 
-		fps = new Label("", -15.5f, 7.8f, 0xffffffff);
+		fps = new Label("", -15.5f, 7.8f, 0xff000000);
 		layer3->add(fps);
 
 		mario = new Sprite(0.0f, 0.0f, 0.15 * 4, 0.20 * 4, new Texture("Mario", "res/mario.png"));
 		layer3->add(mario);
-
-		Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
-		layer1->setMask(new Texture("Mask", "res/mask.png"));
-		layer2->setMask(new Texture("Mask", "res/mask.png"));
-		layer3->setMask(new Texture("Mask", "res/mask.png"));
-
-		shader1->enable();
-		shader2->enable();
-		shader3->enable();
-		shader1->setUniformMat4("mask_matrix", maths::mat4::translation(mask));
-		shader2->setUniformMat4("mask_matrix", maths::mat4::translation(mask));
-		shader3->setUniformMat4("mask_matrix", maths::mat4::translation(mask));
 	}
 #else
 	void init() override

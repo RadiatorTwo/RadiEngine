@@ -18,8 +18,8 @@ namespace radi
 				30
 			};
 
-			m_shader->setUniform1iv("textures", 31, textIDs);
-			m_shader->setUniform1i("mask_texture", 31);
+			m_shader->setUniform1iv("textures", 31, textIDs);			
+			//m_shader->setUniform1i("mask_texture", 31);
 
 			m_shader->disable();
 		}
