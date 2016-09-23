@@ -48,7 +48,7 @@ namespace radi
 		{
 			if (!glfwInit())
 			{
-				std::cout << "Failed to initialize GFLW!" << std::endl;
+				RADI_FATAL("Failed to initialize GLFW!");
 				return false;
 			}
 
@@ -56,7 +56,7 @@ namespace radi
 			if (!m_window)
 			{
 				glfwTerminate();
-				std::cout << "Failed to create GLFW Window!" << std::endl;
+				RADI_FATAL("Failed to create GLFW window!");
 				return false;
 			}
 
@@ -70,15 +70,14 @@ namespace radi
 
 			if (glewInit() != GLEW_OK)
 			{
-				std::cout << "Failed to initialize GLEW!" << std::endl;
+				RADI_FATAL("Could not initialize GLEW!");
 				return false;
 			}
 
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-			//printf("OpenGL %s, GLSL %s\n", glGetString(GL_VERSION), glGetString(GL_SHADING_LANGUAGE_VERSION));
-			std::cout << "OpenGL " << glGetString(GL_VERSION) << std::endl;
+			RADI_WARN("OpenGL ", glGetString(GL_VERSION));
 
 			return true;
 		}
@@ -129,6 +128,7 @@ namespace radi
 
 		void Window::update()
 		{			
+			// TODO: Gescheites OpenGL error checking!
 			GLenum error = glGetError();
 			if (error != GL_NO_ERROR)
 				std::cout << "OpenGL Error: " << error << std::endl;

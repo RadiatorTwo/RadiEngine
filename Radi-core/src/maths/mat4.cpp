@@ -46,7 +46,7 @@ namespace radi
 			return *this;
 		}
 
-vec3 mat4::multiply(const vec3& other) const
+		vec3 mat4::multiply(const vec3& other) const
 		{
 			return vec3(
 				columns[0].x * other.x + columns[1].x * other.y + columns[2].x * other.z + columns[3].x,
@@ -54,7 +54,7 @@ vec3 mat4::multiply(const vec3& other) const
 				columns[0].z * other.x + columns[1].z * other.y + columns[2].z * other.z + columns[3].z
 			);
 		}
-	vec4 mat4::multiply(const vec4& other) const
+		vec4 mat4::multiply(const vec4& other) const
 		{
 			return vec4(
 				columns[0].x * other.x + columns[1].x * other.y + columns[2].x * other.z + columns[3].x * other.w,
@@ -85,8 +85,8 @@ vec3 mat4::multiply(const vec3& other) const
 
 		mat4& mat4::invert()
 		{
-			double temp[16];			
-			
+			double temp[16];
+
 			temp[0] = elements[5] * elements[10] * elements[15] -
 				elements[5] * elements[11] * elements[14] -
 				elements[9] * elements[6] * elements[15] +
@@ -291,6 +291,12 @@ vec3 mat4::multiply(const vec3& other) const
 			result.elements[2 + 2 * 4] = scale.z;
 
 			return result;
+		}
+
+		mat4 mat4::invert(const mat4& matrix)
+		{
+			mat4 result = matrix;
+			return result.invert();
 		}
 	}
 }

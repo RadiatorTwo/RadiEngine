@@ -4,6 +4,8 @@ namespace radi
 {
 	namespace graphics
 	{
+		using namespace maths;
+
 		BatchRenderer2D::BatchRenderer2D()
 			: m_indexCount(0)
 		{
@@ -28,12 +30,16 @@ namespace radi
 
 			glEnableVertexAttribArray(SHADER_VERTEX_INDEX);
 			glEnableVertexAttribArray(SHADER_UV_INDEX);
+			glEnableVertexAttribArray(SHADER_MASK_UV_INDEX);
 			glEnableVertexAttribArray(SHADER_TID_INDEX);
+			glEnableVertexAttribArray(SHADER_MID_INDEX);
 			glEnableVertexAttribArray(SHADER_COLOR_INDEX);
 
 			glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)0);
 			glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, uv)));
+			glVertexAttribPointer(SHADER_MASK_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, mask_uv)));
 			glVertexAttribPointer(SHADER_TID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, tid)));
+			glVertexAttribPointer(SHADER_MID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, mid)));
 			glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, color)));
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -59,6 +65,39 @@ namespace radi
 			glBindVertexArray(0);
 		}
 
+		float BatchRenderer2D::submitTexture(uint textureID)
+		{
+			float result = 0.0f;
+			bool found = false;
+			for (uint i = 0; i < m_textureSlots.size(); i++)
+			{
+				if (m_textureSlots[i] == textureID)
+				{
+					result = (float)(i + 1);
+					found = true;
+					break;
+				}
+			}
+
+			if (!found)
+			{
+				if (m_textureSlots.size() >= RENDERER_MAX_TEXTURES)
+				{
+					end();
+					flush();
+					begin();
+				}
+				m_textureSlots.push_back(textureID);
+				result = (float)(m_textureSlots.size());
+			}
+			return result;
+		}
+
+		float BatchRenderer2D::submitTexture(const Texture* texture)
+		{
+			return submitTexture(texture->getID());
+		}
+
 		void BatchRenderer2D::begin()
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
@@ -75,53 +114,51 @@ namespace radi
 
 			float ts = 0.0f;
 			if (tid > 0)
+				ts = submitTexture(renderable->getTexture());
+
+			maths::mat4 maskTransform = maths::mat4::identity();
+			const GLuint mid = m_mask ? m_mask->texture->getID() : 0;
+			float ms = 0.0f;
+
+			if (m_mask != nullptr)
 			{
-				bool found = false;
-				for (uint i = 0; i < m_textureSlots.size(); i++)
-				{
-					if (m_textureSlots[i] == tid)
-					{
-						ts = (float)(i + 1);
-						found = true;
-						break;
-					}
-				}
-
-				if (!found)
-				{
-					if (m_textureSlots.size() >= RENDERER_MAX_TEXTURES)
-					{
-						end();
-						flush();
-						begin();
-					}
-
-					m_textureSlots.push_back(tid);
-					ts = (float)(m_textureSlots.size());
-				}
+				maskTransform = mat4::invert(m_mask->transform);
+				ms = submitTexture(m_mask->texture);
 			}
 
-			m_buffer->vertex = *m_transformationBack * position;
+			vec3 vertex = *m_transformationBack * position;
+			m_buffer->vertex = vertex;
 			m_buffer->uv = uv[0];
+			m_buffer->mask_uv = maskTransform * vertex;
 			m_buffer->tid = ts;
+			m_buffer->mid = ms;
 			m_buffer->color = color;
 			m_buffer++;
 
-			m_buffer->vertex = *m_transformationBack * maths::vec3(position.x, position.y + size.y, position.z);
+			vertex = *m_transformationBack * vec3(position.x, position.y + size.y, position.z);
+			m_buffer->vertex = vertex;
 			m_buffer->uv = uv[1];
+			m_buffer->mask_uv = maskTransform * vertex;
 			m_buffer->tid = ts;
+			m_buffer->mid = ms;
 			m_buffer->color = color;
 			m_buffer++;
 
-			m_buffer->vertex = *m_transformationBack * maths::vec3(position.x + size.x, position.y + size.y, position.z);
+			vertex = *m_transformationBack * vec3(position.x + size.x, position.y + size.y, position.z);
+			m_buffer->vertex = vertex;
 			m_buffer->uv = uv[2];
+			m_buffer->mask_uv = maskTransform * vertex;
 			m_buffer->tid = ts;
+			m_buffer->mid = ms;
 			m_buffer->color = color;
 			m_buffer++;
 
-			m_buffer->vertex = *m_transformationBack * maths::vec3(position.x + size.x, position.y, position.z);
+			vertex = *m_transformationBack * vec3(position.x + size.x, position.y, position.z);
+			m_buffer->vertex = vertex;
 			m_buffer->uv = uv[3];
+			m_buffer->mask_uv = maskTransform * vertex;
 			m_buffer->tid = ts;
+			m_buffer->mid = ms;
 			m_buffer->color = color;
 			m_buffer++;
 
@@ -133,28 +170,7 @@ namespace radi
 			using namespace ftgl;
 
 			float ts = 0.0f;
-			bool found = false;
-			for (uint i = 0; i < m_textureSlots.size(); i++)
-			{
-				if (m_textureSlots[i] == font.getID())
-				{
-					ts = (float)(i + 1);
-					found = true;
-					break;
-				}
-			}
-
-			if (!found)
-			{
-				if (m_textureSlots.size() >= 32)
-				{
-					end();
-					flush();
-					begin();
-				}
-				m_textureSlots.push_back(font.getID());
-				ts = (float)(m_textureSlots.size());
-			}
+			ts = submitTexture(font.getID());
 
 			const maths::vec2 scale = font.getScale();
 			/*float scaleX = 960.0f / 32.0f;
@@ -231,12 +247,6 @@ namespace radi
 			{
 				glActiveTexture(GL_TEXTURE0 + i);
 				glBindTexture(GL_TEXTURE_2D, m_textureSlots[i]);
-			}
-
-			if (m_mask != nullptr)
-			{
-				glActiveTexture(GL_TEXTURE31);
-				m_mask->bind();
 			}
 
 			glBindVertexArray(m_VAO);

@@ -3,14 +3,16 @@
 #include <radi_types.h>
 #include  "../renderer2d.h"
 #include "../renderable2d.h"
+#include "../Mask.h"
 #include "../../maths/maths.h"
 
 namespace radi
 {
 	namespace graphics
 	{
-		using namespace radi::graphics;
-		using namespace radi::maths;
+		using namespace graphics;
+		using namespace maths;
+
 		class Layer
 		{
 		protected:
@@ -23,7 +25,7 @@ namespace radi
 			virtual ~Layer();
 			virtual Renderable2D* add(Renderable2D* renderable);
 
-			inline void setMask(const Texture* mask) const { m_renderer->setMask(mask); }
+			inline void setMask(const Mask* mask) const { m_renderer->setMask(mask); }
 
 			virtual void render();
 

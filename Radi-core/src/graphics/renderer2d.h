@@ -4,6 +4,7 @@
 #include <vector>
 #include "font.h"
 #include "texture.h"
+#include "Mask.h"
 #include "../maths/maths.h"
 
 
@@ -18,9 +19,9 @@ namespace radi
 		protected:
 			std::vector<maths::mat4> m_transformationStack;
 			const maths::mat4* m_transformationBack;
-			const Texture* m_mask;
+			const Mask* m_mask;
 		protected:
-			Renderer2D()
+			Renderer2D() : m_mask(nullptr)
 			{
 				m_transformationStack.push_back(maths::mat4::identity());
 				m_transformationBack = &m_transformationStack.back();
@@ -47,7 +48,7 @@ namespace radi
 				m_transformationBack = &m_transformationStack.back();
 			}			
 
-			virtual void setMask(const Texture* mask) { m_mask = mask; }
+			virtual void setMask(const Mask* mask) { m_mask = mask; }
 
 			virtual void begin() {}
 			virtual void submit(const Renderable2D* renderable) = 0;

@@ -20,7 +20,9 @@ namespace radi
 		{
 			maths::vec3 vertex;
 			maths::vec2 uv;
+			maths::vec2 mask_uv;
 			float tid;
+			float mid;
 			unsigned int color;
 		};
 
@@ -29,7 +31,7 @@ namespace radi
 		protected:
 			maths::vec3 m_position;
 			maths::vec2 m_size;
-			unsigned int m_color;			
+			unsigned int m_color;
 			std::vector<maths::vec2> m_uv;
 			Texture* m_texture;
 		protected:
@@ -65,6 +67,7 @@ namespace radi
 			inline const std::vector<maths::vec2>& getUV() const { return m_uv; }
 
 			inline const GLuint getTID() const { return m_texture == nullptr ? 0 : m_texture->getID(); }
+			inline const Texture* getTexture() const { return m_texture; }
 		private:
 			void setUVDefaults()
 			{

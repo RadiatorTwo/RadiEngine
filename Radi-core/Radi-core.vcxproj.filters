@@ -497,6 +497,9 @@
     <ClInclude Include="src\embedded\embedded.h">
       <Filter>Headerdateien\embedded</Filter>
     </ClInclude>
+    <ClInclude Include="src\graphics\mask.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\embedded\files\SourceSansPro-Light.embed">

@@ -37,7 +37,7 @@ namespace radi
 			void unbind() const;
 
 			inline const std::string& getName() const { return m_name; }
-			inline const unsigned int getID() { return m_tID; }
+			inline const unsigned int getID() const { return m_tID; }
 			inline const unsigned int getWidth() { return m_width; }
 			inline const unsigned int getHeight() { return m_height; }
 
