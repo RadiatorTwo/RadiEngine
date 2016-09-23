@@ -88,10 +88,6 @@
     <ClCompile Include="src\game.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\basic.frag" />
-    <None Include="shaders\basic.vert" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Radi-core\Radi-core.vcxproj">
       <Project>{b57948d4-6640-4360-a225-37c2da886d9a}</Project>
     </ProjectReference>
