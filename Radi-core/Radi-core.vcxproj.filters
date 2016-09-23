@@ -91,6 +91,15 @@
     <Filter Include="Quelldateien\graphics\shaders">
       <UniqueIdentifier>{35aed47e-6cd9-464e-bd91-552a3029ed45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\embedded">
+      <UniqueIdentifier>{24f6b43b-0a84-4fd8-baff-170f19103c9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\embedded">
+      <UniqueIdentifier>{1b93a8cd-5df5-45b5-b15b-18b9a23f0721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\embedded">
+      <UniqueIdentifier>{b6800932-11cf-48e0-a474-1b155073613d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ext\freetype\src\autofit\autofit.c">
@@ -309,6 +318,9 @@
     <ClCompile Include="src\graphics\shaders\shader_factory.cpp">
       <Filter>Quelldateien\graphics\shaders</Filter>
     </ClCompile>
+    <ClCompile Include="src\embedded\embedded.cpp">
+      <Filter>Quelldateien\embedded</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ext\freetype\include\ft2build.h">
@@ -482,5 +494,13 @@
     <ClInclude Include="src\radi_types.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="src\embedded\embedded.h">
+      <Filter>Headerdateien\embedded</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\embedded\files\SourceSansPro-Light.embed">
+      <Filter>Ressourcendateien\embedded</Filter>
+    </None>
   </ItemGroup>
 </Project>

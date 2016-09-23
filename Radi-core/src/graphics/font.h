@@ -20,6 +20,7 @@ namespace radi
 			std::string m_filename;
 		public:
 			Font(std::string name, std::string filename, float size);
+			Font(const std::string& name, const byte* data, unsigned int datasize, float size);
 
 			void setScale(float x, float y);
 

@@ -68,6 +68,7 @@
     <ClCompile Include="ext\gorilla-audio\ga_stream.c" />
     <ClCompile Include="src\audio\sound.cpp" />
     <ClCompile Include="src\audio\sound_manager.cpp" />
+    <ClCompile Include="src\embedded\embedded.cpp" />
     <ClCompile Include="src\graphics\batchrenderer2d.cpp" />
     <ClCompile Include="src\graphics\buffers\buffer.cpp" />
     <ClCompile Include="src\graphics\buffers\indexbuffer.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="ext\gorilla-audio\ga_internal.h" />
     <ClInclude Include="src\audio\sound.h" />
     <ClInclude Include="src\audio\sound_manager.h" />
+    <ClInclude Include="src\embedded\embedded.h" />
     <ClInclude Include="src\graphics\batchrenderer2d.h" />
     <ClInclude Include="src\graphics\buffers\buffer.h" />
     <ClInclude Include="src\graphics\buffers\indexbuffer.h" />
@@ -146,6 +148,9 @@
     <ClInclude Include="src\utils\log.h" />
     <ClInclude Include="src\utils\stringutils.h" />
     <ClInclude Include="src\utils\timer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\embedded\files\SourceSansPro-Light.embed" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B57948D4-6640-4360-A225-37C2DA886D9A}</ProjectGuid>
