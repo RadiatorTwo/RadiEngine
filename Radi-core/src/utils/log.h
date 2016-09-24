@@ -48,6 +48,12 @@ namespace radi
 			static const bool value = (sizeof(test<T>(0)) == 1);
 		};
 
+		template <>
+		static const char* to_string<unsigned char const*>(unsigned char const* const & t)
+		{
+			return (const char*)t;
+		}
+
 		template <typename T>
 		static const char* to_string(const T& t)
 		{
