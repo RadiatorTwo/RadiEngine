@@ -7,7 +7,7 @@ namespace radi
 		Layer::Layer(Renderer2D* renderer, Shader* shader, mat4 projectionMatrix)
 			:renderer(renderer), m_shader(shader), m_projectionMatrix(projectionMatrix)
 		{
-			m_shader->enable();
+			m_shader->bind();
 			m_shader->setUniformMat4("pr_matrix", m_projectionMatrix);
 
 			GLint textIDs[] =
@@ -20,7 +20,7 @@ namespace radi
 
 			m_shader->setUniform1iv("textures", 32, textIDs);
 
-			m_shader->disable();
+			m_shader->unbind();
 		}
 
 		Layer::~Layer()
@@ -42,7 +42,7 @@ namespace radi
 
 		void Layer::render()
 		{
-			m_shader->enable();
+			m_shader->bind();
 			renderer->begin();
 
 			for (const Renderable2D* renderable : m_renderables)

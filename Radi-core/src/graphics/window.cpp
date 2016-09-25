@@ -5,18 +5,17 @@ namespace radi
 {
 	namespace graphics
 	{
-		void window_resize(GLFWwindow* window, int width, int height);
-		void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-		void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
-		void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
+				std::map<void*, Window*> Window::s_handles;
 
 		Window::Window(const char *title, int width, int height)
+			: m_title(title), m_width(width), m_height(height), m_handle(nullptr), m_closed(false)
 		{
-			m_title = title;
-			m_width = width;
-			m_height = height;
+			
 			if (!init())
-				glfwTerminate();
+			{
+				RADI_ERROR("Failed base Window initialization!");
+				return;				
+			}
 
 			FontManager::add(new Font("SourceSansPro", internal::DEFAULT_FONT, internal::DEFAULT_FONT_SIZE, 32));
 			audio::SoundManager::init();
@@ -41,42 +40,26 @@ namespace radi
 			FontManager::clean();
 			TextureManager::clean();
     		audio::SoundManager::clean();
-			glfwTerminate();
 		}
 
 		bool Window::init()
-		{
-			if (!glfwInit())
+		{			
+			if (!PlatformInit())
 			{
-				RADI_FATAL("Failed to initialize GLFW!");
+				RADI_FATAL("Failed to initialize platform!");
 				return false;
 			}
 
-			m_window = glfwCreateWindow(m_width, m_height, m_title, NULL, NULL);
-			if (!m_window)
-			{
-				RADI_FATAL("Failed to create GLFW window!");
-				return false;
-			}
-
-			glfwMakeContextCurrent(m_window);
-			glfwSetWindowUserPointer(m_window, this);
-			glfwSetFramebufferSizeCallback(m_window, window_resize);
-			glfwSetKeyCallback(m_window, key_callback);
-			glfwSetMouseButtonCallback(m_window, mouse_button_callback);
-			glfwSetCursorPosCallback(m_window, cursor_position_callback);
-			glfwSwapInterval(0.0);
-
-			if (glewInit() != GLEW_OK)
-			{
-				RADI_FATAL("Could not initialize GLEW!");
-				return false;
-			}
-
+			glEnable(GL_DEPTH_TEST);
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-			RADI_WARN("OpenGL ", glGetString(GL_VERSION));
+			
+			RADI_WARN("----------------------------------");
+			RADI_WARN(" OpenGL:");
+			RADI_WARN("    ", glGetString(GL_VERSION));
+			RADI_WARN("    ", glGetString(GL_VENDOR));
+			RADI_WARN("    ", glGetString(GL_RENDERER));
+			RADI_WARN("----------------------------------");
 
 			return true;
 		}
@@ -122,7 +105,7 @@ namespace radi
 
 		void Window::setVsync(bool enabled)
 		{
-			glfwSwapInterval((double)enabled);
+			// TODO: Not implemented
 			m_vsync = enabled;
 		}
 
@@ -133,8 +116,7 @@ namespace radi
 
 		void Window::update()
 		{
-		    glfwSwapBuffers(m_window);
-			glfwPollEvents();
+			PlatformUpdate();
 
 			audio::SoundManager::update();
 		}
@@ -153,38 +135,17 @@ namespace radi
 
 		bool Window::closed() const
 		{
-			return glfwWindowShouldClose(m_window) == 1;
+			return m_closed;
 		}
 
-		void window_resize(GLFWwindow* window, int width, int height)
+		void Window::RegisterWindowClass(void* handle, Window* window)
 		{
-			glViewport(0, 0, width, height);
-			Window* win = (Window*)glfwGetWindowUserPointer(window);
-
-			win->m_width = width;
-			win->m_height = height;
+			s_handles[handle] = window;
 		}
 
-		void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+		Window* Window::GetWindowClass(void* handle)
 		{
-			Window* win = (Window*)glfwGetWindowUserPointer(window);
-
-			win->m_keys[key] = action != GLFW_RELEASE;
-		}
-
-		void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
-		{
-			Window* win = (Window*)glfwGetWindowUserPointer(window);
-
-			win->m_mouseButtons[button] = action != GLFW_RELEASE;
-		}
-
-		void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
-		{
-			Window* win = (Window*)glfwGetWindowUserPointer(window);
-
-			win->m_mousePosition.x = (float)xpos;
-			win->m_mousePosition.y = (float)ypos;
+			return s_handles[handle];
 		}
 	}
 }

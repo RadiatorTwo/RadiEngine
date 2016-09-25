@@ -5,6 +5,9 @@ using namespace radi;
 using namespace graphics;
 using namespace maths;
 
+#define WIDTH 1280
+#define HEIGHT 720
+
 #if 0
 class Game : public Radi
 {
@@ -138,16 +141,15 @@ class Game : public Application
 {
 private:
 	Layer* layer;
+
 	Label* fps;
 	Sprite* sprite;
 	Shader* shader;
 	Mask* mask;
-	Label* debugInfo;
+	Label** debugInfo;
 public:
-	Game()
-		: Application("Test Game", 1280, 720)
+	Game() : Application("Test Game", WIDTH, HEIGHT)
 	{
-
 	}
 
 	~Game()
@@ -162,7 +164,21 @@ public:
 
 		FontManager::get()->setScale(window->getWidth() / 32.0f, window->getHeight() / 18.0f);
 		shader = ShaderFactory::DefaultShader();
-		layer = new Layer(new BatchRenderer2D(tvec2<uint>(1280, 720)), shader, mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+		layer = new Layer(new BatchRenderer2D(tvec2<uint>(WIDTH, HEIGHT)), shader, mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+		layer->renderer->SetRenderTarget(RenderTarget::BUFFER);
+		layer->renderer->AddPostEffectsPass(new PostEffectsPass(Shader::FromFile("shaders/postfx.vert", "shaders/postfx.frag")));
+		layer->renderer->SetPostEffects(false);
+
+		Texture::SetFilter(TextureFilter::NEAREST);
+
+		for (float i = -16.0f; i < 16.0f; i += (5.12f * 4))
+		{
+			layer->add(new Sprite(i, -9.0f + (0.16f * 4), 5.12f * 4, (9.0f * 2) - (0.16f * 4), new Texture("ground", "res/background.png")));
+		}
+		for (float i = -16.0f; i < 16.0f; i += (0.16f * 4))
+		{
+			layer->add(new Sprite(i, -9.0f, 0.16f * 4, 0.16f * 4, new Texture("ground", "res/ground_tile.png")));
+		}
 
 		sprite = new Sprite(0.0f, 0.0f, 8, 8, new Texture("Tex", "res/mario.png"));
 		layer->add(sprite);
@@ -170,8 +186,11 @@ public:
 		fps = new Label("", -15.5f, 7.8f, 0xffffffff);
 		layer->add(fps);
 
-		debugInfo = new Label("", -15.5f, 6.8f, 0xffffffff);
-		layer->add(debugInfo);
+		debugInfo = new Label*[10];
+		debugInfo[0] = new Label("", -15.5f, 6.8f, 0xffffffff);
+		debugInfo[1] = new Label("", -15.5f, 5.8f, 0xffffffff);
+		layer->add(debugInfo[0]);
+		layer->add(debugInfo[1]);
 
 		Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
 		//mask = new Mask(new Texture("Mask", "res/mask.png"));
@@ -187,32 +206,13 @@ public:
 
 	void Update() override
 	{
-		if (window->isKeyPressed(GLFW_KEY_1))
-			((BatchRenderer2D*)layer->renderer)->SetRenderTarget(RenderTarget::SCREEN);
-		if (window->isKeyPressed(GLFW_KEY_2))
-			((BatchRenderer2D*)layer->renderer)->SetRenderTarget(RenderTarget::BUFFER);
+		if (window->isKeyTyped(VK_T))
+			layer->renderer->SetRenderTarget(layer->renderer->GetRenderTarget() == RenderTarget::SCREEN ? RenderTarget::BUFFER : RenderTarget::SCREEN);
+		if (window->isKeyTyped(VK_P))
+			layer->renderer->SetPostEffects(!layer->renderer->GetPostEffects());
 
-		tvec2<uint> size = ((BatchRenderer2D*)layer->renderer)->GetViewportSize();
-
-		if (window->isKeyPressed(GLFW_KEY_UP))
-		{
-			size.x += 16;
-			size.y += 9;
-		}
-		else if (window->isKeyPressed(GLFW_KEY_DOWN))
-		{
-			size.x -= 16;
-			size.y -= 9;
-		}
-
-		if (size.x > 10000)
-			size.x = 0;
-		if (size.y > 10000)
-			size.y = 0;
-
-		debugInfo->text = std::to_string(size.x) + ", " + std::to_string(size.y);
-		((BatchRenderer2D*)layer->renderer)->SetViewportSize(size);
-		((BatchRenderer2D*)layer->renderer)->SetScreenSize(tvec2<uint>(window->getWidth(), window->getHeight()));
+		debugInfo[0]->text = std::string("Target: ") + (layer->renderer->GetRenderTarget() == RenderTarget::SCREEN ? "Screen" : "Buffer");
+		debugInfo[1]->text = std::string("PostFX: ") + (layer->renderer->GetPostEffects() ? "On" : "Off");
 	}
 
 	void Render() override

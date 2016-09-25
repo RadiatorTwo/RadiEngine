@@ -12,7 +12,7 @@ namespace radi
 		using namespace maths;
 
 		BatchRenderer2D::BatchRenderer2D(const maths::tvec2<uint>& screenSize)
-			: m_indexCount(0), m_screenSize(screenSize), m_viewportSize(screenSize), m_target(RenderTarget::SCREEN)
+			: m_indexCount(0), m_screenSize(screenSize), m_viewportSize(screenSize)
 		{
 			init();
 		}
@@ -73,11 +73,14 @@ namespace radi
 			GLCall(glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_screenBuffer));
 			m_framebuffer = new Framebuffer(m_viewportSize);
 			m_simpleShader = ShaderFactory::SimpleShader();
-			m_simpleShader->enable();
+			m_simpleShader->bind();
 			m_simpleShader->setUniformMat4("pr_matrix", maths::mat4::orthographic(0, m_screenSize.x, m_screenSize.y, 0, -1.0f, 1.0f));
 			m_simpleShader->setUniform1i("tex", 0);
-			m_simpleShader->disable();
+			m_simpleShader->unbind();
 			m_screenQuad = meshfactory::CreateQuad(0, 0, m_screenSize.x, m_screenSize.y);
+
+			m_postEffects = new PostEffects();
+			m_postEffectsBuffer = new Framebuffer(m_viewportSize);
 		}
 
 		float BatchRenderer2D::submitTexture(uint textureID)
@@ -121,6 +124,17 @@ namespace radi
 				{
 					delete m_framebuffer;
 					m_framebuffer = new Framebuffer(m_viewportSize);
+					if (m_postEffectsEnabled)
+					{
+						delete m_postEffectsBuffer;
+						m_postEffectsBuffer = new Framebuffer(m_viewportSize);
+					}
+				}
+
+				if (m_postEffectsEnabled)
+				{
+					m_postEffectsBuffer->Bind();
+					m_postEffectsBuffer->Clear();
 				}
 
 				m_framebuffer->Bind();
@@ -292,20 +306,28 @@ namespace radi
 
 			if (m_target == RenderTarget::BUFFER)
 			{
+				// Post Effects pass should go here!
+				if (m_postEffectsEnabled)
+					m_postEffects->RenderPostEffects(m_framebuffer, m_postEffectsBuffer, m_screenQuad, m_IBO);
+
 				// Display Framebuffer - potentially move to Framebuffer class
 				GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_screenBuffer));
 				GLCall(glViewport(0, 0, m_screenSize.x, m_screenSize.y));
-				m_simpleShader->enable();
+				m_simpleShader->bind();
 
 				GLCall(glActiveTexture(GL_TEXTURE0));
-				m_framebuffer->GetTexture()->bind();
+
+				if (m_postEffectsEnabled)
+					m_postEffectsBuffer->GetTexture()->bind();
+				else
+					 m_framebuffer->GetTexture()->bind();
 
 				GLCall(glBindVertexArray(m_screenQuad));
 				m_IBO->bind();
 				GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL));
 				m_IBO->unbind();
 				GLCall(glBindVertexArray(0));
-				m_simpleShader->disable();
+				m_simpleShader->unbind();
 			}
 		}
 	}

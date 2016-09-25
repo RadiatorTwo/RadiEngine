@@ -4,13 +4,13 @@ namespace radi {
 	namespace graphics {
 
 		Framebuffer::Framebuffer(const maths::tvec2<uint>& size)
-			: m_Size(size), m_Width(m_Size.x), m_Height(m_Size.y)
+			: m_Size(size), m_Width(m_Size.x), m_Height(m_Size.y), m_ClearColor(maths::vec4(0.0f, 0.0f, 0.0f, 1.0f))
 		{
 			Create(m_Width, m_Height);
 		}
 
 		Framebuffer::Framebuffer(uint width, uint height)
-			: m_Size(width, height), m_Width(m_Size.x), m_Height(m_Size.y)
+			: m_Size(width, height), m_Width(m_Size.x), m_Height(m_Size.y), m_ClearColor(maths::vec4(0.0f, 0.0f, 0.0f, 1.0f))
 		{
 			Create(width, height);
 		}
@@ -29,6 +29,8 @@ namespace radi {
 
 			GLCall(glBindRenderbuffer(GL_RENDERBUFFER, m_Data.depthbufferID));
 			GLCall(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height));
+
+			Texture::SetFilter(TextureFilter::LINEAR);
 
 			GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_Data.framebufferID));
 			GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture->getID(), 0));

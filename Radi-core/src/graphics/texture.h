@@ -14,7 +14,7 @@ namespace radi
 {
 	namespace graphics
 	{
-		enum TextureWrap
+		enum class TextureWrap
 		{
 			REPEAT = GL_REPEAT,
 			CLAMP = GL_CLAMP,
@@ -23,17 +23,24 @@ namespace radi
 			CLAMP_TO_BORDER = GL_CLAMP_TO_BORDER
 		};
 
+		enum class TextureFilter
+		{
+			LINEAR = GL_LINEAR,
+			NEAREST = GL_NEAREST
+		};
+
 		class Texture
 		{
 		private:
 			static TextureWrap s_wrapMode;
+			static TextureFilter s_filterMode;
 
 			std::string m_name, m_filename;
 			uint m_tID;
 			uint m_width, m_height;
 			unsigned int m_bits;
 		public:
-			Texture(uint width, uint height);
+			Texture(uint width, uint height, uint bits = 24);
 			Texture(const std::string& name, const std::string& filename);
 			~Texture();
 			void bind() const;
@@ -45,6 +52,7 @@ namespace radi
 			inline const unsigned int getHeight() const { return m_height; }
 
 			inline static void SetWrap(TextureWrap mode) { s_wrapMode = mode; }
+			inline static void SetFilter(TextureFilter mode) { s_filterMode = mode; }
 		private:
 			GLuint load();
 		};

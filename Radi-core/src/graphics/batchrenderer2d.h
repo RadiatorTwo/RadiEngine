@@ -18,12 +18,6 @@ namespace radi
 #define RENDERER_INDICES_SIZE RENDERER_MAX_SPRITES * 6
 #define RENDERER_MAX_TEXTURES 32 - 1
 
-		enum class RenderTarget
-		{
-			SCREEN = 0,
-			BUFFER = 1
-		};
-
 		class BatchRenderer2D : public Renderer2D
 		{
 
@@ -36,11 +30,11 @@ namespace radi
 
 			std::vector<GLuint> m_textureSlots;
 			Framebuffer* m_framebuffer;
+			Framebuffer* m_postEffectsBuffer;
 			int m_screenBuffer;
 			maths::tvec2<uint> m_viewportSize, m_screenSize;
 			Shader* m_simpleShader;
 			uint m_screenQuad;
-			RenderTarget m_target;
 		public:
 			BatchRenderer2D(const maths::tvec2<uint>& screenSize);
 			~BatchRenderer2D();
@@ -56,8 +50,6 @@ namespace radi
 			inline void SetViewportSize(const maths::tvec2<uint>& size) { m_viewportSize = size; }
 			inline const maths::tvec2<uint>& GetViewportSize() const { return m_viewportSize; }
 
-			inline void SetRenderTarget(RenderTarget target) { m_target = target; }
-			inline const RenderTarget GetRenderTarget() const { return m_target; }
 		private:
 			void init();
 			float submitTexture(uint textureID);

@@ -8,6 +8,7 @@
 #include <map>
 
 #include <radi_types.h>
+#include <maths/vec2.h>
 
 #define RADI_LOG_LEVEL_FATAL 0
 #define RADI_LOG_LEVEL_ERROR 1
@@ -86,6 +87,16 @@ namespace radi
 		static const char* to_string<std::string>(std::string const & t)
 		{
 			return t.c_str();
+		}
+
+		template <>
+		static const char* to_string<maths::vec2>(maths::vec2 const & t)
+		{
+			// TODO: sprintf
+			std::string string = std::string("vec2: (") + std::to_string(t.x) + ", " + std::to_string(t.y) + ")";
+			char* result = new char[string.length()];
+			strcpy(result, &string[0]);
+			return result;
 		}
 
 		template <typename T>

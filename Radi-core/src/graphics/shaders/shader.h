@@ -26,8 +26,8 @@ namespace radi
 			const char* m_fragPath;
 			const char* m_vertSrc;
 			const char* m_fragSrc;
-		public:
 			GLuint m_shaderID;
+		public:
 			Shader(const char* name, const char* vertSrc, const char* fragSrc);
 			Shader(const char* vertPath, const char* fragPath);
 			~Shader();
@@ -41,8 +41,8 @@ namespace radi
 			void setUniform4f(const GLchar* name, const maths::vec4& vector);
 			void setUniformMat4(const GLchar* name, const maths::mat4& matrix);
 
-			void enable() const;
-			void disable() const;
+			void bind() const;
+			void unbind() const;
 		private:
 			GLuint load(const char* vertSrc, const char* fragSrc);
 			GLint getUniformLocation(const GLchar* name);

@@ -5,7 +5,6 @@ namespace radi {
 	Application::Application(const char* name, uint width, uint height)
 		: m_name(name), m_width(width), m_height(height)
 	{
-
 	}
 
 	Application::~Application()

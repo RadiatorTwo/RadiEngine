@@ -145,17 +145,15 @@ namespace radi
 			glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, matrix.elements);
 		}
 
-		void Shader::enable() const
+		void Shader::bind() const
 		{
 			glUseProgram(m_shaderID);
 		}
 
-		void Shader::disable() const
+		void Shader::unbind() const
 		{
 			glUseProgram(0);
 		}
-
-
 
 	}
 }

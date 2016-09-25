@@ -10,3 +10,10 @@
 
 #include "mat4.h"
 
+namespace radi {
+	namespace maths {
+
+		typedef tvec2<int> ivec2;
+
+	}
+}

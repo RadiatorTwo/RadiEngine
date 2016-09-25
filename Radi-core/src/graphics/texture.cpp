@@ -6,10 +6,11 @@ namespace radi
 {
 	namespace graphics
 	{
-		TextureWrap Texture::s_wrapMode = REPEAT;
+		TextureWrap Texture::s_wrapMode = TextureWrap::REPEAT;
+		TextureFilter Texture::s_filterMode = TextureFilter::LINEAR;
 
-		Texture::Texture(uint width, uint height)
-			: m_width(width), m_height(height), m_filename("NULL")
+		Texture::Texture(uint width, uint height, uint bits)
+			: m_width(width), m_height(height), m_bits(24), m_filename("NULL")
 		{
 			m_tID = load();
 		}
@@ -31,14 +32,12 @@ namespace radi
 			BYTE* pixels = nullptr;
 			if (m_filename != "NULL")
 				 pixels = load_image(m_filename.c_str(), &m_width, &m_height, &m_bits);
-			else
-				 m_bits = 32; // Temporary
 
 			GLuint result;
 			GLCall(glGenTextures(1, &result));
 			GLCall(glBindTexture(GL_TEXTURE_2D, result));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (GLint)s_filterMode));
+			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (GLint)s_filterMode));
 			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, (GLint)s_wrapMode));
 			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, (GLint)s_wrapMode));
 
