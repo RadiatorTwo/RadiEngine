@@ -26,6 +26,8 @@ namespace radi
 			unsigned int color;
 		};
 
+#define RENDERER_VERTEX_SIZE sizeof(VertexData)
+
 		class Renderable2D
 		{
 		protected:

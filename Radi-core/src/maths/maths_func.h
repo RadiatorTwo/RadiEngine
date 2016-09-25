@@ -9,7 +9,7 @@ namespace radi
 	{
 		inline float toRadians(float degrees)
 		{
-			return (float)(degrees * (M_PI / 180.0f));
+		return (float)(degrees * (M_PI / 180.0));
 		}
 
 		inline float toDegrees(float radians)

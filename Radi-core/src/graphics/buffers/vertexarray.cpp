@@ -6,7 +6,7 @@ namespace radi
 	{
 		VertexArray::VertexArray()
 		{
-			glGenVertexArrays(1, &m_arrayID);
+			GLCall(glGenVertexArrays(1, &m_arrayID));
 		}
 
 		VertexArray::~VertexArray()
@@ -14,7 +14,7 @@ namespace radi
 			for (uint i = 0; i < m_buffers.size(); i++)
 				delete m_buffers[i];
 
-			glDeleteVertexArrays(1, &m_arrayID);
+			GLCall(glDeleteVertexArrays(1, &m_arrayID));
 		}
 
 		void VertexArray::addBuffer(Buffer* buffer, GLuint index)
@@ -22,8 +22,8 @@ namespace radi
 			bind();
 			buffer->bind();
 
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index, buffer->getComponentCount(), GL_FLOAT, GL_FALSE, 0, 0);
+			GLCall(glEnableVertexAttribArray(index));
+			GLCall(glVertexAttribPointer(index, buffer->getComponentCount(), GL_FLOAT, GL_FALSE, 0, 0));
 
 			buffer->unbind();
 			unbind();
@@ -33,12 +33,12 @@ namespace radi
 
 		void VertexArray::bind() const
 		{
-			glBindVertexArray(m_arrayID);
+			GLCall(glBindVertexArray(m_arrayID));
 		}
 
 		void VertexArray::unbind() const
 		{
-			glBindVertexArray(0);
+			GLCall(glBindVertexArray(0));
 		}
 	}
 }

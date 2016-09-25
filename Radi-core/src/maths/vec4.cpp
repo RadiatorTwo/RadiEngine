@@ -22,12 +22,12 @@ namespace radi
 			return *this;
 		}
 
-		vec4& vec4::divide(const vec4& other)
+		vec4& vec4::subtract(const vec4& other)
 		{
-			x /= other.x;
-			y /= other.y;
-			z /= other.z;
-			w /= other.w;
+			x -= other.x;
+			y -= other.y;
+			z -= other.z;
+			w -= other.w;
 
 			return *this;
 		}
@@ -42,44 +42,34 @@ namespace radi
 			return *this;
 		}
 
-		vec4& vec4::subtract(const vec4& other)
+		vec4& vec4::divide(const vec4& other)
 		{
-			x -= other.x;
-			y -= other.y;
-			z -= other.z;
-			w -= other.w;
+			x /= other.x;
+			y /= other.y;
+			z /= other.z;
+			w /= other.w;
 
 			return *this;
 		}
 
-		vec4 operator+(vec4 left, vec4& right)
+		vec4 operator+(vec4 left, const vec4& right)
 		{
 			return left.add(right);
 		}
 
-		vec4 operator-(vec4 left, vec4& right)
+		vec4 operator-(vec4 left, const vec4& right)
 		{
 			return left.subtract(right);
 		}
 
-		vec4 operator*(vec4 left, vec4& right)
+		vec4 operator*(vec4 left, const vec4& right)
 		{
 			return left.multiply(right);
 		}
 
-		vec4 operator/(vec4 left, vec4& right)
+		vec4 operator/(vec4 left, const vec4& right)
 		{
 			return left.divide(right);
-		}
-
-		bool vec4::operator==(const vec4& other) const
-		{
-			return x == other.x && y == other.y && y == other.z && y == other.w;
-		}
-
-		bool vec4::operator!=(const vec4& other) const
-		{
-			return !(*this == other);
 		}
 
 		vec4& vec4::operator+=(const vec4& other)
@@ -100,6 +90,16 @@ namespace radi
 		vec4& vec4::operator/=(const vec4& other)
 		{
 			return divide(other);
+		}
+
+		bool vec4::operator==(const vec4& other)
+		{
+			return x == other.x && y == other.y && z == other.z && w == other.w;
+		}
+
+		bool vec4::operator!=(const vec4& other)
+		{
+			return !(*this == other);
 		}
 
 		std::ostream& operator<<(std::ostream& stream, const vec4& vector)

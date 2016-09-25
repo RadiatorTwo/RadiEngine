@@ -7,6 +7,7 @@ namespace radi {
 		namespace ShaderFactory {
 
 			Shader* DefaultShader();
+			Shader* SimpleShader();
 			Shader* BasicLightShader();
 
 		}

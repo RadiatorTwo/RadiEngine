@@ -1,13 +1,15 @@
 #include "batchrenderer2d.h"
 
+#include "shaders/shader_factory.h"
+#include "mesh_factory.h"
 namespace radi
 {
 	namespace graphics
 	{
 		using namespace maths;
 
-		BatchRenderer2D::BatchRenderer2D()
-			: m_indexCount(0)
+		BatchRenderer2D::BatchRenderer2D(const maths::tvec2<uint>& screenSize)
+			: m_indexCount(0), m_screenSize(screenSize), m_viewportSize(screenSize), m_target(RenderTarget::SCREEN)
 		{
 			init();
 		}
@@ -15,34 +17,34 @@ namespace radi
 		BatchRenderer2D::~BatchRenderer2D()
 		{
 			delete m_IBO;
-			glDeleteBuffers(1, &m_VBO);
-			glDeleteVertexArrays(1, &m_VAO);
+			GLCall(glDeleteBuffers(1, &m_VBO));
+			GLCall(glDeleteVertexArrays(1, &m_VAO));
 		}
 
 		void BatchRenderer2D::init()
 		{
-			glGenVertexArrays(1, &m_VAO);
-			glGenBuffers(1, &m_VBO);
+			GLCall(glGenVertexArrays(1, &m_VAO));
+			GLCall(glGenBuffers(1, &m_VBO));
 
-			glBindVertexArray(m_VAO);
-			glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-			glBufferData(GL_ARRAY_BUFFER, RENDERER_BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW);
+			GLCall(glBindVertexArray(m_VAO));
+			GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
+			GLCall(glBufferData(GL_ARRAY_BUFFER, RENDERER_BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW));
 
-			glEnableVertexAttribArray(SHADER_VERTEX_INDEX);
-			glEnableVertexAttribArray(SHADER_UV_INDEX);
-			glEnableVertexAttribArray(SHADER_MASK_UV_INDEX);
-			glEnableVertexAttribArray(SHADER_TID_INDEX);
-			glEnableVertexAttribArray(SHADER_MID_INDEX);
-			glEnableVertexAttribArray(SHADER_COLOR_INDEX);
+			GLCall(glEnableVertexAttribArray(SHADER_VERTEX_INDEX));
+			GLCall(glEnableVertexAttribArray(SHADER_UV_INDEX));
+			GLCall(glEnableVertexAttribArray(SHADER_MASK_UV_INDEX));
+			GLCall(glEnableVertexAttribArray(SHADER_TID_INDEX));
+			GLCall(glEnableVertexAttribArray(SHADER_MID_INDEX));
+			GLCall(glEnableVertexAttribArray(SHADER_COLOR_INDEX));
 
-			glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)0);
-			glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, uv)));
-			glVertexAttribPointer(SHADER_MASK_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, mask_uv)));
-			glVertexAttribPointer(SHADER_TID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, tid)));
-			glVertexAttribPointer(SHADER_MID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, mid)));
-			glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, color)));
+			GLCall(glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)0));
+			GLCall(glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, uv))));
+			GLCall(glVertexAttribPointer(SHADER_MASK_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, mask_uv))));
+			GLCall(glVertexAttribPointer(SHADER_TID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, tid))));
+			GLCall(glVertexAttribPointer(SHADER_MID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, mid))));
+			GLCall(glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, color))));
 
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 
 			GLuint* indices = new GLuint[RENDERER_INDICES_SIZE];
 
@@ -62,7 +64,17 @@ namespace radi
 
 			m_IBO = new IndexBuffer(indices, RENDERER_INDICES_SIZE);
 
-			glBindVertexArray(0);
+			GLCall(glBindVertexArray(0));
+
+			// Setup Framebuffer
+			GLCall(glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_screenBuffer));
+			m_framebuffer = new Framebuffer(m_viewportSize);
+			m_simpleShader = ShaderFactory::SimpleShader();
+			m_simpleShader->enable();
+			m_simpleShader->setUniformMat4("pr_matrix", maths::mat4::orthographic(0, m_screenSize.x, m_screenSize.y, 0, -1.0f, 1.0f));
+			m_simpleShader->setUniform1i("tex", 0);
+			m_simpleShader->disable();
+			m_screenQuad = meshfactory::CreateQuad(0, 0, m_screenSize.x, m_screenSize.y);
 		}
 
 		float BatchRenderer2D::submitTexture(uint textureID)
@@ -100,8 +112,25 @@ namespace radi
 
 		void BatchRenderer2D::begin()
 		{
+			if (m_target == RenderTarget::BUFFER)
+			{
+				if (m_viewportSize != m_framebuffer->GetSize())
+				{
+					delete m_framebuffer;
+					m_framebuffer = new Framebuffer(m_viewportSize);
+				}
+
+				m_framebuffer->Bind();
+				m_framebuffer->Clear();
+			}
+			else
+			{
+				GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_screenBuffer));
+				GLCall(glViewport(0, 0, m_screenSize.x, m_screenSize.y));
+			}
+
 			glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-			m_buffer = (VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+			GLCall(m_buffer = (VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 		}
 
 		void BatchRenderer2D::submit(const Renderable2D* renderable)
@@ -165,25 +194,23 @@ namespace radi
 			m_indexCount += 6;
 		}
 
-		void BatchRenderer2D::drawString(const std::string& text, const maths::vec3& position, const Font font, unsigned int color)
+		void BatchRenderer2D::drawString(const std::string& text, const maths::vec3& position, const Font& font, unsigned int color)
 		{
 			using namespace ftgl;
 
 			float ts = 0.0f;
 			ts = submitTexture(font.getID());
 
-			const maths::vec2 scale = font.getScale();
-			/*float scaleX = 960.0f / 32.0f;
-			float scaleY = 540.0f / 18.0f;*/
+			const maths::vec2& scale = font.getScale();
 
 			float x = position.x;
 
-			texture_font_t* ft_font = font.getFTFont();
+			texture_font_t* ftFont = font.getFTFont();
 
 			for (uint i = 0; i < text.length(); i++)
 			{
 				char c = text[i];
-				texture_glyph_t* glyph = texture_font_get_glyph(ft_font, c);
+				texture_glyph_t* glyph = texture_font_get_glyph(ftFont, c);
 				if (glyph != NULL)
 				{
 
@@ -237,28 +264,46 @@ namespace radi
 
 		void BatchRenderer2D::end()
 		{
-			glUnmapBuffer(GL_ARRAY_BUFFER);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			GLCall(glUnmapBuffer(GL_ARRAY_BUFFER));
+			GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 		}
 
 		void BatchRenderer2D::flush()
 		{
 			for (uint i = 0; i < m_textureSlots.size(); i++)
 			{
-				glActiveTexture(GL_TEXTURE0 + i);
-				glBindTexture(GL_TEXTURE_2D, m_textureSlots[i]);
+				GLCall(glActiveTexture(GL_TEXTURE0 + i));
+				GLCall(glBindTexture(GL_TEXTURE_2D, m_textureSlots[i]));
 			}
 
-			glBindVertexArray(m_VAO);
+			GLCall(glBindVertexArray(m_VAO));
 			m_IBO->bind();
 
-			glDrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, NULL);
+			GLCall(glDrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, NULL));
 
 			m_IBO->unbind();
-			glBindVertexArray(0);
+			GLCall(glBindVertexArray(0));
 
 			m_indexCount = 0;
 			m_textureSlots.clear();
+
+			if (m_target == RenderTarget::BUFFER)
+			{
+				// Display Framebuffer - potentially move to Framebuffer class
+				GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_screenBuffer));
+				GLCall(glViewport(0, 0, m_screenSize.x, m_screenSize.y));
+				m_simpleShader->enable();
+
+				GLCall(glActiveTexture(GL_TEXTURE0));
+				m_framebuffer->GetTexture()->bind();
+
+				GLCall(glBindVertexArray(m_screenQuad));
+				m_IBO->bind();
+				GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL));
+				m_IBO->unbind();
+				GLCall(glBindVertexArray(0));
+				m_simpleShader->disable();
+			}
 		}
 	}
 }

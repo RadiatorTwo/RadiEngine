@@ -10,6 +10,14 @@ namespace radi
 {
 	namespace graphics
 	{
+
+#define SHADER_VERTEX_INDEX		0
+#define SHADER_UV_INDEX			1
+#define SHADER_MASK_UV_INDEX	2
+#define SHADER_TID_INDEX		3
+#define SHADER_MID_INDEX		4
+#define SHADER_COLOR_INDEX		5
+
 		class Shader
 		{
 		private:
@@ -21,7 +29,7 @@ namespace radi
 		public:
 			GLuint m_shaderID;
 			Shader(const char* name, const char* vertSrc, const char* fragSrc);
-			Shader(const char* vertPath, const char* fragPath);		
+			Shader(const char* vertPath, const char* fragPath);
 			~Shader();
 
 			void setUniform1f(const GLchar* name, float value);

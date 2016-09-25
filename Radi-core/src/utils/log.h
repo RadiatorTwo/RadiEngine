@@ -48,11 +48,6 @@ namespace radi
 			static const bool value = (sizeof(test<T>(0)) == 1);
 		};
 
-		template <>
-		static const char* to_string<unsigned char const*>(unsigned char const* const & t)
-		{
-			return (const char*)t;
-		}
 
 		template <typename T>
 		static const char* to_string(const T& t)
@@ -66,11 +61,18 @@ namespace radi
 			return &t;
 		}
 
-		template <>
-		static const char* to_string<char*>(char* const & t)
-		{
-			return t;
-		}
+	template <>
+	static const char* to_string<char*>(char* const & t)
+	{
+		return t;
+	}
+
+	template <>
+	static const char* to_string<unsigned char const*>(unsigned char const* const & t)
+	{
+		return (const char*)t;
+	}
+
 
 		template <>
 		static const char* to_string<char const*>(char const * const & t)
@@ -190,7 +192,7 @@ namespace radi
 				SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 				break;
 			}
-			std::cout << buffer;
+			printf("%s", buffer);
 			SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
 		}
 	}

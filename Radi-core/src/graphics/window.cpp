@@ -38,9 +38,9 @@ namespace radi
 
 		Window::~Window()
 		{
-			audio::SoundManager::clean();
 			FontManager::clean();
 			TextureManager::clean();
+    		audio::SoundManager::clean();
 			glfwTerminate();
 		}
 
@@ -55,7 +55,6 @@ namespace radi
 			m_window = glfwCreateWindow(m_width, m_height, m_title, NULL, NULL);
 			if (!m_window)
 			{
-				glfwTerminate();
 				RADI_FATAL("Failed to create GLFW window!");
 				return false;
 			}
@@ -133,8 +132,8 @@ namespace radi
 			if (error != GL_NO_ERROR)
 				std::cout << "OpenGL Error: " << error << std::endl;
 
+		    glfwSwapBuffers(m_window);
 			glfwPollEvents();
-			glfwSwapBuffers(m_window);
 
 			audio::SoundManager::update();
 		}

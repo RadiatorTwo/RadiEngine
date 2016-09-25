@@ -21,16 +21,16 @@ namespace radi
 			vec2& multiply(const vec2& other);
 			vec2& divide(const vec2& other);
 
-			friend vec2 operator+(vec2 left, vec2& right);
-			friend vec2 operator-(vec2 left, vec2& right);
-			friend vec2 operator*(vec2 left, vec2& right);
-			friend vec2 operator/(vec2 left, vec2& right);
+	    	friend vec2 operator+(vec2 left, const vec2& right);
+	    	friend vec2 operator-(vec2 left, const vec2& right);
+	    	friend vec2 operator*(vec2 left, const vec2& right);
+	    	friend vec2 operator/(vec2 left, const vec2& right);
 
 			friend vec2 operator+(vec2 left, float value);
 			friend vec2 operator*(vec2 left, float value);
 
-			bool operator==(const vec2& other) const;
-			bool operator!=(const vec2& other) const;
+	    	bool operator==(const vec2& other);
+	    	bool operator!=(const vec2& other);
 
 			vec2& operator+=(const vec2& other);
 			vec2& operator-=(const vec2& other);

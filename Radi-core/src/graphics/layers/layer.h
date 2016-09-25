@@ -15,8 +15,9 @@ namespace radi
 
 		class Layer
 		{
+		public:
+			Renderer2D* renderer;
 		protected:
-			Renderer2D* m_renderer;
 			std::vector<Renderable2D*> m_renderables;
 			Shader* m_shader;
 			mat4 m_projectionMatrix;
@@ -25,7 +26,7 @@ namespace radi
 			virtual ~Layer();
 			virtual Renderable2D* add(Renderable2D* renderable);
 
-			inline void setMask(const Mask* mask) const { m_renderer->setMask(mask); }
+			inline void setMask(const Mask* mask) const { renderer->setMask(mask); }
 
 			virtual void render();
 

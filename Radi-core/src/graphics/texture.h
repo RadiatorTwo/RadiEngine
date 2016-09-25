@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <utils/log.h>
+#include <radi_types.h>
 #include <radigl.h>
 #include <FreeImage.h>
 #include "utils/image_load.h"
@@ -27,10 +28,11 @@ namespace radi
 			static TextureWrap s_wrapMode;
 
 			std::string m_name, m_filename;
-			GLuint m_tID;
-			GLsizei m_width, m_height;
+			uint m_tID;
+			uint m_width, m_height;
 			unsigned int m_bits;
 		public:
+			Texture(uint width, uint height);
 			Texture(const std::string& name, const std::string& filename);
 			~Texture();
 			void bind() const;
@@ -38,8 +40,8 @@ namespace radi
 
 			inline const std::string& getName() const { return m_name; }
 			inline const unsigned int getID() const { return m_tID; }
-			inline const unsigned int getWidth() { return m_width; }
-			inline const unsigned int getHeight() { return m_height; }
+			inline const unsigned int getWidth() const { return m_width; }
+			inline const unsigned int getHeight() const { return m_height; }
 
 			inline static void SetWrap(TextureWrap mode) { s_wrapMode = mode; }
 		private:

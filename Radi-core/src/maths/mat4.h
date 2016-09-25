@@ -19,10 +19,17 @@ namespace radi
 			mat4();
 			mat4(float diagonal);
 
-			static mat4 identity();
-			mat4& multiply(const mat4& other);
-			friend mat4 operator*(mat4 left, const mat4& right);
-			mat4& operator*=(const mat4& other);
+    		vec4 getColumn(int index)
+    		{
+		    	index *= 4;
+	    		return vec4(elements[index], elements[index + 1], elements[index + 2], elements[index + 3]);
+    		}
+
+	    	static mat4 identity();
+
+    		mat4& multiply(const mat4& other);
+		    friend mat4 operator*(mat4 left, const mat4& right);
+		    mat4& operator*=(const mat4& other);
 
 			vec3 multiply(const vec3& other) const;
 			friend vec3 operator*(const mat4& left, const vec3& right);

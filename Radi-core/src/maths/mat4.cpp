@@ -199,8 +199,7 @@ namespace radi
 				elements[8] * elements[1] * elements[6] -
 				elements[8] * elements[2] * elements[5];
 
-			double determinant;
-			determinant = elements[0] * temp[0] + elements[1] * temp[4] + elements[2] * temp[8] + elements[3] * temp[12];
+		double determinant = elements[0] * temp[0] + elements[1] * temp[4] + elements[2] * temp[8] + elements[3] * temp[12];
 			determinant = 1.0 / determinant;
 
 			for (int i = 0; i < 4 * 4; i++)

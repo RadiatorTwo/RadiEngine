@@ -30,13 +30,13 @@ namespace radi
 			return *this;
 		}
 
-		vec2& vec2::divide(const vec2& other)
-		{
-			x /= other.x;
-			y /= other.y;
+    	vec2& vec2::subtract(const vec2& other)
+    	{
+    		x -= other.x;
+    		y -= other.y;
 
-			return *this;
-		}
+    		return *this;
+    	}
 
 		vec2& vec2::multiply(const vec2& other)
 		{
@@ -46,33 +46,33 @@ namespace radi
 			return *this;
 		}
 
-		vec2& vec2::subtract(const vec2& other)
-		{
-			x -= other.x;
-			y -= other.y;
+    	vec2& vec2::divide(const vec2& other)
+    	{
+    		x /= other.x;
+    		y /= other.y;
 
-			return *this;
-		}
+    		return *this;
+    	}
 
-		vec2 operator+(vec2 left, vec2& right)
-		{
-			return left.add(right);
-		}
+    	vec2 operator+(vec2 left, const vec2& right)
+    	{
+    		return left.add(right);
+    	}
 
-		vec2 operator-(vec2 left, vec2& right)
-		{
-			return left.subtract(right);
-		}
+    	vec2 operator-(vec2 left, const vec2& right)
+    	{
+    		return left.subtract(right);
+    	}
 
-		vec2 operator*(vec2 left, vec2& right)
-		{
-			return left.multiply(right);
-		}
+    	vec2 operator*(vec2 left, const vec2& right)
+    	{
+    		return left.multiply(right);
+    	}
 
-		vec2 operator/(vec2 left, vec2& right)
-		{
-			return left.divide(right);
-		}
+    	vec2 operator/(vec2 left, const vec2& right)
+    	{
+    		return left.divide(right);
+    	}
 
 		vec2 operator+(vec2 left, float value)
 		{
@@ -84,15 +84,35 @@ namespace radi
 			return vec2(left.x * value, left.y * value);
 		}
 
-		bool vec2::operator==(const vec2& other) const
-		{
-			return x == other.x && y == other.y;
-		}
+    	vec2& vec2::operator+=(const vec2& other)
+    	{
+    		return add(other);
+    	}
 
-		bool vec2::operator!=(const vec2& other) const
-		{
-			return !(*this == other);
-		}
+    	vec2& vec2::operator-=(const vec2& other)
+	    {
+		    return subtract(other);
+    	}
+
+    	vec2& vec2::operator*=(const vec2& other)
+	    {
+		    return multiply(other);
+    	}
+
+	    vec2& vec2::operator/=(const vec2& other)
+    	{
+	    	return divide(other);
+    	}
+
+    	bool vec2::operator==(const vec2& other)
+	    {
+		    return x == other.x && y == other.y;
+    	}
+
+    	bool vec2::operator!=(const vec2& other)
+    	{
+    		return !(*this == other);
+    	}
 
 		float vec2::distance(const vec2& other) const
 		{
@@ -117,25 +137,6 @@ namespace radi
 			return vec2(x / length, y / length);
 		}
 
-		vec2& vec2::operator+=(const vec2& other)
-		{
-			return add(other);
-		}
-
-		vec2& vec2::operator-=(const vec2& other)
-		{
-			return subtract(other);
-		}
-
-		vec2& vec2::operator*=(const vec2& other)
-		{
-			return multiply(other);
-		}
-
-		vec2& vec2::operator/=(const vec2& other)
-		{
-			return divide(other);
-		}
 
 		std::ostream& operator<<(std::ostream& stream, const vec2& vector)
 		{

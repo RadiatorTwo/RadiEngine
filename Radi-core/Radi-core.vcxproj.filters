@@ -321,6 +321,15 @@
     <ClCompile Include="src\embedded\embedded.cpp">
       <Filter>Quelldateien\embedded</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphics\framebuffer.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\mesh_factory.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\layers\tilelayer.cpp">
+      <Filter>Quelldateien\graphics\layers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ext\freetype\include\ft2build.h">
@@ -498,6 +507,18 @@
       <Filter>Headerdateien\embedded</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\mask.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\maths\tvec2.h">
+      <Filter>Headerdateien\maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\layers\tilelayer.h">
+      <Filter>Headerdateien\graphics\layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\framebuffer.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\mesh_factory.h">
       <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
   </ItemGroup>

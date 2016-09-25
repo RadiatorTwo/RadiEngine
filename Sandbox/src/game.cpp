@@ -1,6 +1,6 @@
 # include "../src/radi.h"
 
-#define GAME_MODE 1
+#define GAME_MODE 0
 
 using namespace radi;
 using namespace graphics;
@@ -8,7 +8,7 @@ using namespace graphics;
 class Game : public Radi
 {
 private:
-#if GAME_MODE
+
 	Window* window;
 	Layer* layer1;
 	Layer* layer2;
@@ -19,14 +19,8 @@ private:
 	Shader* shader1;
 	Shader* shader2;
 	Shader* shader3;
-#else
-	Window* window;
-	Layer* layer;
-	Label* fps;
-	Sprite* sprite;
-	Shader* shader;
-	Mask* mask;
-#endif
+	Label* debugInfo;
+
 public:
 	Game()
 	{
@@ -34,27 +28,25 @@ public:
 
 	~Game()
 	{
-#if GAME_MODE
+
 		delete layer1;
 		delete layer2;
 		delete layer3;
-#else
-		delete layer;
-#endif
+
 	}
 
-#if GAME_MODE
+
 	void init() override
 	{
-		window = createWindow("Test Game", 960, 540);
+		window = createWindow("Test Game", 1280, 720);
 		FontManager::get()->setScale(window->getWidth() / 32.0f, window->getHeight() / 18.0f);
 
 		shader1 = ShaderFactory::DefaultShader();
 		shader2 = ShaderFactory::DefaultShader();
 		shader3 = ShaderFactory::DefaultShader();
-		layer1 = new Layer(new BatchRenderer2D(), shader1, mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
-		layer2 = new Layer(new BatchRenderer2D(), shader2, mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
-		layer3 = new Layer(new BatchRenderer2D(), shader3, mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+		layer1 = new Layer(new BatchRenderer2D(maths::tvec2<uint>(1280, 720)), shader1, maths::mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+		layer2 = new Layer(new BatchRenderer2D(maths::tvec2<uint>(1280, 720)), shader2, maths::mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+		layer3 = new Layer(new BatchRenderer2D(maths::tvec2<uint>(1280, 720)), shader3, maths::mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
 
 		for (float i = -16.0f; i < 16.0f; i += (5.12f * 4))
 		{
@@ -69,33 +61,13 @@ public:
 		fps = new Label("", -15.5f, 7.8f, 0xff000000);
 		layer3->add(fps);
 
+		debugInfo = new Label("", -15.5f, 6.8f, 0xffffffff);
+		layer3->add(debugInfo);
+
 		mario = new Sprite(0.0f, 0.0f, 0.15 * 4, 0.20 * 4, new Texture("Mario", "res/mario.png"));
 		layer3->add(mario);
+        Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
 	}
-#else
-	void init() override
-	{
-		window = createWindow("Test Game", 960, 540);
-		FontManager::get()->setScale(window->getWidth() / 32.0f, window->getHeight() / 18.0f);
-
-		shader = ShaderFactory::DefaultShader();
-
-		layer = new Layer(new BatchRenderer2D(), shader, maths::mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
-		sprite = new Sprite(0.0f, 0.0f, 4, 4, new Texture("Tex", "res/mario.png"));
-		//layer->add(new Sprite(-16.0f, -9.0f, 32, 32, 0xffff00ff));
-		layer->add(sprite);
-
-		fps = new Label("", -15.5f, 7.8f, 0xffffffff);
-		layer->add(fps);
-
-		Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
-		mask = new Mask(new Texture("Mask", "res/mask.png"));
-
-		layer->setMask(mask);
-
-		//		audio::SoundManager::add(new audio::Sound("Lol", "res/Cherno.ogg"))->loop();
-	}
-#endif
 
 	void tick() override
 	{
@@ -103,18 +75,49 @@ public:
 		RADI_INFO(getUPS(), " ups, ", getFPS(), " fps");
 	}
 
-#if GAME_MODE
 	void update() override
 	{
-		float speed = 0.25f;
+		if (window->isKeyPressed(GLFW_KEY_1))
+		{
+			((BatchRenderer2D*)layer1->renderer)->SetRenderTarget(RenderTarget::SCREEN);
+			((BatchRenderer2D*)layer2->renderer)->SetRenderTarget(RenderTarget::SCREEN);
+			((BatchRenderer2D*)layer3->renderer)->SetRenderTarget(RenderTarget::SCREEN);
+		}
+
+		if (window->isKeyPressed(GLFW_KEY_2))
+		{
+			((BatchRenderer2D*)layer1->renderer)->SetRenderTarget(RenderTarget::BUFFER);
+			((BatchRenderer2D*)layer2->renderer)->SetRenderTarget(RenderTarget::BUFFER);
+			((BatchRenderer2D*)layer3->renderer)->SetRenderTarget(RenderTarget::BUFFER);
+		}
+
+		maths::tvec2<uint> size1 = ((BatchRenderer2D*)layer1->renderer)->GetViewportSize();
+		maths::tvec2<uint> size2 = ((BatchRenderer2D*)layer2->renderer)->GetViewportSize();
+		maths::tvec2<uint> size3 = ((BatchRenderer2D*)layer3->renderer)->GetViewportSize();
+
 		if (window->isKeyPressed(GLFW_KEY_UP))
-			mario->position.y += speed;
-		if (window->isKeyPressed(GLFW_KEY_DOWN))
-			mario->position.y -= speed;
-		if (window->isKeyPressed(GLFW_KEY_LEFT))
-			mario->position.x -= speed;
-		if (window->isKeyPressed(GLFW_KEY_RIGHT))
-			mario->position.x += speed;
+		{
+			size1.x++;
+			size1.y++;
+			size2.x++;
+			size2.y++;
+			size3.x++;
+			size3.y++;
+		}
+		else if (window->isKeyPressed(GLFW_KEY_DOWN))
+		{
+			size1.x--;
+			size1.y--;
+			size2.x--;
+			size2.y--;
+			size3.x--;
+			size3.y--;
+		}
+
+		debugInfo->text = std::to_string(size1.x) + ", " + std::to_string(size1.y);
+		((BatchRenderer2D*)layer1->renderer)->SetViewportSize(size1);
+		((BatchRenderer2D*)layer2->renderer)->SetViewportSize(size2);
+		((BatchRenderer2D*)layer3->renderer)->SetViewportSize(size3);
 
 		//maths::vec2 mouse = window->getMousePosition();
 		//shader2->setUniform2f("light_pos", maths::vec2((float)(mouse.x * 32.0f / window->getWidth() - 16.0f), (float)(9.0f - mouse.y * 18.0f / window->getHeight())));
@@ -126,54 +129,6 @@ public:
 		layer2->render();
 		layer3->render();
 	}
-
-#else
-	void update() override
-	{
-		float speed = 0.5f;
-		if (window->isKeyPressed(GLFW_KEY_UP))
-			sprite->position.y += speed;
-		else if (window->isKeyPressed(GLFW_KEY_DOWN))
-			sprite->position.y -= speed;
-		if (window->isKeyPressed(GLFW_KEY_LEFT))
-			sprite->position.x -= speed;
-		else if (window->isKeyPressed(GLFW_KEY_RIGHT))
-			sprite->position.x += speed;
-
-		static maths::vec3 pos;
-		if (window->isKeyPressed(GLFW_KEY_UP))
-			pos.y += speed;
-		else if (window->isKeyPressed(GLFW_KEY_DOWN))
-			pos.y -= speed;
-		if (window->isKeyPressed(GLFW_KEY_LEFT))
-			pos.x -= speed;
-		else if (window->isKeyPressed(GLFW_KEY_RIGHT))
-			pos.x += speed;
-
-		static maths::vec3 scale(1.777778f, 1, 1);
-		if (window->isKeyPressed(GLFW_KEY_W))
-		{
-			scale.x += speed*1.777778f;
-			scale.y += speed;
-		}
-		else if (window->isKeyPressed(GLFW_KEY_S))
-		{
-			scale.x -= speed*1.777778f;
-			scale.y -= speed;
-		}
-
-		mask->transform = maths::mat4::scale(scale);
-
-		//maths::vec2 mouse = window->getMousePosition();
-		// shader->setUniform2f("light_pos", maths::vec2((float)(mouse.x * 32.0f / window->getWidth() - 16.0f), (float)(9.0f - mouse.y * 18.0f / window->getHeight())));
-	}
-
-	void render() override
-	{
-		layer->render();
-	}
-#endif
-
 };
 
 int main()

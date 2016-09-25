@@ -5,7 +5,7 @@ namespace radi
 	namespace graphics
 	{
 		Layer::Layer(Renderer2D* renderer, Shader* shader, mat4 projectionMatrix)
-			:m_renderer(renderer), m_shader(shader), m_projectionMatrix(projectionMatrix)
+			:renderer(renderer), m_shader(shader), m_projectionMatrix(projectionMatrix)
 		{
 			m_shader->enable();
 			m_shader->setUniformMat4("pr_matrix", m_projectionMatrix);
@@ -26,7 +26,7 @@ namespace radi
 		Layer::~Layer()
 		{
 			delete m_shader;
-			delete m_renderer;
+			delete renderer;
 
 			for (uint i = 0; i < m_renderables.size(); i++)
 			{
@@ -43,16 +43,16 @@ namespace radi
 		void Layer::render()
 		{
 			m_shader->enable();
-			m_renderer->begin();
+			renderer->begin();
 
 			for (const Renderable2D* renderable : m_renderables)
 			{
-				renderable->submit(m_renderer);
+				renderable->submit(renderer);
 			}
 			
-			m_renderer->end();
+			renderer->end();
 
-			m_renderer->flush();
+			renderer->flush();
 			//m_shader->disable();
 		}
 	}

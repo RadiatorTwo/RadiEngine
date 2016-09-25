@@ -35,11 +35,11 @@ namespace radi
 			return *this;
 		}
 
-		vec3& vec3::divide(const vec3& other)
+		vec3& vec3::subtract(const vec3& other)
 		{
-			x /= other.x;
-			y /= other.y;
-			z /= other.y;
+			x -= other.x;
+			y -= other.y;
+			z -= other.z;
 
 			return *this;
 		}
@@ -53,51 +53,33 @@ namespace radi
 			return *this;
 		}
 
-		vec3& vec3::subtract(const vec3& other)
+		vec3& vec3::divide(const vec3& other)
 		{
-			x -= other.x;
-			y -= other.y;
-			z -= other.z;
+			x /= other.x;
+			y /= other.y;
+			z /= other.z;
 
 			return *this;
 		}
 
-		vec3 operator+(vec3 left, vec3& right)
+		vec3 operator+(vec3 left, const vec3& right)
 		{
 			return left.add(right);
 		}
 
-		vec3 operator-(vec3 left, vec3& right)
+		vec3 operator-(vec3 left, const vec3& right)
 		{
 			return left.subtract(right);
 		}
 
-		vec3 operator*(vec3 left, vec3& right)
+		vec3 operator*(vec3 left, const vec3& right)
 		{
 			return left.multiply(right);
 		}
 
-		vec3 operator/(vec3 left, vec3& right)
+		vec3 operator/(vec3 left, const vec3& right)
 		{
 			return left.divide(right);
-		}
-
-		bool vec3::operator==(const vec3& other) const
-		{
-			return x == other.x && y == other.y && z == other.z;
-		}
-
-		bool vec3::operator!=(const vec3& other) const
-		{
-			return !(*this == other);
-		}
-
-		float vec3::distance(const vec3& other) const
-		{
-			float a = x - other.x;
-			float b = y - other.y;
-			float c = z - other.z;
-			return sqrt(a * a + b * b + c * c);
 		}
 
 		vec3& vec3::operator+=(const vec3& other)
@@ -118,6 +100,24 @@ namespace radi
 		vec3& vec3::operator/=(const vec3& other)
 		{
 			return divide(other);
+		}
+
+		bool vec3::operator==(const vec3& other)
+		{
+			return x == other.x && y == other.y && z == other.z;
+		}
+
+		bool vec3::operator!=(const vec3& other)
+		{
+			return !(*this == other);
+		}
+
+		float vec3::distance(const vec3& other) const
+		{
+			float a = x - other.x;
+			float b = y - other.y;
+			float c = z - other.z;
+			return sqrt(a * a + b * b + c * c);
 		}
 
 		std::ostream& operator<<(std::ostream& stream, const vec3& vector)
