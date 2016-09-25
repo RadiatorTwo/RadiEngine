@@ -17,7 +17,7 @@ namespace radi
 			GLCall(glDeleteVertexArrays(1, &m_arrayID));
 		}
 
-		void VertexArray::addBuffer(Buffer* buffer, GLuint index)
+		void VertexArray::addBuffer(Buffer* buffer, uint index)
 		{
 			bind();
 			buffer->bind();

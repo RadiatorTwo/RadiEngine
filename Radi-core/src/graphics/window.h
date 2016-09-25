@@ -30,6 +30,7 @@ namespace radi
 			bool m_mouseClicked[MAX_BUTTONS];
 			
 			maths::vec2 m_mousePosition;
+			bool m_vsync;
 		public:
 			Window(const char *name, int width, int height);
 			~Window();
@@ -40,12 +41,15 @@ namespace radi
 
 			inline int getWidth() const { return m_width; }
 			inline int getHeight() const { return m_height; }
-
-			bool isKeyPressed(unsigned int keycode) const;
-			bool isKeyTyped(unsigned int keycode) const;
-			bool isMouseButtonPressed(unsigned int button) const;
-			bool isMouseButtonClicked(unsigned int button) const;
+			
+			bool isKeyPressed(uint keycode) const;
+			bool isKeyTyped(uint keycode) const;
+			bool isMouseButtonPressed(uint button) const;
+			bool isMouseButtonClicked(uint button) const;
 			const maths::vec2& getMousePosition() const;
+
+			void setVsync(bool enabled);
+			bool isVsync() const { return m_vsync; }
 		private:
 			bool init();
 			friend void window_resize(GLFWwindow* window, int width, int height);

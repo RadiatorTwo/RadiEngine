@@ -2,12 +2,13 @@
 
 #include <iostream>
 #include <string>
-#include <utils/log.h>
+
+#include <FreeImage.h>
+
 #include <radi_types.h>
 #include <radigl.h>
-#include <FreeImage.h>
-#include "utils/image_load.h"
 
+#include <utils/image_load.h>
 
 namespace radi
 {

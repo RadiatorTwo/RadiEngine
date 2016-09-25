@@ -1,5 +1,7 @@
 #include "font.h"
 
+#include <utils/Log.h>
+
 namespace radi
 {
 	namespace graphics

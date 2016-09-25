@@ -2,6 +2,9 @@
 
 #include "shaders/shader_factory.h"
 #include "mesh_factory.h"
+
+#include <utils/Log.h>
+
 namespace radi
 {
 	namespace graphics

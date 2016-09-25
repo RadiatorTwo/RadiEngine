@@ -81,7 +81,7 @@ namespace radi
 			return true;
 		}
 
-		bool Window::isKeyPressed(unsigned int keycode) const
+		bool Window::isKeyPressed(uint keycode) const
 		{
 			//TODO: Log this!
 			if (keycode >= MAX_KEYS)
@@ -90,7 +90,7 @@ namespace radi
 		}
 
 
-		bool Window::isKeyTyped(unsigned int keycode) const
+		bool Window::isKeyTyped(uint keycode) const
 		{
 			//TODO: Log this!
 			if (keycode >= MAX_KEYS)
@@ -99,7 +99,7 @@ namespace radi
 			return m_keyTyped[keycode];
 		}
 
-		bool Window::isMouseButtonPressed(unsigned int button) const
+		bool Window::isMouseButtonPressed(uint button) const
 		{
 			//TODO: Log this!
 			if (button >= MAX_BUTTONS)
@@ -107,7 +107,7 @@ namespace radi
 			return m_mouseButtons[button];
 		}
 		
-		bool Window::isMouseButtonClicked(unsigned int button) const
+		bool Window::isMouseButtonClicked(uint button) const
 		{
 			//TODO: Log this!
 			if (button >= MAX_BUTTONS)
@@ -120,18 +120,19 @@ namespace radi
 			return m_mousePosition;;
 		}
 
+		void Window::setVsync(bool enabled)
+		{
+			glfwSwapInterval((double)enabled);
+			m_vsync = enabled;
+		}
+
 		void Window::clear() const
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
 		void Window::update()
-		{			
-			// TODO: Gescheites OpenGL error checking!
-			GLenum error = glGetError();
-			if (error != GL_NO_ERROR)
-				std::cout << "OpenGL Error: " << error << std::endl;
-
+		{
 		    glfwSwapBuffers(m_window);
 			glfwPollEvents();
 

@@ -15,6 +15,7 @@
 #include "audio/sound_manager.h"
 
 #include "maths/maths.h"
+#include "utils/Log.h"
 #include "utils/timer.h"
 
 namespace radi

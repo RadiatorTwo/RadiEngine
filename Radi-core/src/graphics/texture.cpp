@@ -1,5 +1,7 @@
 #include "texture.h"
 
+#include "utils/log.h"
+
 namespace radi
 {
 	namespace graphics

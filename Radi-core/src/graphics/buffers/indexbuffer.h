@@ -1,5 +1,6 @@
 #pragma once
 
+#include <radi_types.h>
 #include <radigl.h>
 
 namespace radi
@@ -13,8 +14,8 @@ namespace radi
 			GLuint m_count;
 
 		public:
-			IndexBuffer(GLushort* data, GLsizei count);
-			IndexBuffer(GLuint* data, GLsizei count);
+			IndexBuffer(short* data, uint count);
+			IndexBuffer(uint* data, uint count);
 			~IndexBuffer();
 
 			void bind() const;

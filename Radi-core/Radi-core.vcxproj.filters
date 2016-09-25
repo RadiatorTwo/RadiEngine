@@ -100,6 +100,12 @@
     <Filter Include="Ressourcendateien\embedded">
       <UniqueIdentifier>{b6800932-11cf-48e0-a474-1b155073613d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\platform">
+      <UniqueIdentifier>{f4c9ec72-2c10-49b5-ac18-5681670eb7a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\platform\windows">
+      <UniqueIdentifier>{1171d33f-6b1c-438c-a387-c0c5d402f3f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ext\freetype\src\autofit\autofit.c">
@@ -329,6 +335,9 @@
     </ClCompile>
     <ClCompile Include="src\graphics\layers\tilelayer.cpp">
       <Filter>Quelldateien\graphics\layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\platform\windows\win32log.cpp">
+      <Filter>Quelldateien\platform\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

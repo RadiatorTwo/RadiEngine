@@ -7,7 +7,7 @@
 #include <list>
 #include <map>
 
-#include <Windows.h>
+#include <radi_types.h>
 
 #define RADI_LOG_LEVEL_FATAL 0
 #define RADI_LOG_LEVEL_ERROR 1
@@ -40,6 +40,9 @@ namespace radi
 	namespace internal
 	{
 		static char to_string_buffer[1024 * 10];
+
+		void PlatformLogMessage(uint level, const char* message);
+
 		template <class T>
 		struct has_iterator
 		{
@@ -47,7 +50,6 @@ namespace radi
 			template<class U> static char(&test(...))[2];
 			static const bool value = (sizeof(test<T>(0)) == 1);
 		};
-
 
 		template <typename T>
 		static const char* to_string(const T& t)
@@ -61,17 +63,17 @@ namespace radi
 			return &t;
 		}
 
-	template <>
-	static const char* to_string<char*>(char* const & t)
-	{
-		return t;
-	}
+		template <>
+		static const char* to_string<char*>(char* const & t)
+		{
+			return t;
+		}
 
-	template <>
-	static const char* to_string<unsigned char const*>(unsigned char const* const & t)
-	{
-		return (const char*)t;
-	}
+		template <>
+		static const char* to_string<unsigned char const*>(unsigned char const* const & t)
+		{
+			return (const char*)t;
+		}
 
 
 		template <>
@@ -160,9 +162,7 @@ namespace radi
 			memcpy(&buffer[position], formatted, length);
 			position += length;
 			if (sizeof...(Args))
-			{
 				print_log_internal(buffer, position, std::forward<Args>(args)...);
-			}
 		}
 
 		template <typename... Args>
@@ -176,24 +176,7 @@ namespace radi
 				buffer[position++] = '\n';
 			buffer[position] = 0;
 
-			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-			switch (level)
-			{
-			case RADI_LOG_LEVEL_FATAL:
-				SetConsoleTextAttribute(hConsole, BACKGROUND_RED | BACKGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-				break;
-			case RADI_LOG_LEVEL_ERROR:
-				SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_INTENSITY);
-				break;
-			case RADI_LOG_LEVEL_WARN:
-				SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-				break;
-			case RADI_LOG_LEVEL_INFO:
-				SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-				break;
-			}
-			printf("%s", buffer);
-			SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
+			PlatformLogMessage(level, buffer);
 		}
 	}
 }

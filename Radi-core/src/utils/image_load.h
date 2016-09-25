@@ -1,8 +1,10 @@
 #pragma once
 
 #include <string>
+
 #include <FreeImage.h>
-#include <GL/glew.h>
+
+#include <radi_types.h>
 #include <utils/Log.h>
 
 namespace radi

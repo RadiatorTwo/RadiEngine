@@ -2,15 +2,15 @@
 
 #include <radi_types.h>
 
-#include "buffers/buffer.h"
-#include "buffers/indexbuffer.h"
-#include "buffers/vertexarray.h"
 
 #include "renderer2d.h"
 #include "texture.h"
 
-#include "../maths/maths.h"
+#include "buffers/buffer.h"
+#include "buffers/indexbuffer.h"
 #include "shaders/shader.h"
+
+#include "../maths/maths.h"
 
 namespace radi
 {
