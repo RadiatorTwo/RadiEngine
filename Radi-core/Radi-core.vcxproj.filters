@@ -339,6 +339,9 @@
     <ClCompile Include="src\platform\windows\win32log.cpp">
       <Filter>Quelldateien\platform\windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\platform\windows\win32application.cpp">
+      <Filter>Quelldateien\platform\windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ext\freetype\include\ft2build.h">
@@ -529,6 +532,9 @@
     </ClInclude>
     <ClInclude Include="src\graphics\mesh_factory.h">
       <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\application.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

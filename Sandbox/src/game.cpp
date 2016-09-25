@@ -1,10 +1,11 @@
 # include "../src/radi.h"
-
-#define GAME_MODE 0
+#include <app/Application.h>
 
 using namespace radi;
 using namespace graphics;
+using namespace maths;
 
+#if 0
 class Game : public Radi
 {
 private:
@@ -34,7 +35,6 @@ public:
 		delete layer3;
 
 	}
-
 
 	void init() override
 	{
@@ -66,7 +66,7 @@ public:
 
 		mario = new Sprite(0.0f, 0.0f, 0.15 * 4, 0.20 * 4, new Texture("Mario", "res/mario.png"));
 		layer3->add(mario);
-        Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
+		Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
 	}
 
 	void tick() override
@@ -131,9 +131,100 @@ public:
 	}
 };
 
+}
+
+#else
+class Game : public Application
+{
+private:
+	Layer* layer;
+	Label* fps;
+	Sprite* sprite;
+	Shader* shader;
+	Mask* mask;
+	Label* debugInfo;
+public:
+	Game()
+		: Application("Test Game", 1280, 720)
+	{
+
+	}
+
+	~Game()
+	{
+		delete layer;
+	}
+
+	void Init() override
+	{
+		Application::Init();
+		// window->SetVsync(false);
+
+		FontManager::get()->setScale(window->getWidth() / 32.0f, window->getHeight() / 18.0f);
+		shader = ShaderFactory::DefaultShader();
+		layer = new Layer(new BatchRenderer2D(tvec2<uint>(1280, 720)), shader, mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+
+		sprite = new Sprite(0.0f, 0.0f, 8, 8, new Texture("Tex", "res/mario.png"));
+		layer->add(sprite);
+
+		fps = new Label("", -15.5f, 7.8f, 0xffffffff);
+		layer->add(fps);
+
+		debugInfo = new Label("", -15.5f, 6.8f, 0xffffffff);
+		layer->add(debugInfo);
+
+		Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
+		//mask = new Mask(new Texture("Mask", "res/mask.png"));
+		//mask->transform = mat4::translation(vec3(-16.0f, -9.0f, 0.0f)) * mat4::scale(vec3(32, 18, 1));
+		//layer->setMask(mask);
+	}
+
+	void Tick() override
+	{
+		fps->text = std::to_string(GetFPS()) + " fps";
+		RADI_INFO(GetUPS(), " ups, ", GetFPS(), " fps");
+	}
+
+	void Update() override
+	{
+		if (window->isKeyPressed(GLFW_KEY_1))
+			((BatchRenderer2D*)layer->renderer)->SetRenderTarget(RenderTarget::SCREEN);
+		if (window->isKeyPressed(GLFW_KEY_2))
+			((BatchRenderer2D*)layer->renderer)->SetRenderTarget(RenderTarget::BUFFER);
+
+		tvec2<uint> size = ((BatchRenderer2D*)layer->renderer)->GetViewportSize();
+
+		if (window->isKeyPressed(GLFW_KEY_UP))
+		{
+			size.x += 16;
+			size.y += 9;
+		}
+		else if (window->isKeyPressed(GLFW_KEY_DOWN))
+		{
+			size.x -= 16;
+			size.y -= 9;
+		}
+
+		if (size.x > 10000)
+			size.x = 0;
+		if (size.y > 10000)
+			size.y = 0;
+
+		debugInfo->text = std::to_string(size.x) + ", " + std::to_string(size.y);
+		((BatchRenderer2D*)layer->renderer)->SetViewportSize(size);
+		((BatchRenderer2D*)layer->renderer)->SetScreenSize(tvec2<uint>(window->getWidth(), window->getHeight()));
+	}
+
+	void Render() override
+	{
+		layer->render();
+	}
+};
+#endif
+
 int main()
 {
 	Game game;
-	game.start();
+	game.Start();
 	return 0;
 }
