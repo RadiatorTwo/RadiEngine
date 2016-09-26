@@ -170,6 +170,8 @@ public:
 		layer->renderer->SetPostEffects(false);
 
 		Texture::SetFilter(TextureFilter::NEAREST);
+		
+		layer->add(new Sprite(5.0f, 5.0f, 0.15f * 4, 0.2f * 4, new Texture("mario", "res/mario32.png")));
 
 		for (float i = -16.0f; i < 16.0f; i += (5.12f * 4))
 		{
@@ -179,9 +181,6 @@ public:
 		{
 			layer->add(new Sprite(i, -9.0f, 0.16f * 4, 0.16f * 4, new Texture("ground", "res/ground_tile.png")));
 		}
-
-		sprite = new Sprite(0.0f, 0.0f, 8, 8, new Texture("Tex", "res/mario.png"));
-		layer->add(sprite);
 
 		fps = new Label("", -15.5f, 7.8f, 0xffffffff);
 		layer->add(fps);

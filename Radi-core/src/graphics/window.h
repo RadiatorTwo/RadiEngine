@@ -16,7 +16,7 @@ namespace radi
 #define MAX_BUTTONS 32
 		class Window
 		{
-		private:		
+		private:
 			static std::map<void*, Window*> s_handles;
 
 			const char *m_title;
@@ -30,7 +30,8 @@ namespace radi
 			bool m_mouseButtons[MAX_BUTTONS];
 			bool m_mouseState[MAX_BUTTONS];
 			bool m_mouseClicked[MAX_BUTTONS];
-			
+			bool m_MouseGrabbed;
+
 			maths::vec2 m_mousePosition;
 			bool m_vsync;
 		public:
@@ -43,12 +44,17 @@ namespace radi
 
 			inline int getWidth() const { return m_width; }
 			inline int getHeight() const { return m_height; }
-			
+
 			bool isKeyPressed(uint keycode) const;
 			bool isKeyTyped(uint keycode) const;
 			bool isMouseButtonPressed(uint button) const;
 			bool isMouseButtonClicked(uint button) const;
 			const maths::vec2& getMousePosition() const;
+
+			void SetMousePosition(const maths::vec2& position);
+			const bool IsMouseGrabbed() const;
+			void SetMouseGrabbed(bool grabbed);
+			void SetMouseCursor(int cursor);
 
 			void setVsync(bool enabled);
 			bool isVsync() const { return m_vsync; }
@@ -66,7 +72,7 @@ namespace radi
 			friend void resize_callback(Window* window, int width, int height);
 			friend void key_callback(Window* window, int key, uint message);
 			friend void mouse_button_callback(Window* window, int button, int x, int y);
-			public:
+		public:
 			static void RegisterWindowClass(void* handle, Window* window);
 			static Window* GetWindowClass(void* handle);
 		};
@@ -76,6 +82,8 @@ namespace radi
 #define SP_MOUSE_LEFT	  0x00
 #define SP_MOUSE_MIDDLE	  0x01
 #define SP_MOUSE_RIGHT    0x02
+
+#define SP_NO_CURSOR	  NULL
 
 #define VK_0			  0x30
 #define VK_1			  0x31

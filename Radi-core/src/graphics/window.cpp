@@ -5,16 +5,16 @@ namespace radi
 {
 	namespace graphics
 	{
-				std::map<void*, Window*> Window::s_handles;
+		std::map<void*, Window*> Window::s_handles;
 
 		Window::Window(const char *title, int width, int height)
 			: m_title(title), m_width(width), m_height(height), m_handle(nullptr), m_closed(false)
 		{
-			
+
 			if (!init())
 			{
 				RADI_ERROR("Failed base Window initialization!");
-				return;				
+				return;
 			}
 
 			FontManager::add(new Font("SourceSansPro", internal::DEFAULT_FONT, internal::DEFAULT_FONT_SIZE, 32));
@@ -33,17 +33,18 @@ namespace radi
 				m_mouseState[i] = false;
 				m_mouseClicked[i] = false;
 			}
+			m_MouseGrabbed = true;
 		}
 
 		Window::~Window()
 		{
 			FontManager::clean();
 			TextureManager::clean();
-    		audio::SoundManager::clean();
+			audio::SoundManager::clean();
 		}
 
 		bool Window::init()
-		{			
+		{
 			if (!PlatformInit())
 			{
 				RADI_FATAL("Failed to initialize platform!");
@@ -53,7 +54,7 @@ namespace radi
 			glEnable(GL_DEPTH_TEST);
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			
+
 			RADI_WARN("----------------------------------");
 			RADI_WARN(" OpenGL:");
 			RADI_WARN("    ", glGetString(GL_VERSION));
@@ -89,7 +90,7 @@ namespace radi
 				return false;
 			return m_mouseButtons[button];
 		}
-		
+
 		bool Window::isMouseButtonClicked(uint button) const
 		{
 			//TODO: Log this!
@@ -101,6 +102,16 @@ namespace radi
 		const maths::vec2& Window::getMousePosition() const
 		{
 			return m_mousePosition;;
+		}
+
+		const bool Window::IsMouseGrabbed() const
+		{
+			return m_MouseGrabbed;
+		}
+
+		void Window::SetMouseGrabbed(bool grabbed)
+		{
+			m_MouseGrabbed = grabbed;
 		}
 
 		void Window::setVsync(bool enabled)

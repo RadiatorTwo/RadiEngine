@@ -206,18 +206,21 @@ namespace radi
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_ERROR
 #define RADI_ERROR(...) radi::internal::log_message(RADI_LOG_LEVEL_ERROR, true, "RADI:    ", __VA_ARGS__)
+#define _RADI_ERROR(...) radi::internal::log_message(RADI_LOG_LEVEL_ERROR, false, __VA_ARGS__)
 #else
 #define RADI_ERROR(...)
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_WARN
 #define RADI_WARN(...) radi::internal::log_message(RADI_LOG_LEVEL_WARN, true, "RADI:    ", __VA_ARGS__)
+#define _RADI_WARN(...) radi::internal::log_message(RADI_LOG_LEVEL_WARN, false, __VA_ARGS__)
 #else
 #define RADI_WARN(...)
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_INFO
 #define RADI_INFO(...) radi::internal::log_message(RADI_LOG_LEVEL_INFO, true, "RADI:    ", __VA_ARGS__)
+#define _RADI_INFO(...) radi::internal::log_message(RADI_LOG_LEVEL_INFO, false, __VA_ARGS__)
 #else
 #define RADI_INFO(...)
 #endif
