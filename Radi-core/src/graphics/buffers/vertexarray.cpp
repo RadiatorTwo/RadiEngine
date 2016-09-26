@@ -4,9 +4,11 @@ namespace radi
 {
 	namespace graphics
 	{
+		uint VertexArray::s_currentBinding = 0;
+
 		VertexArray::VertexArray()
 		{
-			GLCall(glGenVertexArrays(1, &m_arrayID));
+			m_id = API::CreateVertexArray();
 		}
 
 		VertexArray::~VertexArray()
@@ -14,31 +16,42 @@ namespace radi
 			for (uint i = 0; i < m_buffers.size(); i++)
 				delete m_buffers[i];
 
-			GLCall(glDeleteVertexArrays(1, &m_arrayID));
+			API::FreeVertexArray(m_id);
 		}
 
-		void VertexArray::addBuffer(Buffer* buffer, uint index)
+		API::Buffer* VertexArray::GetBuffer(uint index)
 		{
-			bind();
-			buffer->bind();
+			return m_buffers[index];
+		}
 
-			GLCall(glEnableVertexAttribArray(index));
-			GLCall(glVertexAttribPointer(index, buffer->getComponentCount(), GL_FLOAT, GL_FALSE, 0, 0));
-
-			buffer->unbind();
-			unbind();
+		void VertexArray::PushBuffer(API::Buffer* buffer)
+		{
+			RADI_ASSERT(s_currentBinding == m_id);
 
 			m_buffers.push_back(buffer);
+
+			const std::vector<BufferLayoutType>& layout = buffer->layout.GetLayout();
+			for (uint i = 0; i < layout.size(); i++)
+			{
+				API::EnableVertexAttribute(i);
+				API::SetVertexAttributePointer(i, layout[i].count, layout[i].type, layout[i].normalized, buffer->layout.GetStride(), layout[i].offset);
+			}
 		}
 
 		void VertexArray::bind() const
 		{
-			GLCall(glBindVertexArray(m_arrayID));
+#ifdef RADI_DEBUG
+			s_currentBinding = m_id;
+#endif
+			API::BindVertexArray(m_id);
 		}
 
 		void VertexArray::unbind() const
 		{
-			GLCall(glBindVertexArray(0));
+#ifdef RADI_DEBUG
+			s_currentBinding = 0;
+#endif
+			API::UnbindVertexArrays();
 		}
 	}
 }

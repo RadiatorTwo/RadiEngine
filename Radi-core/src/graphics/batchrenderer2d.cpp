@@ -3,6 +3,9 @@
 #include "shaders/shader_factory.h"
 #include "mesh_factory.h"
 
+#include "buffers/buffer.h"
+#include "buffers/buffer_layout.h"
+
 #include <utils/Log.h>
 
 namespace radi
@@ -25,37 +28,30 @@ namespace radi
 
 		BatchRenderer2D::~BatchRenderer2D()
 		{
+			delete m_screenQuad;
 			delete m_IBO;
-			GLCall(glDeleteBuffers(1, &m_VBO));
-			GLCall(glDeleteVertexArrays(1, &m_VAO));
+			API::FreeBuffer(m_VBO);
+			API::FreeVertexArray(m_VAO);
 		}
 
 		void BatchRenderer2D::init()
 		{
-			GLCall(glGenVertexArrays(1, &m_VAO));
-			GLCall(glGenBuffers(1, &m_VBO));
+			API::Buffer* buffer = new API::Buffer(GL_ARRAY_BUFFER, GL_DYNAMIC_DRAW);
+			buffer->Bind();
+			buffer->Resize(RENDERER_BUFFER_SIZE);
 
-			GLCall(glBindVertexArray(m_VAO));
-			GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
-			GLCall(glBufferData(GL_ARRAY_BUFFER, RENDERER_BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW));
+			buffer->layout.Push<vec3>("position");
+			buffer->layout.Push<vec2>("uv");
+			buffer->layout.Push<vec2>("mask_uv");
+			buffer->layout.Push<float>("tid");
+			buffer->layout.Push<float>("mid");
+			buffer->layout.Push<byte>("color", 4, true);
 
-			GLCall(glEnableVertexAttribArray(SHADER_VERTEX_INDEX));
-			GLCall(glEnableVertexAttribArray(SHADER_UV_INDEX));
-			GLCall(glEnableVertexAttribArray(SHADER_MASK_UV_INDEX));
-			GLCall(glEnableVertexAttribArray(SHADER_TID_INDEX));
-			GLCall(glEnableVertexAttribArray(SHADER_MID_INDEX));
-			GLCall(glEnableVertexAttribArray(SHADER_COLOR_INDEX));
+			m_vertexArray = new VertexArray();
+			m_vertexArray->bind();
+			m_vertexArray->PushBuffer(buffer);
 
-			GLCall(glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)0));
-			GLCall(glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, uv))));
-			GLCall(glVertexAttribPointer(SHADER_MASK_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, mask_uv))));
-			GLCall(glVertexAttribPointer(SHADER_TID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, tid))));
-			GLCall(glVertexAttribPointer(SHADER_MID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, mid))));
-			GLCall(glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, color))));
-
-			GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-
-			GLuint* indices = new GLuint[RENDERER_INDICES_SIZE];
+			uint* indices = new uint[RENDERER_INDICES_SIZE];
 
 			int offset = 0;
 			for (int i = 0; i < RENDERER_INDICES_SIZE; i += 6)
@@ -73,15 +69,15 @@ namespace radi
 
 			m_IBO = new IndexBuffer(indices, RENDERER_INDICES_SIZE);
 
-			GLCall(glBindVertexArray(0));
+			m_vertexArray->unbind();
 
 			// Setup Framebuffer
-			GLCall(glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_screenBuffer));
+			m_screenBuffer = API::GetScreenBuffer();
 			m_framebuffer = new Framebuffer(m_viewportSize);
 			m_simpleShader = ShaderFactory::SimpleShader();
 			m_simpleShader->bind();
-			m_simpleShader->setUniformMat4("pr_matrix", maths::mat4::orthographic(0, m_screenSize.x, m_screenSize.y, 0, -1.0f, 1.0f));
-			m_simpleShader->setUniform1i("tex", 0);
+			m_simpleShader->SetUniformMat4("pr_matrix", maths::mat4::orthographic(0, m_screenSize.x, m_screenSize.y, 0, -1.0f, 1.0f));
+			m_simpleShader->SetUniform1i("tex", 0);
 			m_simpleShader->unbind();
 			m_screenQuad = meshfactory::CreateQuad(0, 0, m_screenSize.x, m_screenSize.y);
 
@@ -148,28 +144,28 @@ namespace radi
 			}
 			else
 			{
-				GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_screenBuffer));
-				GLCall(glViewport(0, 0, m_screenSize.x, m_screenSize.y));
+				API::BindFramebuffer(GL_FRAMEBUFFER, m_screenBuffer);
+				API::SetViewport(0, 0, m_screenSize.x, m_screenSize.y);
 			}
 
-			glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-			GLCall(m_buffer = (VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+			m_vertexArray->GetBuffer()->Bind();
+			m_buffer = m_vertexArray->GetBuffer()->GetPointer<VertexData>();
 		}
 
 		void BatchRenderer2D::submit(const Renderable2D* renderable)
 		{
-			const maths::vec3& position = renderable->getPosition();
-			const maths::vec2& size = renderable->getSize();
-			const unsigned int color = renderable->getColor();
-			const std::vector<maths::vec2>& uv = renderable->getUV();
+			const vec3& position = renderable->getPosition();
+			const vec2& size = renderable->getSize();
+			const uint color = renderable->getColor();
+			const std::vector<vec2>& uv = renderable->getUV();
 			const GLuint tid = renderable->getTID();
 
 			float ts = 0.0f;
 			if (tid > 0)
 				ts = submitTexture(renderable->getTexture());
 
-			maths::mat4 maskTransform = maths::mat4::identity();
-			const GLuint mid = m_mask ? m_mask->texture->getID() : 0;
+			mat4 maskTransform = mat4::identity();
+			const uint mid = m_mask ? m_mask->texture->getID() : 0;
 			float ms = 0.0f;
 
 			if (m_mask != nullptr)
@@ -217,6 +213,24 @@ namespace radi
 			m_indexCount += 6;
 		}
 
+		void BatchRenderer2D::drawAABB(const maths::AABB& aabb, uint color)
+		{
+			// TODO: Draw 3D AABBs
+#if 0
+			m_DeferredLineVertexData.push_back({ aabb.min, vec2(), vec2(), 0, 0, color });
+			m_DeferredLineVertexData.push_back({ vec3(aabb.min.x, aabb.max.y, 0.0f), vec2(), vec2(), 0, 0, color });
+
+			m_DeferredLineVertexData.push_back({ vec3(aabb.min.x, aabb.max.y, 0.0f), vec2(), vec2(), 0, 0, color });
+			m_DeferredLineVertexData.push_back({ aabb.max, vec2(), vec2(), 0, 0, color });
+
+			m_DeferredLineVertexData.push_back({ aabb.max, vec2(), vec2(), 0, 0, color });
+			m_DeferredLineVertexData.push_back({ vec3(aabb.max.x, aabb.min.y, 0.0f), vec2(), vec2(), 0, 0, color });
+
+			m_DeferredLineVertexData.push_back({ vec3(aabb.max.x, aabb.min.y, 0.0f), vec2(), vec2(), 0, 0, color });
+			m_DeferredLineVertexData.push_back({ aabb.min, vec2(), vec2(), 0, 0, color });
+#endif
+		}
+
 		void BatchRenderer2D::drawString(const std::string& text, const maths::vec3& position, const Font& font, unsigned int color)
 		{
 			using namespace ftgl;
@@ -254,25 +268,25 @@ namespace radi
 					float v1 = glyph->t1;
 
 					m_buffer->vertex = *m_transformationBack * maths::vec3(x0, y0, 0);
-					m_buffer->uv = maths::vec2(u0, v0);
+					m_buffer->uv = vec2(u0, v0);
 					m_buffer->tid = ts;
 					m_buffer->color = color;
 					m_buffer++;
 
 					m_buffer->vertex = *m_transformationBack * maths::vec3(x0, y1, 0);
-					m_buffer->uv = maths::vec2(u0, v1);
+					m_buffer->uv = vec2(u0, v1);
 					m_buffer->tid = ts;
 					m_buffer->color = color;
 					m_buffer++;
 
 					m_buffer->vertex = *m_transformationBack * maths::vec3(x1, y1, 0);
-					m_buffer->uv = maths::vec2(u1, v1);
+					m_buffer->uv = vec2(u1, v1);
 					m_buffer->tid = ts;
 					m_buffer->color = color;
 					m_buffer++;
 
 					m_buffer->vertex = *m_transformationBack * maths::vec3(x1, y0, 0);
-					m_buffer->uv = maths::vec2(u1, v0);
+					m_buffer->uv = vec2(u1, v0);
 					m_buffer->tid = ts;
 					m_buffer->color = color;
 					m_buffer++;
@@ -287,25 +301,28 @@ namespace radi
 
 		void BatchRenderer2D::end()
 		{
-			GLCall(glUnmapBuffer(GL_ARRAY_BUFFER));
-			GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+			m_vertexArray->GetBuffer()->ReleasePointer();
+			m_vertexArray->GetBuffer()->Unbind();
 		}
 
 		void BatchRenderer2D::flush()
 		{
 			for (uint i = 0; i < m_textureSlots.size(); i++)
 			{
-				GLCall(glActiveTexture(GL_TEXTURE0 + i));
-				GLCall(glBindTexture(GL_TEXTURE_2D, m_textureSlots[i]));
+				API::SetActiveTexture(GL_TEXTURE0 + i);
+				API::BindTexture(GL_TEXTURE_2D, m_textureSlots[i]);
 			}
 
-			GLCall(glBindVertexArray(m_VAO));
-			m_IBO->bind();
+			// Draw buffers here
+			{
+				m_vertexArray->bind();
+				m_IBO->bind();
 
-			GLCall(glDrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, NULL));
+				API::DrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, NULL);
 
-			m_IBO->unbind();
-			GLCall(glBindVertexArray(0));
+				m_IBO->unbind();
+				m_vertexArray->unbind();
+			}
 
 			m_indexCount = 0;
 			m_textureSlots.clear();
@@ -317,22 +334,23 @@ namespace radi
 					m_postEffects->RenderPostEffects(m_framebuffer, m_postEffectsBuffer, m_screenQuad, m_IBO);
 
 				// Display Framebuffer - potentially move to Framebuffer class
-				GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_screenBuffer));
-				GLCall(glViewport(0, 0, m_screenSize.x, m_screenSize.y));
+				API::BindFramebuffer(GL_FRAMEBUFFER, m_screenBuffer);
+				API::SetViewport(0, 0, m_screenSize.x, m_screenSize.y);
 				m_simpleShader->bind();
 
-				GLCall(glActiveTexture(GL_TEXTURE0));
+				API::SetActiveTexture(GL_TEXTURE0);
 
 				if (m_postEffectsEnabled)
 					m_postEffectsBuffer->GetTexture()->bind();
 				else
 					m_framebuffer->GetTexture()->bind();
 
-				GLCall(glBindVertexArray(m_screenQuad));
+				m_screenQuad->bind();
+
 				m_IBO->bind();
-				GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL));
+				API::DrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
 				m_IBO->unbind();
-				GLCall(glBindVertexArray(0));
+				m_screenQuad->unbind();
 				m_simpleShader->unbind();
 			}
 		}

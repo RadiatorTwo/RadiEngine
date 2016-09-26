@@ -1,7 +1,8 @@
 #pragma once
 
-#include <radigl.h>
 #include <radi_types.h>
+
+#include "graphics/radi_render_api.h"
 
 #include "../maths/vec4.h"
 #include "../maths/tvec2.h"
@@ -15,8 +16,8 @@ namespace radi {
 		private:
 			struct FramebufferData
 			{
-				GLuint framebufferID;
-				GLuint depthbufferID;
+				uint framebufferID;
+				uint depthbufferID;
 			};
 
 			Texture* m_Texture;

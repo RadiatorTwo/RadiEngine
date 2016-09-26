@@ -1,5 +1,6 @@
 #include "texture.h"
 
+#include <GL/glew.h>
 #include "utils/log.h"
 
 namespace radi
@@ -23,7 +24,7 @@ namespace radi
 
 		Texture::~Texture()
 		{
-			GLCall(glDeleteTextures(1, &m_tID));
+			API::FreeTexture(m_tID);
 		}
 
 
@@ -31,26 +32,25 @@ namespace radi
 		{
 			BYTE* pixels = nullptr;
 			if (m_filename != "NULL")
-				 pixels = load_image(m_filename.c_str(), &m_width, &m_height, &m_bits);
+				pixels = load_image(m_filename.c_str(), &m_width, &m_height, &m_bits);
 
-			GLuint result;
-			GLCall(glGenTextures(1, &result));
-			GLCall(glBindTexture(GL_TEXTURE_2D, result));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (GLint)s_filterMode));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (GLint)s_filterMode));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, (GLint)s_wrapMode));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, (GLint)s_wrapMode));
+			uint result = API::CreateTexture();
+			API::BindTexture(GL_TEXTURE_2D, result);
+			API::SetTextureParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (int)s_filterMode);
+			API::SetTextureParameter(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (int)s_filterMode);
+			API::SetTextureParameter(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, (int)s_wrapMode);
+			API::SetTextureParameter(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, (int)s_wrapMode);
 
 			if (m_bits != 24 && m_bits != 32)
 				RADI_ERROR("[Texture] Unsupported image bit-depth! (", m_bits, ")");
 
-			GLint internalFormat = m_bits == 32 ? GL_RGBA : GL_RGB;
-			GLenum format = m_bits == 32 ?
+			int internalFormat = m_bits == 32 ? GL_RGBA : GL_RGB;
+			uint format = m_bits == 32 ?
 
-				GL_BGRA : GL_BGR;
+			GL_BGRA: GL_BGR;
 
-			GLCall(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, pixels ? pixels : NULL));
-			GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+			API::SetTextureData(GL_TEXTURE_2D, internalFormat, m_width, m_height, format, GL_UNSIGNED_BYTE, pixels ? pixels : NULL);
+			API::UnbindTexture(GL_TEXTURE_2D);
 
 			if (pixels != nullptr)
 				delete[] pixels;
@@ -60,12 +60,12 @@ namespace radi
 
 		void Texture::bind() const
 		{
-			GLCall(glBindTexture(GL_TEXTURE_2D, m_tID));
+			API::BindTexture(GL_TEXTURE_2D, m_tID);
 		}
 
 		void Texture::unbind() const
 		{
-			GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+			API::UnbindTexture(GL_TEXTURE_2D);
 		}
 	}
 }

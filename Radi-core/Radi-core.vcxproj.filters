@@ -375,6 +375,18 @@
     <ClCompile Include="src\events\mouse_event.cpp">
       <Filter>Quelldateien\events</Filter>
     </ClCompile>
+    <ClCompile Include="src\platform\opengl\radi_opengl_buffer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\platform\opengl\radi_opengl_render_api.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\buffers\buffer_layout.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\maths\AABB.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ext\freetype\include\ft2build.h">
@@ -587,10 +599,25 @@
     <ClInclude Include="src\events\mouse_event.h">
       <Filter>Headerdateien\graphics\events</Filter>
     </ClInclude>
+    <ClInclude Include="src\platform\opengl\radi_opengl_buffer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\radi_render_api.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\buffers\buffer_layout.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\maths\AABB.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\embedded\files\SourceSansPro-Light.embed">
       <Filter>Ressourcendateien\embedded</Filter>
+    </None>
+    <None Include="src\platform\opengl\radi_opengl_render_api.inl">
+      <Filter>Headerdateien</Filter>
     </None>
   </ItemGroup>
 </Project>

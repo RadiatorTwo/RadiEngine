@@ -1,5 +1,7 @@
 #include "mesh_factory.h"
 
+#include <graphics/batchrenderer2d.h>
+
 #include <radigl.h>
 #include <graphics/renderable2d.h>
 #include <graphics/shaders/Shader.h>
@@ -10,60 +12,50 @@ namespace radi {
 	namespace graphics {
 		namespace meshfactory {
 
-			uint CreateQuad(float x, float y, float width, float height)
+			VertexArray* CreateQuad(float x, float y, float width, float height)
 			{
-				uint result;
+				using namespace maths;
 
 				VertexData data[4];
-				data[0].vertex = maths::vec3(x, y, 0);
-				data[0].uv = maths::vec2(0, 1);
 
-				data[1].vertex = maths::vec3(x, y + height, 0);
-				data[1].uv = maths::vec2(0, 0);
+				data[0].vertex = vec3(x, y, 0);
+				data[0].uv = vec2(0, 1);
 
-				data[2].vertex = maths::vec3(x + width, y + height, 0);
-				data[2].uv = maths::vec2(1, 0);
+				data[1].vertex = vec3(x, y + height, 0);
+				data[1].uv = vec2(0, 0);
 
-				data[3].vertex = maths::vec3(x + width, y, 0);
-				data[3].uv = maths::vec2(1, 1);
+				data[2].vertex = vec3(x + width, y + height, 0);
+				data[2].uv = vec2(1, 0);
+
+				data[3].vertex = vec3(x + width, y, 0);
+				data[3].uv = vec2(1, 1);
 
 #if RADI_VERTEX_ARRAYS
-				uint buffer;
-				GLCall(glGenVertexArrays(1, &result));
-				GLCall(glGenBuffers(1, &buffer));
+				API::Buffer* buffer = new API::Buffer(GL_ARRAY_BUFFER, GL_STATIC_DRAW);
+				buffer->Bind();
+				buffer->SetData(RENDERER_VERTEX_SIZE * 4, data);
 
-				GLCall(glBindVertexArray(result));
-				GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
+				buffer->layout.Push<vec3>("position");
+				buffer->layout.Push<vec2>("uv");
+				buffer->layout.Push<vec2>("mask_uv");
+				buffer->layout.Push<float>("tid");
+				buffer->layout.Push<float>("mid");
+				buffer->layout.Push<byte>("color", 4, true);
 
-				GLCall(glBufferData(GL_ARRAY_BUFFER, RENDERER_VERTEX_SIZE * 4, data, GL_STATIC_DRAW));
-
-				GLCall(glEnableVertexAttribArray(SHADER_VERTEX_INDEX));
-				GLCall(glEnableVertexAttribArray(SHADER_UV_INDEX));
-				GLCall(glEnableVertexAttribArray(SHADER_MASK_UV_INDEX));
-				GLCall(glEnableVertexAttribArray(SHADER_TID_INDEX));
-				GLCall(glEnableVertexAttribArray(SHADER_MID_INDEX));
-				GLCall(glEnableVertexAttribArray(SHADER_COLOR_INDEX));
-
-				GLCall(glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)0));
-				GLCall(glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, uv))));
-				GLCall(glVertexAttribPointer(SHADER_MASK_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, mask_uv))));
-				GLCall(glVertexAttribPointer(SHADER_TID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, tid))));
-				GLCall(glVertexAttribPointer(SHADER_MID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, mid))));
-				GLCall(glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, color))));
-
-				GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-				GLCall(glBindVertexArray(0));
+				VertexArray* result = new VertexArray();
+				result->bind();
+				result->PushBuffer(buffer);
 #else
 #error non-vertex arrays noch nicht drin
 #endif
 				return result;
 			}
 
-			uint CreateQuad(const maths::vec2& position, const maths::vec2& size)
+			VertexArray* CreateQuad(const maths::vec2& position, const maths::vec2& size)
 			{
 				return CreateQuad(position.x, position.y, size.x, size.y);
 			}
 
+			}
 		}
 	}
-}

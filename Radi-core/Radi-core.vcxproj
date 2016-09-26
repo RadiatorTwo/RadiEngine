@@ -75,6 +75,7 @@
     <ClCompile Include="src\events\mouse_event.cpp" />
     <ClCompile Include="src\graphics\batchrenderer2d.cpp" />
     <ClCompile Include="src\graphics\buffers\buffer.cpp" />
+    <ClCompile Include="src\graphics\buffers\buffer_layout.cpp" />
     <ClCompile Include="src\graphics\buffers\indexbuffer.cpp" />
     <ClCompile Include="src\graphics\buffers\vertexarray.cpp" />
     <ClCompile Include="src\graphics\font.cpp" />
@@ -87,6 +88,9 @@
     <ClCompile Include="src\graphics\mesh_factory.cpp" />
     <ClCompile Include="src\graphics\postfx\post_effects.cpp" />
     <ClCompile Include="src\graphics\postfx\post_effect_pass.cpp" />
+    <ClCompile Include="src\maths\AABB.cpp" />
+    <ClCompile Include="src\platform\opengl\radi_opengl_buffer.cpp" />
+    <ClCompile Include="src\platform\opengl\radi_opengl_render_api.cpp" />
     <ClCompile Include="src\platform\windows\win32window.cpp" />
     <ClCompile Include="src\graphics\shaders\shader.cpp" />
     <ClCompile Include="src\graphics\shaders\shader_factory.cpp" />
@@ -136,6 +140,7 @@
     <ClInclude Include="src\events\mouse_event.h" />
     <ClInclude Include="src\graphics\batchrenderer2d.h" />
     <ClInclude Include="src\graphics\buffers\buffer.h" />
+    <ClInclude Include="src\graphics\buffers\buffer_layout.h" />
     <ClInclude Include="src\graphics\buffers\indexbuffer.h" />
     <ClInclude Include="src\graphics\buffers\vertexarray.h" />
     <ClInclude Include="src\graphics\font.h" />
@@ -149,6 +154,7 @@
     <ClInclude Include="src\graphics\mesh_factory.h" />
     <ClInclude Include="src\graphics\postfx\post_effects.h" />
     <ClInclude Include="src\graphics\postfx\post_effect_pass.h" />
+    <ClInclude Include="src\graphics\radi_render_api.h" />
     <ClInclude Include="src\graphics\renderable2d.h" />
     <ClInclude Include="src\graphics\renderer2d.h" />
     <ClInclude Include="src\graphics\shaders\shader.h" />
@@ -157,6 +163,7 @@
     <ClInclude Include="src\graphics\texture.h" />
     <ClInclude Include="src\graphics\texture_manager.h" />
     <ClInclude Include="src\graphics\window.h" />
+    <ClInclude Include="src\maths\AABB.h" />
     <ClInclude Include="src\maths\mat4.h" />
     <ClInclude Include="src\maths\maths.h" />
     <ClInclude Include="src\maths\maths_func.h" />
@@ -164,6 +171,7 @@
     <ClInclude Include="src\maths\vec2.h" />
     <ClInclude Include="src\maths\vec3.h" />
     <ClInclude Include="src\maths\vec4.h" />
+    <ClInclude Include="src\platform\opengl\radi_opengl_buffer.h" />
     <ClInclude Include="src\radi.h" />
     <ClInclude Include="src\radigl.h" />
     <ClInclude Include="src\radi_types.h" />
@@ -175,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="src\embedded\files\SourceSansPro-Light.embed" />
+    <None Include="src\platform\opengl\radi_opengl_render_api.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B57948D4-6640-4360-A225-37C2DA886D9A}</ProjectGuid>
@@ -228,7 +237,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;WIN32;_LIB;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;RADI_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;WIN32;_LIB;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;RADI_DEBUG;RADI_PLATFORM_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -257,7 +266,7 @@ xcopy /y /d  "$(SolutionDir)Dependencies\OpenAL\binaries\*.dll" "$(OutDir)"</Com
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>src</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;WIN32;_LIB;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;WIN32;_LIB;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;RADI_PLATFORM_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <FloatingPointModel>Fast</FloatingPointModel>

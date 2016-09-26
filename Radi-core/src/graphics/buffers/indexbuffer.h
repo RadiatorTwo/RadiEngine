@@ -1,7 +1,7 @@
 #pragma once
 
 #include <radi_types.h>
-#include <radigl.h>
+#include "../radi_render_api.h"
 
 namespace radi
 {
@@ -10,8 +10,8 @@ namespace radi
 		class IndexBuffer
 		{
 		private:
-			GLuint m_bufferID;
-			GLuint m_count;
+			uint m_count;
+			API::Buffer* m_buffer;
 
 		public:
 			IndexBuffer(short* data, uint count);
@@ -21,7 +21,7 @@ namespace radi
 			void bind() const;
 			void unbind() const;
 
-			inline GLuint getCount() const { return m_count; }
+			inline uint GetCount() const { return m_count; }
 		};
 
 	}

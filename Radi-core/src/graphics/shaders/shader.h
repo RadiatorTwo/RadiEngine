@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <vector>
-#include <radigl.h>
 #include "../../maths/maths.h"
 #include "../../utils/fileutils.h"
 
@@ -26,26 +25,26 @@ namespace radi
 			const char* m_fragPath;
 			const char* m_vertSrc;
 			const char* m_fragSrc;
-			GLuint m_shaderID;
+			uint m_shaderID;
 		public:
 			Shader(const char* name, const char* vertSrc, const char* fragSrc);
 			Shader(const char* vertPath, const char* fragPath);
 			~Shader();
 
-			void setUniform1f(const GLchar* name, float value);
-			void setUniform1fv(const GLchar* name, int count, float* value);
-			void setUniform1i(const GLchar* name, int value);
-			void setUniform1iv(const GLchar* name, int count, int* value);
-			void setUniform2f(const GLchar* name, const maths::vec2& vector);
-			void setUniform3f(const GLchar* name, const maths::vec3& vector);
-			void setUniform4f(const GLchar* name, const maths::vec4& vector);
-			void setUniformMat4(const GLchar* name, const maths::mat4& matrix);
+			void SetUniform1f(const char* name, float value);
+			void SetUniform1fv(const char* name, float* value, int count);
+			void SetUniform1i(const char* name, int value);
+			void SetUniform1iv(const char* name, int* value, int count);
+			void SetUniform2f(const char* name, const maths::vec2& vector);
+			void SetUniform3f(const char* name, const maths::vec3& vector);
+			void SetUniform4f(const char* name, const maths::vec4& vector);
+			void SetUniformMat4(const char* name, const maths::mat4& matrix);
 
 			void bind() const;
 			void unbind() const;
 		private:
-			GLuint load(const char* vertSrc, const char* fragSrc);
-			GLint getUniformLocation(const GLchar* name);
+			uint Load(const char* vertSrc, const char* fragSrc);
+			int GetUniformLocation(const char* name);
 		public:
 			static Shader* FromFile(const char* vertPath, const char* fragPath);
 			static Shader* FromSource(const char* vertSrc, const char* fragSrc);

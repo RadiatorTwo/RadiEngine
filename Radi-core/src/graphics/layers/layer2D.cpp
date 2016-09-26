@@ -10,7 +10,7 @@ namespace radi {
 			: m_renderer(new BatchRenderer2D(Window::GetWindowClass(nullptr)->getWidth(), Window::GetWindowClass(nullptr)->getHeight())), m_shader(shader), m_projectionMatrix(projectionMatrix)
 		{
 			m_shader->bind();
-			m_shader->setUniformMat4("pr_matrix", m_projectionMatrix);
+			m_shader->SetUniformMat4("pr_matrix", m_projectionMatrix);
 
 			GLint texIDs[] =
 			{
@@ -20,7 +20,7 @@ namespace radi {
 				30, 31
 			};
 
-			m_shader->setUniform1iv("textures", 32, texIDs);
+			m_shader->SetUniform1iv("textures", texIDs, 32);
 			m_shader->unbind();
 		}
 

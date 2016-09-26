@@ -6,7 +6,8 @@
 #include <FreeImage.h>
 
 #include <radi_types.h>
-#include <radigl.h>
+
+#include "graphics/radi_render_api.h"
 
 #include <utils/image_load.h>
 

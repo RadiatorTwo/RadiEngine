@@ -102,12 +102,32 @@ namespace radi
 			return divide(other);
 		}
 
-		bool vec3::operator==(const vec3& other)
+		bool vec3::operator<(const vec3& other) const
+		{
+			return x < other.x && y < other.y && z < other.z;
+		}
+
+		bool vec3::operator<=(const vec3& other) const
+		{
+			return x <= other.x && y <= other.y && z <= other.z;
+		}
+
+		bool vec3::operator>(const vec3& other) const
+		{
+			return x > other.x && y > other.y && z > other.z;
+		}
+
+		bool vec3::operator>=(const vec3& other) const
+		{
+			return x >= other.x && y >= other.y && z >= other.z;
+		}
+
+		bool vec3::operator==(const vec3& other) const
 		{
 			return x == other.x && y == other.y && z == other.z;
 		}
 
-		bool vec3::operator!=(const vec3& other)
+		bool vec3::operator!=(const vec3& other) const
 		{
 			return !(*this == other);
 		}

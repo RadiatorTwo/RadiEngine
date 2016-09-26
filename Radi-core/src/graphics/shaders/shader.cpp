@@ -1,5 +1,6 @@
 #include "shader.h"
-#include <iostream>
+
+#include <GL/glew.h>
 
 namespace radi
 {
@@ -8,7 +9,7 @@ namespace radi
 		Shader::Shader(const char* name, const char* vertSrc, const char* fragSrc)
 			: m_name(name), m_vertSrc(vertSrc), m_fragSrc(fragSrc)
 		{
-			m_shaderID = load(m_vertSrc, m_fragSrc);
+			m_shaderID = Load(m_vertSrc, m_fragSrc);
 		}
 
 		Shader::Shader(const char* vertPath, const char* fragPath)
@@ -19,7 +20,7 @@ namespace radi
 
 			m_vertSrc = vertSourceString.c_str();
 			m_fragSrc = fragSourceString.c_str();
-			m_shaderID = load(m_vertSrc, m_fragSrc);
+			m_shaderID = Load(m_vertSrc, m_fragSrc);
 		}
 
 		Shader* Shader::FromFile(const char* vertPath, const char* fragPath)
@@ -42,7 +43,7 @@ namespace radi
 			glDeleteProgram(m_shaderID);
 		}
 
-		GLuint Shader::load(const char* vertSrc, const char* fragSrc)
+		GLuint Shader::Load(const char* vertSrc, const char* fragSrc)
 		{
 			GLuint program = glCreateProgram();
 
@@ -96,7 +97,7 @@ namespace radi
 			return program;
 		}
 
-		GLint Shader::getUniformLocation(const GLchar* name)
+		GLint Shader::GetUniformLocation(const GLchar* name)
 		{
 			GLint result = glGetUniformLocation(m_shaderID, name);
 			if (result == -1)
@@ -105,44 +106,44 @@ namespace radi
 			return result;
 		}
 
-		void Shader::setUniform1f(const GLchar* name, float value)
+		void Shader::SetUniform1f(const GLchar* name, float value)
 		{
-			glUniform1f(getUniformLocation(name), value);
+			glUniform1f(GetUniformLocation(name), value);
 		}
 
-		void Shader::setUniform1fv(const GLchar* name, int count, float* value)
+		void Shader::SetUniform1fv(const char* name, float* value, int count)
 		{
-			glUniform1fv(getUniformLocation(name), count, value);
+			glUniform1fv(GetUniformLocation(name), count, value);
 		}
 
-		void Shader::setUniform1i(const GLchar* name, int value)
+		void Shader::SetUniform1i(const GLchar* name, int value)
 		{
-			glUniform1i(getUniformLocation(name), value);
+			glUniform1i(GetUniformLocation(name), value);
 		}
 
-		void Shader::setUniform1iv(const GLchar* name, int count, int* value)
+		void Shader::SetUniform1iv(const char* name, int* value, int count)
 		{
-			glUniform1iv(getUniformLocation(name), count, value);
+			glUniform1iv(GetUniformLocation(name), count, value);
 		}
 
-		void Shader::setUniform2f(const GLchar* name, const maths::vec2& vector)
+		void Shader::SetUniform2f(const GLchar* name, const maths::vec2& vector)
 		{
-			glUniform2f(getUniformLocation(name), vector.x, vector.y);
+			glUniform2f(GetUniformLocation(name), vector.x, vector.y);
 		}
 
-		void Shader::setUniform3f(const GLchar* name, const maths::vec3& vector)
+		void Shader::SetUniform3f(const GLchar* name, const maths::vec3& vector)
 		{
-			glUniform3f(getUniformLocation(name), vector.x, vector.y, vector.z);
+			glUniform3f(GetUniformLocation(name), vector.x, vector.y, vector.z);
 		}
 
-		void Shader::setUniform4f(const GLchar* name, const maths::vec4& vector)
+		void Shader::SetUniform4f(const GLchar* name, const maths::vec4& vector)
 		{
-			glUniform4f(getUniformLocation(name), vector.x, vector.y, vector.z, vector.w);
+			glUniform4f(GetUniformLocation(name), vector.x, vector.y, vector.z, vector.w);
 		}
 
-		void Shader::setUniformMat4(const GLchar* name, const maths::mat4& matrix)
+		void Shader::SetUniformMat4(const GLchar* name, const maths::mat4& matrix)
 		{
-			glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, matrix.elements);
+			glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, matrix.elements);
 		}
 
 		void Shader::bind() const

@@ -1,5 +1,7 @@
 #include "post_effects.h"
 
+#include <graphics/radi_render_api.h>
+
 namespace radi {
 	namespace graphics {
 
@@ -23,20 +25,20 @@ namespace radi {
 			m_Passes.pop_back();
 		}
 
-		void PostEffects::RenderPostEffects(Framebuffer* source, Framebuffer* target, uint quad, IndexBuffer* indices)
+		void PostEffects::RenderPostEffects(Framebuffer* source, Framebuffer* target, VertexArray* quad, IndexBuffer* indices)
 		{
 			target->Bind();
-			GLCall(glActiveTexture(GL_TEXTURE0));
+			API::SetActiveTexture(GL_TEXTURE0);
 			source->GetTexture()->bind();
 
-			GLCall(glBindVertexArray(quad));
+			quad->bind();
 			indices->bind();
 
 			for (PostEffectsPass* pass : m_Passes)
 				pass->RenderPass(target);
 
 			indices->unbind();
-			GLCall(glBindVertexArray(0));
+			quad->unbind();
 		}
 
 	}

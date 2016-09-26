@@ -2,8 +2,9 @@
 
 #include <vector>
 
-#include "../Framebuffer.h"
-#include "../buffers/IndexBuffer.h"
+#include "../framebuffer.h"
+#include "../buffers/vertexarray.h"
+#include "../buffers/indexbuffer.h"
 #include "post_effect_pass.h"
 
 namespace radi {
@@ -20,7 +21,7 @@ namespace radi {
 			void Push(PostEffectsPass* pass);
 			void Pop();
 
-			void RenderPostEffects(Framebuffer* source, Framebuffer* target, uint quad, IndexBuffer* indices);
+			void RenderPostEffects(Framebuffer* source, Framebuffer* target, VertexArray* quad, IndexBuffer* indices);
 		};
 
 	}

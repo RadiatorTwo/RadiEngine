@@ -27,19 +27,10 @@ namespace std
 //
 // Work in progress!
 //
-// -------------------------------
-//			TODO: 
-// -------------------------------
-//	- Besseres container type logging
-//	- Besserer platform support
-//	- In Datei loggen
-//	- Include (fast) alle Radi Klassentypen
-//	- Und Mehr...
 
-namespace radi
-{
-	namespace internal
-	{
+namespace radi {
+	namespace internal {
+
 		static char to_string_buffer[1024 * 10];
 
 		void PlatformLogMessage(uint level, const char* message);
@@ -51,6 +42,7 @@ namespace radi
 			template<class U> static char(&test(...))[2];
 			static const bool value = (sizeof(test<T>(0)) == 1);
 		};
+
 
 		template <typename T>
 		static const char* to_string(const T& t)
@@ -115,19 +107,20 @@ namespace radi
 			return result;
 		}
 
+		//
 		//template <typename T> const char* container_to_string_internal(const std::vector<T>& v)
-			//{
-			//	static char buffer[1024];
-			//	sprintf(buffer, "Vector of %s - size: %d, contents: %s", typeid(T).name(), v.size(), format_iterators(v.begin(), v.end()).c_str());
-			//	return buffer;
-			//}
-			//
-			//template <typename T> const char* container_to_string_internal(const std::list<T>& v)
-			//{
-			//	static char buffer[1024];
-			//	sprintf(buffer, "List of %s - size: %d, contents: %s", typeid(T).name(), v.size(), format_iterators(v.begin(), v.end()).c_str());
-			//	return buffer;
-			//}
+		//{
+		//	static char buffer[1024];
+		//	sprintf(buffer, "Vector of %s - size: %d, contents: %s", typeid(T).name(), v.size(), format_iterators(v.begin(), v.end()).c_str());
+		//	return buffer;
+		//}
+		//
+		//template <typename T> const char* container_to_string_internal(const std::list<T>& v)
+		//{
+		//	static char buffer[1024];
+		//	sprintf(buffer, "List of %s - size: %d, contents: %s", typeid(T).name(), v.size(), format_iterators(v.begin(), v.end()).c_str());
+		//	return buffer;
+		//}
 
 		template <typename T>
 		static const char* to_string_internal(const T& v, const std::true_type& ignored)
@@ -185,6 +178,7 @@ namespace radi
 
 			if (newline)
 				buffer[position++] = '\n';
+
 			buffer[position] = 0;
 
 			PlatformLogMessage(level, buffer);
@@ -192,39 +186,39 @@ namespace radi
 	}
 }
 
-
 #ifndef RADI_LOG_LEVEL
 #define RADI_LOG_LEVEL RADI_LOG_LEVEL_INFO
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_FATAL
-#define RADI_FATAL(...) radi::internal::log_message(RADI_LOG_LEVEL_FATAL, "RADI:    ", __VA_ARGS__)
+#define RADI_FATAL(...) radi::internal::log_message(RADI_LOG_LEVEL_FATAL, true, "radi:    ", __VA_ARGS__)
 #define _RADI_FATAL(...) radi::internal::log_message(RADI_LOG_LEVEL_FATAL, false, __VA_ARGS__)
 #else
 #define RADI_FATAL(...)
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_ERROR
-#define RADI_ERROR(...) radi::internal::log_message(RADI_LOG_LEVEL_ERROR, true, "RADI:    ", __VA_ARGS__)
+#define RADI_ERROR(...) radi::internal::log_message(RADI_LOG_LEVEL_ERROR, true, "radi:    ", __VA_ARGS__)
 #define _RADI_ERROR(...) radi::internal::log_message(RADI_LOG_LEVEL_ERROR, false, __VA_ARGS__)
 #else
 #define RADI_ERROR(...)
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_WARN
-#define RADI_WARN(...) radi::internal::log_message(RADI_LOG_LEVEL_WARN, true, "RADI:    ", __VA_ARGS__)
+#define RADI_WARN(...) radi::internal::log_message(RADI_LOG_LEVEL_WARN, true, "radi:    ", __VA_ARGS__)
 #define _RADI_WARN(...) radi::internal::log_message(RADI_LOG_LEVEL_WARN, false, __VA_ARGS__)
 #else
 #define RADI_WARN(...)
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_INFO
-#define RADI_INFO(...) radi::internal::log_message(RADI_LOG_LEVEL_INFO, true, "RADI:    ", __VA_ARGS__)
+#define RADI_INFO(...) radi::internal::log_message(RADI_LOG_LEVEL_INFO, true, "radi:    ", __VA_ARGS__)
 #define _RADI_INFO(...) radi::internal::log_message(RADI_LOG_LEVEL_INFO, false, __VA_ARGS__)
 #else
 #define RADI_INFO(...)
 #endif
 
+#ifdef SP_DEBUG
 #define RADI_ASSERT(x, ...) \
 	do { \
 	if (!(x)) \
@@ -250,3 +244,27 @@ namespace radi
 		*(int*)NULL = 8; \
 		} \
 	} while(0)
+#else
+#define RADI_ASSERT(x, ...)
+#endif
+
+#include <GL/glew.h>
+
+static bool log_gl_call(const char* function, const char* file, int line)
+{
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR)
+	{
+		RADI_ERROR("[OpenGL Error] (", error, "): ", function, " ", file, ":", line);
+		return false;
+	}
+	return true;
+}
+
+#ifdef RADI_DEBUG
+#define GLCall(x) glGetError();\
+		x; \
+		if (!log_gl_call(#x, __FILE__, __LINE__)) __debugbreak();
+#else
+#define GLCall(x) x
+#endif

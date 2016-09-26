@@ -6,6 +6,9 @@
 #include "renderable2d.h"
 #include "Framebuffer.h"
 
+ #include "radi_render_api.h"
+
+#include "buffers/VertexArray.h"
 #include "buffers/indexbuffer.h"
 
 namespace radi
@@ -20,12 +23,13 @@ namespace radi
 
 		class BatchRenderer2D : public Renderer2D
 		{
-
 		private:
+			VertexArray* m_vertexArray;
 			GLuint m_VAO;
 			GLuint m_VBO;
 			IndexBuffer* m_IBO;
-			GLsizei m_indexCount;
+			IndexBuffer* m_lineIBO;
+			GLsizei m_indexCount, m_lineIndexCount;
 			VertexData* m_buffer;
 
 			std::vector<GLuint> m_textureSlots;
@@ -34,7 +38,7 @@ namespace radi
 			int m_screenBuffer;
 			maths::tvec2<uint> m_viewportSize, m_screenSize;
 			Shader* m_simpleShader;
-			uint m_screenQuad;
+			VertexArray* m_screenQuad;
 		public:
 			BatchRenderer2D(uint width, uint height);
 			BatchRenderer2D(const maths::tvec2<uint>& screenSize);
@@ -42,6 +46,7 @@ namespace radi
 
 			void begin() override;
 			void submit(const Renderable2D* renderable) override;
+			void drawAABB(const maths::AABB& aabb, uint color = 0xffffffff);
 			void drawString(const std::string& text, const maths::vec3& position, const Font& font, unsigned int color) override;
 			void end() override;
 			void flush() override;
