@@ -118,6 +118,15 @@
     <Filter Include="Quelldateien\events">
       <UniqueIdentifier>{26559808-94f4-4f09-b184-742a578fec6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\platform\opengl">
+      <UniqueIdentifier>{29557b88-c542-4614-b675-c8e6869f3cc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\platform">
+      <UniqueIdentifier>{e2054f8e-b2cf-41e3-b4d3-1d1b51543b08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\platform\opengl">
+      <UniqueIdentifier>{d57a4063-aa6f-4689-a9cb-d8aa7800135d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ext\freetype\src\autofit\autofit.c">
@@ -375,17 +384,17 @@
     <ClCompile Include="src\events\mouse_event.cpp">
       <Filter>Quelldateien\events</Filter>
     </ClCompile>
-    <ClCompile Include="src\platform\opengl\radi_opengl_buffer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\opengl\radi_opengl_render_api.cpp">
-      <Filter>Quelldateien</Filter>
+    <ClCompile Include="src\maths\AABB.cpp">
+      <Filter>Quelldateien\maths</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\buffers\buffer_layout.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\graphics\buffers</Filter>
     </ClCompile>
-    <ClCompile Include="src\maths\AABB.cpp">
-      <Filter>Quelldateien</Filter>
+    <ClCompile Include="src\platform\opengl\radi_opengl_render_api.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\platform\opengl\radi_opengl_buffer.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -599,17 +608,17 @@
     <ClInclude Include="src\events\mouse_event.h">
       <Filter>Headerdateien\graphics\events</Filter>
     </ClInclude>
-    <ClInclude Include="src\platform\opengl\radi_opengl_buffer.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="src\graphics\radi_render_api.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\buffers\buffer_layout.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="src\maths\AABB.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Headerdateien\maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\platform\opengl\radi_opengl_buffer.h">
+      <Filter>Headerdateien\platform\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\buffers\buffer_layout.h">
+      <Filter>Headerdateien\graphics\buffers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -617,7 +626,7 @@
       <Filter>Ressourcendateien\embedded</Filter>
     </None>
     <None Include="src\platform\opengl\radi_opengl_render_api.inl">
-      <Filter>Headerdateien</Filter>
+      <Filter>Headerdateien\platform\opengl</Filter>
     </None>
   </ItemGroup>
 </Project>
