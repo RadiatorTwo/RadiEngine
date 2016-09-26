@@ -36,6 +36,7 @@ namespace radi
 			Shader* m_simpleShader;
 			uint m_screenQuad;
 		public:
+			BatchRenderer2D(uint width, uint height);
 			BatchRenderer2D(const maths::tvec2<uint>& screenSize);
 			~BatchRenderer2D();
 

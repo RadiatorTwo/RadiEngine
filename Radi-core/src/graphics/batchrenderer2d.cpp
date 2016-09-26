@@ -11,6 +11,12 @@ namespace radi
 	{
 		using namespace maths;
 
+		BatchRenderer2D::BatchRenderer2D(uint width, uint height)
+			: m_indexCount(0), m_screenSize(tvec2<uint>(width, height)), m_viewportSize(tvec2<uint>(width, height))
+		{
+			init();
+		}
+
 		BatchRenderer2D::BatchRenderer2D(const maths::tvec2<uint>& screenSize)
 			: m_indexCount(0), m_screenSize(screenSize), m_viewportSize(screenSize)
 		{
@@ -320,7 +326,7 @@ namespace radi
 				if (m_postEffectsEnabled)
 					m_postEffectsBuffer->GetTexture()->bind();
 				else
-					 m_framebuffer->GetTexture()->bind();
+					m_framebuffer->GetTexture()->bind();
 
 				GLCall(glBindVertexArray(m_screenQuad));
 				m_IBO->bind();

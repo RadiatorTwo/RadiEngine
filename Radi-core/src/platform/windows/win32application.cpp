@@ -5,6 +5,7 @@ namespace radi {
 	Application::Application(const char* name, uint width, uint height)
 		: m_name(name), m_width(width), m_height(height)
 	{
+		s_instance = this;
 	}
 
 	Application::~Application()
@@ -38,22 +39,7 @@ namespace radi {
 	void Application::Stop()
 	{
 		m_running = false;
-	}
-
-	void Application::Tick()
-	{
-
-	}
-
-	void Application::Update()
-	{
-
-	}
-
-	void Application::Render()
-	{
-
-	}
+	}	
 
 	void Application::Run()
 	{
@@ -69,11 +55,11 @@ namespace radi {
 			if (m_Timer->elapsed() - updateTimer > updateTick)
 			{
 				window->updateInput();
-				Update();
+				OnUpdate();
 				updates++;
 				updateTimer += updateTick;
 			}
-			Render();
+			OnRender();
 			frames++;
 			window->update();
 			if (m_Timer->elapsed() - timer > 1.0f)
@@ -83,7 +69,7 @@ namespace radi {
 				m_updatesPerSecond = updates;
 				frames = 0;
 				updates = 0;
-				Tick();
+				OnTick();
 			}
 			if (window->closed())
 				m_running = false;

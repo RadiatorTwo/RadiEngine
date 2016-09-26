@@ -37,7 +37,7 @@ namespace radi {
 			winClass.hInstance = hInstance; // GetModuleHandle(0);
 			winClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 			winClass.lpfnWndProc = (WNDPROC)WndProc;
-			winClass.lpszClassName = "Sparky Win32 Window";
+			winClass.lpszClassName = "Radi Win32 Window";
 			winClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 			winClass.hIcon = LoadIcon(NULL, IDI_WINLOGO);
 

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <radi_types.h>
-#include  "../renderer2d.h"
-#include "../renderable2d.h"
-#include "../Mask.h"
+#include "../../events/Event.h"
+#include "../../events/IEventListener.h"
+#include "../Window.h"
 #include "../../maths/maths.h"
 
 namespace radi
@@ -13,24 +13,20 @@ namespace radi
 		using namespace graphics;
 		using namespace maths;
 
-		class Layer
+		class Layer : public events::IEventListener
 		{
-		public:
-			Renderer2D* renderer;
 		protected:
-			std::vector<Renderable2D*> m_renderables;
-			Shader* m_shader;
-			mat4 m_projectionMatrix;
+			Window* m_window;
+
 		public:
-			Layer(Renderer2D* renderer, Shader* shader, mat4 projectionMatrix);
+			Layer();
 			virtual ~Layer();
-			virtual Renderable2D* add(Renderable2D* renderable);
 
-			inline void setMask(const Mask* mask) const { renderer->setMask(mask); }
-
-			virtual void render();
-
-			inline const std::vector<Renderable2D*>& getRenderables() { return m_renderables; }
+			virtual void Init();
+			virtual bool OnEvent(const events::Event& event);
+			virtual void OnTick();
+			virtual void OnUpdate();
+			virtual void OnRender();
 		};
 
 	}

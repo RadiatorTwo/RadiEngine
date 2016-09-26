@@ -112,6 +112,12 @@
     <Filter Include="Headerdateien\graphics\postfx">
       <UniqueIdentifier>{3bcf0405-e361-40e8-9c7a-678327e5135b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\graphics\events">
+      <UniqueIdentifier>{a114323b-f1dc-42d7-90cf-3ccc3120c237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\events">
+      <UniqueIdentifier>{26559808-94f4-4f09-b184-742a578fec6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ext\freetype\src\autofit\autofit.c">
@@ -339,9 +345,6 @@
     <ClCompile Include="src\graphics\mesh_factory.cpp">
       <Filter>Quelldateien\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\layers\tilelayer.cpp">
-      <Filter>Quelldateien\graphics\layers</Filter>
-    </ClCompile>
     <ClCompile Include="src\platform\windows\win32log.cpp">
       <Filter>Quelldateien\platform\windows</Filter>
     </ClCompile>
@@ -356,6 +359,21 @@
     </ClCompile>
     <ClCompile Include="src\platform\windows\win32window.cpp">
       <Filter>Quelldateien\platform\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\application.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\layers\layer2D.cpp">
+      <Filter>Quelldateien\graphics\layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\events\event.cpp">
+      <Filter>Quelldateien\events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\events\key_event.cpp">
+      <Filter>Quelldateien\events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\events\mouse_event.cpp">
+      <Filter>Quelldateien\events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -539,9 +557,6 @@
     <ClInclude Include="src\maths\tvec2.h">
       <Filter>Headerdateien\maths</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\layers\tilelayer.h">
-      <Filter>Headerdateien\graphics\layers</Filter>
-    </ClInclude>
     <ClInclude Include="src\graphics\framebuffer.h">
       <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
@@ -556,6 +571,21 @@
     </ClInclude>
     <ClInclude Include="src\graphics\postfx\post_effect_pass.h">
       <Filter>Headerdateien\graphics\postfx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\layers\layer2D.h">
+      <Filter>Headerdateien\graphics\layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\event.h">
+      <Filter>Headerdateien\graphics\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\iEventlistener.h">
+      <Filter>Headerdateien\graphics\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\key_event.h">
+      <Filter>Headerdateien\graphics\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\mouse_event.h">
+      <Filter>Headerdateien\graphics\events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

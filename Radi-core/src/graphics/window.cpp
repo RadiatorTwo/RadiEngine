@@ -156,6 +156,9 @@ namespace radi
 
 		Window* Window::GetWindowClass(void* handle)
 		{
+			if (handle == nullptr)
+				return s_handles.begin()->second;
+
 			return s_handles[handle];
 		}
 	}
