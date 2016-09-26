@@ -4,7 +4,10 @@ namespace radi {
 	namespace graphics {
 		namespace ShaderFactory {
 
-			const char* default_shader_vert =
+#if defined(RADI_PLATFORM_WIN32)
+
+			static const char* s_DefaultShader =
+				"#shader vertex\n"
 				"#version 330 core\n"
 				"\n"
 				"layout (location = 0) in vec4 position;\n"
@@ -39,9 +42,9 @@ namespace radi {
 				"	vs_out.mid = mid;\n"
 				"	vs_out.color = color;\n"
 				"	vs_out.mask_uv = mask_uv;\n"
-				"}\n";
-
-			const char* default_shader_frag =
+				"};\n"
+				"\n"
+				"#shader fragment\n"
 				"#version 330 core\n"
 				"\n"
 				"layout (location = 0) out vec4 color;\n"
@@ -73,9 +76,11 @@ namespace radi {
 				"		maskColor = texture(textures[mid], fs_in.mask_uv);\n"
 				"	}\n"
 				"	color = texColor * maskColor; // vec4(1.0 - maskColor.x, 1.0 - maskColor.y, 1.0 - maskColor.z, 1.0);\n"
-				"}\n";
+				"};\n"
+				;
 
-			const char* simple_shader_vert =
+			static const char* s_SimpleShader =
+				"#shader vertex\n"
 				"#version 330 core\n"
 				"\n"
 				"layout (location = 0) in vec4 position;\n"
@@ -96,9 +101,9 @@ namespace radi {
 				"{\n"
 				"	gl_Position = pr_matrix * position;\n"
 				"	vs_out.uv = uv;\n"
-				"}\n";
-
-			const char* simple_shader_frag =
+				"};\n"
+				"\n"
+				"#shader fragment\n"
 				"#version 330 core\n"
 				"\n"
 				"layout (location = 0) out vec4 color;\n"
@@ -113,9 +118,12 @@ namespace radi {
 				"void main()\n"
 				"{\n"
 				"	color = texture(tex, fs_in.uv);\n"
-				"}\n";
+				"};\n"
 
-			const char* basic_light_shader_vert =
+				;
+
+			static const char* s_BasicLightShader =
+				"#shader vertex\n"
 				"#version 330 core\n"
 				"\n"
 				"layout (location = 0) in vec4 position;\n"
@@ -142,9 +150,9 @@ namespace radi {
 				"	vs_out.uv = uv;\n"
 				"	vs_out.tid = tid;\n"
 				"	vs_out.color = color;\n"
-				"}\n";
-
-			const char* basic_light_shader_frag =
+				"};\n"
+				"\n"
+				"#shader fragment\n"
 				"#version 330 core\n"
 				"\n"
 				"layout (location = 0) out vec4 color;\n"
@@ -172,21 +180,27 @@ namespace radi {
 				"		texColor = fs_in.color * texture(textures[tid], fs_in.uv);\n"
 				"	}\n"
 				"	color = texColor * intensity;\n"
-				"}\n";
+				"};\n"
+
+				;
+
+#else
+#error TODO: GLES shaders!
+#endif
 
 			Shader* DefaultShader()
 			{
-				return Shader::FromSource("Default Shader", default_shader_vert, default_shader_frag);
+				return Shader::FromSource("Default Shader", s_DefaultShader);
 			}
 
 			Shader* SimpleShader()
 			{
-				return Shader::FromSource("Simple Shader", simple_shader_vert, simple_shader_frag);
+				return Shader::FromSource("Simple Shader", s_SimpleShader);
 			}
 
 			Shader* BasicLightShader()
 			{
-				return Shader::FromSource("Basic Light Shader", basic_light_shader_vert, basic_light_shader_frag);
+				return Shader::FromSource("Basic Light Shader", s_BasicLightShader);
 			}
 
 		}

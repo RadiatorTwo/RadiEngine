@@ -8,10 +8,10 @@ namespace radi
 {
 	namespace utils
 	{
-		static String read_file(const char* filepath)
+		static String ReadFile(const String& filepath)
 		{
 			// ReSharper disable once CppDeprecatedEntity
-			FILE* file = fopen(filepath, "rt");
+			FILE* file = fopen(filepath.c_str(), "rt");
 			if (file == nullptr)
 				RADI_ASSERT(file, "Could not open file '", filepath, "'!");
 
@@ -26,24 +26,7 @@ namespace radi
 			String result(data);
 			delete[] data;
 
-			return result;
-
-			/*String content;
-			std::ifstream fileStream(filepath, std::ios::in);
-
-			if (!fileStream.is_open()) {
-				std::cerr << "Could not read file " << filepath << ". File does not exist." << std::endl;
-				return "";
-			}
-
-			String line = "";
-			while (!fileStream.eof()) {
-				std::getline(fileStream, line);
-				content.append(line + "\n");
-			}
-
-			fileStream.close();
-			return content;*/
+			return result;			
 		}
 	}
 }
