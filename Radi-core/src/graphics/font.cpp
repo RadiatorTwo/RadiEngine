@@ -6,7 +6,7 @@ namespace radi
 {
 	namespace graphics
 	{
-		Font::Font(const std::string name, const std::string filename, float size)
+		Font::Font(const String name, const String filename, float size)
 			: m_name(name), m_filename(filename), m_size(size), m_scale(maths::vec2(1.0f, 1.0f))
 		{
 
@@ -15,7 +15,7 @@ namespace radi
 			RADI_ASSERT(m_FTFont, "Failed to load font '", filename.c_str(), "'!");
 		}
 
-		Font::Font(const std::string& name, const byte* data, unsigned int datasize, float size)
+		Font::Font(const String& name, const byte* data, unsigned int datasize, float size)
 			: m_name(name), m_filename("NULL"), m_size(size), m_scale(maths::vec2(1.0f, 1.0f))
 		{
 			m_FTAtlas = ftgl::texture_atlas_new(512, 512, 2);

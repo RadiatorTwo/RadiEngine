@@ -16,7 +16,7 @@ namespace radi
 			return m_fonts[0];
 		}
 
-		Font* FontManager::get(const std::string& name)
+		Font* FontManager::get(const String& name)
 		{
 			for(Font* font : m_fonts)
 			{
@@ -29,7 +29,7 @@ namespace radi
 			return nullptr;
 		}
 
-		Font* FontManager::get(const std::string& name, unsigned int size)
+		Font* FontManager::get(const String& name, unsigned int size)
 		{
 			for (Font* font : m_fonts)
 			{

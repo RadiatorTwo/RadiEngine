@@ -20,7 +20,7 @@ namespace std
 	template <typename T>
 	string to_string(const T& t)
 	{
-		return std::string("[Unsupported type (") + typeid(T).name() + std::string(")!] (to_string)");
+		return String("[Unsupported type (") + typeid(T).name() + String(")!] (to_string)");
 	}
 }
 
@@ -76,7 +76,7 @@ namespace radi {
 		}
 
 		template <>
-		static const char* to_string<std::string>(std::string const & t)
+		static const char* to_string<String>(String const & t)
 		{
 			return t.c_str();
 		}
@@ -85,16 +85,16 @@ namespace radi {
 		static const char* to_string<maths::vec2>(maths::vec2 const & t)
 		{
 			// TODO: sprintf
-			std::string string = std::string("vec2: (") + std::to_string(t.x) + ", " + std::to_string(t.y) + ")";
+			String string = String("vec2: (") + std::to_string(t.x) + ", " + std::to_string(t.y) + ")";
 			char* result = new char[string.length()];
 			strcpy(result, &string[0]);
 			return result;
 		}
 
 		template <typename T>
-		static std::string format_iterators(T& begin, T& end)
+		static String format_iterators(T& begin, T& end)
 		{
-			std::string result;
+			String result;
 			bool first = true;
 			while (begin != end)
 			{

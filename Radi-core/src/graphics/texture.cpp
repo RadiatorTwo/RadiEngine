@@ -16,7 +16,7 @@ namespace radi
 			m_tID = load();
 		}
 
-		Texture::Texture(const std::string& name, const std::string& filename)
+		Texture::Texture(const String& name, const String& filename)
 			: m_name(name), m_filename(filename)
 		{
 			m_tID = load();

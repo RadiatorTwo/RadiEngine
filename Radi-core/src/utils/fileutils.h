@@ -8,7 +8,7 @@ namespace radi
 {
 	namespace utils
 	{
-		static std::string read_file(const char* filepath)
+		static String read_file(const char* filepath)
 		{
 			// ReSharper disable once CppDeprecatedEntity
 			FILE* file = fopen(filepath, "rt");
@@ -23,12 +23,12 @@ namespace radi
 			fread(data, 1, length, file);
 			fclose(file);
 
-			std::string result(data);
+			String result(data);
 			delete[] data;
 
 			return result;
 
-			/*std::string content;
+			/*String content;
 			std::ifstream fileStream(filepath, std::ios::in);
 
 			if (!fileStream.is_open()) {
@@ -36,7 +36,7 @@ namespace radi
 				return "";
 			}
 
-			std::string line = "";
+			String line = "";
 			while (!fileStream.eof()) {
 				std::getline(fileStream, line);
 				content.append(line + "\n");

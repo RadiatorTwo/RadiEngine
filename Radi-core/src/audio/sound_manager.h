@@ -22,7 +22,7 @@ namespace radi { namespace audio {
 	public:
 		static void init();
 		static Sound* add(Sound* sound);
-		static Sound* get(const std::string& name);
+		static Sound* get(const String& name);
 		static void update();
 		static void clean();
 	private:

@@ -15,11 +15,11 @@ namespace radi
 			ftgl::texture_font_t* m_FTFont;
 			float m_size;
 			maths::vec2 m_scale;
-			std::string m_name;
-			std::string m_filename;
+			String m_name;
+			String m_filename;
 		public:
-			Font(const std::string name, const std::string filename, float size);
-			Font(const std::string& name, const byte* data, unsigned int datasize, float size);
+			Font(const String name, const String filename, float size);
+			Font(const String& name, const byte* data, unsigned int datasize, float size);
 
 			void setScale(float x, float y);
 
@@ -27,8 +27,8 @@ namespace radi
 
 			inline const unsigned int getID() const { return m_FTAtlas->id; }
 			inline const maths::vec2& getScale() const { return m_scale; }
-			inline const std::string& getName() const { return m_name; }
-			inline const std::string& getFilename() const { return m_filename; }
+			inline const String& getName() const { return m_name; }
+			inline const String& getFilename() const { return m_filename; }
 			inline const float getSize() const { return m_size; }
 		};
 	}

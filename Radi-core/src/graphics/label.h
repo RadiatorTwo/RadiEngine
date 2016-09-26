@@ -10,16 +10,16 @@ namespace radi {
 		{
 		public:
 			Font* m_font;
-			std::string text;
+			String text;
 			maths::vec3& position;
 			float x, y;
 		public:
-			Label(const std::string& text, float x, float y, uint color);
-			Label(const std::string& text, float x, float y, Font* font, uint color);
-			Label(const std::string& text, float x, float y, const std::string& font, uint color);
-			Label(const std::string& text, float x, float y, const std::string& font, uint size, uint color);
+			Label(const String& text, float x, float y, uint color);
+			Label(const String& text, float x, float y, Font* font, uint color);
+			Label(const String& text, float x, float y, const String& font, uint color);
+			Label(const String& text, float x, float y, const String& font, uint size, uint color);
 			void submit(Renderer2D* renderer) const override;
-			void validateFont(const std::string& name, int size = -1);
+			void validateFont(const String& name, int size = -1);
 		};
 
 	}

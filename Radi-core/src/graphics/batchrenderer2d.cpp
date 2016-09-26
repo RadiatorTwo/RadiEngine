@@ -231,7 +231,7 @@ namespace radi
 #endif
 		}
 
-		void BatchRenderer2D::drawString(const std::string& text, const maths::vec3& position, const Font& font, unsigned int color)
+		void BatchRenderer2D::drawString(const String& text, const maths::vec3& position, const Font& font, unsigned int color)
 		{
 			using namespace ftgl;
 

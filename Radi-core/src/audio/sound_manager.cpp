@@ -20,7 +20,7 @@ namespace radi { namespace audio {
 		return sound;
 	}
 
-	Sound* SoundManager::get(const std::string& name)
+	Sound* SoundManager::get(const String& name)
 	{
 		for (Sound* sound : m_Sounds)
 		{

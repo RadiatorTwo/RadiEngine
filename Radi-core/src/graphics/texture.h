@@ -36,18 +36,18 @@ namespace radi
 			static TextureWrap s_wrapMode;
 			static TextureFilter s_filterMode;
 
-			std::string m_name, m_filename;
+			String m_name, m_filename;
 			uint m_tID;
 			uint m_width, m_height;
 			unsigned int m_bits;
 		public:
 			Texture(uint width, uint height, uint bits = 24);
-			Texture(const std::string& name, const std::string& filename);
+			Texture(const String& name, const String& filename);
 			~Texture();
 			void bind() const;
 			void unbind() const;
 
-			inline const std::string& getName() const { return m_name; }
+			inline const String& getName() const { return m_name; }
 			inline const unsigned int getID() const { return m_tID; }
 			inline const unsigned int getWidth() const { return m_width; }
 			inline const unsigned int getHeight() const { return m_height; }

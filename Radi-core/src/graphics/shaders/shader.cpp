@@ -15,8 +15,8 @@ namespace radi
 		Shader::Shader(const char* vertPath, const char* fragPath)
 			: m_name(vertPath), m_vertPath(vertPath), m_fragPath(fragPath)
 		{
-			std::string vertSourceString = utils::read_file(m_vertPath);
-			std::string fragSourceString = utils::read_file(m_fragPath);
+			String vertSourceString = utils::read_file(m_vertPath);
+			String fragSourceString = utils::read_file(m_fragPath);
 
 			m_vertSrc = vertSourceString.c_str();
 			m_fragSrc = fragSourceString.c_str();

@@ -10,7 +10,7 @@ namespace radi {
 			m_textures.push_back(texture);
 		}
 
-		Texture* TextureManager::get(const std::string& name)
+		Texture* TextureManager::get(const String& name)
 		{
 			for (Texture* texture : m_textures)
 			{
