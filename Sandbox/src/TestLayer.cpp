@@ -25,30 +25,37 @@ TestLayer::~TestLayer()
 
 void TestLayer::OnInit(Renderer2D& renderer, Shader& shader)
 {
-	// m_Window->SetVsync(false);
-
 	FontManager::get()->setScale(m_window->getWidth() / 32.0f, m_window->getHeight() / 18.0f);
-	renderer.SetRenderTarget(RenderTarget::BUFFER);
+	renderer.SetRenderTarget(RenderTarget::SCREEN);
+	Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
 	renderer.AddPostEffectsPass(new PostEffectsPass(Shader::FromFile("Horizontal Blur", "shaders/postfx.shader")));
 	renderer.SetPostEffects(false);
 
 	Texture::SetFilter(TextureFilter::NEAREST);
-	Add(new Sprite(0.0f, 0.0f, 0.15f * 8, 0.2f * 8, new Texture("mario", "res/mario32.png")));
-	Add(new Sprite(0.0f, 0.0f, 8, 8, new Texture("test", "res/test2.png")));
-	Add(new Sprite(-8.0f, -8.0f, 6, 6, 0xffff00ff));
+	m_mario = new Sprite(0.0f, 0.0f, 0.15f * 4, 0.2f * 4, new Texture("mario", "res/mario32.png"));
+	Add(m_mario);
 
-	m_fps = new Label("", -15.5f, 7.8f, 0xffffffff);
+	for (float i = -16; i < 16.0f; i += 0.16f * 4)
+	{
+		Add(new Sprite(i, -9.0f, 0.16f * 4, 0.16f * 4, new Texture("ground_tile", "res/ground_tile.png")));
+	}
+
+	for (float i = -16.0f; i < 16.0f; i += 5.12f * 4)
+	{
+		Add(new Sprite(i, -9.0f + (0.16f * 4), 5.12f * 4, 4.32f * 4, new Texture("background", "res/background.png")));
+	}
+
+	m_fps = new Label("", -15.5f, 7.8f, 0xff000000);
 	Add(m_fps);
 
 	debugInfo = new Label*[10];
-	debugInfo[0] = new Label("", -15.5f, 6.8f, 0xffffffff);
-	debugInfo[1] = new Label("", -15.5f, 5.8f, 0xffffffff);
+	debugInfo[0] = new Label("", -15.5f, 6.8f, 0xff000000);
+	debugInfo[1] = new Label("", -15.5f, 5.8f, 0xff000000);
 	Add(debugInfo[0]);
 	Add(debugInfo[1]);
-
-	Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
-	Mask* mask = new Mask(new Texture("Mask", "res/mask.png"));
-	mask->transform = mat4::translation(vec3(-16.0f, -9.0f, 0.0f)) * mat4::scale(vec3(32, 18, 1));
+	
+	//Mask* mask = new Mask(new Texture("Mask", "res/mask.png"));
+	//mask->transform = mat4::translation(vec3(-16.0f, -9.0f, 0.0f)) * mat4::scale(vec3(32, 18, 1));
 	// layer->SetMask(mask);
 }
 
@@ -61,6 +68,16 @@ void TestLayer::OnTick()
 
 void TestLayer::OnUpdate()
 {
+	float speed = 0.15f;
+	if (m_window->isKeyPressed(VK_LEFT))
+		m_mario->position.x -= speed;
+	else if (m_window->isKeyPressed(VK_RIGHT))
+		m_mario->position.x += speed;
+
+	if (m_window->isKeyPressed(VK_UP))
+		m_mario->position.y += speed;
+	else if (m_window->isKeyPressed(VK_DOWN))
+		m_mario->position.y -= speed;
 }
 
 bool TestLayer::OnEvent(const radi::events::Event& event)

@@ -9,14 +9,14 @@ using namespace graphics;
 using namespace maths;
 
 #define WIDTH 1280
-#define HEIGHT 1024
+#define HEIGHT 720
 
 class Game : public Application
 {
 public:
 	Game()
 		: Application("Test Game", WIDTH, HEIGHT)
-	{
+	{		
 	}
 
 	~Game()
