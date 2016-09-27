@@ -67,11 +67,11 @@ namespace radi
 
 			virtual void setMask(const Mask* mask) { m_mask = mask; }
 
-			virtual void begin() {}
+			virtual void Begin() {}
 			virtual void submit(const Renderable2D* renderable) = 0;
 			virtual void drawString(const String& text, const maths::vec3& position, const Font& font, unsigned int color) { }
 			virtual void end() {}
-			virtual void flush() = 0;
+			virtual void Present() = 0;
 		};
 	}
 }

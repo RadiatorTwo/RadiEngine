@@ -53,5 +53,10 @@ namespace radi
 #endif
 			API::UnbindVertexArrays();
 		}
+
+		void VertexArray::Draw(uint count) const
+		{
+			API::DrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, NULL);
+		}
 	}
 }

@@ -104,8 +104,8 @@ namespace radi
 				if (m_textureSlots.size() >= RENDERER_MAX_TEXTURES)
 				{
 					end();
-					flush();
-					begin();
+					Present();
+					Begin();
 				}
 				m_textureSlots.push_back(textureID);
 				result = (float)(m_textureSlots.size());
@@ -118,7 +118,7 @@ namespace radi
 			return submitTexture(texture->getID());
 		}
 
-		void BatchRenderer2D::begin()
+		void BatchRenderer2D::Begin()
 		{
 			if (m_target == RenderTarget::BUFFER)
 			{
@@ -305,7 +305,7 @@ namespace radi
 			m_vertexArray->GetBuffer()->Unbind();
 		}
 
-		void BatchRenderer2D::flush()
+		void BatchRenderer2D::Present()
 		{
 			for (uint i = 0; i < m_textureSlots.size(); i++)
 			{

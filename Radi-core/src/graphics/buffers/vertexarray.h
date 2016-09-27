@@ -28,6 +28,9 @@ namespace radi
 
 			void bind() const;
 			void unbind() const;
+
+			// TODO: I don't like this!
+			void Draw(uint count) const;
 		};
 	}
 }

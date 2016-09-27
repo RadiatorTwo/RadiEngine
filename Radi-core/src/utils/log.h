@@ -210,7 +210,7 @@ namespace radi {
 #define RADI_INFO(...)
 #endif
 
-#ifdef SP_DEBUG
+#ifdef RADI_DEBUG
 #define RADI_ASSERT(x, ...) \
 	do { \
 	if (!(x)) \
@@ -253,7 +253,7 @@ static bool log_gl_call(const char* function, const char* file, int line)
 	return true;
 }
 
-#ifdef SP_DEBUG
+#ifdef RADI_DEBUG
 #define GLCall(x) glGetError();\
 		x; \
 		if (!log_gl_call(#x, __FILE__, __LINE__)) __debugbreak();

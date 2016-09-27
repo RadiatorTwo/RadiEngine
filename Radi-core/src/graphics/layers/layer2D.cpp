@@ -51,13 +51,13 @@ namespace radi {
 		void Layer2D::OnRender()
 		{
 			m_shader->bind();
-			m_renderer->begin();
+			m_renderer->Begin();
 
 			for (const Renderable2D* renderable : m_renderables)
 				renderable->submit(m_renderer);
 
 			m_renderer->end();
-			m_renderer->flush();
+			m_renderer->Present();
 
 			OnRender(*m_renderer);
 		}

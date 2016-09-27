@@ -42,6 +42,8 @@ namespace radi
 			float distance(const vec2& other) const;
 			float dot(const vec2& other) const;
 
+			String ToString() const;
+
 			friend std::ostream& operator<<(std::ostream& stream, const vec2& vector);
 		};
 	}

@@ -44,12 +44,12 @@ namespace radi
 			BatchRenderer2D(const maths::tvec2<uint>& screenSize);
 			~BatchRenderer2D();
 
-			void begin() override;
+			void Begin() override;
 			void submit(const Renderable2D* renderable) override;
 			void drawAABB(const maths::AABB& aabb, uint color = 0xffffffff);
 			void drawString(const String& text, const maths::vec3& position, const Font& font, unsigned int color) override;
 			void end() override;
-			void flush() override;
+			void Present() override;
 
 			inline void SetScreenSize(const maths::tvec2<uint>& size) { m_screenSize = size; }
 			inline const maths::tvec2<uint>& GetScreenSize() const { return m_screenSize; }

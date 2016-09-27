@@ -18,6 +18,7 @@ namespace radi {
 			Shader* m_shader;
 			maths::mat4 m_projectionMatrix;
 		public:
+			// TODO: Replace Shader with Material!
 			Layer2D(Shader* shader, const maths::mat4& projectionMatrix);
 			virtual ~Layer2D();
 

@@ -1,7 +1,14 @@
 #pragma once
 
-#include <string>
+#include <radi_string.h>
 
 typedef unsigned char byte;
 typedef unsigned int uint;
-typedef std::string String;
+
+namespace radi {
+	namespace graphics {
+		class Shader;
+
+	}
+
+}
