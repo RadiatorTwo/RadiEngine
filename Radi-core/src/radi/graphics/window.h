@@ -29,7 +29,6 @@ namespace radi
 			bool m_Closed;
 			void* m_Handle;
 
-			
 			bool m_KeyState[MAX_KEYS];
 			bool m_LastKeyState[MAX_KEYS];
 
@@ -37,6 +36,8 @@ namespace radi
 			bool m_MouseState[MAX_BUTTONS];
 			bool m_MouseClicked[MAX_BUTTONS];
 			bool m_MouseGrabbed;
+
+			int m_KeyModifiers;
 
 			maths::vec2 m_MousePosition;
 			bool m_Vsync;
@@ -52,7 +53,7 @@ namespace radi
 			inline uint GetWidth() const { return m_Width; }
 			inline uint GetHeight() const { return m_Height; }
 
-			bool IsKeyPressed(uint keycode) const;		
+			bool IsKeyPressed(uint keycode) const;
 			bool IsMouseButtonPressed(uint button) const;
 			bool IsMouseButtonClicked(uint button) const;
 
@@ -87,6 +88,13 @@ namespace radi
 #define RD_MOUSE_RIGHT    0x02
 
 #define RD_NO_CURSOR	  NULL
+
+#define SP_MODIFIER_LEFT_CONTROL	BIT(0)
+#define SP_MODIFIER_LEFT_ALT		BIT(1)
+#define SP_MODIFIER_LEFT_SHIFT		BIT(2)
+#define SP_MODIFIER_RIGHT_CONTROL	BIT(3)
+#define SP_MODIFIER_RIGHT_ALT		BIT(4)
+#define SP_MODIFIER_RIGHT_SHIFT		BIT(5)
 
 #define VK_TAB			  0x09
 

@@ -43,6 +43,10 @@ namespace radi {
 
 	void Application::OnEvent(events::Event& event)
 	{
+		m_DebugLayer->OnEvent(event);
+		if (event.IsHandled()) // TODO(Yan): Maybe this shouldn't happen
+			return;
+
 		for (int i = m_overlayStack.size() - 1; i >= 0; i--)
 		{
 			m_overlayStack[i]->OnEvent(event);
@@ -83,12 +87,22 @@ namespace radi {
 	void Application::OnRender()
 	{
 		for (uint i = 0; i < m_layerStack.size(); i++)
-			m_layerStack[i]->OnRender();
+		{
+			if (m_layerStack[i]->IsVisible())
+				m_layerStack[i]->OnRender();
+
+		}
 
 		for (uint i = 0; i < m_overlayStack.size(); i++)
-			m_overlayStack[i]->OnRender();
+		{
+			if (m_overlayStack[i]->IsVisible())
+				m_overlayStack[i]->OnRender();
 
-		((Layer2D*)m_DebugLayer)->OnRender();
+		}
+
+		Layer2D* debugLayer = (Layer2D*)m_DebugLayer;
+		if (debugLayer->IsVisible())
+			debugLayer->OnRender();
 	}
 
 }

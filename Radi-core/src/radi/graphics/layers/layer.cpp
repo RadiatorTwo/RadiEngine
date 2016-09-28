@@ -5,7 +5,8 @@ namespace radi
 {
 	namespace graphics
 	{
-		Layer::Layer() : m_window(Window::GetWindowClass(nullptr))
+		Layer::Layer()
+			: m_window(Window::GetWindowClass(nullptr)), m_Visible(true)
 		{
 		}
 

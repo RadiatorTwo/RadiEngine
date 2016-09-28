@@ -9,8 +9,8 @@ namespace radi {
 		{
 		}
 
-		KeyPressedEvent::KeyPressedEvent(int button, int repeat)
-			: KeyEvent(button, KeyPressedEvent::GetStaticType()), m_repeat(repeat)
+		KeyPressedEvent::KeyPressedEvent(int button, int repeat, int modifiers)
+			: KeyEvent(button, KeyPressedEvent::GetStaticType()), m_repeat(repeat), m_Modifiers(modifiers)
 		{
 		}
 
