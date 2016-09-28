@@ -5,8 +5,8 @@
 #include "sound.h"
 
 #define GAU_THREAD_POLICY_MULTI 2
-#include "../../ext/gorilla-audio/ga.h"
-#include "../../ext/gorilla-audio/gau.h"
+#include "../../gorilla-audio/src/ga.h"
+#include "../../gorilla-audio/src/gau.h"
 
 namespace radi { namespace audio {
 

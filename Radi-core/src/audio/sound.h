@@ -7,8 +7,8 @@
 
 #include "../utils/stringutils.h"
 
-#include "../../ext/gorilla-audio/ga.h"
-#include "../../ext/gorilla-audio/gau.h"
+#include "../../gorilla-audio/src/ga.h"
+#include "../../gorilla-audio/src/gau.h"
 
 namespace radi { namespace audio {
 

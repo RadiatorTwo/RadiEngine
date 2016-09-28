@@ -212,30 +212,15 @@ namespace radi {
 
 #ifdef RADI_DEBUG
 #define RADI_ASSERT(x, ...) \
-	do { \
-	if (!(x)) \
-		{ \
-		char* file = __FILE__; \
-		unsigned int last = 0; \
-		char* c; \
-		for (c = file; *c != '\0'; c++) \
-				{ \
-			if (*c == '\\' || *c == '/') \
-				last = c - file; \
-				} \
-		RADI_FATAL(""); \
-		RADI_FATAL("*************************"); \
-		RADI_FATAL("    ASSERTION FAILED!    "); \
-		RADI_FATAL("*************************"); \
-		RADI_FATAL(#x); \
-		RADI_FATAL(__VA_ARGS__); \
-		_RADI_FATAL("-> "); \
-		for (int i = last + 1; i < c - file; i++) \
-			_RADI_FATAL(file[i]); \
-		_RADI_FATAL(":", __LINE__, "\n"); \
-		*(int*)NULL = 8; \
-		} \
-	} while(0)
+ 		if (!(x)) {\
+ 			RADI_FATAL("*************************"); \
+ 			RADI_FATAL("    ASSERTION FAILED!    "); \
+ 			RADI_FATAL("*************************"); \
+ 			RADI_FATAL(__FILE__, ": ", __LINE__); \
+ 			RADI_FATAL("Condition: ", #x); \
+ 			RADI_FATAL(__VA_ARGS__); \
+ 			__debugbreak(); \
+ 		}
 #else
 #define RADI_ASSERT(x, ...)
 #endif

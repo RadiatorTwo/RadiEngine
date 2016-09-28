@@ -2,7 +2,7 @@
 
 #include <string>
 #include "../maths/vec2.h"
-#include "../../ext/freetype-gl/freetype-gl.h"
+#include "../../Freetype/freetype-gl/freetype-gl.h"
 
 namespace radi
 {
