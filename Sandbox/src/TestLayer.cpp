@@ -13,7 +13,7 @@ using namespace events;
 using namespace maths;
 
 TestLayer::TestLayer()
-	: Layer2D(ShaderFactory::DefaultShader(), mat4::orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f))
+	: Layer2D(ShaderFactory::DefaultShader(), mat4::Orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f))
 {
 
 }

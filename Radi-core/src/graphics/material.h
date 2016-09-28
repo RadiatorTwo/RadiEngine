@@ -11,6 +11,8 @@ namespace radi {
 		class Material
 		{
 		private:
+			friend class MaterialInstance;
+
 			Shader* m_shader;
 			byte* m_uniformData;
 			uint m_uniformDataSize;
@@ -21,6 +23,8 @@ namespace radi {
 			void Bind() const;
 			void Unbind() const;
 			void DumpUniformData() const;
+
+			inline Shader* GetShader() const { return m_shader; }
 
 			template<typename T>
 			void SetUniform(const String& name, const T& value)
@@ -56,6 +60,8 @@ namespace radi {
 		private:
 			Material* m_material;
 			byte* m_uniformData;
+			uint m_uniformDataSize;
+			uint m_setUniforms;
 		public:
 			MaterialInstance(Material* material);
 
@@ -63,16 +69,26 @@ namespace radi {
 
 			void Bind() const;
 			void Unbind() const;
+			void UnsetUniform(const String& name);
 
 			template<typename T>
 			void SetUniform(const String& name, const T& value)
 			{
-				RADI_ASSERT(false, "Unknown type");
+				int index = GetUniformDeclarationIndex(name);
+				if (index == -1)
+				{
+					RADI_ERROR("Could not find uniform '", name, "'!");
+					return;
+				}
+				ShaderUniformDeclaration* uniform = m_material->m_shader->GetUniformDeclarations()[index];
+				memcpy(m_uniformData + uniform->GetOffset(), &value, uniform->GetSize());
+
+				m_setUniforms |= 1 << index;
 			}
 
-			template<> void SetUniform<float>(const String& name, const float& value) { }
 		private:
 			void InitUniformStorage();
+			int GetUniformDeclarationIndex(const String& name) const;
 		};
 
 	}

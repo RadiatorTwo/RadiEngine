@@ -3,34 +3,32 @@
 #include <vector>
 #include <radi_types.h>
 
-#include "buffer.h"
-#include "graphics/radi_render_api.h"
+#include "Buffer.h"
+#include <graphics/radi_render_api.h>
 
+namespace radi {
+	namespace graphics {
 
-namespace radi
-{
-	namespace graphics
-	{
 		class VertexArray
 		{
 		private:
-			static uint s_currentBinding;
+			static uint s_CurrentBinding;
 		private:
-			uint m_id;
-			std::vector<API::Buffer*> m_buffers;
+			uint m_ID;
+			std::vector<API::Buffer*> m_Buffers;
 		public:
 			VertexArray();
 			~VertexArray();
 
 			API::Buffer* GetBuffer(uint index = 0);
-			
+
 			void PushBuffer(API::Buffer* buffer);
+			void Bind() const;
+			void Unbind() const;
 
-			void bind() const;
-			void unbind() const;
-
-			// TODO: I don't like this!
+			// TODO: I don't like this
 			void Draw(uint count) const;
 		};
+
 	}
 }

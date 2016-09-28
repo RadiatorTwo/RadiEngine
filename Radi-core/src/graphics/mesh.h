@@ -4,6 +4,8 @@
 #include "buffers/IndexBuffer.h"
 #include "material.h"
 
+#include "iRenderable.h"
+
 namespace radi {
 	namespace graphics {
 
@@ -16,19 +18,20 @@ namespace radi {
 			maths::vec2 uv;
 		};
 
-		class Mesh
+		class Mesh : public IRenderable
 		{
 		private:
-			VertexArray* m_VertexArray;
-			IndexBuffer* m_IndexBuffer;
-			MaterialInstance* m_MaterialInstance;
+			VertexArray* m_vertexArray;
+			IndexBuffer* m_indexBuffer;
+			MaterialInstance* m_materialInstance;
 		public:
 			Mesh(VertexArray* vertexArray, IndexBuffer* indexBuffer, MaterialInstance* materialInstance);
 			~Mesh();
 
-			inline MaterialInstance* GetMaterialInstance() const { return m_MaterialInstance; }
+			inline void SetMaterial(MaterialInstance* materialInstance) { m_materialInstance = materialInstance; }
+			inline MaterialInstance* GetMaterialInstance() const { return m_materialInstance; }
 
-			void Render(Renderer3D& renderer);
+			void Render(Renderer3D& renderer) override;
 		};
 
 	}

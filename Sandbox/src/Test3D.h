@@ -4,15 +4,20 @@
 #include <maths/maths.h>
 
 #include <graphics/mesh_factory.h>
-#include <graphics/layers/Layer3D.h>
+#include <graphics/layers/layer3D.h>
 #include <graphics/shaders/shader_factory.h>
+#include <graphics/model.h>
+
+#include <entity/entity.h>
+#include <entity/component/components.h>
 
 class Test3D : public radi::graphics::Layer3D
 {
 private:
-	radi::graphics::Mesh* m_Cube;
-	radi::graphics::Material* m_Material;
-	float m_Rotation;
+	radi::entity::Entity* m_Cube;
+	radi::entity::Entity* m_Sphere;
+	float m_rotation;
+	bool m_setUniforms[2];
 public:
 	Test3D();
 	~Test3D();

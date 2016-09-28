@@ -2,10 +2,11 @@
 
 #include <sstream>
 
-namespace radi
-{
-	namespace maths
-	{
+#include "quaternion.h"
+
+namespace radi {
+	namespace maths {
+
 		mat4::mat4()
 		{
 			for (int i = 0; i < 4 * 4; i++)
@@ -23,12 +24,12 @@ namespace radi
 			elements[3 + 3 * 4] = diagonal;
 		}
 
-		mat4 mat4::identity()
+		mat4 mat4::Identity()
 		{
 			return mat4(1.0f);
 		}
 
-		mat4& mat4::multiply(const mat4& other)
+		mat4& mat4::Multiply(const mat4& other)
 		{
 			float data[16];
 			for (int y = 0; y < 4; y++)
@@ -48,7 +49,7 @@ namespace radi
 			return *this;
 		}
 
-		vec3 mat4::multiply(const vec3& other) const
+		vec3 mat4::Multiply(const vec3& other) const
 		{
 			return vec3(
 				columns[0].x * other.x + columns[1].x * other.y + columns[2].x * other.z + columns[3].x,
@@ -56,7 +57,8 @@ namespace radi
 				columns[0].z * other.x + columns[1].z * other.y + columns[2].z * other.z + columns[3].z
 			);
 		}
-		vec4 mat4::multiply(const vec4& other) const
+
+		vec4 mat4::Multiply(const vec4& other) const
 		{
 			return vec4(
 				columns[0].x * other.x + columns[1].x * other.y + columns[2].x * other.z + columns[3].x * other.w,
@@ -65,27 +67,28 @@ namespace radi
 				columns[0].w * other.x + columns[1].w * other.y + columns[2].w * other.z + columns[3].w * other.w
 			);
 		}
+
 		mat4 operator*(mat4 left, const mat4& right)
 		{
-			return left.multiply(right);
+			return left.Multiply(right);
 		}
 
 		mat4& mat4::operator*=(const mat4& other)
 		{
-			return multiply(other);
+			return Multiply(other);
 		}
 
 		vec3 operator*(const mat4& left, const vec3& right)
 		{
-			return left.multiply(right);
+			return left.Multiply(right);
 		}
 
 		vec4 operator*(const mat4& left, const vec4& right)
 		{
-			return left.multiply(right);
+			return left.Multiply(right);
 		}
 
-		mat4& mat4::invert()
+		mat4& mat4::Invert()
 		{
 			double temp[16];
 
@@ -210,12 +213,14 @@ namespace radi
 			return *this;
 		}
 
-		mat4 mat4::orthographic(float left, float right, float bottom, float top, float near, float far)
+		mat4 mat4::Orthographic(float left, float right, float bottom, float top, float near, float far)
 		{
 			mat4 result(1.0f);
 
 			result.elements[0 + 0 * 4] = 2.0f / (right - left);
+
 			result.elements[1 + 1 * 4] = 2.0f / (top - bottom);
+
 			result.elements[2 + 2 * 4] = 2.0f / (near - far);
 
 			result.elements[0 + 3 * 4] = (left + right) / (left - right);
@@ -225,7 +230,7 @@ namespace radi
 			return result;
 		}
 
-		mat4 mat4::perspective(float fov, float aspectRatio, float near, float far)
+		mat4 mat4::Perspective(float fov, float aspectRatio, float near, float far)
 		{
 			mat4 result(1.0f);
 
@@ -244,7 +249,7 @@ namespace radi
 			return result;
 		}
 
-		mat4 mat4::translation(const vec3& translation)
+		mat4 mat4::Translate(const vec3& translation)
 		{
 			mat4 result(1.0f);
 
@@ -255,7 +260,7 @@ namespace radi
 			return result;
 		}
 
-		mat4 mat4::rotation(float angle, const vec3& axis)
+		mat4 mat4::Rotate(float angle, const vec3& axis)
 		{
 			mat4 result(1.0f);
 
@@ -283,7 +288,36 @@ namespace radi
 			return result;
 		}
 
-		mat4 mat4::scale(const vec3& scale)
+		mat4 mat4::Rotate(const Quaternion& quat)
+		{
+			mat4 result = Identity();
+
+			float qx, qy, qz, qw, qx2, qy2, qz2, qxqx2, qyqy2, qzqz2, qxqy2, qyqz2, qzqw2, qxqz2, qyqw2, qxqw2;
+			qx = quat.x;
+			qy = quat.y;
+			qz = quat.z;
+			qw = quat.w;
+			qx2 = (qx + qx);
+			qy2 = (qy + qy);
+			qz2 = (qz + qz);
+			qxqx2 = (qx * qx2);
+			qxqy2 = (qx * qy2);
+			qxqz2 = (qx * qz2);
+			qxqw2 = (qw * qx2);
+			qyqy2 = (qy * qy2);
+			qyqz2 = (qy * qz2);
+			qyqw2 = (qw * qy2);
+			qzqz2 = (qz * qz2);
+			qzqw2 = (qw * qz2);
+
+			result.columns[0] = vec4(((1.0f - qyqy2) - qzqz2), (qxqy2 + qzqw2), (qxqz2 - qyqw2), 0.0f);
+			result.columns[1] = vec4((qxqy2 - qzqw2), ((1.0f - qxqx2) - qzqz2), (qyqz2 + qxqw2), 0.0f);
+			result.columns[2] = vec4((qxqz2 + qyqw2), (qyqz2 - qxqw2), ((1.0f - qxqx2) - qyqy2), 0.0f);
+
+			return result;
+		}
+
+		mat4 mat4::Scale(const vec3& scale)
 		{
 			mat4 result(1.0f);
 
@@ -294,10 +328,10 @@ namespace radi
 			return result;
 		}
 
-		mat4 mat4::invert(const mat4& matrix)
+		mat4 mat4::Invert(const mat4& matrix)
 		{
 			mat4 result = matrix;
-			return result.invert();
+			return result.Invert();
 		}
 
 		String mat4::ToString() const
@@ -309,5 +343,6 @@ namespace radi
 			result << "(" << columns[0].w << ", " << columns[1].w << ", " << columns[2].w << ", " << columns[3].w << ")";
 			return result.str();
 		}
+
 	}
 }

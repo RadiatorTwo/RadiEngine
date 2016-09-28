@@ -12,6 +12,8 @@
 
 #include "mat4.h"
 
+#include "quaternion.h"
+
 namespace radi {
 	namespace maths {
 

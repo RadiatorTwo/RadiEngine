@@ -48,7 +48,7 @@ namespace radi
 			buffer->layout.Push<byte>("color", 4, true);
 
 			m_vertexArray = new VertexArray();
-			m_vertexArray->bind();
+			m_vertexArray->Bind();
 			m_vertexArray->PushBuffer(buffer);
 
 			uint* indices = new uint[RENDERER_INDICES_SIZE];
@@ -69,16 +69,16 @@ namespace radi
 
 			m_IBO = new IndexBuffer(indices, RENDERER_INDICES_SIZE);
 
-			m_vertexArray->unbind();
+			m_vertexArray->Unbind();
 
 			// Setup Framebuffer
 			m_screenBuffer = API::GetScreenBuffer();
 			m_framebuffer = new Framebuffer(m_viewportSize);
 			m_simpleShader = ShaderFactory::SimpleShader();
-			m_simpleShader->bind();
-			m_simpleShader->SetUniformMat4("pr_matrix", maths::mat4::orthographic(0, m_screenSize.x, m_screenSize.y, 0, -1.0f, 1.0f));
+			m_simpleShader->Bind();
+			m_simpleShader->SetUniformMat4("pr_matrix", maths::mat4::Orthographic(0, m_screenSize.x, m_screenSize.y, 0, -1.0f, 1.0f));
 			m_simpleShader->SetUniform1i("tex", 0);
-			m_simpleShader->unbind();
+			m_simpleShader->Unbind();
 			m_screenQuad = meshfactory::CreateQuad(0, 0, m_screenSize.x, m_screenSize.y);
 
 			m_postEffects = new PostEffects();
@@ -164,13 +164,13 @@ namespace radi
 			if (tid > 0)
 				ts = submitTexture(renderable->getTexture());
 
-			mat4 maskTransform = mat4::identity();
+			mat4 maskTransform = mat4::Identity();
 			const uint mid = m_mask ? m_mask->texture->getID() : 0;
 			float ms = 0.0f;
 
 			if (m_mask != nullptr)
 			{
-				maskTransform = mat4::invert(m_mask->transform);
+				maskTransform = mat4::Invert(m_mask->transform);
 				ms = submitTexture(m_mask->texture);
 			}
 
@@ -315,13 +315,13 @@ namespace radi
 
 			// Draw buffers here
 			{
-				m_vertexArray->bind();
-				m_IBO->bind();
+				m_vertexArray->Bind();
+				m_IBO->Bind();
 
 				API::DrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, NULL);
 
-				m_IBO->unbind();
-				m_vertexArray->unbind();
+				m_IBO->Unbind();
+				m_vertexArray->Unbind();
 			}
 
 			m_indexCount = 0;
@@ -336,7 +336,7 @@ namespace radi
 				// Display Framebuffer - potentially move to Framebuffer class
 				API::BindFramebuffer(GL_FRAMEBUFFER, m_screenBuffer);
 				API::SetViewport(0, 0, m_screenSize.x, m_screenSize.y);
-				m_simpleShader->bind();
+				m_simpleShader->Bind();
 
 				API::SetActiveTexture(GL_TEXTURE0);
 
@@ -345,13 +345,13 @@ namespace radi
 				else
 					m_framebuffer->GetTexture()->bind();
 
-				m_screenQuad->bind();
+				m_screenQuad->Bind();
 
-				m_IBO->bind();
+				m_IBO->Bind();
 				API::DrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
-				m_IBO->unbind();
-				m_screenQuad->unbind();
-				m_simpleShader->unbind();
+				m_IBO->Unbind();
+				m_screenQuad->Unbind();
+				m_simpleShader->Unbind();
 			}
 		}
 	}

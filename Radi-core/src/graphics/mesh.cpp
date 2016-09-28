@@ -6,29 +6,29 @@ namespace radi {
 	namespace graphics {
 
 		Mesh::Mesh(VertexArray* vertexArray, IndexBuffer* indexBuffer, MaterialInstance* materialInstance)
-			: m_VertexArray(vertexArray), m_IndexBuffer(indexBuffer), m_MaterialInstance(materialInstance)
+			: m_vertexArray(vertexArray), m_indexBuffer(indexBuffer), m_materialInstance(materialInstance)
 		{
 
 		}
 
 		Mesh::~Mesh()
 		{
-			delete m_VertexArray;
-			delete m_IndexBuffer;
-			delete m_MaterialInstance;
+			delete m_vertexArray;
+			delete m_indexBuffer;
+			delete m_materialInstance;
 		}
 
 		void Mesh::Render(Renderer3D& renderer)
 		{
-			m_MaterialInstance->GetMaterial()->Bind();
+			m_materialInstance->Bind();
 
-			m_VertexArray->bind();
-			m_IndexBuffer->bind();
-			m_VertexArray->Draw(m_IndexBuffer->GetCount());
-			m_IndexBuffer->unbind();
-			m_VertexArray->unbind();
+			m_vertexArray->Bind();
+			m_indexBuffer->Bind();
+			m_vertexArray->Draw(m_indexBuffer->GetCount());
+			m_indexBuffer->Unbind();
+			m_vertexArray->Unbind();
 
-			m_MaterialInstance->GetMaterial()->Unbind();
+			m_materialInstance->Unbind();
 		}
 
 	}

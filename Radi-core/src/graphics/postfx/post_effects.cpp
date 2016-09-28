@@ -31,14 +31,14 @@ namespace radi {
 			API::SetActiveTexture(GL_TEXTURE0);
 			source->GetTexture()->bind();
 
-			quad->bind();
-			indices->bind();
+			quad->Bind();
+			indices->Bind();
 
 			for (PostEffectsPass* pass : m_Passes)
 				pass->RenderPass(target);
 
-			indices->unbind();
-			quad->unbind();
+			indices->Unbind();
+			quad->Unbind();
 		}
 
 	}

@@ -43,7 +43,7 @@ namespace radi {
 				buffer->layout.Push<byte>("color", 4, true);
 
 				VertexArray* result = new VertexArray();
-				result->bind();
+				result->Bind();
 				result->PushBuffer(buffer);
 #else
 #error non-vertex arrays noch nicht drin
@@ -91,7 +91,7 @@ namespace radi {
 				buffer->layout.Push<vec2>("uv");
 
 				VertexArray* va = new VertexArray();
-				va->bind();
+				va->Bind();
 				va->PushBuffer(buffer);
 
 				uint* indices = new uint[36]

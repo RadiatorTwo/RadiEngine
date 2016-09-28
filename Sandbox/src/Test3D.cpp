@@ -4,10 +4,15 @@ using namespace radi;
 using namespace radi::graphics;
 using namespace maths;
 
+using namespace entity;
+using namespace component;
+
 Test3D::Test3D()
 	: Layer3D(new Scene())
 {
-	m_Rotation = 0.0f;
+	m_rotation = 0.0f;
+	m_setUniforms[0] = true;
+	m_setUniforms[1] = true;
 }
 
 Test3D::~Test3D()
@@ -16,33 +21,38 @@ Test3D::~Test3D()
 
 void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 {
-	VertexArray* va = meshfactory::CreateQuad(0, 0, 5, 5);
-	IndexBuffer* ib = new IndexBuffer(new uint[6]{ 0, 1, 2, 2, 3, 0 }, 6);
+	Material* material = new Material(Shader::FromFile("Scene", "shaders/scene.shader"));
 
-	m_Material = new Material(Shader::FromFile("Scene", "shaders/Scene.shader"));
-	m_Cube = meshfactory::CreateCube(5.0f, new MaterialInstance(m_Material));
-	scene.Add(m_Cube);
+	m_Cube = new Entity();
+	Model* cubeModel = new Model("res/cube-rounded.obj", new MaterialInstance(material));
+	m_Cube->AddComponent(new MeshComponent(cubeModel->GetMesh()));
+	m_Cube->AddComponent(new TransformComponent(mat4::Identity()));
 
-	m_Material->SetUniform("pr_matrix", mat4::perspective(65.0f, 16.0f / 9.0f, 0.1f, 1000.0f));
-	m_Material->SetUniform("vw_matrix", mat4::translation(vec3(0, 0, -10.0f)));
-	m_Material->SetUniform("ml_matrix", mat4::rotation(45.0f, vec3(0, 1, 0)));
+	m_Sphere = new Entity();
+	Model* sphereModel = new Model("res/sphere-high.obj", new MaterialInstance(material));
+	m_Sphere->AddComponent(new MeshComponent(sphereModel->GetMesh()));
+	m_Sphere->AddComponent(new TransformComponent(mat4::Identity()));
+
+	m_scene->Add(m_Cube);
+	m_scene->Add(m_Sphere);
 }
 
 void Test3D::OnTick()
 {
 	Application& app = Application::GetApplication();
 	RADI_INFO(app.GetUPS(), " ups, ", app.GetFPS(), " fps");
-
-	// m_Cube->GetMaterialInstance()->GetMaterial()->DumpUniformData();
 }
 
-float g_Rotation = 0.0f;
 
 void Test3D::OnUpdate()
 {
-	mat4 transform = mat4::rotation(g_Rotation, vec3(1, 0, 0)) * mat4::rotation(g_Rotation, vec3(0, 1, 0)) * mat4::rotation(g_Rotation, vec3(0, 0, 1));
-	m_Material->SetUniform("ml_matrix", transform);
-	g_Rotation += 0.5f;
+	TransformComponent* cubeTransform = m_Cube->GetComponent<TransformComponent>();
+	TransformComponent* sphereTransform = m_Sphere->GetComponent<TransformComponent>();
+
+	mat4 transform = mat4::Rotate(m_rotation, vec3(1, 0, 0)) * mat4::Rotate(m_rotation, vec3(0, 1, 0)) * mat4::Rotate(m_rotation, vec3(0, 0, 1));
+	cubeTransform->transform = mat4::Translate(vec3(-4, 0, 0)) * transform * mat4::Scale(vec3(1.4f, 1.4f, 1.4f));
+	sphereTransform->transform = mat4::Translate(vec3(8, 0, 0)) * transform;
+	m_rotation++;
 }
 
 bool Test3D::OnEvent(const radi::events::Event& event)

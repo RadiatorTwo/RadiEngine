@@ -1,10 +1,9 @@
 #include "vec3.h"
 #include "vec2.h"
 
-namespace radi
-{
-	namespace maths
-	{
+namespace radi {
+	namespace maths {
+
 		vec3::vec3()
 		{
 			x = 0.0f;
@@ -26,7 +25,47 @@ namespace radi
 			this->z = 0.0f;
 		}
 
-		vec3& vec3::add(const vec3& other)
+		vec3 vec3::Up()
+		{
+			return vec3(0.0f, 1.0f, 0.0f);
+		}
+
+		vec3 vec3::Down()
+		{
+			return vec3(0.0f, -1.0f, 0.0f);
+		}
+
+		vec3 vec3::Left()
+		{
+			return vec3(-1.0f, 0.0f, 0.0f);
+		}
+
+		vec3 vec3::Right()
+		{
+			return vec3(1.0f, 1.0f, 0.0f);
+		}
+
+		vec3 vec3::Zero()
+		{
+			return vec3(0.0f, 0.0f, 0.0f);
+		}
+
+		vec3 vec3::XAxis()
+		{
+			return vec3(1.0f, 0.0f, 0.0f);
+		}
+
+		vec3 vec3::YAxis()
+		{
+			return vec3(0.0f, 1.0f, 0.0f);
+		}
+
+		vec3 vec3::ZAxis()
+		{
+			return vec3(0.0f, 0.0f, 1.0f);
+		}
+
+		vec3& vec3::Add(const vec3& other)
 		{
 			x += other.x;
 			y += other.y;
@@ -35,7 +74,7 @@ namespace radi
 			return *this;
 		}
 
-		vec3& vec3::subtract(const vec3& other)
+		vec3& vec3::Subtract(const vec3& other)
 		{
 			x -= other.x;
 			y -= other.y;
@@ -44,7 +83,7 @@ namespace radi
 			return *this;
 		}
 
-		vec3& vec3::multiply(const vec3& other)
+		vec3& vec3::Multiply(const vec3& other)
 		{
 			x *= other.x;
 			y *= other.y;
@@ -53,7 +92,7 @@ namespace radi
 			return *this;
 		}
 
-		vec3& vec3::divide(const vec3& other)
+		vec3& vec3::Divide(const vec3& other)
 		{
 			x /= other.x;
 			y /= other.y;
@@ -62,44 +101,120 @@ namespace radi
 			return *this;
 		}
 
+		vec3& vec3::Add(float other)
+		{
+			x += other;
+			y += other;
+			z += other;
+
+			return *this;
+		}
+
+		vec3& vec3::Subtract(float other)
+		{
+			x -= other;
+			y -= other;
+			z -= other;
+
+			return *this;
+		}
+
+		vec3& vec3::Multiply(float other)
+		{
+			x *= other;
+			y *= other;
+			z *= other;
+
+			return *this;
+		}
+
+		vec3& vec3::Divide(float other)
+		{
+			x /= other;
+			y /= other;
+			z /= other;
+
+			return *this;
+		}
+
 		vec3 operator+(vec3 left, const vec3& right)
 		{
-			return left.add(right);
+			return left.Add(right);
 		}
 
 		vec3 operator-(vec3 left, const vec3& right)
 		{
-			return left.subtract(right);
+			return left.Subtract(right);
 		}
 
 		vec3 operator*(vec3 left, const vec3& right)
 		{
-			return left.multiply(right);
+			return left.Multiply(right);
 		}
 
 		vec3 operator/(vec3 left, const vec3& right)
 		{
-			return left.divide(right);
+			return left.Divide(right);
+		}
+
+		vec3 operator+(vec3 left, float right)
+		{
+			return left.Add(right);
+		}
+
+		vec3 operator-(vec3 left, float right)
+		{
+			return left.Subtract(right);
+		}
+
+		vec3 operator*(vec3 left, float right)
+		{
+			return left.Multiply(right);
+		}
+
+		vec3 operator/(vec3 left, float right)
+		{
+			return left.Divide(right);
 		}
 
 		vec3& vec3::operator+=(const vec3& other)
 		{
-			return add(other);
+			return Add(other);
 		}
 
 		vec3& vec3::operator-=(const vec3& other)
 		{
-			return subtract(other);
+			return Subtract(other);
 		}
 
 		vec3& vec3::operator*=(const vec3& other)
 		{
-			return multiply(other);
+			return Multiply(other);
 		}
 
 		vec3& vec3::operator/=(const vec3& other)
 		{
-			return divide(other);
+			return Divide(other);
+		}
+
+		vec3& vec3::operator+=(float other)
+		{
+			return Add(other);
+		}
+
+		vec3& vec3::operator-=(float other)
+		{
+			return Subtract(other);
+		}
+
+		vec3& vec3::operator*=(float other)
+		{
+			return Multiply(other);
+		}
+
+		vec3& vec3::operator/=(float other)
+		{
+			return Divide(other);
 		}
 
 		bool vec3::operator<(const vec3& other) const
@@ -132,7 +247,33 @@ namespace radi
 			return !(*this == other);
 		}
 
-		float vec3::distance(const vec3& other) const
+		vec3 operator-(const vec3& vector)
+		{
+			return vec3(-vector.x, -vector.y, -vector.z);
+		}
+
+		vec3 vec3::Cross(const vec3& other) const
+		{
+			return vec3(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
+		}
+
+		float vec3::Dot(const vec3& other) const
+		{
+			return x * other.x + y * other.y + z * other.z;
+		}
+
+		float vec3::Magnitude() const
+		{
+			return sqrt(x * x + y * y + z * z);
+		}
+
+		vec3 vec3::Normalize() const
+		{
+			float length = Magnitude();
+			return vec3(x / length, y / length, z / length);
+		}
+
+		float vec3::Distance(const vec3& other) const
 		{
 			float a = x - other.x;
 			float b = y - other.y;
@@ -145,5 +286,7 @@ namespace radi
 			stream << "vec3: (" << vector.x << ", " << vector.y << ", " << vector.z << ")";
 			return stream;
 		}
+
+
 	}
 }

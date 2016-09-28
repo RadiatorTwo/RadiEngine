@@ -9,7 +9,7 @@ namespace radi {
 		Layer2D::Layer2D(Shader* shader, const maths::mat4& projectionMatrix)
 			: m_renderer(new BatchRenderer2D(Window::GetWindowClass(nullptr)->getWidth(), Window::GetWindowClass(nullptr)->getHeight())), m_shader(shader), m_projectionMatrix(projectionMatrix)
 		{
-			m_shader->bind();
+			m_shader->Bind();
 			m_shader->SetUniformMat4("pr_matrix", m_projectionMatrix);
 
 			GLint texIDs[] =
@@ -21,7 +21,7 @@ namespace radi {
 			};
 
 			m_shader->SetUniform1iv("textures", texIDs, 32);
-			m_shader->unbind();
+			m_shader->Unbind();
 		}
 
 		Layer2D::~Layer2D()
@@ -50,7 +50,7 @@ namespace radi {
 
 		void Layer2D::OnRender()
 		{
-			m_shader->bind();
+			m_shader->Bind();
 			m_renderer->Begin();
 
 			for (const Renderable2D* renderable : m_renderables)

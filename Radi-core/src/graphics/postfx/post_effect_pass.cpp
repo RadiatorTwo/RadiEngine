@@ -8,9 +8,9 @@ namespace radi {
 		PostEffectsPass::PostEffectsPass(Shader* shader)
 			: m_shader(shader)
 		{
-			m_shader->bind();
+			m_shader->Bind();
 			m_shader->SetUniform1i("tex", 0);
-			m_shader->unbind();
+			m_shader->Unbind();
 		}
 
 		PostEffectsPass::~PostEffectsPass()
@@ -20,10 +20,10 @@ namespace radi {
 
 		void PostEffectsPass::RenderPass(Framebuffer* target)
 		{
-			m_shader->bind();
-			m_shader->SetUniformMat4("pr_matrix", maths::mat4::orthographic(0, target->GetWidth(), target->GetHeight(), 0, -1.0f, 1.0f));
+			m_shader->Bind();
+			m_shader->SetUniformMat4("pr_matrix", maths::mat4::Orthographic(0, target->GetWidth(), target->GetHeight(), 0, -1.0f, 1.0f));
 			API::DrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
-			m_shader->unbind();
+			m_shader->Unbind();
 		}
 
 	}

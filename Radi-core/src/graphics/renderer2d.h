@@ -32,7 +32,7 @@ namespace radi
 		protected:
 			Renderer2D() : m_mask(nullptr), m_postEffectsEnabled(true)
 			{
-				m_transformationStack.push_back(maths::mat4::identity());
+				m_transformationStack.push_back(maths::mat4::Identity());
 				m_transformationBack = &m_transformationStack.back();
 				m_target = RenderTarget::SCREEN;
 			}

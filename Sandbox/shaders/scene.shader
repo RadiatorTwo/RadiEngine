@@ -42,7 +42,6 @@ in DATA
 uniform vec4 u_Color;
 
 void main()
-{
-	vec3 n = fs_in.normal / 2.0 + 0.5;
+{	
 	color = vec4(fs_in.color, 1.0);
 };

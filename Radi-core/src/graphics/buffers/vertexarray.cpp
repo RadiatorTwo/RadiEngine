@@ -1,34 +1,34 @@
 #include "vertexarray.h"
 
-namespace radi
-{
-	namespace graphics
-	{
-		uint VertexArray::s_currentBinding = 0;
+namespace radi {
+	namespace graphics {
+
+		uint VertexArray::s_CurrentBinding = 0;
 
 		VertexArray::VertexArray()
 		{
-			m_id = API::CreateVertexArray();
+			m_ID = API::CreateVertexArray();
 		}
 
 		VertexArray::~VertexArray()
 		{
-			for (uint i = 0; i < m_buffers.size(); i++)
-				delete m_buffers[i];
+			for (uint i = 0; i < m_Buffers.size(); i++)
+				delete m_Buffers[i];
 
-			API::FreeVertexArray(m_id);
+			API::FreeVertexArray(m_ID);
 		}
+
 
 		API::Buffer* VertexArray::GetBuffer(uint index)
 		{
-			return m_buffers[index];
+			return m_Buffers[index];
 		}
 
 		void VertexArray::PushBuffer(API::Buffer* buffer)
 		{
-			RADI_ASSERT(s_currentBinding == m_id);
+			RADI_ASSERT(s_CurrentBinding == m_ID);
 
-			m_buffers.push_back(buffer);
+			m_Buffers.push_back(buffer);
 
 			const std::vector<BufferLayoutType>& layout = buffer->layout.GetLayout();
 			for (uint i = 0; i < layout.size(); i++)
@@ -38,18 +38,18 @@ namespace radi
 			}
 		}
 
-		void VertexArray::bind() const
+		void VertexArray::Bind() const
 		{
 #ifdef RADI_DEBUG
-			s_currentBinding = m_id;
+			s_CurrentBinding = m_ID;
 #endif
-			API::BindVertexArray(m_id);
+			API::BindVertexArray(m_ID);
 		}
 
-		void VertexArray::unbind() const
+		void VertexArray::Unbind() const
 		{
 #ifdef RADI_DEBUG
-			s_currentBinding = 0;
+			s_CurrentBinding = 0;
 #endif
 			API::UnbindVertexArrays();
 		}
@@ -58,5 +58,6 @@ namespace radi
 		{
 			API::DrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, NULL);
 		}
+
 	}
 }

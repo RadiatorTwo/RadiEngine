@@ -1,40 +1,40 @@
 #include "indexbuffer.h"
 
-namespace radi
-{
-	namespace graphics
-	{
+namespace radi {
+	namespace graphics {
+
 		IndexBuffer::IndexBuffer(short* data, uint count)
-			:m_count(count)
+			: m_Count(count)
 		{
-			m_buffer = new API::Buffer(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW);
-			m_buffer->Bind();
-			m_buffer->SetData(count * sizeof(short), data);
-			m_buffer->Unbind();
+			m_Buffer = new API::Buffer(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW);
+			m_Buffer->Bind();
+			m_Buffer->SetData(count * sizeof(short), data);
+			m_Buffer->Unbind();
 		}
 
 		IndexBuffer::IndexBuffer(uint* data, uint count)
-			:m_count(count)
+			: m_Count(count)
 		{
-			m_buffer = new API::Buffer(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW);
-			m_buffer->Bind();
-			m_buffer->SetData(count * sizeof(uint), data);
-			m_buffer->Unbind();
+			m_Buffer = new API::Buffer(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW);
+			m_Buffer->Bind();
+			m_Buffer->SetData(count * sizeof(uint), data);
+			m_Buffer->Unbind();
 		}
 
 		IndexBuffer::~IndexBuffer()
 		{
-			delete m_buffer;
+			delete m_Buffer;
 		}
 
-		void IndexBuffer::bind() const
+		void IndexBuffer::Bind() const
 		{
-			m_buffer->Bind();
+			m_Buffer->Bind();
 		}
 
-		void IndexBuffer::unbind() const
+		void IndexBuffer::Unbind() const
 		{
-			m_buffer->Unbind();
+			m_Buffer->Unbind();
 		}
+
 	}
 }

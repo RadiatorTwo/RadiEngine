@@ -3,7 +3,9 @@
 #include <vector>
 
 #include <radi_types.h>
-#include "mesh.h"
+#include <entity/entity.h>
+
+#include "camera/camera.h"
 
 namespace radi {
 	namespace graphics {
@@ -14,14 +16,17 @@ namespace radi {
 		class Scene
 		{
 		private:
-			std::vector<Mesh*> m_meshes; // TODO: Replace with component-based Entities!
+			std::vector<entity::Entity*> m_Entities;
+			Camera* m_Camera;
 		public:
 			Scene();
+			Scene(Camera* camera);
 			~Scene();
-			void Add(Mesh* mesh);
+			void Add(entity::Entity* entity);
+			void Update();
 			void Render(Renderer3D& renderer);
 
-			const std::vector<Mesh*>& GetMeshes() const { return m_meshes; }
+			const std::vector<entity::Entity*>& GetEntities() const { return m_Entities; }
 		};
 
 	}
