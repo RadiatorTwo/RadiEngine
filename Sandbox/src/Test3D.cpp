@@ -33,8 +33,13 @@ void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 	m_Sphere->AddComponent(new MeshComponent(sphereModel->GetMesh()));
 	m_Sphere->AddComponent(new TransformComponent(mat4::Identity()));
 
+	m_Plane = new Entity();
+	m_Plane->AddComponent(new MeshComponent(meshfactory::CreatePlane(32, 32, vec3(0, 1, 0), new MaterialInstance(material))));
+	m_Plane->AddComponent(new TransformComponent(mat4::Identity()));
+
 	m_scene->Add(m_Cube);
 	m_scene->Add(m_Sphere);
+	m_scene->Add(m_Plane);
 }
 
 void Test3D::OnTick()
@@ -49,13 +54,12 @@ void Test3D::OnUpdate()
 	TransformComponent* cubeTransform = m_Cube->GetComponent<TransformComponent>();
 	TransformComponent* sphereTransform = m_Sphere->GetComponent<TransformComponent>();
 
-	mat4 transform = mat4::Rotate(m_rotation, vec3(1, 0, 0)) * mat4::Rotate(m_rotation, vec3(0, 1, 0)) * mat4::Rotate(m_rotation, vec3(0, 0, 1));
+	mat4 transform = mat4::Translate(vec3(0, 2.5f, 0)) * mat4::Rotate(m_rotation, vec3(1, 0, 0)) * mat4::Rotate(m_rotation, vec3(0, 1, 0)) * mat4::Rotate(m_rotation, vec3(0, 0, 1));
 	cubeTransform->transform = mat4::Translate(vec3(-4, 0, 0)) * transform * mat4::Scale(vec3(1.4f, 1.4f, 1.4f));
 	sphereTransform->transform = mat4::Translate(vec3(8, 0, 0)) * transform;
 	m_rotation++;
 }
 
-bool Test3D::OnEvent(const radi::events::Event& event)
+void Test3D::OnEvent(radi::events::Event& event)
 {
-	return false;
 }

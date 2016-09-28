@@ -16,6 +16,7 @@ class Test3D : public radi::graphics::Layer3D
 private:
 	radi::entity::Entity* m_Cube;
 	radi::entity::Entity* m_Sphere;
+	radi::entity::Entity* m_Plane;
 	float m_rotation;
 	bool m_setUniforms[2];
 public:
@@ -26,5 +27,5 @@ public:
 
 	void OnTick() override;
 	void OnUpdate() override;
-	bool OnEvent(const radi::events::Event& event) override;
+	void OnEvent(radi::events::Event& event) override;
 };

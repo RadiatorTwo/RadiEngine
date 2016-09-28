@@ -41,6 +41,8 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="src\radi\debug\debug_layer.cpp" />
+    <ClCompile Include="src\radi\debug\debug_menu.cpp" />
     <ClCompile Include="src\radi\embedded\embedded.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
@@ -360,6 +362,8 @@
     <ClInclude Include="src\radi\audio\sound.h" />
     <ClInclude Include="src\radi\audio\sound_manager.h" />
     <ClInclude Include="src\radi\common.h" />
+    <ClInclude Include="src\radi\debug\debug_layer.h" />
+    <ClInclude Include="src\radi\debug\debug_menu.h" />
     <ClInclude Include="src\radi\embedded\embedded.h" />
     <ClInclude Include="src\radi\entity\component\component.h" />
     <ClInclude Include="src\radi\entity\component\components.h" />
@@ -367,6 +371,8 @@
     <ClInclude Include="src\radi\entity\component\transform_component.h" />
     <ClInclude Include="src\radi\entity\entity.h" />
     <ClInclude Include="src\radi\events\event.h" />
+    <ClInclude Include="src\radi\events\events.h" />
+    <ClInclude Include="src\radi\events\event_dispatcher.h" />
     <ClInclude Include="src\radi\events\iEventlistener.h" />
     <ClInclude Include="src\radi\events\key_event.h" />
     <ClInclude Include="src\radi\events\mouse_event.h" />

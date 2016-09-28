@@ -17,9 +17,8 @@ namespace radi
 		{
 		}
 
-		bool Layer::OnEvent(const events::Event& event)
+		void Layer::OnEvent(events::Event& event)
 		{
-			return false;
 		}
 
 		void Layer::OnTick()

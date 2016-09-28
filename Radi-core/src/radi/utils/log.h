@@ -1,11 +1,11 @@
 #pragma once
 
-
 #include "radi/rd.h"
-#include "radi/common.h"
+#include "radi/Common.h"
 #include "radi/radi_types.h"
 
 #include "radi/maths/vec2.h"
+#include "radi/events/events.h"
 
 #define RADI_LOG_LEVEL_FATAL 0
 #define RADI_LOG_LEVEL_ERROR 1
@@ -24,18 +24,11 @@ namespace std
 //
 // Work in progress!
 //
-// -------------------------------
-//			TODO: 
-// -------------------------------
-//	- Better container type logging
-//	- Better platform support
-//	- Logging to other destinations (eg. files)
-//	- Include (almost) ALL Radi class types
-//	- More...
 namespace radi {
 	namespace internal {
 
 		static char to_string_buffer[1024 * 10];
+		static char sprintf_buffer[1024 * 10];
 
 		RD_API void PlatformLogMessage(uint level, const char* message);
 
@@ -46,7 +39,6 @@ namespace radi {
 			template<class U> static char(&test(...))[2];
 			static const bool value = (sizeof(test<T>(0)) == 1);
 		};
-
 
 		template <typename T>
 		static const char* to_string(const T& t)
@@ -93,6 +85,91 @@ namespace radi {
 			char* result = new char[string.length()];
 			strcpy(result, &string[0]);
 			return result;
+		}
+
+		template <>
+		static const char* to_string<maths::vec3>(const maths::vec3& t)
+		{
+			// TODO: sprintf
+			String string = String("vec3: (") + std::to_string(t.x) + ", " + std::to_string(t.y) + ", " + std::to_string(t.z) + ")";
+			char* result = new char[string.length()];
+			strcpy(result, &string[0]);
+			return result;
+		}
+
+		template <>
+		static const char* to_string<events::KeyPressedEvent>(const events::KeyPressedEvent& e)
+		{
+			sprintf(sprintf_buffer, "KeyPressedEvent: (%d, %d)", e.GetKeyCode(), e.GetRepeat());
+			char* result = new char[strlen(sprintf_buffer)];
+			strcpy(result, &sprintf_buffer[0]);
+			return result;
+		}
+
+		template <>
+		static const char* to_string<events::KeyReleasedEvent>(const events::KeyReleasedEvent& e)
+		{
+			sprintf(sprintf_buffer, "KeyReleasedEvent: (%d)", e.GetKeyCode());
+			char* result = new char[strlen(sprintf_buffer)];
+			strcpy(result, &sprintf_buffer[0]);
+			return result;
+		}
+
+		template <>
+		static const char* to_string<events::MousePressedEvent>(const events::MousePressedEvent& e)
+		{
+			sprintf(sprintf_buffer, "MousePressedEvent: (%d, %f, %f)", e.GetButton(), e.GetX(), e.GetY());
+			char* result = new char[strlen(sprintf_buffer)];
+			strcpy(result, &sprintf_buffer[0]);
+			return result;
+		}
+
+		template <>
+		static const char* to_string<events::MouseReleasedEvent>(const events::MouseReleasedEvent& e)
+		{
+			sprintf(sprintf_buffer, "MouseReleasedEvent: (%d, %f, %f)", e.GetButton(), e.GetX(), e.GetY());
+			char* result = new char[strlen(sprintf_buffer)];
+			strcpy(result, &sprintf_buffer[0]);
+			return result;
+		}
+
+		template <>
+		static const char* to_string<events::MouseMovedEvent>(const events::MouseMovedEvent& e)
+		{
+			sprintf(sprintf_buffer, "MouseMovedEvent: (%f, %f, %s)", e.GetX(), e.GetY(), e.IsDragged() ? "true" : "false");
+			char* result = new char[strlen(sprintf_buffer)];
+			strcpy(result, &sprintf_buffer[0]);
+			return result;
+		}
+
+		template <>
+		static const char* to_string<events::Event>(const events::Event& e)
+		{
+			sprintf(sprintf_buffer, "Event: %s (%d)", events::Event::TypeToString(e.GetType()).c_str(), e.GetType());
+			char* result = new char[strlen(sprintf_buffer)];
+			strcpy(result, &sprintf_buffer[0]);
+			return result;
+		}
+
+		template <>
+		static const char* to_string<events::Event*>(events::Event* const& e)
+		{
+			using namespace events;
+
+			switch (e->GetType())
+			{
+			case Event::Type::KEY_PRESSED:
+				return to_string(*(KeyPressedEvent*)e);
+			case Event::Type::KEY_RELEASED:
+				return to_string(*(KeyReleasedEvent*)e);
+			case Event::Type::MOUSE_PRESSED:
+				return to_string(*(MousePressedEvent*)e);
+			case Event::Type::MOUSE_RELEASED:
+				return to_string(*(MouseReleasedEvent*)e);
+			case Event::Type::MOUSE_MOVED:
+				return to_string(*(MouseMovedEvent*)e);
+			}
+			return "Unkown Event!";
 		}
 
 		template <typename T>
@@ -175,49 +252,58 @@ namespace radi {
 	}
 }
 
+// Windows (wingdi.h) defines RADI_ERROR
+#ifdef RADI_ERROR
+#undef RADI_ERROR
+#endif
+
 #ifndef RADI_LOG_LEVEL
 #define RADI_LOG_LEVEL RADI_LOG_LEVEL_INFO
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_FATAL
-#define RADI_FATAL(...) radi::internal::log_message(RADI_LOG_LEVEL_FATAL, true, "RADI:    ", __VA_ARGS__)
+#define RADI_FATAL(...) radi::internal::log_message(RADI_LOG_LEVEL_FATAL, true, "SPARKY:    ", __VA_ARGS__)
 #define _RADI_FATAL(...) radi::internal::log_message(RADI_LOG_LEVEL_FATAL, false, __VA_ARGS__)
 #else
 #define RADI_FATAL(...)
+#define _RADI_FATAL(...)
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_ERROR
-#define RADI_ERROR(...) radi::internal::log_message(RADI_LOG_LEVEL_ERROR, true, "RADI:    ", __VA_ARGS__)
+#define RADI_ERROR(...) radi::internal::log_message(RADI_LOG_LEVEL_ERROR, true, "SPARKY:    ", __VA_ARGS__)
 #define _RADI_ERROR(...) radi::internal::log_message(RADI_LOG_LEVEL_ERROR, false, __VA_ARGS__)
 #else
 #define RADI_ERROR(...)
+#define _RADI_ERROR(...)
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_WARN
-#define RADI_WARN(...) radi::internal::log_message(RADI_LOG_LEVEL_WARN, true, "RADI:    ", __VA_ARGS__)
+#define RADI_WARN(...) radi::internal::log_message(RADI_LOG_LEVEL_WARN, true, "SPARKY:    ", __VA_ARGS__)
 #define _RADI_WARN(...) radi::internal::log_message(RADI_LOG_LEVEL_WARN, false, __VA_ARGS__)
 #else
 #define RADI_WARN(...)
+#define _RADI_WARN(...)
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_INFO
-#define RADI_INFO(...) radi::internal::log_message(RADI_LOG_LEVEL_INFO, true, "RADI:    ", __VA_ARGS__)
+#define RADI_INFO(...) radi::internal::log_message(RADI_LOG_LEVEL_INFO, true, "SPARKY:    ", __VA_ARGS__)
 #define _RADI_INFO(...) radi::internal::log_message(RADI_LOG_LEVEL_INFO, false, __VA_ARGS__)
 #else
 #define RADI_INFO(...)
+#define _RADI_INFO(...)
 #endif
 
 #ifdef RADI_DEBUG
 #define RADI_ASSERT(x, ...) \
- 		if (!(x)) {\
- 			RADI_FATAL("*************************"); \
- 			RADI_FATAL("    ASSERTION FAILED!    "); \
- 			RADI_FATAL("*************************"); \
- 			RADI_FATAL(__FILE__, ": ", __LINE__); \
- 			RADI_FATAL("Condition: ", #x); \
- 			RADI_FATAL(__VA_ARGS__); \
- 			__debugbreak(); \
- 		}
+		if (!(x)) {\
+			RADI_FATAL("*************************"); \
+			RADI_FATAL("    ASSERTION FAILED!    "); \
+			RADI_FATAL("*************************"); \
+			RADI_FATAL(__FILE__, ": ", __LINE__); \
+			RADI_FATAL("Condition: ", #x); \
+			RADI_FATAL(__VA_ARGS__); \
+			__debugbreak(); \
+		}
 #else
 #define RADI_ASSERT(x, ...)
 #endif
@@ -226,7 +312,7 @@ void check_error();
 bool log_gl_call(const char* function, const char* file, int line);
 
 #ifdef RADI_DEBUG
-#define GLCall(x) glGetError();\
+#define GLCall(x) check_error();\
 		x; \
 		if (!log_gl_call(#x, __FILE__, __LINE__)) __debugbreak();
 #else

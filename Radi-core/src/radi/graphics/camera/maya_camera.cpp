@@ -32,22 +32,24 @@ namespace radi {
 
 			/*if (window->isKeyPressed(VK_CONTROL))
 			{*/
-				const vec2& mouse = window->GetMousePosition();
-				vec2 delta = mouse - m_InitialMousePosition;
-				m_InitialMousePosition = mouse;
+			const vec2& mouse = window->GetMousePosition();
+			vec2 delta = mouse - m_InitialMousePosition;
+			m_InitialMousePosition = mouse;
 
-				if (window->IsMouseButtonPressed(RD_MOUSE_MIDDLE))
-					MousePan(delta);
-				else if (window->IsMouseButtonPressed(RD_MOUSE_LEFT))
-					MouseRotate(delta);
-				else if (window->IsMouseButtonPressed(RD_MOUSE_RIGHT))
-					MouseZoom(delta.y);
+			if (window->IsMouseButtonPressed(RD_MOUSE_MIDDLE))
+				MousePan(delta);
+			else if (window->IsMouseButtonPressed(RD_MOUSE_LEFT))
+				MouseRotate(delta);
+			else if (window->IsMouseButtonPressed(RD_MOUSE_RIGHT))
+				MouseZoom(delta.y);
 
 			//}
 
 			// MouseZoom(window->GetMouseScrollPosition().y);
 
-			m_ViewMatrix = mat4::Rotate(GetOrientation().Conjugate());
+			Quaternion orientation = GetOrientation();
+			m_Rotation = orientation.ToEulerAngles() * (180.0f / M_PI);
+			m_ViewMatrix = mat4::Rotate(orientation.Conjugate());
 			m_ViewMatrix *= mat4::Translate(-GetPosition());
 		}
 

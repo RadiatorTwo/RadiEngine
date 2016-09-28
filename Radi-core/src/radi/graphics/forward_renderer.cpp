@@ -1,6 +1,8 @@
 #include "radi/rd.h"
 #include "forward_renderer.h"
 
+#include <GL/glew.h>
+
 namespace radi {
 	namespace graphics {
 
@@ -60,6 +62,9 @@ namespace radi {
 		void ForwardRenderer::Present()
 		{
 			// TODO: Shader binding, texture sorting, visibility testing, etc.
+
+			GLCall(glEnable(GL_DEPTH_TEST));
+			GLCall(glDepthFunc(GL_LEQUAL));
 
 			for (uint i = 0; i < m_CommandQueue.size(); i++)
 			{

@@ -15,7 +15,7 @@ using namespace maths;
 TestLayer::TestLayer()
 	: Layer2D(ShaderFactory::DefaultShader(), mat4::Orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f))
 {
-
+	m_Renderer = nullptr;
 }
 
 TestLayer::~TestLayer()
@@ -25,7 +25,8 @@ TestLayer::~TestLayer()
 
 void TestLayer::OnInit(Renderer2D& renderer, Shader& shader)
 {
-	FontManager::get()->SetScale(m_window->GetWidth() / 32.0f, m_window->GetHeight() / 18.0f);
+	m_Renderer = &renderer;
+
 	renderer.SetRenderTarget(RenderTarget::SCREEN);
 	Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
 	renderer.AddPostEffectsPass(new PostEffectsPass(Shader::FromFile("Horizontal Blur", "shaders/postfx.shader")));
@@ -33,17 +34,19 @@ void TestLayer::OnInit(Renderer2D& renderer, Shader& shader)
 
 	Texture::SetFilter(TextureFilter::NEAREST);
 	m_mario = new Sprite(0.0f, 0.0f, 0.15f * 4, 0.2f * 4, new Texture("mario", "res/mario32.png"));
-	Add(m_mario);
+	
 
 	for (float i = -16; i < 16.0f; i += 0.16f * 4)
 	{
 		Add(new Sprite(i, -9.0f, 0.16f * 4, 0.16f * 4, new Texture("ground_tile", "res/ground_tile.png")));
 	}
 
-	for (float i = -16.0f; i < 16.0f; i += 5.12f * 4)
-	{
-		Add(new Sprite(i, -9.0f + (0.16f * 4), 5.12f * 4, 4.32f * 4, new Texture("background", "res/background.png")));
-	}
+	//for (float i = -16.0f; i < 16.0f; i += 5.12f * 4)
+	//{
+	//	Add(new Sprite(i, -9.0f + (0.16f * 4), 5.12f * 4, 4.32f * 4, new Texture("background", "res/background.png")));
+	//}
+
+Add(m_mario);
 
 	m_fps = new Label("", -15.5f, 7.8f, 0xff000000);
 	Add(m_fps);
@@ -53,10 +56,11 @@ void TestLayer::OnInit(Renderer2D& renderer, Shader& shader)
 	debugInfo[1] = new Label("", -15.5f, 5.8f, 0xff000000);
 	Add(debugInfo[0]);
 	Add(debugInfo[1]);
-	
-	//Mask* mask = new Mask(new Texture("Mask", "res/mask.png"));
-	//mask->transform = mat4::translation(vec3(-16.0f, -9.0f, 0.0f)) * mat4::scale(vec3(32, 18, 1));
+
+	Mask* mask = new Mask(new Texture("Mask", "res/mask.png"));
+	mask->transform = mat4::Translate(vec3(-16.0f, -9.0f, 0.0f)) * mat4::Scale(vec3(32, 18, 1));
 	// layer->SetMask(mask);
+	SetMask(mask);
 }
 
 void TestLayer::OnTick()
@@ -80,19 +84,38 @@ void TestLayer::OnUpdate()
 		m_mario->position.y -= speed;
 }
 
-bool TestLayer::OnEvent(const radi::events::Event& event)
+bool TestLayer::OnKeyPressedEvent(KeyPressedEvent& event)
 {
+	if (!m_Renderer)
+		return false;
+
+	Renderer2D& renderer = *m_Renderer;
+
+	if (event.GetRepeat())
+		return false;
+
+	if (event.GetKeyCode() == VK_T)
+	{
+		renderer.SetRenderTarget(renderer.GetRenderTarget() == RenderTarget::SCREEN ? RenderTarget::BUFFER : RenderTarget::SCREEN);
+		return true;
+	}
+	if (event.GetKeyCode() == VK_P)
+	{
+		renderer.SetPostEffects(!renderer.GetPostEffects());
+		return true;
+	}
+
 	return false;
+}
+
+void TestLayer::OnEvent(radi::events::Event& event)
+{
+	EventDispatcher dispatcher(event);
+	dispatcher.Dispatch<KeyPressedEvent>(METHOD(&TestLayer::OnKeyPressedEvent));
 }
 
 void TestLayer::OnRender(Renderer2D& renderer)
 {
-	// TODO: Move this into OnEvent!
-	if (m_window->IsKeyTyped(VK_T))
-		renderer.SetRenderTarget(renderer.GetRenderTarget() == RenderTarget::SCREEN ? RenderTarget::BUFFER : RenderTarget::SCREEN);
-	if (m_window->IsKeyTyped(VK_P))
-		renderer.SetPostEffects(!renderer.GetPostEffects());
-
 	debugInfo[0]->text = String("Target: ") + (renderer.GetRenderTarget() == RenderTarget::SCREEN ? "Screen" : "Buffer");
 	debugInfo[1]->text = String("PostFX: ") + (renderer.GetPostEffects() ? "On" : "Off");
 }

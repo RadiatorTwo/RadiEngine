@@ -15,7 +15,7 @@ namespace radi
 		TextureFilter Texture::s_filterMode = TextureFilter::LINEAR;
 
 		Texture::Texture(uint width, uint height, uint bits)
-			: m_width(width), m_height(height), m_bits(24), m_filename("NULL")
+			: m_width(width), m_height(height), m_bits(bits), m_filename("NULL")
 		{
 			m_tID = load();
 		}

@@ -33,6 +33,7 @@ namespace radi {
 			~Framebuffer();
 
 			void Bind() const;
+			void Unbind() const;
 			void Clear();
 
 			inline const maths::tvec2<uint>& GetSize() const { return m_Size; }

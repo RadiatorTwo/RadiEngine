@@ -5,6 +5,7 @@
 #include "radi/maths/vec2.h"
 
 #include "../audio/sound_manager.h"
+#include "radi/events/Events.h"
 
 #include "font_manager.h"
 #include "texture_manager.h"
@@ -15,6 +16,9 @@ namespace radi
 	{
 #define MAX_KEYS 1024
 #define MAX_BUTTONS 32
+
+		typedef std::function<void(events::Event& event)> WindowEventCallback;
+
 		class RD_API Window
 		{
 		private:
@@ -25,9 +29,10 @@ namespace radi
 			bool m_Closed;
 			void* m_Handle;
 
-			bool m_Keys[MAX_KEYS];
+			
 			bool m_KeyState[MAX_KEYS];
-			bool m_KeyTyped[MAX_KEYS];
+			bool m_LastKeyState[MAX_KEYS];
+
 			bool m_MouseButtons[MAX_BUTTONS];
 			bool m_MouseState[MAX_BUTTONS];
 			bool m_MouseClicked[MAX_BUTTONS];
@@ -35,6 +40,7 @@ namespace radi
 
 			maths::vec2 m_MousePosition;
 			bool m_Vsync;
+			WindowEventCallback m_EventCallback;
 		public:
 			Window(const char *name, uint width, uint height);
 			~Window();
@@ -46,8 +52,7 @@ namespace radi
 			inline uint GetWidth() const { return m_Width; }
 			inline uint GetHeight() const { return m_Height; }
 
-			bool IsKeyPressed(uint keycode) const;
-			bool IsKeyTyped(uint keycode) const;
+			bool IsKeyPressed(uint keycode) const;		
 			bool IsMouseButtonPressed(uint button) const;
 			bool IsMouseButtonClicked(uint button) const;
 
@@ -59,6 +64,8 @@ namespace radi
 
 			void SetVsync(bool enabled);
 			bool IsVsync() const { return m_Vsync; }
+
+			void SetEventCallback(const WindowEventCallback& callback);
 		private:
 			bool Init();
 
@@ -66,7 +73,7 @@ namespace radi
 			void PlatformUpdate();
 
 			friend void resize_callback(Window* window, int width, int height);
-			friend void key_callback(Window* window, int key, uint message);
+			friend void key_callback(Window* window, int flags, int key, uint message);
 			friend void mouse_button_callback(Window* window, int button, int x, int y);
 		public:
 			static void RegisterWindowClass(void* handle, Window* window);
@@ -80,6 +87,8 @@ namespace radi
 #define RD_MOUSE_RIGHT    0x02
 
 #define RD_NO_CURSOR	  NULL
+
+#define VK_TAB			  0x09
 
 #define VK_0			  0x30
 #define VK_1			  0x31

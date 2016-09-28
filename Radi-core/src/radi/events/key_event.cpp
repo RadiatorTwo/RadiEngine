@@ -5,17 +5,17 @@ namespace radi {
 	namespace events {
 
 		KeyEvent::KeyEvent(int keyCode, Event::Type type)
-			: Event(type)
+			: Event(type), m_keyCode(keyCode)
 		{
 		}
 
 		KeyPressedEvent::KeyPressedEvent(int button, int repeat)
-			: KeyEvent(button, Event::Type::KEY_PRESSED)
+			: KeyEvent(button, KeyPressedEvent::GetStaticType()), m_repeat(repeat)
 		{
 		}
 
 		KeyReleasedEvent::KeyReleasedEvent(int button)
-			: KeyEvent(button, Event::Type::KEY_RELEASED)
+			: KeyEvent(button, KeyReleasedEvent::GetStaticType())
 		{
 		}
 

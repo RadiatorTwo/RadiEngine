@@ -18,6 +18,7 @@ namespace radi {
 			RD_API VertexArray* CreateQuad(const maths::vec2& position, const maths::vec2& size);
 
 			RD_API Mesh* CreateCube(float size, MaterialInstance* material);
+			RD_API Mesh* CreatePlane(float width, float height, const maths::vec3& normal, MaterialInstance* material);
 		}
 	}
 }

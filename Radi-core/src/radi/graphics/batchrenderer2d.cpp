@@ -78,6 +78,8 @@ namespace radi
 
 			// Setup Framebuffer
 			m_screenBuffer = API::GetScreenBuffer();
+			RADI_ASSERT(m_screenBuffer == 0);
+
 			m_framebuffer = new Framebuffer(m_viewportSize);
 			m_simpleShader = ShaderFactory::SimpleShader();
 			m_simpleShader->Bind();
@@ -146,6 +148,8 @@ namespace radi
 
 				m_framebuffer->Bind();
 				m_framebuffer->Clear();
+
+				glBlendFunc(GL_ONE, GL_ZERO);
 			}
 			else
 			{
@@ -253,7 +257,7 @@ namespace radi
 			{
 				char c = text[i];
 				texture_glyph_t* glyph = texture_font_get_glyph(ftFont, c);
-				if (glyph != NULL)
+				if (glyph)
 				{
 
 					if (i > 0)
@@ -272,25 +276,25 @@ namespace radi
 					float u1 = glyph->s1;
 					float v1 = glyph->t1;
 
-					m_buffer->vertex = *m_transformationBack * maths::vec3(x0, y0, 0);
+					m_buffer->vertex = *m_transformationBack * vec3(x0, y0, 0);
 					m_buffer->uv = vec2(u0, v0);
 					m_buffer->tid = ts;
 					m_buffer->color = color;
 					m_buffer++;
 
-					m_buffer->vertex = *m_transformationBack * maths::vec3(x0, y1, 0);
+					m_buffer->vertex = *m_transformationBack * vec3(x0, y1, 0);
 					m_buffer->uv = vec2(u0, v1);
 					m_buffer->tid = ts;
 					m_buffer->color = color;
 					m_buffer++;
 
-					m_buffer->vertex = *m_transformationBack * maths::vec3(x1, y1, 0);
+					m_buffer->vertex = *m_transformationBack * vec3(x1, y1, 0);
 					m_buffer->uv = vec2(u1, v1);
 					m_buffer->tid = ts;
 					m_buffer->color = color;
 					m_buffer++;
 
-					m_buffer->vertex = *m_transformationBack * maths::vec3(x1, y0, 0);
+					m_buffer->vertex = *m_transformationBack * vec3(x1, y0, 0);
 					m_buffer->uv = vec2(u1, v0);
 					m_buffer->tid = ts;
 					m_buffer->color = color;
@@ -312,6 +316,9 @@ namespace radi
 
 		void BatchRenderer2D::Present()
 		{
+			GLCall(glDepthFunc(GL_NEVER));
+			GLCall(glDisable(GL_DEPTH_TEST));
+
 			for (uint i = 0; i < m_textureSlots.size(); i++)
 			{
 				API::SetActiveTexture(GL_TEXTURE0 + i);
@@ -341,6 +348,7 @@ namespace radi
 				// Display Framebuffer - potentially move to Framebuffer class
 				API::BindFramebuffer(GL_FRAMEBUFFER, m_screenBuffer);
 				API::SetViewport(0, 0, m_screenSize.x, m_screenSize.y);
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				m_simpleShader->Bind();
 
 				API::SetActiveTexture(GL_TEXTURE0);
