@@ -1,10 +1,10 @@
 #pragma once
 
-#include <graphics/layers/layer2d.h>
-#include <events/event.h>
-#include <graphics/label.h>
-#include <graphics/sprite.h>
-#include <graphics/renderer2d.h>
+#include <radi/graphics/layers/layer2d.h>
+#include <radi/events/event.h>
+#include <radi/graphics/label.h>
+#include <radi/graphics/sprite.h>
+#include <radi/graphics/renderer2d.h>
 
 class TestLayer : public radi::graphics::Layer2D
 {

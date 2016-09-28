@@ -1,7 +1,7 @@
 #pragma once
 
 #include <radi_types.h>
-#include <graphics/buffers/buffer_layout.h>
+#include <radi/graphics/buffers/buffer_layout.h>
 
 namespace radi {
 	namespace graphics {

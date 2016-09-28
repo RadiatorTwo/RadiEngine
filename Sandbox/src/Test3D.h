@@ -1,15 +1,15 @@
 #pragma once
 
-#include <app/Application.h>
-#include <maths/maths.h>
+#include <radi/app/Application.h>
+#include <radi/maths/maths.h>
 
-#include <graphics/mesh_factory.h>
-#include <graphics/layers/layer3D.h>
-#include <graphics/shaders/shader_factory.h>
-#include <graphics/model.h>
+#include <radi/graphics/mesh_factory.h>
+#include <radi/graphics/layers/layer3D.h>
+#include <radi/graphics/shaders/shader_factory.h>
+#include <radi/graphics/model.h>
 
-#include <entity/entity.h>
-#include <entity/component/components.h>
+#include <radi/entity/entity.h>
+#include <radi/entity/component/components.h>
 
 class Test3D : public radi::graphics::Layer3D
 {

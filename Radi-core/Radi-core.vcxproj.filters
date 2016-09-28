@@ -147,113 +147,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\graphics\buffers\buffer.cpp">
-      <Filter>Quelldateien\graphics\buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\buffers\indexbuffer.cpp">
-      <Filter>Quelldateien\graphics\buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\layers\group.cpp">
-      <Filter>Quelldateien\graphics\layers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\label.cpp">
-      <Filter>Quelldateien\graphics\renderables</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\layers\layer.cpp">
-      <Filter>Quelldateien\graphics\layers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\batchrenderer2d.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\maths\mat4.cpp">
-      <Filter>Quelldateien\maths</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\sprite.cpp">
-      <Filter>Quelldateien\graphics\renderables</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\texture.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\maths\vec3.cpp">
-      <Filter>Quelldateien\maths</Filter>
-    </ClCompile>
-    <ClCompile Include="src\maths\vec4.cpp">
-      <Filter>Quelldateien\maths</Filter>
-    </ClCompile>
-    <ClCompile Include="src\maths\vec2.cpp">
-      <Filter>Quelldateien\maths</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\buffers\vertexarray.cpp">
-      <Filter>Quelldateien\graphics\buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\window.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\font.cpp">
-      <Filter>Quelldateien\graphics\fonts</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\font_manager.cpp">
-      <Filter>Quelldateien\graphics\fonts</Filter>
-    </ClCompile>
-    <ClCompile Include="src\audio\sound.cpp">
-      <Filter>Quelldateien\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\audio\sound_manager.cpp">
-      <Filter>Quelldateien\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\texture_manager.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\shaders\shader.cpp">
-      <Filter>Quelldateien\graphics\shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\shaders\shader_factory.cpp">
-      <Filter>Quelldateien\graphics\shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="src\embedded\embedded.cpp">
-      <Filter>Quelldateien\embedded</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\framebuffer.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\mesh_factory.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\platform\windows\win32log.cpp">
       <Filter>Quelldateien\platform\windows</Filter>
     </ClCompile>
     <ClCompile Include="src\platform\windows\win32application.cpp">
       <Filter>Quelldateien\platform\windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\postfx\post_effects.cpp">
-      <Filter>Quelldateien\graphics\postfx</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\postfx\post_effect_pass.cpp">
-      <Filter>Quelldateien\graphics\postfx</Filter>
-    </ClCompile>
     <ClCompile Include="src\platform\windows\win32window.cpp">
       <Filter>Quelldateien\platform\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\app\application.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\layers\layer2D.cpp">
-      <Filter>Quelldateien\graphics\layers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\events\event.cpp">
-      <Filter>Quelldateien\events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\events\key_event.cpp">
-      <Filter>Quelldateien\events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\events\mouse_event.cpp">
-      <Filter>Quelldateien\events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\maths\AABB.cpp">
-      <Filter>Quelldateien\maths</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\buffers\buffer_layout.cpp">
-      <Filter>Quelldateien\graphics\buffers</Filter>
     </ClCompile>
     <ClCompile Include="src\platform\opengl\radi_opengl_render_api.cpp">
       <Filter>Quelldateien\platform\opengl</Filter>
@@ -264,264 +165,369 @@
     <ClCompile Include="src\radi_string.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\camera\camera.cpp">
-      <Filter>Quelldateien\camera</Filter>
+    <ClCompile Include="src\platform\opengl\radi_opengl_error.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\layers\layer3D.cpp">
-      <Filter>Quelldateien\graphics\layers</Filter>
+    <ClCompile Include="src\radi\app\application.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\forward_renderer.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\mesh.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\camera\maya_camera.cpp">
-      <Filter>Quelldateien\camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\material.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entity\component\component.cpp">
-      <Filter>Quelldateien\entity\component</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entity\entity.cpp">
-      <Filter>Quelldateien\entity</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entity\component\mesh_component.cpp">
-      <Filter>Quelldateien\entity\component</Filter>
-    </ClCompile>
-    <ClCompile Include="src\maths\quaternion.cpp">
+    <ClCompile Include="src\radi\maths\AABB.cpp">
       <Filter>Quelldateien\maths</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\model.cpp">
-      <Filter>Quelldateien\graphics</Filter>
+    <ClCompile Include="src\radi\maths\mat4.cpp">
+      <Filter>Quelldateien\maths</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\scene.cpp">
-      <Filter>Quelldateien\graphics</Filter>
+    <ClCompile Include="src\radi\maths\quaternion.cpp">
+      <Filter>Quelldateien\maths</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\shaders\shader_uniform.cpp">
+    <ClCompile Include="src\radi\maths\vec2.cpp">
+      <Filter>Quelldateien\maths</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\maths\vec3.cpp">
+      <Filter>Quelldateien\maths</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\maths\vec4.cpp">
+      <Filter>Quelldateien\maths</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\audio\sound.cpp">
+      <Filter>Quelldateien\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\audio\sound_manager.cpp">
+      <Filter>Quelldateien\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\buffers\buffer.cpp">
+      <Filter>Quelldateien\graphics\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\buffers\buffer_layout.cpp">
+      <Filter>Quelldateien\graphics\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\buffers\indexbuffer.cpp">
+      <Filter>Quelldateien\graphics\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\buffers\vertexarray.cpp">
+      <Filter>Quelldateien\graphics\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\camera\camera.cpp">
+      <Filter>Quelldateien\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\camera\maya_camera.cpp">
+      <Filter>Quelldateien\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\layers\group.cpp">
+      <Filter>Quelldateien\graphics\layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\layers\layer.cpp">
+      <Filter>Quelldateien\graphics\layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\layers\layer2D.cpp">
+      <Filter>Quelldateien\graphics\layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\layers\layer3D.cpp">
+      <Filter>Quelldateien\graphics\layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\postfx\post_effect_pass.cpp">
+      <Filter>Quelldateien\graphics\postfx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\postfx\post_effects.cpp">
+      <Filter>Quelldateien\graphics\postfx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\shaders\shader.cpp">
       <Filter>Quelldateien\graphics\shaders</Filter>
     </ClCompile>
-    <ClCompile Include="src\entity\component\transform_component.cpp">
+    <ClCompile Include="src\radi\graphics\shaders\shader_factory.cpp">
+      <Filter>Quelldateien\graphics\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\shaders\shader_uniform.cpp">
+      <Filter>Quelldateien\graphics\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\batchrenderer2d.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\font.cpp">
+      <Filter>Quelldateien\graphics\fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\font_manager.cpp">
+      <Filter>Quelldateien\graphics\fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\forward_renderer.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\framebuffer.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\label.cpp">
+      <Filter>Quelldateien\graphics\renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\material.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\mesh.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\mesh_factory.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\model.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\scene.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\sprite.cpp">
+      <Filter>Quelldateien\graphics\renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\texture.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\texture_manager.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\window.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\events\event.cpp">
+      <Filter>Quelldateien\events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\events\key_event.cpp">
+      <Filter>Quelldateien\events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\events\mouse_event.cpp">
+      <Filter>Quelldateien\events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\entity\component\component.cpp">
       <Filter>Quelldateien\entity\component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\entity\component\mesh_component.cpp">
+      <Filter>Quelldateien\entity\component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\entity\component\transform_component.cpp">
+      <Filter>Quelldateien\entity\component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\entity\entity.cpp">
+      <Filter>Quelldateien\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\embedded\embedded.cpp">
+      <Filter>Quelldateien\embedded</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\graphics\batchrenderer2d.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\renderer2d.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\texture.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\fileutils.h">
-      <Filter>Headerdateien\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\image_load.h">
-      <Filter>Headerdateien\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\timer.h">
-      <Filter>Headerdateien\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\maths\mat4.h">
-      <Filter>Headerdateien\maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\maths\maths.h">
-      <Filter>Headerdateien\maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\maths\maths_func.h">
-      <Filter>Headerdateien\maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\maths\vec2.h">
-      <Filter>Headerdateien\maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\maths\vec3.h">
-      <Filter>Headerdateien\maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\maths\vec4.h">
-      <Filter>Headerdateien\maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\buffers\buffer.h">
-      <Filter>Headerdateien\graphics\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\buffers\indexbuffer.h">
-      <Filter>Headerdateien\graphics\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\layers\layer.h">
-      <Filter>Headerdateien\graphics\layers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\buffers\vertexarray.h">
-      <Filter>Headerdateien\graphics\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\layers\group.h">
-      <Filter>Headerdateien\graphics\layers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\label.h">
-      <Filter>Headerdateien\graphics\renderables</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\sprite.h">
-      <Filter>Headerdateien\graphics\renderables</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\renderable2d.h">
-      <Filter>Headerdateien\graphics\renderables</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\window.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\font.h">
-      <Filter>Headerdateien\graphics\fonts</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\font_manager.h">
-      <Filter>Headerdateien\graphics\fonts</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\stringutils.h">
-      <Filter>Headerdateien\utils</Filter>
-    </ClInclude>
     <ClInclude Include="src\radi.h">
       <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\log.h">
-      <Filter>Headerdateien\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio\sound.h">
-      <Filter>Headerdateien\audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio\sound_manager.h">
-      <Filter>Headerdateien\audio</Filter>
     </ClInclude>
     <ClInclude Include="src\radigl.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\texture_manager.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\shaders\shader.h">
-      <Filter>Headerdateien\graphics\shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\shaders\shader_factory.h">
-      <Filter>Headerdateien\graphics\shaders</Filter>
-    </ClInclude>
     <ClInclude Include="src\radi_types.h">
       <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="src\embedded\embedded.h">
-      <Filter>Headerdateien\embedded</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\mask.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\maths\tvec2.h">
-      <Filter>Headerdateien\maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\framebuffer.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\mesh_factory.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\app\application.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\postfx\post_effects.h">
-      <Filter>Headerdateien\graphics\postfx</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\postfx\post_effect_pass.h">
-      <Filter>Headerdateien\graphics\postfx</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\layers\layer2D.h">
-      <Filter>Headerdateien\graphics\layers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\events\event.h">
-      <Filter>Headerdateien\graphics\events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\events\iEventlistener.h">
-      <Filter>Headerdateien\graphics\events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\events\key_event.h">
-      <Filter>Headerdateien\graphics\events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\events\mouse_event.h">
-      <Filter>Headerdateien\graphics\events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\maths\AABB.h">
-      <Filter>Headerdateien\maths</Filter>
     </ClInclude>
     <ClInclude Include="src\platform\opengl\radi_opengl_buffer.h">
       <Filter>Headerdateien\platform\opengl</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\buffers\buffer_layout.h">
-      <Filter>Headerdateien\graphics\buffers</Filter>
-    </ClInclude>
     <ClInclude Include="src\radi_string.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\forward_renderer.h">
-      <Filter>Headerdateien\graphics</Filter>
+    <ClInclude Include="src\platform\opengl\radi_opengl_types.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\iRenderable.h">
-      <Filter>Headerdateien\graphics\renderables</Filter>
+    <ClInclude Include="src\radi\app\application.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\camera\camera.h">
-      <Filter>Headerdateien\graphics\camera</Filter>
+    <ClInclude Include="src\radi\utils\fileutils.h">
+      <Filter>Headerdateien\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\camera\maya_camera.h">
-      <Filter>Headerdateien\graphics\camera</Filter>
+    <ClInclude Include="src\radi\utils\image_load.h">
+      <Filter>Headerdateien\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity\entity.h">
-      <Filter>Headerdateien\entity</Filter>
+    <ClInclude Include="src\radi\utils\log.h">
+      <Filter>Headerdateien\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity\component\mesh_component.h">
-      <Filter>Headerdateien\entity\component</Filter>
+    <ClInclude Include="src\radi\utils\stringutils.h">
+      <Filter>Headerdateien\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity\component\transform_component.h">
-      <Filter>Headerdateien\entity\component</Filter>
+    <ClInclude Include="src\radi\utils\timer.h">
+      <Filter>Headerdateien\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity\component\component.h">
-      <Filter>Headerdateien\entity\component</Filter>
-    </ClInclude>
-    <ClInclude Include="src\entity\component\components.h">
-      <Filter>Headerdateien\entity\component</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\layers\layer3D.h">
-      <Filter>Headerdateien\graphics\layers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\material.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\mesh.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\model.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\maths\quaternion.h">
+    <ClInclude Include="src\radi\maths\AABB.h">
       <Filter>Headerdateien\maths</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\renderer3D.h">
-      <Filter>Headerdateien\graphics</Filter>
+    <ClInclude Include="src\radi\maths\mat4.h">
+      <Filter>Headerdateien\maths</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\render_command.h">
-      <Filter>Headerdateien\graphics</Filter>
+    <ClInclude Include="src\radi\maths\maths.h">
+      <Filter>Headerdateien\maths</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\shaders\shader_uniform.h">
+    <ClInclude Include="src\radi\maths\maths_func.h">
+      <Filter>Headerdateien\maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\maths\quaternion.h">
+      <Filter>Headerdateien\maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\maths\tvec2.h">
+      <Filter>Headerdateien\maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\maths\vec2.h">
+      <Filter>Headerdateien\maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\maths\vec3.h">
+      <Filter>Headerdateien\maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\maths\vec4.h">
+      <Filter>Headerdateien\maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\audio\sound.h">
+      <Filter>Headerdateien\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\audio\sound_manager.h">
+      <Filter>Headerdateien\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\buffers\buffer.h">
+      <Filter>Headerdateien\graphics\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\buffers\buffer_layout.h">
+      <Filter>Headerdateien\graphics\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\buffers\indexbuffer.h">
+      <Filter>Headerdateien\graphics\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\buffers\vertexarray.h">
+      <Filter>Headerdateien\graphics\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\camera\camera.h">
+      <Filter>Headerdateien\graphics\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\camera\maya_camera.h">
+      <Filter>Headerdateien\graphics\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\layers\group.h">
+      <Filter>Headerdateien\graphics\layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\layers\layer.h">
+      <Filter>Headerdateien\graphics\layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\layers\layer2D.h">
+      <Filter>Headerdateien\graphics\layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\layers\layer3D.h">
+      <Filter>Headerdateien\graphics\layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\postfx\post_effect_pass.h">
+      <Filter>Headerdateien\graphics\postfx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\postfx\post_effects.h">
+      <Filter>Headerdateien\graphics\postfx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\shaders\shader.h">
       <Filter>Headerdateien\graphics\shaders</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\scene.h">
+    <ClInclude Include="src\radi\graphics\shaders\shader_factory.h">
+      <Filter>Headerdateien\graphics\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\shaders\shader_uniform.h">
+      <Filter>Headerdateien\graphics\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\batchrenderer2d.h">
       <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\radi_render_api.h">
+    <ClInclude Include="src\radi\graphics\font.h">
+      <Filter>Headerdateien\graphics\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\font_manager.h">
+      <Filter>Headerdateien\graphics\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\forward_renderer.h">
       <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\framebuffer.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\iRenderable.h">
+      <Filter>Headerdateien\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\label.h">
+      <Filter>Headerdateien\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\mask.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\material.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\mesh.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\mesh_factory.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\model.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\radi_render_api.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\render_command.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\renderable2d.h">
+      <Filter>Headerdateien\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\renderer2d.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\renderer3D.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\scene.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\sprite.h">
+      <Filter>Headerdateien\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\texture.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\texture_manager.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\window.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\events\event.h">
+      <Filter>Headerdateien\graphics\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\events\iEventlistener.h">
+      <Filter>Headerdateien\graphics\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\events\key_event.h">
+      <Filter>Headerdateien\graphics\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\events\mouse_event.h">
+      <Filter>Headerdateien\graphics\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\entity\component\component.h">
+      <Filter>Headerdateien\entity\component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\entity\component\components.h">
+      <Filter>Headerdateien\entity\component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\entity\component\mesh_component.h">
+      <Filter>Headerdateien\entity\component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\entity\component\transform_component.h">
+      <Filter>Headerdateien\entity\component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\entity\entity.h">
+      <Filter>Headerdateien\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\embedded\embedded.h">
+      <Filter>Headerdateien\embedded</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\embedded\files\SourceSansPro-Light.embed">
-      <Filter>Ressourcendateien\embedded</Filter>
-    </None>
     <None Include="src\platform\opengl\radi_opengl_render_api.inl">
       <Filter>Headerdateien\platform\opengl</Filter>
+    </None>
+    <None Include="src\radi\embedded\files\SourceSansPro-Light.embed">
+      <Filter>Ressourcendateien\embedded</Filter>
     </None>
   </ItemGroup>
 </Project>

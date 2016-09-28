@@ -1,22 +1,22 @@
 #pragma once
-#include "graphics/label.h"
-#include "graphics/sprite.h"
-#include "graphics/renderer2d.h"
-#include "graphics/batchrenderer2d.h"
-#include "graphics/layers/layer.h"
-#include "graphics/layers/group.h"
-#include "graphics/texture_manager.h"
-#include "graphics/window.h"
+#include "radi/graphics/label.h"
+#include "radi/graphics/sprite.h"
+#include "radi/graphics/renderer2d.h"
+#include "radi/graphics/batchrenderer2d.h"
+#include "radi/graphics/layers/layer.h"
+#include "radi/graphics/layers/group.h"
+#include "radi/graphics/texture_manager.h"
+#include "radi/graphics/window.h"
 
-#include "graphics/shaders/Shader.h"
-#include "graphics/shaders/shader_factory.h"
+#include "radi/graphics/shaders/Shader.h"
+#include "radi/graphics/shaders/shader_factory.h"
 
-#include "audio/sound.h"
-#include "audio/sound_manager.h"
+#include "radi/audio/sound.h"
+#include "radi/audio/sound_manager.h"
 
-#include "maths/maths.h"
-#include "utils/Log.h"
-#include "utils/timer.h"
+#include "radi/maths/maths.h"
+#include "radi/utils/Log.h"
+#include "radi/utils/timer.h"
 
 namespace radi
 {

@@ -1,11 +1,11 @@
 #include "TestLayer.h"
 
-#include <app/Application.h>
+#include <radi/app/Application.h>
 
-#include <graphics/BatchRenderer2D.h>
-#include <graphics/shaders/shader_factory.h>
-#include <graphics/font_manager.h>
-#include <graphics/Sprite.h>
+#include <radi/graphics/BatchRenderer2D.h>
+#include <radi/graphics/shaders/shader_factory.h>
+#include <radi/graphics/font_manager.h>
+#include <radi/graphics/Sprite.h>
 
 using namespace radi;
 using namespace graphics;
