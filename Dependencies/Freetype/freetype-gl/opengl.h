@@ -31,8 +31,6 @@
  * policies, either expressed or implied, of Nicolas P. Rougier.
  * ============================================================================
  */
-#ifndef SPARKY_PLATFORM_WEB
-
 #ifndef __OPEN_GL_H__
 #define __OPEN_GL_H__
 
@@ -50,5 +48,3 @@
 #endif
 
 #endif /* OPEN_GL_H */
-
-#endif

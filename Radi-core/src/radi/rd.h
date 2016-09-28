@@ -1,6 +1,6 @@
 #pragma once
 
-// Sparky PCH header
+// RadiEngine PCH header
 
 #include <algorithm>
 #include <iostream>

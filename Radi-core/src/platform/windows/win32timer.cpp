@@ -1,5 +1,5 @@
 #include "radi/rd.h"
-#include "radi/utils/Timer.h"
+#include "radi/utils/timer.h"
 
 #include <Windows.h>
 

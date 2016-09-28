@@ -312,10 +312,10 @@
     <ClCompile Include="src\radi\utils\image_load.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\radi\utils\win32timer.cpp">
+    <ClCompile Include="src\platform\posix\posix_timer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\platform\posix\posix_timer.cpp">
+    <ClCompile Include="src\platform\windows\win32timer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
