@@ -1,6 +1,7 @@
 #pragma once
 
-#include <vector>
+#include "radi/rd.h"
+#include "radi/common.h"
 
 #include "../framebuffer.h"
 #include "../buffers/vertexarray.h"
@@ -11,7 +12,7 @@ namespace radi {
 	namespace graphics {
 
 		// The Post Effects pipeline
-		class PostEffects
+		class RD_API PostEffects
 		{
 		private:
 			std::vector<PostEffectsPass*> m_Passes;

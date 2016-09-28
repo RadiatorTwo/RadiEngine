@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "maya_camera.h"
 
 #include "../Window.h"
@@ -31,15 +32,15 @@ namespace radi {
 
 			/*if (window->isKeyPressed(VK_CONTROL))
 			{*/
-				const vec2& mouse = window->getMousePosition();
+				const vec2& mouse = window->GetMousePosition();
 				vec2 delta = mouse - m_InitialMousePosition;
 				m_InitialMousePosition = mouse;
 
-				if (window->isMouseButtonPressed(SP_MOUSE_MIDDLE))
+				if (window->IsMouseButtonPressed(RD_MOUSE_MIDDLE))
 					MousePan(delta);
-				else if (window->isMouseButtonPressed(SP_MOUSE_LEFT))
+				else if (window->IsMouseButtonPressed(RD_MOUSE_LEFT))
 					MouseRotate(delta);
-				else if (window->isMouseButtonPressed(SP_MOUSE_RIGHT))
+				else if (window->IsMouseButtonPressed(RD_MOUSE_RIGHT))
 					MouseZoom(delta.y);
 
 			//}

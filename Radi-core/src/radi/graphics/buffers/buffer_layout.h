@@ -1,16 +1,16 @@
 #pragma once
 
-#include <vector>
-#include <radi_types.h>
+#include "radi/rd.h"
+#include "radi/common.h"
+#include "radi/radi_types.h"
 #include <radi/maths/maths.h>
 
-#include <GL/glew.h>
-#include "radi/utils/Log.h"
+#include "platform/opengl/radi_opengl_types.h"
 
 namespace radi {
 	namespace graphics {
 
-		struct BufferLayoutType
+		struct RD_API BufferLayoutType
 		{
 			String name;
 			uint type;
@@ -20,7 +20,7 @@ namespace radi {
 			bool normalized;
 		};
 
-		class BufferLayout
+		class RD_API BufferLayout
 		{
 		private:
 			uint m_size;

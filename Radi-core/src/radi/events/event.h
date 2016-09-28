@@ -1,9 +1,11 @@
 #pragma once
 
+#include "radi/common.h"
+
 namespace radi {
 	namespace events {
 
-		class Event
+		class RD_API Event
 		{
 		public:
 			enum class Type

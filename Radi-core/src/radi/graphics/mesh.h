@@ -1,5 +1,6 @@
 #pragma once
 
+#include "radi/rd.h"
 #include "buffers/VertexArray.h"
 #include "buffers/IndexBuffer.h"
 #include "material.h"
@@ -11,14 +12,14 @@ namespace radi {
 
 		class Renderer3D;
 
-		struct Vertex
+		struct RD_API Vertex
 		{
 			maths::vec3 position;
 			maths::vec3 normal;
 			maths::vec2 uv;
 		};
 
-		class Mesh : public IRenderable
+		class RD_API Mesh : public IRenderable
 		{
 		private:
 			VertexArray* m_vertexArray;

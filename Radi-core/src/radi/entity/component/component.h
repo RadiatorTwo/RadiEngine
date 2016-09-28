@@ -1,6 +1,8 @@
 #pragma once
 
-#include <radi_types.h>
+#include "radi/common.h"
+#include "radi/radi_types.h"
+#include "radi/radi_string.h"
 
 namespace radi {
 	namespace entity {
@@ -12,12 +14,12 @@ namespace radi {
 	namespace entity {
 		namespace component {
 
-			struct ComponentType
+			struct RD_API ComponentType
 			{
 				String name;
 			};
 
-			class Component
+			class RD_API Component
 			{
 			protected:
 				Entity* m_Entity;

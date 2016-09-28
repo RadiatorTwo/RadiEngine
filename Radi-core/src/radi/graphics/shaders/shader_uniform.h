@@ -1,12 +1,14 @@
 #pragma once
 
-#include <radi_types.h>
+#include "radi/common.h"
+#include "radi/radi_types.h"
+#include "radi/radi_string.h"
 
 namespace radi {
 	namespace graphics {
 
 
-		class ShaderUniformDeclaration
+		class RD_API ShaderUniformDeclaration
 		{
 		public:
 			enum class Type

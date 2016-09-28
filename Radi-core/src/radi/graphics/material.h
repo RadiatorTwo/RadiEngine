@@ -1,14 +1,15 @@
 #pragma once
 
-#include <map>
+#include "radi/rd.h"
+#include "radi/common.h"
 
-#include <radi_types.h>
+#include <radi/radi_types.h>
 #include <radi/graphics/shaders/Shader.h>
 
 namespace radi {
 	namespace graphics {
 
-		class Material
+		class RD_API Material
 		{
 		private:
 			friend class MaterialInstance;
@@ -55,7 +56,7 @@ namespace radi {
 			const ShaderUniformDeclaration* GetUniformDeclaration(const String& name) const;
 		};
 
-		class MaterialInstance
+		class RD_API MaterialInstance
 		{
 		private:
 			Material* m_material;

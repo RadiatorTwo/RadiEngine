@@ -1,4 +1,4 @@
-#include <radi/utils/Log.h>
+#include <radi/utils/log.h>
 
 #include <GL/glew.h>
 

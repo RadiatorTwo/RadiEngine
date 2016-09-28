@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include <radi_types.h>
+#include <radi/radi_types.h>
 #include <radi/entity/entity.h>
 
 #include "camera/camera.h"
@@ -13,7 +13,7 @@ namespace radi {
 		class Renderer3D;
 
 		// TODO: This probably shouldn't be in graphics.
-		class Scene
+		class RD_API Scene
 		{
 		private:
 			std::vector<entity::Entity*> m_Entities;

@@ -1,7 +1,11 @@
+#include "radi/rd.h"
 #include "texture.h"
 
 #include <GL/glew.h>
-#include "radi/utils/log.h"
+#include <FreeImage.h>
+
+#include "radi/utils/image_load.h"
+#include "radi_render_api.h"
 
 namespace radi
 {

@@ -1,36 +1,28 @@
 #pragma once
 
-#include <iostream>
-#include <string>
-
-#include <FreeImage.h>
-
-#include <radi_types.h>
-
-#include "radi/graphics/radi_render_api.h"
-
-#include <radi/utils/image_load.h>
+#include "radi/radi_types.h"
+#include "radi/radi_string.h"
 
 namespace radi
 {
 	namespace graphics
 	{
-		enum class TextureWrap
+		enum class RD_API TextureWrap
 		{
-			REPEAT = GL_REPEAT,
-			CLAMP = GL_CLAMP,
-			MIRRORED_REPEAT = GL_MIRRORED_REPEAT,
-			CLAMP_TO_EDGE = GL_CLAMP_TO_EDGE,
-			CLAMP_TO_BORDER = GL_CLAMP_TO_BORDER
+			REPEAT = 0x2901, // GL_REPEAT
+			CLAMP = 0x2900, // GL_CLAMP
+			MIRRORED_REPEAT = 0x8370, // GL_MIRRORED
+			CLAMP_TO_EDGE = 0x812F, // GL_CLAMP_TO_EDGE
+			CLAMP_TO_BORDER = 0x812D  // GL_CLAMP_TO_BORDER
 		};
 
-		enum class TextureFilter
+		enum class RD_API TextureFilter
 		{
-			LINEAR = GL_LINEAR,
-			NEAREST = GL_NEAREST
+			LINEAR = 0x2601, // GL_LINEAR
+			NEAREST = 0x2600  // GL_NEAREST
 		};
 
-		class Texture
+		class RD_API Texture
 		{
 		private:
 			static TextureWrap s_wrapMode;
@@ -48,14 +40,14 @@ namespace radi
 			void unbind() const;
 
 			inline const String& getName() const { return m_name; }
-			inline const unsigned int getID() const { return m_tID; }
-			inline const unsigned int getWidth() const { return m_width; }
-			inline const unsigned int getHeight() const { return m_height; }
+			inline const uint getID() const { return m_tID; }
+			inline const uint getWidth() const { return m_width; }
+			inline const uint getHeight() const { return m_height; }
 
 			inline static void SetWrap(TextureWrap mode) { s_wrapMode = mode; }
 			inline static void SetFilter(TextureFilter mode) { s_filterMode = mode; }
 		private:
-			GLuint load();
+			uint load();
 		};
 	}
 }

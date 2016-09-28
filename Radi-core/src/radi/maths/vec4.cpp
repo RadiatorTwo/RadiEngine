@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "vec4.h"
 
 namespace radi

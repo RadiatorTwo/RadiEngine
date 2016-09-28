@@ -1,11 +1,12 @@
 #pragma once
 
+#include "radi/common.h"
 #include "renderer3D.h"
 
 namespace radi {
 	namespace graphics {
 
-		class ForwardRenderer : public Renderer3D
+		class RD_API ForwardRenderer : public Renderer3D
 		{
 		public:
 			ForwardRenderer();

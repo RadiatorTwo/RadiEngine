@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "shader.h"
 
 #include <radi/utils/stringutils.h>
@@ -39,7 +40,7 @@ namespace radi {
 		{
 			ShaderType type = ShaderType::UNKNOWN;
 
-			std::vector<String> lines = SplitString(source, '\n');
+			std::vector<String> lines = utils::SplitString(source, '\n');
 			for (uint i = 0; i < lines.size(); i++)
 			{
 				const char* str = lines[i].c_str();
@@ -66,7 +67,7 @@ namespace radi {
 				const char* str = lines[i].c_str();
 				if (strstr(str, "uniform"))
 				{
-					std::vector<String> line = SplitString(str, ' ');
+					std::vector<String> line = utils::SplitString(str, ' ');
 					for (uint i = 0; i < line.size(); i++)
 					{
 						// TODO: Precision

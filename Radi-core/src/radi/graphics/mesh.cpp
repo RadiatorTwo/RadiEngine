@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "mesh.h"
 
 #include "renderer3D.h"

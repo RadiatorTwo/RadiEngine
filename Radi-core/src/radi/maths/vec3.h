@@ -1,14 +1,16 @@
 #pragma once
 
-#include <iostream>
-#include <radi_types.h>
+#include "radi/rd.h"
+#include "radi/common.h"
+
+#include "radi/radi_types.h"
 
 namespace radi {
 	namespace maths {
 
 		struct vec2;
 
-		struct vec3
+		struct RD_API vec3
 		{
 			float x, y, z;
 

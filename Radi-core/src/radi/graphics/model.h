@@ -1,16 +1,16 @@
 #pragma once
 
-#include <radi_types.h>
+#include "radi/rd.h"
+#include "radi/common.h"
+#include "radi/radi_types.h"
 #include <radi/maths/maths.h>
-
-#include <unordered_map>
 
 #include "Mesh.h"
 
 namespace radi {
 	namespace graphics {
 
-		class Model : public IRenderable
+		class RD_API Model : public IRenderable
 		{
 		private:
 			Mesh* m_Mesh;

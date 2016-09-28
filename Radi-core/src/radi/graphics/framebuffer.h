@@ -1,11 +1,11 @@
 #pragma once
 
-#include <radi_types.h>
-
-#include "radi/graphics/radi_render_api.h"
+#include "radi/common.h"
+#include "radi/radi_types.h"
 
 #include "../maths/vec4.h"
 #include "../maths/tvec2.h"
+
 #include "texture.h"
 
 namespace radi {
@@ -14,7 +14,7 @@ namespace radi {
 		class Framebuffer
 		{
 		private:
-			struct FramebufferData
+			struct RD_API FramebufferData
 			{
 				uint framebufferID;
 				uint depthbufferID;

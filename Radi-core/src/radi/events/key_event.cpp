@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "key_event.h"
 
 namespace radi {

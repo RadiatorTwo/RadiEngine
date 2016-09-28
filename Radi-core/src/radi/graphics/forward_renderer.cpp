@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "forward_renderer.h"
 
 namespace radi {

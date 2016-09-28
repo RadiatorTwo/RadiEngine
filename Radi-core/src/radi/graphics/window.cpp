@@ -1,37 +1,42 @@
+#include "radi/rd.h"
 #include "window.h"
+
+#include "radi/utils/log.h"
+
 #include "../embedded/Embedded.h"
+#include <GL/glew.h>
 
 namespace radi
 {
 	namespace graphics
 	{
-		std::map<void*, Window*> Window::s_handles;
+		std::map<void*, Window*> Window::s_Handles;
 
-		Window::Window(const char *title, int width, int height)
-			: m_title(title), m_width(width), m_height(height), m_handle(nullptr), m_closed(false)
+		Window::Window(const char *title, uint width, uint height)
+			: m_Title(title), m_Width(width), m_Height(height), m_Handle(nullptr), m_Closed(false)
 		{
-
-			if (!init())
+			if (!Init())
 			{
 				RADI_ERROR("Failed base Window initialization!");
 				return;
 			}
 
 			FontManager::add(new Font("SourceSansPro", internal::DEFAULT_FONT, internal::DEFAULT_FONT_SIZE, 32));
+
 			audio::SoundManager::init();
 
 			for (int i = 0; i < MAX_KEYS; i++)
 			{
-				m_keys[i] = false;
-				m_keyState[i] = false;
-				m_keyTyped[i] = false;
+				m_Keys[i] = false;
+				m_KeyState[i] = false;
+				m_KeyTyped[i] = false;
 			}
 
 			for (int i = 0; i < MAX_BUTTONS; i++)
 			{
-				m_mouseButtons[i] = false;
-				m_mouseState[i] = false;
-				m_mouseClicked[i] = false;
+				m_MouseButtons[i] = false;
+				m_MouseState[i] = false;
+				m_MouseClicked[i] = false;
 			}
 			m_MouseGrabbed = true;
 		}
@@ -43,7 +48,7 @@ namespace radi
 			audio::SoundManager::clean();
 		}
 
-		bool Window::init()
+		bool Window::Init()
 		{
 			if (!PlatformInit())
 			{
@@ -61,47 +66,48 @@ namespace radi
 			RADI_WARN("    ", glGetString(GL_VENDOR));
 			RADI_WARN("    ", glGetString(GL_RENDERER));
 			RADI_WARN("----------------------------------");
-
 			return true;
 		}
 
-		bool Window::isKeyPressed(uint keycode) const
+		bool Window::IsKeyPressed(uint keycode) const
 		{
-			//TODO: Log this!
-			if (keycode >= MAX_KEYS)
-				return false;
-			return m_keys[keycode];
-		}
-
-
-		bool Window::isKeyTyped(uint keycode) const
-		{
-			//TODO: Log this!
+			// TODO: Log this!
 			if (keycode >= MAX_KEYS)
 				return false;
 
-			return m_keyTyped[keycode];
+			return m_Keys[keycode];
 		}
 
-		bool Window::isMouseButtonPressed(uint button) const
+		bool Window::IsKeyTyped(uint keycode) const
 		{
-			//TODO: Log this!
+			// TODO: Log this!
+			if (keycode >= MAX_KEYS)
+				return false;
+
+			return m_KeyTyped[keycode];
+		}
+
+		bool Window::IsMouseButtonPressed(uint button) const
+		{
+			// TODO: Log this!
 			if (button >= MAX_BUTTONS)
 				return false;
-			return m_mouseButtons[button];
+
+			return m_MouseButtons[button];
 		}
 
-		bool Window::isMouseButtonClicked(uint button) const
+		bool Window::IsMouseButtonClicked(uint button) const
 		{
-			//TODO: Log this!
+			// TODO: Log this!
 			if (button >= MAX_BUTTONS)
 				return false;
-			return m_mouseClicked[button];
+
+			return m_MouseClicked[button];
 		}
 
-		const maths::vec2& Window::getMousePosition() const
+		const maths::vec2& Window::GetMousePosition() const
 		{
-			return m_mousePosition;;
+			return m_MousePosition;
 		}
 
 		const bool Window::IsMouseGrabbed() const
@@ -114,52 +120,51 @@ namespace radi
 			m_MouseGrabbed = grabbed;
 		}
 
-		void Window::setVsync(bool enabled)
+		void Window::SetVsync(bool enabled)
 		{
 			// TODO: Not implemented
-			m_vsync = enabled;
+			m_Vsync = enabled;
 		}
 
-		void Window::clear() const
+		void Window::Clear() const
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
-		void Window::update()
+		void Window::Update()
 		{
 			PlatformUpdate();
-
 			audio::SoundManager::update();
 		}
 
-		void Window::updateInput()
+		void Window::UpdateInput()
 		{
 			for (int i = 0; i < MAX_KEYS; i++)
-				m_keyTyped[i] = m_keys[i] && !m_keyState[i];
+				m_KeyTyped[i] = m_Keys[i] && !m_KeyState[i];
 
 			for (int i = 0; i < MAX_BUTTONS; i++)
-				m_mouseClicked[i] = m_mouseButtons[i] && !m_mouseState[i];
+				m_MouseClicked[i] = m_MouseButtons[i] && !m_MouseState[i];
 
-			memcpy(m_keyState, m_keys, MAX_KEYS);
-			memcpy(m_mouseState, m_mouseButtons, MAX_BUTTONS);
+			memcpy(m_KeyState, m_Keys, MAX_KEYS);
+			memcpy(m_MouseState, m_MouseButtons, MAX_BUTTONS);
 		}
 
-		bool Window::closed() const
+		bool Window::Closed() const
 		{
-			return m_closed;
+			return m_Closed;
 		}
 
 		void Window::RegisterWindowClass(void* handle, Window* window)
 		{
-			s_handles[handle] = window;
+			s_Handles[handle] = window;
 		}
 
 		Window* Window::GetWindowClass(void* handle)
 		{
 			if (handle == nullptr)
-				return s_handles.begin()->second;
+				return s_Handles.begin()->second;
 
-			return s_handles[handle];
+			return s_Handles[handle];
 		}
 	}
 }

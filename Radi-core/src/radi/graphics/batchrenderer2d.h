@@ -1,12 +1,12 @@
 #pragma once
 
-#include <cstddef>
-#include <radi_types.h>
+#include "radi/rd.h"
+#include "radi/common.h"
+#include "radi/radi_types.h"
+
 #include "renderer2d.h"
 #include "renderable2d.h"
 #include "Framebuffer.h"
-
- #include "radi_render_api.h"
 
 #include "buffers/VertexArray.h"
 #include "buffers/indexbuffer.h"
@@ -21,18 +21,18 @@ namespace radi
 #define RENDERER_INDICES_SIZE RENDERER_MAX_SPRITES * 6
 #define RENDERER_MAX_TEXTURES 32 - 1
 
-		class BatchRenderer2D : public Renderer2D
+		class RD_API BatchRenderer2D : public Renderer2D
 		{
 		private:
 			VertexArray* m_vertexArray;
-			GLuint m_VAO;
-			GLuint m_VBO;
+			uint m_VAO;
+			uint m_VBO;
 			IndexBuffer* m_IBO;
 			IndexBuffer* m_lineIBO;
-			GLsizei m_indexCount, m_lineIndexCount;
+			uint m_indexCount, m_lineIndexCount;
 			VertexData* m_buffer;
 
-			std::vector<GLuint> m_textureSlots;
+			std::vector<uint> m_textureSlots;
 			Framebuffer* m_framebuffer;
 			Framebuffer* m_postEffectsBuffer;
 			int m_screenBuffer;

@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 
-#include <radi/utils/Log.h>
+#include <radi/utils/log.h>
 
 namespace radi
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <radi_types.h>
+#include "radi/radi_types.h"
 #include <radi/graphics/buffers/buffer_layout.h>
 
 namespace radi {
@@ -21,7 +21,7 @@ namespace radi {
 				void SetData(uint size, const void* data);
 
 				template<typename T>
-				T* GetPointer(uint flags = GL_WRITE_ONLY)
+				T* GetPointer(uint flags = 0x88B9/*GL_WRITE_ONLY*/)
 				{
 					return (T*)API::GetBufferPointer(target, flags);
 				}

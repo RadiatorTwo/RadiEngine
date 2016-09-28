@@ -1,6 +1,7 @@
 #pragma once
 
-#include <iostream>
+#include "radi/rd.h"
+#include "radi/common.h"
 
 #include "vec2.h"
 #include "vec3.h"
@@ -8,7 +9,7 @@
 namespace radi {
 	namespace maths {
 
-		struct AABB
+		struct RD_API AABB
 		{
 			vec3 min, max;
 

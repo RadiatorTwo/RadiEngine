@@ -1,12 +1,14 @@
 #pragma once
 
+#include "radi/common.h"
+
 #include "../Framebuffer.h"
 #include "../shaders/Shader.h"
 
 namespace radi {
 	namespace graphics {
 
-		class PostEffectsPass
+		class RD_API PostEffectsPass
 		{
 		private:
 			Shader* m_shader;

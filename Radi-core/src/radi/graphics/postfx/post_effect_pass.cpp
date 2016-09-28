@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "post_effect_pass.h"
 
 #include <radi/graphics/radi_render_api.h>

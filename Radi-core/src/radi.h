@@ -1,103 +1,80 @@
 #pragma once
-#include "radi/graphics/label.h"
-#include "radi/graphics/sprite.h"
-#include "radi/graphics/renderer2d.h"
-#include "radi/graphics/batchrenderer2d.h"
-#include "radi/graphics/layers/layer.h"
-#include "radi/graphics/layers/group.h"
-#include "radi/graphics/texture_manager.h"
-#include "radi/graphics/window.h"
 
-#include "radi/graphics/shaders/Shader.h"
-#include "radi/graphics/shaders/shader_factory.h"
+//
+// Radi Engine header file
+//
 
-#include "radi/audio/sound.h"
-#include "radi/audio/sound_manager.h"
+#include <radi/app/application.h>
 
-#include "radi/maths/maths.h"
-#include "radi/utils/Log.h"
-#include "radi/utils/timer.h"
+#include <radi/audio/sound.h>
+#include <radi/audio/sound_manager.h>
 
-namespace radi
-{
-	class Radi
-	{
-	private:
-		graphics::Window* m_window;
-		utils::Timer* m_timer;
-		int m_framesPerSecond, m_updatesPerSecond;
-	protected:
-		Radi() :m_framesPerSecond(0), m_updatesPerSecond(0)
-		{
-		}
+#include <radi/entity/entity.h>
+#include <radi/entity/component/component.h>
+#include <radi/entity/component/mesh_component.h>
+#include <radi/entity/component/transform_component.h>
 
+#include <radi/events/event.h>
+#include <radi/events/key_event.h>
+#include <radi/events/mouse_event.h>
 
-		virtual ~Radi()
-		{
-			delete m_window;
-			delete m_timer;
-		}
+#include <radi/graphics/renderer2d.h>
+#include <radi/graphics/batchrenderer2d.h>
+#include <radi/graphics/renderer3d.h>
+#include <radi/graphics/forward_renderer.h>
 
-		graphics::Window* createWindow(const char *name, int width, int height)
-		{
-			m_window = new graphics::Window(name, width, height);
-			return m_window;
-		}
-	public:
-		void start()
-		{
-			init();
-			run();
-		}
+#include <radi/graphics/font.h>
+#include <radi/graphics/font_manager.h>
+#include <radi/graphics/framebuffer.h>
+#include <radi/graphics/irenderable.h>
+#include <radi/graphics/label.h>
+#include <radi/graphics/mask.h>
+#include <radi/graphics/material.h>
+#include <radi/graphics/mesh.h>
+#include <radi/graphics/mesh_factory.h>
+#include <radi/graphics/model.h>
+#include <radi/graphics/renderable2d.h>
+#include <radi/graphics/render_command.h>
+#include <radi/graphics/scene.h>
+#include <radi/graphics/sprite.h>
+#include <radi/graphics/texture.h>
+#include <radi/graphics/texture_manager.h>
+#include <radi/graphics/window.h>
 
-	protected:
-		// Runs once upon initialization
-		virtual void init() = 0;
-		// Runs once per second
-		virtual void tick() {}
-		// runs 60 times per second;
-		virtual void update() {}
-		// Runs as fast as possible (unless vsync is enabled)
-		virtual void render() = 0;
+#include <radi/graphics/buffers/buffer.h>
+#include <radi/graphics/buffers/buffer_layout.h>
+#include <radi/graphics/buffers/indexbuffer.h>
+#include <radi/graphics/buffers/vertexarray.h>
 
-		const unsigned int getFPS() { return m_framesPerSecond; }
-		const unsigned int getUPS() { return m_updatesPerSecond; }
+#include <radi/graphics/camera/camera.h>
+#include <radi/graphics/camera/maya_camera.h>
 
-	private:
-		void run()
-		{
-			m_timer = new utils::Timer();
-			float timer = 0.0f;
-			float updateTimer = 0.0f;
-			float updateTick = 1.0f / 60.0f;
-			unsigned int frames = 0;
-			unsigned int updates = 0;
+#include <radi/graphics/layers/group.h>
+#include <radi/graphics/layers/layer.h>
+#include <radi/graphics/layers/layer2d.h>
+#include <radi/graphics/layers/layer3d.h>
 
-			while (!m_window->closed())
-			{
-				m_window->clear();
-				if (m_timer->elapsed() - updateTimer > updateTick)
-				{
-					m_window->updateInput();
-					update();
-					updates++;
-					updateTimer += updateTick;
-				}
+#include <radi/graphics/postfx/post_effects.h>
+#include <radi/graphics/postfx/post_effect_pass.h>
 
-					render();
-					frames++;
-					m_window->update();
+#include <radi/graphics/shaders/shader.h>
+#include <radi/graphics/shaders/shader_factory.h>
+#include <radi/graphics/shaders/shader_uniform.h>
 
-				if (m_timer->elapsed() - timer > 1.0f)
-				{
-					timer += 1.0f;
-					m_framesPerSecond = frames;
-					m_updatesPerSecond = updates;
-					frames = 0;
-					updates = 0;
-					tick();
-				}
-			}
-		}
-	};
-}
+#include <radi/maths/aabb.h>
+#include <radi/maths/mat4.h>
+#include <radi/maths/maths_func.h>
+#include <radi/maths/quaternion.h>
+#include <radi/maths/tvec2.h>
+#include <radi/maths/vec2.h>
+#include <radi/maths/vec3.h>
+#include <radi/maths/vec4.h>
+
+#include <radi/utils/fileutils.h>
+#include <radi/utils/image_load.h>
+#include <radi/utils/log.h>
+#include <radi/utils/stringutils.h>
+#include <radi/utils/timer.h>
+
+#include <radi/radi_string.h>
+#include <radi/radi_types.h>

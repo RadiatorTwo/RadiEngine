@@ -1,17 +1,18 @@
 #pragma once
 
+#include "radi/rd.h"
 #include "Mesh.h"
 
 namespace radi {
 	namespace graphics {
 
-		struct RendererUniform
+		struct RD_API RendererUniform
 		{
 			String uniform;
 			byte* value;
 		};
 
-		struct RenderCommand
+		struct RD_API RenderCommand
 		{
 			Mesh* mesh;
 			std::vector<RendererUniform> uniforms;

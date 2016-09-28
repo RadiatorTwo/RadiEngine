@@ -6,7 +6,7 @@
 namespace radi {
 	namespace events {
 
-		class MouseButtonEvent : public Event
+		class RD_API MouseButtonEvent : public Event
 		{
 		protected:
 			int m_button;
@@ -20,19 +20,19 @@ namespace radi {
 			inline const maths::vec2& GetPosition() const { return m_position; }
 		};
 
-		class MousePressedEvent : public MouseButtonEvent
+		class RD_API MousePressedEvent : public MouseButtonEvent
 		{
 		public:
 			MousePressedEvent(int button, float x, float y);
 		};
 
-		class MouseReleasedEvent : public MouseButtonEvent
+		class RD_API MouseReleasedEvent : public MouseButtonEvent
 		{
 		public:
 			MouseReleasedEvent(int button, float x, float y);
 		};
 
-		class MouseMovedEvent : public Event
+		class RD_API MouseMovedEvent : public Event
 		{
 		private:
 			maths::vec2 m_position;

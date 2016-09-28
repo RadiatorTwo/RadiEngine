@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "layer3D.h"
 
 #include "../forward_renderer.h"

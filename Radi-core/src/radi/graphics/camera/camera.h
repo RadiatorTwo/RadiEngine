@@ -1,11 +1,12 @@
 #pragma once
 
+#include "radi/common.h"
 #include <radi/maths/maths.h>
 
 namespace radi {
 	namespace graphics {
 
-		class Camera
+		class RD_API Camera
 		{
 		protected:
 			maths::mat4 m_ProjectionMatrix, m_ViewMatrix;

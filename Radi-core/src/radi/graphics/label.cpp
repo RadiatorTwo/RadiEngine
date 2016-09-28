@@ -1,5 +1,5 @@
+#include "radi/rd.h"
 #include "label.h"
-#include "font_manager.h"
 
 namespace radi {
 	namespace graphics {

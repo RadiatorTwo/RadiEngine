@@ -1,17 +1,16 @@
 #pragma once
 
-#include <vector>
+#include "radi/rd.h"
+#include "radi/common.h"
+#include "radi/radi_types.h"
 
-#include <radigl.h>
-#include <radi_types.h>
-
-#include <radi/graphics/Window.h>
+#include <radi/graphics/window.h>
 #include <radi/graphics/layers/layer.h>
-#include <radi/utils/Timer.h>
+#include <radi/utils/timer.h>
 
 namespace radi {
 
-	class Application
+	class RD_API Application
 	{
 	private:
 		static Application* s_instance;
@@ -19,7 +18,7 @@ namespace radi {
 		graphics::Window* window;
 	private:
 		bool m_running, m_suspended;
-		utils::Timer* m_Timer;
+		Timer* m_Timer;
 		uint m_updatesPerSecond, m_framesPerSecond;
 
 		const char* m_name;

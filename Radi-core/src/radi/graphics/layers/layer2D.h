@@ -2,6 +2,7 @@
 
 #include "layer.h"
 
+#include "radi/common.h"
 #include "../../events/event.h"
 #include "../renderable2d.h"
 #include "../mask.h"
@@ -9,7 +10,7 @@
 namespace radi {
 	namespace graphics {
 
-		class Layer2D : public Layer
+		class RD_API Layer2D : public Layer
 		{
 		private:
 			Renderer2D* m_renderer;

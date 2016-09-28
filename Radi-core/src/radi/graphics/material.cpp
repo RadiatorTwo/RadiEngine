@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "material.h"
 
 #include <sstream>

@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "shader_uniform.h"
 
 #include "shader.h"

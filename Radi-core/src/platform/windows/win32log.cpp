@@ -1,6 +1,7 @@
-#include <radi/utils/Log.h>
+#include "radi/rd.h"
 
 #include <Windows.h>
+#include <radi/utils/Log.h>
 
 namespace radi {
 	namespace internal {

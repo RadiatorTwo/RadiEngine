@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "Layer2D.h"
 
 #include "../batchrenderer2d.h"
@@ -7,12 +8,12 @@ namespace radi {
 	namespace graphics {
 
 		Layer2D::Layer2D(Shader* shader, const maths::mat4& projectionMatrix)
-			: m_renderer(new BatchRenderer2D(Window::GetWindowClass(nullptr)->getWidth(), Window::GetWindowClass(nullptr)->getHeight())), m_shader(shader), m_projectionMatrix(projectionMatrix)
+			: m_renderer(new BatchRenderer2D(Window::GetWindowClass(nullptr)->GetWidth(), Window::GetWindowClass(nullptr)->GetHeight())), m_shader(shader), m_projectionMatrix(projectionMatrix)
 		{
 			m_shader->Bind();
 			m_shader->SetUniformMat4("pr_matrix", m_projectionMatrix);
 
-			GLint texIDs[] =
+			int texIDs[] =
 			{
 				0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
 				10, 11, 12, 13, 14, 15, 16, 17, 18, 19,

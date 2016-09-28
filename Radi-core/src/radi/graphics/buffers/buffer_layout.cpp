@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "buffer_layout.h"
 
 namespace radi {

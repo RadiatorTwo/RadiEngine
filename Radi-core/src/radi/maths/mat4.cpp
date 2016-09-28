@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "mat4.h"
 
 #include <sstream>

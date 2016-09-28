@@ -1,7 +1,12 @@
+#include "radi/rd.h"
+
 #include <Windows.h>
 #include <Windowsx.h>
 
+#include "radi/utils/log.h"
 #include <radi/graphics/Window.h>
+
+#include <GL/glew.h>
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
@@ -48,14 +53,14 @@ namespace radi {
 				return false;
 			}
 
-			RECT size = { 0, 0, m_width, m_height };
+			RECT size = { 0, 0, m_Width, m_Height };
 			AdjustWindowRectEx(&size, WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, false, WS_EX_APPWINDOW | WS_EX_WINDOWEDGE);
 
 			hWnd = CreateWindowExA(WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,
-				winClass.lpszClassName, m_title,
+				winClass.lpszClassName, m_Title,
 				WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
-				GetSystemMetrics(SM_CXSCREEN) / 2 - m_width / 2,
-				GetSystemMetrics(SM_CYSCREEN) / 2 - m_height / 2,
+				GetSystemMetrics(SM_CXSCREEN) / 2 - m_Width / 2,
+				GetSystemMetrics(SM_CYSCREEN) / 2 - m_Height / 2,
 				// TODO: This requires some... attention
 				size.right + (-size.left), size.bottom + (-size.top), NULL, NULL, hInstance, NULL);
 
@@ -119,7 +124,7 @@ namespace radi {
 			{
 				if (message.message == WM_QUIT)
 				{
-					m_closed = true;
+					m_Closed = true;
 					return;
 				}
 				TranslateMessage(&message);
@@ -129,7 +134,7 @@ namespace radi {
 			POINT mouse;
 			GetCursorPos(&mouse);
 			ScreenToClient(hWnd, &mouse);
-			m_mousePosition = maths::vec2(mouse.x, mouse.y);
+			m_MousePosition = maths::vec2(mouse.x, mouse.y);
 
 			SwapBuffers(hDc);
 		}
@@ -143,9 +148,9 @@ namespace radi {
 
 		void Window::SetMouseCursor(int cursor)
 		{
-			if (cursor == SP_NO_CURSOR)
+			if (cursor == RD_NO_CURSOR)
 			{
-				SetCursor(SP_NO_CURSOR);
+				SetCursor(RD_NO_CURSOR);
 				while (ShowCursor(false) >= 0);
 			}
 			else
@@ -157,7 +162,7 @@ namespace radi {
 
 		void key_callback(Window* window, int key, uint message)
 		{
-			window->m_keys[key] = message == WM_KEYDOWN || message == WM_SYSKEYDOWN;
+			window->m_Keys[key] = message == WM_KEYDOWN || message == WM_SYSKEYDOWN;
 		}
 
 		void mouse_button_callback(Window* window, int button, int x, int y)
@@ -166,40 +171,40 @@ namespace radi {
 			switch (button)
 			{
 			case WM_LBUTTONDOWN:
-				button = SP_MOUSE_LEFT;
+				button = RD_MOUSE_LEFT;
 				down = true;
 				break;
 			case WM_LBUTTONUP:
-				button = SP_MOUSE_LEFT;
+				button = RD_MOUSE_LEFT;
 				down = false;
 				break;
 			case WM_RBUTTONDOWN:
-				button = SP_MOUSE_RIGHT;
+				button = RD_MOUSE_RIGHT;
 				down = true;
 				break;
 			case WM_RBUTTONUP:
-				button = SP_MOUSE_RIGHT;
+				button = RD_MOUSE_RIGHT;
 				down = false;
 				break;
 			case WM_MBUTTONDOWN:
-				button = SP_MOUSE_MIDDLE;
+				button = RD_MOUSE_MIDDLE;
 				down = true;
 				break;
 			case WM_MBUTTONUP:
-				button = SP_MOUSE_MIDDLE;
+				button = RD_MOUSE_MIDDLE;
 				down = false;
 				break;
 			}
 
-			window->m_mouseButtons[button] = down;
-			window->m_mousePosition.x = x;
-			window->m_mousePosition.y = y;
+			window->m_MouseButtons[button] = down;
+			window->m_MousePosition.x = x;
+			window->m_MousePosition.y = y;
 		}
 
 		void resize_callback(Window* window, int width, int height)
 		{
-			window->m_width = width;
-			window->m_height = height;
+			window->m_Width = width;
+			window->m_Height = height;
 		}
 
 		LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

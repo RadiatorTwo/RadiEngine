@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "batchrenderer2d.h"
 
 #include "shaders/shader_factory.h"
@@ -6,7 +7,11 @@
 #include "buffers/buffer.h"
 #include "buffers/buffer_layout.h"
 
-#include <radi/utils/Log.h>
+#include "radi/utils/log.h""
+
+#include "radi_render_api.h"
+
+#include <../freetype-gl/freetype-gl.h>
 
 namespace radi
 {
@@ -236,13 +241,13 @@ namespace radi
 			using namespace ftgl;
 
 			float ts = 0.0f;
-			ts = submitTexture(font.getID());
+			ts = submitTexture(font.GetID());
 
-			const maths::vec2& scale = font.getScale();
+			const maths::vec2& scale = font.GetScale();
 
 			float x = position.x;
 
-			texture_font_t* ftFont = font.getFTFont();
+			texture_font_t* ftFont = font.GetFTFont();
 
 			for (uint i = 0; i < text.length(); i++)
 			{

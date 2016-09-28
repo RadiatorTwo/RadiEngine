@@ -1,14 +1,12 @@
 #pragma once
 
-#include <iostream>
-#include <string>
+#include "radi/rd.h"
+#include "radi/common.h"
+#include "radi/radi_types.h"
+#include "radi/radi_string.h"
 
-#include <radi_types.h>
-
-#include "../utils/stringutils.h"
-
-#include "../../gorilla-audio/src/ga.h"
-#include "../../gorilla-audio/src/gau.h"
+struct ga_Sound;
+struct ga_Handle;
 
 namespace radi { namespace audio {
 
@@ -18,11 +16,11 @@ namespace radi { namespace audio {
 		String m_Name;
 		String m_Filename;
 
-		unsigned int m_Count;
+		uint m_Count;
 
 		ga_Sound* m_Sound;
 		ga_Handle* m_Handle;
-		gc_int32 m_Position;
+		int m_Position;
 
 		bool m_Playing;
 		float m_Gain;

@@ -25,7 +25,7 @@ TestLayer::~TestLayer()
 
 void TestLayer::OnInit(Renderer2D& renderer, Shader& shader)
 {
-	FontManager::get()->setScale(m_window->getWidth() / 32.0f, m_window->getHeight() / 18.0f);
+	FontManager::get()->SetScale(m_window->GetWidth() / 32.0f, m_window->GetHeight() / 18.0f);
 	renderer.SetRenderTarget(RenderTarget::SCREEN);
 	Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
 	renderer.AddPostEffectsPass(new PostEffectsPass(Shader::FromFile("Horizontal Blur", "shaders/postfx.shader")));
@@ -69,14 +69,14 @@ void TestLayer::OnTick()
 void TestLayer::OnUpdate()
 {
 	float speed = 0.15f;
-	if (m_window->isKeyPressed(VK_LEFT))
+	if (m_window->IsKeyPressed(VK_LEFT))
 		m_mario->position.x -= speed;
-	else if (m_window->isKeyPressed(VK_RIGHT))
+	else if (m_window->IsKeyPressed(VK_RIGHT))
 		m_mario->position.x += speed;
 
-	if (m_window->isKeyPressed(VK_UP))
+	if (m_window->IsKeyPressed(VK_UP))
 		m_mario->position.y += speed;
-	else if (m_window->isKeyPressed(VK_DOWN))
+	else if (m_window->IsKeyPressed(VK_DOWN))
 		m_mario->position.y -= speed;
 }
 
@@ -88,9 +88,9 @@ bool TestLayer::OnEvent(const radi::events::Event& event)
 void TestLayer::OnRender(Renderer2D& renderer)
 {
 	// TODO: Move this into OnEvent!
-	if (m_window->isKeyTyped(VK_T))
+	if (m_window->IsKeyTyped(VK_T))
 		renderer.SetRenderTarget(renderer.GetRenderTarget() == RenderTarget::SCREEN ? RenderTarget::BUFFER : RenderTarget::SCREEN);
-	if (m_window->isKeyTyped(VK_P))
+	if (m_window->IsKeyTyped(VK_P))
 		renderer.SetPostEffects(!renderer.GetPostEffects());
 
 	debugInfo[0]->text = String("Target: ") + (renderer.GetRenderTarget() == RenderTarget::SCREEN ? "Screen" : "Buffer");

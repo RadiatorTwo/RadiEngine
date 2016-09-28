@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "vec2.h"
 
 #include <sstream>

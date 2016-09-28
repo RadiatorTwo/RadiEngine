@@ -1,10 +1,11 @@
 #pragma once
 
-#include <radi_types.h>
+#include "radi/common.h"
+#include "radi/radi_types.h"
+
 #include "../../events/Event.h"
 #include "../../events/IEventListener.h"
 #include "../Window.h"
-#include "../../maths/maths.h"
 
 namespace radi
 {
@@ -13,7 +14,7 @@ namespace radi
 		using namespace graphics;
 		using namespace maths;
 
-		class Layer : public events::IEventListener
+		class RD_API Layer : public events::IEventListener
 		{
 		protected:
 			Window* m_window;

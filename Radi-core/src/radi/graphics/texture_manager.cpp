@@ -1,3 +1,5 @@
+#include "radi/rd.h"
+#include "radi/common.h"
 #include "texture_manager.h"
 
 namespace radi {

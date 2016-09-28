@@ -1,7 +1,9 @@
 #pragma once
 
-#include <iostream>
-#include <math.h>
+#include "radi/rd.h"
+#include "radi/common.h"
+#include "radi/radi_string.h"
+
 #include "vec3.h"
 
 namespace radi

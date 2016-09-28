@@ -1,10 +1,11 @@
+#include "radi/rd.h"
 #include "Model.h"
 
-#include <radi_string.h>
+#include <radi/radi_string.h>
 #include <radi/utils/StringUtils.h>
 #include <radi/utils/FileUtils.h>
 
-#include <vector>
+#include <GL/glew.h>
 
 template<>
 struct std::hash<radi::graphics::Model::IndexSet>
@@ -33,7 +34,7 @@ namespace radi {
 
 		void Model::Load(const String& path)
 		{
-			std::vector<String> lines = SplitString(utils::ReadFile(path), '\n');
+			std::vector<String> lines = utils::SplitString(utils::ReadFile(path), '\n');
 			VertexSet inputVertices;
 			std::vector<Vertex> vertices;
 			std::vector<uint> indices;

@@ -1,13 +1,13 @@
 #pragma once
 
-#include <vector>
-#include <radi_types.h>
-#include "texture.h"
+#include "radi/rd.h"
+#include <radi/radi_types.h>
+#include "radi/graphics/texture.h"
 
 namespace radi {
 	namespace graphics {
 
-		class TextureManager
+		class RD_API TextureManager
 		{
 		private:
 			static std::vector<Texture*> m_textures;

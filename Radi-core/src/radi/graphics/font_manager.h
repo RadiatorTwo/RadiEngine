@@ -1,7 +1,9 @@
 #pragma once
 
-#include <vector>
-#include <radi_types.h>
+
+#include "radi/rd.h"
+#include "radi/common.h"
+#include "radi/radi_types.h"
 
 #include "font.h"
 
@@ -9,7 +11,7 @@ namespace radi
 {
 	namespace graphics
 	{
-		class FontManager
+		class RD_API FontManager
 		{
 		private:
 			static std::vector<Font*> m_fonts;

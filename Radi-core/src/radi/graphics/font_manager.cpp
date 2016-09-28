@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "font_manager.h"
 
 namespace radi
@@ -20,7 +21,7 @@ namespace radi
 		{
 			for(Font* font : m_fonts)
 			{
-				if (font->getName() == name)
+				if (font->GetName() == name)
 				{
 					return font;
 				}
@@ -33,7 +34,7 @@ namespace radi
 		{
 			for (Font* font : m_fonts)
 			{
-				if (font->getSize() == size && font->getName() == name)
+				if (font->GetSize() == size && font->GetName() == name)
 				{
 					return font;
 				}

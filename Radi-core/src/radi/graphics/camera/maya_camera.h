@@ -1,11 +1,12 @@
 #pragma once
 
 #include "camera.h"
+#include "radi/common.h"
 
 namespace radi {
 	namespace graphics {
 
-		class MayaCamera : public Camera
+		class RD_API MayaCamera : public Camera
 		{
 		private:
 			bool m_Panning, m_Rotating;

@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "radi_opengl_buffer.h"
 
 #include <radi/graphics/radi_render_api.h>

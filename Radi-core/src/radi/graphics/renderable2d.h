@@ -1,7 +1,7 @@
 #pragma once
 
-#include <radi_types.h>
-
+#include "radi/common.h"
+#include "radi/radi_types.h"
 
 #include "renderer2d.h"
 #include "texture.h"
@@ -16,7 +16,7 @@ namespace radi
 {
 	namespace graphics
 	{
-		struct VertexData
+		struct RD_API VertexData
 		{
 			maths::vec3 vertex;
 			maths::vec2 uv;
@@ -28,7 +28,7 @@ namespace radi
 
 #define RENDERER_VERTEX_SIZE sizeof(VertexData)
 
-		class Renderable2D
+		class RD_API Renderable2D
 		{
 		protected:
 			maths::vec3 m_position;
@@ -68,7 +68,7 @@ namespace radi
 			inline const unsigned int getColor() const { return m_color; }
 			inline const std::vector<maths::vec2>& getUV() const { return m_uv; }
 
-			inline const GLuint getTID() const { return m_texture == nullptr ? 0 : m_texture->getID(); }
+			inline const uint getTID() const { return m_texture == nullptr ? 0 : m_texture->getID(); }
 			inline const Texture* getTexture() const { return m_texture; }
 		private:
 			void setUVDefaults()

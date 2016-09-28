@@ -1,7 +1,7 @@
 #pragma once
 
-#include <radigl.h>
 #include <vector>
+
 #include "font.h"
 #include "texture.h"
 #include "Mask.h"
@@ -14,13 +14,13 @@ namespace radi
 	{
 		class Renderable2D;
 
-		enum class RenderTarget
+		enum class RD_API RenderTarget
 		{
 			SCREEN = 0,
 			BUFFER = 1
 		};
 
-		class Renderer2D
+		class RD_API Renderer2D
 		{
 		protected:
 			std::vector<maths::mat4> m_transformationStack;

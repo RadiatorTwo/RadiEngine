@@ -1,4 +1,5 @@
-#include "Quaternion.h"
+#include "radi/rd.h"
+#include "quaternion.h"
 
 namespace radi {
 	namespace maths {

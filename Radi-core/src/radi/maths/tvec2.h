@@ -1,6 +1,7 @@
 #pragma once
 
-#include <iostream>
+#include "radi/rd.h"
+#include "radi/common.h"
 
 namespace radi {
 	namespace maths {

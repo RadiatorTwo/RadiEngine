@@ -1,16 +1,15 @@
 #pragma once
 
-#include <vector>
-
+#include "radi/rd.h"
+#include "radi/common.h"
 #include "sound.h"
 
-#define GAU_THREAD_POLICY_MULTI 2
-#include "../../gorilla-audio/src/ga.h"
-#include "../../gorilla-audio/src/gau.h"
+struct gau_Manager;
+struct ga_Mixer;
 
 namespace radi { namespace audio {
 
-	class SoundManager
+	class RD_API SoundManager
 	{
 	private:
 		friend class Sound;

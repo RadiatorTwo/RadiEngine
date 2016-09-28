@@ -1,13 +1,14 @@
 #pragma once
 
-#include <vector>
+#include "radi/rd.h"
+#include "radi/common.h"
 
 #include "component/components.h"
 
 namespace radi {
 	namespace entity {
 
-		class Entity
+		class RD_API Entity
 		{
 		protected:
 			std::vector<component::Component*> m_Components;

@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "mouse_event.h"
 
 namespace radi {

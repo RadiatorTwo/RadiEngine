@@ -1,4 +1,9 @@
+#include "radi/rd.h"
 #include "sound_manager.h"
+
+#define GAU_THREAD_POLICY_MULTI 2
+#include <../../gorilla-audio/src/ga.h>
+#include <../../gorilla-audio/src/gau.h>
 
 namespace radi { namespace audio {
 

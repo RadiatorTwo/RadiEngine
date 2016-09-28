@@ -1,6 +1,5 @@
 #pragma once
 
-#include "radi_render_api.h"
 #include "mesh.h"
 #include "render_command.h"
 #include "camera/Camera.h"
@@ -17,7 +16,7 @@ namespace radi {
 		//		- ForwardRenderer.h  (WIP)
 		//		- DeferredRenderer.h (TBA)
 		//
-		class Renderer3D
+		class RD_API Renderer3D
 		{
 		protected:
 			CommandQueue m_CommandQueue;

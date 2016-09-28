@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "embedded.h"
 
 namespace radi

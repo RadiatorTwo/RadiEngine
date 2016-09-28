@@ -1,7 +1,7 @@
 #pragma once
 
-#include <stdlib.h>
-#include <string>
+#include "radi/rd.h"
+#include "radi/common.h"
 
 typedef unsigned int uint;
 typedef std::string String;
@@ -10,7 +10,7 @@ namespace radi {
 
 #define STRINGFORMAT_BUFFER_SIZE 10 * 1024
 
-	class StringFormat
+	class RD_API StringFormat
 	{
 	private:
 		static char* s_Buffer;

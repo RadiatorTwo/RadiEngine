@@ -2,13 +2,14 @@
 
 #include "component.h"
 
+#include "radi/common.h"
 #include <radi/maths/maths.h>
 
 namespace radi {
 	namespace entity {
 		namespace component {
 
-			class TransformComponent : public Component
+			class RD_API TransformComponent : public Component
 			{
 			public:
 				maths::mat4 transform;

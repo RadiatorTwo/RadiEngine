@@ -1,10 +1,12 @@
+#include "radi/rd.h"
 #include "mesh_factory.h"
 
 #include <radi/graphics/batchrenderer2d.h>
 
-#include <radigl.h>
 #include <radi/graphics/renderable2d.h>
 #include <radi/graphics/shaders/Shader.h>
+
+#include <GL/glew.h>
 
 #define RADI_VERTEX_ARRAYS 1
 

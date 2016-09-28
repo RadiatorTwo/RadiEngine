@@ -1,15 +1,15 @@
 #pragma once
 
-#include <vector>
-#include <radi_types.h>
+#include "radi/rd.h"
+#include "radi/common.h"
+#include "radi/radi_types.h"
 
 #include "Buffer.h"
-#include <radi/graphics/radi_render_api.h>
 
 namespace radi {
 	namespace graphics {
 
-		class VertexArray
+		class RD_API VertexArray
 		{
 		private:
 			static uint s_CurrentBinding;

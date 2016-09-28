@@ -1,12 +1,13 @@
 #pragma once
 
-#include "texture.h"
+#include "radi/common.h"
 #include "../maths/maths.h"
+#include "texture.h"
 
 namespace radi {
 	namespace graphics {
 
-		struct Mask
+		struct RD_API Mask
 		{
 			Texture* texture;
 			maths::mat4 transform;

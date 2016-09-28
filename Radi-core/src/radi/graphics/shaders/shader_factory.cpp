@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "shader_factory.h"
 
 namespace radi {

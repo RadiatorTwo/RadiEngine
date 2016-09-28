@@ -1,11 +1,13 @@
 #pragma once
 
+#include "radi/common.h"
+
 #include "mat4.h"
 
 namespace radi {
 	namespace maths {
 
-		struct Quaternion
+		struct RD_API Quaternion
 		{
 			float x, y, z, w;
 

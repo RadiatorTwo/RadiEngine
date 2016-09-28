@@ -5,7 +5,7 @@
 namespace radi {
 	namespace events {
 
-		class KeyEvent : public Event
+		class RD_API KeyEvent : public Event
 		{
 		private:
 			int m_keyCode;
@@ -15,7 +15,7 @@ namespace radi {
 			inline const int GetKeyCode() const { return m_keyCode; }
 		};
 
-		class KeyPressedEvent : public KeyEvent
+		class RD_API KeyPressedEvent : public KeyEvent
 		{
 		private:
 			int m_repeat;
@@ -25,7 +25,7 @@ namespace radi {
 			inline const int GetRepeat() const { return m_repeat; }
 		};
 
-		class KeyReleasedEvent : public KeyEvent
+		class RD_API KeyReleasedEvent : public KeyEvent
 		{
 		public:
 			KeyReleasedEvent(int button);

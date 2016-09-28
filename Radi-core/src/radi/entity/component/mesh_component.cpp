@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "mesh_component.h"
 
 namespace radi {

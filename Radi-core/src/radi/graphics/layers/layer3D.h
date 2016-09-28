@@ -1,12 +1,14 @@
 #pragma once
 
+#include "radi/common.h"
+
 #include "layer.h"
 #include "../scene.h"
 
 namespace radi {
 	namespace graphics {
 
-		class Layer3D : public Layer
+		class RD_API Layer3D : public Layer
 		{
 		protected:
 			Scene* m_scene;

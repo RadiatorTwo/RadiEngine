@@ -1,14 +1,19 @@
 #pragma once
 
-#include <string>
+#include "radi/common.h"
+#include "radi/radi_types.h"
 #include "../maths/vec2.h"
-#include "../../Freetype/freetype-gl/freetype-gl.h"
+
+namespace ftgl {
+	struct texture_atlas_t;
+	struct texture_font_t;
+}
 
 namespace radi
 {
 	namespace graphics
 	{
-		class Font
+		class RD_API Font
 		{
 		private:
 			ftgl::texture_atlas_t* m_FTAtlas;
@@ -18,18 +23,17 @@ namespace radi
 			String m_name;
 			String m_filename;
 		public:
-			Font(const String name, const String filename, float size);
+			Font(const String& name, const String& filename, float size);
 			Font(const String& name, const byte* data, unsigned int datasize, float size);
 
-			void setScale(float x, float y);
+			void SetScale(float x, float y);
+			uint GetID() const;
 
-			inline ftgl::texture_font_t* getFTFont() const { return m_FTFont; }
-
-			inline const unsigned int getID() const { return m_FTAtlas->id; }
-			inline const maths::vec2& getScale() const { return m_scale; }
-			inline const String& getName() const { return m_name; }
-			inline const String& getFilename() const { return m_filename; }
-			inline const float getSize() const { return m_size; }
+			inline ftgl::texture_font_t* GetFTFont() const { return m_FTFont; }
+			inline const maths::vec2& GetScale() const { return m_scale; }
+			inline const String& GetName() const { return m_name; }
+			inline const String& GetFileName() const { return m_filename; }
+			inline const float GetSize() const { return m_size; }
 		};
 	}
 }

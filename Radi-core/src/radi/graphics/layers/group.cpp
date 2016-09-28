@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "group.h"
 
 namespace radi
@@ -23,7 +24,6 @@ namespace radi
 
 			renderer->pop();
 		}
-
 
 		Group::~Group()
 		{

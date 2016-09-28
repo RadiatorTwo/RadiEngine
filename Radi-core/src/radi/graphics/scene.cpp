@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "scene.h"
 
 #include "renderer3D.h"

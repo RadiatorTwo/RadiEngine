@@ -1,9 +1,8 @@
 #pragma once
 
-#include <iostream>
-#include <vector>
-
-#include <radi_types.h>
+#include "radi/rd.h"
+#include "radi/common.h"
+#include "radi/radi_types.h"
 
 #include <radi/maths/maths.h>
 #include <radi/utils/fileutils.h>
@@ -24,7 +23,7 @@ namespace radi {
 #define SHADER_UNIFORM_VIEW_MATRIX_NAME			"vw_matrix"
 #define SHADER_UNIFORM_MODEL_MATRIX_NAME		"ml_matrix"
 
-		class Shader
+		class RD_API Shader
 		{
 		private:
 			enum class ShaderType

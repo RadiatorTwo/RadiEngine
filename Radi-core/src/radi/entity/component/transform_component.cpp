@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "transform_component.h"
 
 namespace radi {

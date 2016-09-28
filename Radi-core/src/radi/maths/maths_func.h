@@ -3,6 +3,8 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+#include "radi/common.h"
+
 namespace radi {
 	namespace maths {
 

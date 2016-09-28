@@ -1,12 +1,14 @@
 #pragma once
 
-#include <radi_types.h>
-#include "../radi_render_api.h"
+#include "radi/common.h"
+#include "radi/radi_types.h"
+
+#include "platform/opengl/radi_opengl_buffer.h"
 
 namespace radi {
 	namespace graphics {
 
-		class IndexBuffer
+		class RD_API IndexBuffer
 		{
 		private:
 			uint m_Count;

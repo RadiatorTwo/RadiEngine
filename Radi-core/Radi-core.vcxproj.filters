@@ -162,9 +162,6 @@
     <ClCompile Include="src\platform\opengl\radi_opengl_buffer.cpp">
       <Filter>Quelldateien\platform\opengl</Filter>
     </ClCompile>
-    <ClCompile Include="src\radi_string.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="src\platform\opengl\radi_opengl_error.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -194,9 +191,6 @@
     </ClCompile>
     <ClCompile Include="src\radi\audio\sound_manager.cpp">
       <Filter>Quelldateien\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\graphics\buffers\buffer.cpp">
-      <Filter>Quelldateien\graphics\buffers</Filter>
     </ClCompile>
     <ClCompile Include="src\radi\graphics\buffers\buffer_layout.cpp">
       <Filter>Quelldateien\graphics\buffers</Filter>
@@ -309,22 +303,28 @@
     <ClCompile Include="src\radi\embedded\embedded.cpp">
       <Filter>Quelldateien\embedded</Filter>
     </ClCompile>
+    <ClCompile Include="src\radi\radi_string.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\rd.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\utils\image_load.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\utils\win32timer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\platform\posix\posix_timer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\radi.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\radigl.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="src\radi_types.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="src\platform\opengl\radi_opengl_buffer.h">
       <Filter>Headerdateien\platform\opengl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\radi_string.h">
-      <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="src\platform\opengl\radi_opengl_types.h">
       <Filter>Headerdateien</Filter>
@@ -520,6 +520,18 @@
     </ClInclude>
     <ClInclude Include="src\radi\embedded\embedded.h">
       <Filter>Headerdateien\embedded</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\radi_string.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\radi_types.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\rd.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\common.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

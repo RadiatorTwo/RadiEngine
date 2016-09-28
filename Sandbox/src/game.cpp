@@ -1,5 +1,4 @@
 #include <radi.h>
-#include <radi/app/application.h>
 
 #include "TestLayer.h"
 #include "Test3D.h"

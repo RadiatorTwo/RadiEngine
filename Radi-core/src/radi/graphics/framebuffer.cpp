@@ -1,4 +1,7 @@
+#include "radi/rd.h"
 #include "framebuffer.h"
+
+#include "radi/graphics/radi_render_api.h"
 
 namespace radi {
 	namespace graphics {

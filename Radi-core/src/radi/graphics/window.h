@@ -1,12 +1,13 @@
 #pragma once
 
-#include <iostream>
-#include <radigl.h>
+#include "radi/rd.h"
 
-#include "../maths/vec2.h"
+#include "radi/maths/vec2.h"
+
+#include "../audio/sound_manager.h"
+
 #include "font_manager.h"
 #include "texture_manager.h"
-#include "../audio/sound_manager.h"
 
 namespace radi
 {
@@ -14,60 +15,55 @@ namespace radi
 	{
 #define MAX_KEYS 1024
 #define MAX_BUTTONS 32
-		class Window
+		class RD_API Window
 		{
 		private:
-			static std::map<void*, Window*> s_handles;
+			static std::map<void*, Window*> s_Handles;
+		private:
+			const char *m_Title;
+			int m_Width, m_Height;
+			bool m_Closed;
+			void* m_Handle;
 
-			const char *m_title;
-			int m_width, m_height;
-			bool m_closed;
-			void* m_handle;
-
-			bool m_keys[MAX_KEYS];
-			bool m_keyState[MAX_KEYS];
-			bool m_keyTyped[MAX_KEYS];
-			bool m_mouseButtons[MAX_BUTTONS];
-			bool m_mouseState[MAX_BUTTONS];
-			bool m_mouseClicked[MAX_BUTTONS];
+			bool m_Keys[MAX_KEYS];
+			bool m_KeyState[MAX_KEYS];
+			bool m_KeyTyped[MAX_KEYS];
+			bool m_MouseButtons[MAX_BUTTONS];
+			bool m_MouseState[MAX_BUTTONS];
+			bool m_MouseClicked[MAX_BUTTONS];
 			bool m_MouseGrabbed;
 
-			maths::vec2 m_mousePosition;
-			bool m_vsync;
+			maths::vec2 m_MousePosition;
+			bool m_Vsync;
 		public:
-			Window(const char *name, int width, int height);
+			Window(const char *name, uint width, uint height);
 			~Window();
-			void clear() const;
-			void update();
-			void updateInput();
-			bool closed() const;
+			void Clear() const;
+			void Update();
+			void UpdateInput();
+			bool Closed() const;
 
-			inline int getWidth() const { return m_width; }
-			inline int getHeight() const { return m_height; }
+			inline uint GetWidth() const { return m_Width; }
+			inline uint GetHeight() const { return m_Height; }
 
-			bool isKeyPressed(uint keycode) const;
-			bool isKeyTyped(uint keycode) const;
-			bool isMouseButtonPressed(uint button) const;
-			bool isMouseButtonClicked(uint button) const;
-			const maths::vec2& getMousePosition() const;
+			bool IsKeyPressed(uint keycode) const;
+			bool IsKeyTyped(uint keycode) const;
+			bool IsMouseButtonPressed(uint button) const;
+			bool IsMouseButtonClicked(uint button) const;
 
+			const maths::vec2& GetMousePosition() const;
 			void SetMousePosition(const maths::vec2& position);
 			const bool IsMouseGrabbed() const;
 			void SetMouseGrabbed(bool grabbed);
 			void SetMouseCursor(int cursor);
 
-			void setVsync(bool enabled);
-			bool isVsync() const { return m_vsync; }
+			void SetVsync(bool enabled);
+			bool IsVsync() const { return m_Vsync; }
 		private:
-			bool init();
+			bool Init();
 
 			bool PlatformInit();
 			void PlatformUpdate();
-
-			//friend void window_resize(GLFWwindow* window, int width, int height);
-			//friend void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-			//friend void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
-			//friend void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 
 			friend void resize_callback(Window* window, int width, int height);
 			friend void key_callback(Window* window, int key, uint message);
@@ -79,11 +75,11 @@ namespace radi
 	}
 }
 
-#define SP_MOUSE_LEFT	  0x00
-#define SP_MOUSE_MIDDLE	  0x01
-#define SP_MOUSE_RIGHT    0x02
+#define RD_MOUSE_LEFT	  0x00
+#define RD_MOUSE_MIDDLE	  0x01
+#define RD_MOUSE_RIGHT    0x02
 
-#define SP_NO_CURSOR	  NULL
+#define RD_NO_CURSOR	  NULL
 
 #define VK_0			  0x30
 #define VK_1			  0x31

@@ -5,7 +5,7 @@
 namespace radi {
 	namespace events {
 
-		class IEventListener
+		class RD_API IEventListener
 		{
 		public:
 			virtual bool OnEvent(const Event& event) = 0;

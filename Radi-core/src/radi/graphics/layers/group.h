@@ -1,12 +1,13 @@
 #pragma once
 
 #include "../renderable2d.h"
+#include "radi/common.h"
 
 namespace radi
 {
 	namespace graphics
 	{
-		class Group : public Renderable2D
+		class RD_API Group : public Renderable2D
 		{
 		private:
 			std::vector<Renderable2D*> m_renderables;

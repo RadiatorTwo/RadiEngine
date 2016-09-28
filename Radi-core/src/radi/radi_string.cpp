@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include "radi_string.h"
 
 namespace radi {

@@ -1,3 +1,4 @@
+#include "radi/rd.h"
 #include <radi/app/Application.h>
 
 namespace radi {
@@ -43,7 +44,7 @@ namespace radi {
 
 	void Application::Run()
 	{
-		m_Timer = new utils::Timer();
+		m_Timer = new Timer();
 		float timer = 0.0f;
 		float updateTimer = 0.0f;
 		float updateTick = 1.0f / 60.0f;
@@ -51,18 +52,18 @@ namespace radi {
 		unsigned int updates = 0;
 		while (m_running)
 		{
-			window->clear();
-			if (m_Timer->elapsed() - updateTimer > updateTick)
+			window->Clear();
+			if (m_Timer->Elapsed() - updateTimer > updateTick)
 			{
-				window->updateInput();
+				window->UpdateInput();
 				OnUpdate();
 				updates++;
 				updateTimer += updateTick;
 			}
 			OnRender();
 			frames++;
-			window->update();
-			if (m_Timer->elapsed() - timer > 1.0f)
+			window->Update();
+			if (m_Timer->Elapsed() - timer > 1.0f)
 			{
 				timer += 1.0f;
 				m_framesPerSecond = frames;
@@ -71,7 +72,7 @@ namespace radi {
 				updates = 0;
 				OnTick();
 			}
-			if (window->closed())
+			if (window->Closed())
 				m_running = false;
 		}
 	}
