@@ -11,6 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\radi\graphics\ui\button.cpp" />
+    <ClCompile Include="src\radi\graphics\ui\panel.cpp" />
+    <ClCompile Include="src\radi\graphics\ui\slider.cpp" />
+    <ClCompile Include="src\radi\graphics\ui\widget.cpp" />
+    <ClCompile Include="src\radi\maths\rectangle.cpp" />
     <ClCompile Include="src\radi\platform\posix\posix_timer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
@@ -352,6 +357,8 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="src\radi\rddebug\debug_menu_item.cpp" />
+    <ClCompile Include="src\radi\rddebug\debug_menu_slider.cpp" />
     <ClCompile Include="src\radi\utils\image_load.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
@@ -365,6 +372,11 @@
     <ClInclude Include="src\radi\audio\sound.h" />
     <ClInclude Include="src\radi\audio\sound_manager.h" />
     <ClInclude Include="src\radi\common.h" />
+    <ClInclude Include="src\radi\graphics\ui\button.h" />
+    <ClInclude Include="src\radi\graphics\ui\panel.h" />
+    <ClInclude Include="src\radi\graphics\ui\slider.h" />
+    <ClInclude Include="src\radi\graphics\ui\widget.h" />
+    <ClInclude Include="src\radi\maths\rectangle.h" />
     <ClInclude Include="src\radi\rddebug\debug_layer.h" />
     <ClInclude Include="src\radi\rddebug\debug_menu.h" />
     <ClInclude Include="src\radi\embedded\embedded.h" />
@@ -431,6 +443,9 @@
     <ClInclude Include="src\radi\radi_string.h" />
     <ClInclude Include="src\radi\radi_types.h" />
     <ClInclude Include="src\radi\rd.h" />
+    <ClInclude Include="src\radi\rddebug\debug_menu_action.h" />
+    <ClInclude Include="src\radi\rddebug\debug_menu_item.h" />
+    <ClInclude Include="src\radi\rddebug\debug_menu_slider.h" />
     <ClInclude Include="src\radi\utils\fileutils.h" />
     <ClInclude Include="src\radi\utils\image_load.h" />
     <ClInclude Include="src\radi\utils\log.h" />

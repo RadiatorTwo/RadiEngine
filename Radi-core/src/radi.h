@@ -10,6 +10,11 @@
 #include <radi/audio/sound.h>
 #include <radi/audio/sound_manager.h>
 
+#include <radi/rddebug/debug_layer.h>
+#include <radi/rddebug/debug_menu.h>
+#include <radi/rddebug/debug_menu_action.h>
+#include <radi/rddebug/debug_menu_item.h>
+
 #include <radi/entity/entity.h>
 #include <radi/entity/component/component.h>
 #include <radi/entity/component/mesh_component.h>

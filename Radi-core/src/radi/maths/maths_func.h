@@ -1,9 +1,9 @@
 #pragma once
 
 #define _USE_MATH_DEFINES
-#include <math.h>
 
 #include "radi/common.h"
+#include <math.h>
 
 namespace radi {
 	namespace maths {
@@ -68,5 +68,19 @@ namespace radi {
 			return ::atan2(y, x);
 		}
 
+		RD_API inline float min(float value, float minimum)
+		{
+			return (value < minimum) ? minimum : value;
+		}
+
+		RD_API inline float max(float value, float maximum)
+		{
+			return (value > maximum) ? maximum : value;
+		}
+
+		RD_API inline float clamp(float value, float minimum, float maximum)
+		{
+			return (value > minimum) ? (value < maximum) ? value : maximum : minimum;
+		}
 	}
 }

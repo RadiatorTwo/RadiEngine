@@ -1,6 +1,7 @@
 #include "Test3D.h"
 
 using namespace radi;
+using namespace debug;
 using namespace radi::graphics;
 using namespace maths;
 
@@ -19,17 +20,20 @@ Test3D::~Test3D()
 {
 }
 
+float xTransform = -4.0f;
+float sSize = 4.0f;
+
 void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 {
 	Material* material = new Material(Shader::FromFile("Scene", "shaders/scene.shader"));
 
 	m_Cube = new Entity();
-	Model* cubeModel = new Model("res/cube-rounded.obj", new MaterialInstance(material));
+	Model* cubeModel = new Model("res/cube.obj", new MaterialInstance(material));
 	m_Cube->AddComponent(new MeshComponent(cubeModel->GetMesh()));
 	m_Cube->AddComponent(new TransformComponent(mat4::Identity()));
 
 	m_Sphere = new Entity();
-	Model* sphereModel = new Model("res/sphere-high.obj", new MaterialInstance(material));
+	Model* sphereModel = new Model("res/sphere.obj", new MaterialInstance(material));
 	m_Sphere->AddComponent(new MeshComponent(sphereModel->GetMesh()));
 	m_Sphere->AddComponent(new TransformComponent(mat4::Identity()));
 
@@ -40,6 +44,10 @@ void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 	m_scene->Add(m_Cube);
 	m_scene->Add(m_Sphere);
 	m_scene->Add(m_Plane);
+
+	DebugMenu::Init();
+	DebugMenu::Add("Cube X", &xTransform, -20.0f, 20.0f);
+	DebugMenu::Add("Sphere Size", &sSize, -20.0f, 20.0f);
 }
 
 void Test3D::OnTick()
@@ -55,8 +63,9 @@ void Test3D::OnUpdate()
 	TransformComponent* sphereTransform = m_Sphere->GetComponent<TransformComponent>();
 
 	mat4 transform = mat4::Translate(vec3(0, 2.5f, 0)) * mat4::Rotate(m_rotation, vec3(1, 0, 0)) * mat4::Rotate(m_rotation, vec3(0, 1, 0)) * mat4::Rotate(m_rotation, vec3(0, 0, 1));
-	cubeTransform->transform = mat4::Translate(vec3(-4, 0, 0)) * transform * mat4::Scale(vec3(1.4f, 1.4f, 1.4f));
-	sphereTransform->transform = mat4::Translate(vec3(8, 0, 0)) * transform;
+	//cubeTransform->transform = mat4::Translate(vec3(xTransform, 0, 0)) * transform * mat4::Scale(vec3(1.4f, 1.4f, 1.4f));
+	cubeTransform->transform = mat4::Translate(vec3(0, 0, 0)) * transform * mat4::Scale(vec3(xTransform, xTransform, xTransform));
+	sphereTransform->transform = mat4::Translate(vec3(4, 0, 0)) * transform * mat4::Scale(vec3(sSize, sSize, sSize));
 	m_rotation++;
 }
 

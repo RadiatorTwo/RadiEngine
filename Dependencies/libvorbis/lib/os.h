@@ -71,13 +71,13 @@ void *_alloca(size_t size);
 #  include <memory.h>
 #endif
 
-#ifndef min
-#  define min(x,y)  ((x)>(y)?(y):(x))
-#endif
-
-#ifndef max
-#  define max(x,y)  ((x)<(y)?(y):(x))
-#endif
+//#ifndef min
+//#  define min(x,y)  ((x)>(y)?(y):(x))
+//#endif
+//
+//#ifndef max
+//#  define max(x,y)  ((x)<(y)?(y):(x))
+//#endif
 
 #if defined(__i386__) && defined(__GNUC__) && !defined(__BEOS__)
 #  define VORBIS_FPU_CONTROL

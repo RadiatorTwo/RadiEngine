@@ -30,6 +30,19 @@ namespace radi {
 		return layer;
 	}
 
+	Layer* Application::PopLayer(Layer* layer)
+	{
+		for (uint i = 0; i < m_layerStack.size(); i++)
+		{
+			if (m_layerStack[i] == layer)
+			{
+				m_layerStack.erase(m_layerStack.begin() + i);
+				break;
+			}
+		}
+		return layer;
+	}
+
 	void Application::PushOverlay(Layer* layer)
 	{
 		m_overlayStack.push_back(layer);
@@ -40,6 +53,19 @@ namespace radi {
 	{
 		Layer* layer = m_overlayStack.back();
 		m_overlayStack.pop_back();
+		return layer;
+	}
+
+	Layer* Application::PopOverlay(Layer* layer)
+	{
+		for (uint i = 0; i < m_overlayStack.size(); i++)
+		{
+			if (m_overlayStack[i] == layer)
+			{
+				m_overlayStack.erase(m_overlayStack.begin() + i);
+				break;
+			}
+		}
 		return layer;
 	}
 

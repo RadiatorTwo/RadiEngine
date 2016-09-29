@@ -107,14 +107,34 @@ namespace radi
 			return divide(other);
 		}
 
-		bool vec2::operator==(const vec2& other)
+		bool vec2::operator==(const vec2& other) const
 		{
 			return x == other.x && y == other.y;
 		}
 
-		bool vec2::operator!=(const vec2& other)
+		bool vec2::operator!=(const vec2& other) const
 		{
 			return !(*this == other);
+		}
+
+		bool vec2::operator<(const vec2& other) const
+		{
+			return x < other.x && y < other.y;
+		}
+
+		bool vec2::operator<=(const vec2& other) const
+		{
+			return x <= other.x && y <= other.y;
+		}
+
+		bool vec2::operator>(const vec2& other) const
+		{
+			return x > other.x && y > other.y;
+		}
+
+		bool vec2::operator>=(const vec2& other) const
+		{
+			return x >= other.x && y >= other.y;
 		}
 
 		float vec2::distance(const vec2& other) const

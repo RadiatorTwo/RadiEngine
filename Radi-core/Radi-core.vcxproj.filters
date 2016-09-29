@@ -336,6 +336,27 @@
     <ClCompile Include="src\radi\platform\windows\win32input.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\radi\maths\rectangle.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\ui\panel.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\ui\widget.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\rddebug\debug_menu_item.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\rddebug\debug_menu_slider.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\ui\button.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\ui\slider.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\radi.h">
@@ -564,6 +585,30 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="src\radi\rddebug\debug_menu.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\maths\rectangle.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\ui\panel.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\ui\widget.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\rddebug\debug_menu_action.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\rddebug\debug_menu_item.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\rddebug\debug_menu_slider.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\ui\button.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\ui\slider.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

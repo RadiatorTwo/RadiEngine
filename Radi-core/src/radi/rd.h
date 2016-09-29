@@ -18,3 +18,4 @@
 #include <math.h>
 
 #include "radi/common.h"
+#include "radi/radi_types.h"

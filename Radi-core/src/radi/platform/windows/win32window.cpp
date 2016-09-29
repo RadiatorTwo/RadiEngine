@@ -1,5 +1,6 @@
 #include "radi/rd.h"
 
+#define NOMINMAX
 #include <Windows.h>
 #include <Windowsx.h>
 
