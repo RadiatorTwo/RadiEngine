@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\radi\graphics\light.cpp" />
+    <ClCompile Include="src\radi\graphics\light_setup.cpp" />
     <ClCompile Include="src\radi\graphics\ui\button.cpp" />
     <ClCompile Include="src\radi\graphics\ui\panel.cpp" />
     <ClCompile Include="src\radi\graphics\ui\slider.cpp" />
@@ -372,6 +374,8 @@
     <ClInclude Include="src\radi\audio\sound.h" />
     <ClInclude Include="src\radi\audio\sound_manager.h" />
     <ClInclude Include="src\radi\common.h" />
+    <ClInclude Include="src\radi\graphics\light.h" />
+    <ClInclude Include="src\radi\graphics\light_setup.h" />
     <ClInclude Include="src\radi\graphics\ui\button.h" />
     <ClInclude Include="src\radi\graphics\ui\panel.h" />
     <ClInclude Include="src\radi\graphics\ui\slider.h" />

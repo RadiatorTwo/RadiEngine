@@ -19,6 +19,7 @@ namespace radi {
 		void ForwardRenderer::Begin()
 		{
 			m_CommandQueue.clear();
+			m_SystemUniforms.clear();
 		}
 
 		void ForwardRenderer::Submit(const RenderCommand& command)
@@ -45,7 +46,24 @@ namespace radi {
 			command.uniforms.push_back(pr_matrix);
 			command.uniforms.push_back(vw_matrix);
 			command.uniforms.push_back(ml_matrix);
+
+			for (uint i = 0; i < m_SystemUniforms.size(); i++)
+				command.uniforms.push_back(m_SystemUniforms[i]);
+
 			m_CommandQueue.push_back(command);
+		}
+
+		void ForwardRenderer::SubmitLightSetup(const LightSetup& lightSetup)
+		{
+			auto lights = lightSetup.GetLights();
+			RADI_ASSERT(lights.size() <= 1, "Only one light is supported at the moment!");
+			for (uint i = 0; i < lights.size(); i++)
+			{
+				Light* light = lights[i];
+				m_SystemUniforms.push_back({ "u_LightPosition",  (byte*)&light->position });
+				m_SystemUniforms.push_back({ "u_LightAttenuation",  (byte*)&light->attenuation });
+				m_SystemUniforms.push_back({ "u_LightColor",  (byte*)&light->color });
+			}
 		}
 
 		void ForwardRenderer::End()
@@ -55,6 +73,13 @@ namespace radi {
 
 		void ForwardRenderer::SetRequiredUniforms(Shader* shader, const std::vector<RendererUniform>& uniforms)
 		{
+			for (uint i = 0; i < uniforms.size(); i++)
+				shader->SetUniform(uniforms[i].uniform, uniforms[i].value);
+		}
+
+		void ForwardRenderer::SetSystemUniforms(Shader* shader)
+		{
+			const SystemUniformList& uniforms = m_SystemUniforms;
 			for (uint i = 0; i < uniforms.size(); i++)
 				shader->SetUniform(uniforms[i].uniform, uniforms[i].value);
 		}
@@ -71,6 +96,7 @@ namespace radi {
 				const RenderCommand& command = m_CommandQueue[i];
 				command.mesh->GetMaterialInstance()->GetMaterial()->GetShader()->Bind();
 				SetRequiredUniforms(command.mesh->GetMaterialInstance()->GetMaterial()->GetShader(), command.uniforms);
+				//SetSystemUniforms(command.mesh->GetMaterialInstance()->GetMaterial()->GetShader());
 				command.mesh->Render(*this);
 			}
 		}

@@ -207,6 +207,14 @@ namespace radi {
 			if (uniform->GetName() == SHADER_UNIFORM_MODEL_MATRIX_NAME)
 				return true;
 
+			// TODO: Temporary
+			if (uniform->GetName() == "u_LightPosition")
+				return true;
+			if (uniform->GetName() == "u_LightAttenuation")
+				return true;
+			if (uniform->GetName() == "u_LightColor")
+				return true;
+
 			return false;
 		}
 

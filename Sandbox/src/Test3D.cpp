@@ -45,9 +45,14 @@ void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 	m_scene->Add(m_Sphere);
 	m_scene->Add(m_Plane);
 
+	LightSetup* lights = new LightSetup();
+	lights->Add(new Light{ vec3(0, 10, 0), 10.0f, vec4(1, 1, 1, 1) });
+	m_scene->PushLightSetup(lights);
+
 	DebugMenu::Init();
 	DebugMenu::Add("Cube X", &xTransform, -20.0f, 20.0f);
 	DebugMenu::Add("Sphere Size", &sSize, -20.0f, 20.0f);
+	DebugMenu::Add("Light Atten.", &lights->GetLights()[0]->position.z, 0, 40);
 }
 
 void Test3D::OnTick()

@@ -6,6 +6,7 @@
 #include <radi/entity/entity.h>
 
 #include "camera/camera.h"
+#include "light_setup.h"
 
 namespace radi {
 	namespace graphics {
@@ -18,11 +19,16 @@ namespace radi {
 		private:
 			std::vector<entity::Entity*> m_Entities;
 			Camera* m_Camera;
+			std::vector<LightSetup*> m_LightSetupStack;
 		public:
 			Scene();
 			Scene(Camera* camera);
 			~Scene();
+
 			void Add(entity::Entity* entity);
+			void PushLightSetup(LightSetup* lightSetup);
+			LightSetup* PopLightSetup();
+
 			void Update();
 			void Render(Renderer3D& renderer);
 

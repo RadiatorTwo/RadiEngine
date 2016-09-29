@@ -39,6 +39,18 @@ namespace radi {
 			}
 		}
 
+		void Scene::PushLightSetup(LightSetup* lightSetup)
+		{
+			m_LightSetupStack.push_back(lightSetup);
+		}
+
+		LightSetup* Scene::PopLightSetup()
+		{
+			LightSetup* result = m_LightSetupStack.back();
+			m_LightSetupStack.pop_back();
+			return result;
+		}
+
 		void Scene::Update()
 		{
 		}
@@ -49,6 +61,9 @@ namespace radi {
 			camera->Update();
 
 			renderer.Begin();
+
+			for (uint i = 0; i < m_LightSetupStack.size(); i++)
+				renderer.SubmitLightSetup(*m_LightSetupStack[i]);
 
 			for (Entity* entity : m_Entities)
 			{
