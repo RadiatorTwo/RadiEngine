@@ -7,7 +7,7 @@
 #include "buffers/buffer.h"
 #include "buffers/buffer_layout.h"
 
-#include "radi/utils/log.h""
+#include "radi/utils/log.h"
 
 #include "radi_render_api.h"
 

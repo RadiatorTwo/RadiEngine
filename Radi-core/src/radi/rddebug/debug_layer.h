@@ -17,7 +17,7 @@ namespace radi {
 
 		class DebugLayer : public graphics::Layer2D
 		{
-		private:			
+		private:
 			Application& m_application;
 			graphics::Label* m_FPSLabel;
 		public:
@@ -30,8 +30,9 @@ namespace radi {
 			void OnUpdate() override;
 
 			void OnEvent(events::Event& event) override;
-			bool OnMouseMovedEvent(events::MouseMovedEvent& event);
-			bool OnKeyPressedEvent(events::KeyPressedEvent& event);
+			bool OnMouseMovedEvent(events::MouseMovedEvent& e);
+			bool OnMousePressedEvent(events::MousePressedEvent& e);
+			bool OnKeyPressedEvent(events::KeyPressedEvent& e);
 
 			void OnRender(graphics::Renderer2D& renderer) override;
 		};

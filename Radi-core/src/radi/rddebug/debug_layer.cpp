@@ -38,35 +38,42 @@ namespace radi {
 		void DebugLayer::OnTick()
 		{
 			m_FPSLabel->text = std::to_string(m_application.GetFPS()) + " fps";
+
+			RADI_INFO(m_application.GetUPS(), " ups, ", m_application.GetFPS(), " fps");
 		}
 
 		void DebugLayer::OnUpdate()
 		{
 		}
 
-		void DebugLayer::OnEvent(Event& event)
+		void DebugLayer::OnEvent(Event& e)
 		{
-			EventDispatcher dispatcher(event);
+			EventDispatcher dispatcher(e);
 			dispatcher.Dispatch<MouseMovedEvent>(METHOD(&DebugLayer::OnMouseMovedEvent));
 			dispatcher.Dispatch<KeyPressedEvent>(METHOD(&DebugLayer::OnKeyPressedEvent));
+			dispatcher.Dispatch<MousePressedEvent>(METHOD(&DebugLayer::OnMousePressedEvent));
 		}
 
-		bool DebugLayer::OnMouseMovedEvent(MouseMovedEvent& event)
+		bool DebugLayer::OnMouseMovedEvent(MouseMovedEvent& e)
 		{
 			return false;
 		}
 
-		bool DebugLayer::OnKeyPressedEvent(KeyPressedEvent& event)
+		bool DebugLayer::OnMousePressedEvent(events::MousePressedEvent& e)
 		{
-			if (event.GetRepeat())
+			return false;
+		}
+
+		bool DebugLayer::OnKeyPressedEvent(KeyPressedEvent& e)
+		{
+			if (e.GetRepeat())
 				return false;
 
-			if (event.GetModifiers() == RD_MODIFIER_LEFT_CONTROL && event.GetKeyCode() == RD_KEY_TAB)
+			if (e.GetModifiers() == RD_MODIFIER_LEFT_CONTROL && e.GetKeyCode() == RD_KEY_TAB)
 			{
 				DebugMenu::SetVisible(!DebugMenu::IsVisible());
 				return true;
 			}
-			return false;
 		}
 
 		void DebugLayer::OnRender(graphics::Renderer2D& renderer)

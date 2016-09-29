@@ -26,8 +26,8 @@ public:
 	{
 		Application::Init();
 		
-		PushLayer(new Test3D());
-		PushOverlay(new TestLayer());
+		//PushLayer(new Test3D());
+		//PushLayer(new TestLayer());
 	}
 };
 

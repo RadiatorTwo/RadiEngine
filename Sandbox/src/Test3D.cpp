@@ -44,8 +44,8 @@ void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 
 void Test3D::OnTick()
 {
-	Application& app = Application::GetApplication();
-	RADI_INFO(app.GetUPS(), " ups, ", app.GetFPS(), " fps");
+	/*Application& app = Application::GetApplication();
+	RADI_INFO(app.GetUPS(), " ups, ", app.GetFPS(), " fps");*/
 }
 
 

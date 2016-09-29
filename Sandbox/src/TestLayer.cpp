@@ -41,29 +41,29 @@ void TestLayer::OnInit(Renderer2D& renderer, Shader& shader)
 		Add(new Sprite(i, -9.0f, 0.16f * 4, 0.16f * 4, new Texture("ground_tile", "res/ground_tile.png")));
 	}
 
-	//for (float i = -16.0f; i < 16.0f; i += 5.12f * 4)
-	//{
-	//	Add(new Sprite(i, -9.0f + (0.16f * 4), 5.12f * 4, 4.32f * 4, new Texture("background", "res/background.png")));
-	//}
+	/*for (float i = -16.0f; i < 16.0f; i += 5.12f * 4)
+	{
+		Add(new Sprite(i, -9.0f + (0.16f * 4), 5.12f * 4, 4.32f * 4, new Texture("background", "res/background.png")));
+	}*/
 
 	Add(m_mario);
 
-	debugInfo = new Label*[10];
+	/*debugInfo = new Label*[10];
 	debugInfo[0] = new Label("", -15.5f, 6.8f, 0xff000000);
 	debugInfo[1] = new Label("", -15.5f, 5.8f, 0xff000000);
 	Add(debugInfo[0]);
-	Add(debugInfo[1]);
+	Add(debugInfo[1]);*/
 
 	Mask* mask = new Mask(new Texture("Mask", "res/mask.png"));
 	mask->transform = mat4::Translate(vec3(-16.0f, -9.0f, 0.0f)) * mat4::Scale(vec3(32, 18, 1));
 	// layer->SetMask(mask);
-	SetMask(mask);
+	//SetMask(mask);
 }
 
 void TestLayer::OnTick()
 {
-	Application& app = Application::GetApplication();
-	RADI_INFO(app.GetUPS(), " ups, ", app.GetFPS(), " fps");
+	/*Application& app = Application::GetApplication();
+	RADI_INFO(app.GetUPS(), " ups, ", app.GetFPS(), " fps");*/
 }
 
 void TestLayer::OnUpdate()
@@ -112,6 +112,6 @@ void TestLayer::OnEvent(radi::events::Event& event)
 
 void TestLayer::OnRender(Renderer2D& renderer)
 {
-	debugInfo[0]->text = String("Target: ") + (renderer.GetRenderTarget() == RenderTarget::SCREEN ? "Screen" : "Buffer");
-	debugInfo[1]->text = String("PostFX: ") + (renderer.GetPostEffects() ? "On" : "Off");
+	/*debugInfo[0]->text = String("Target: ") + (renderer.GetRenderTarget() == RenderTarget::SCREEN ? "Screen" : "Buffer");
+	debugInfo[1]->text = String("PostFX: ") + (renderer.GetPostEffects() ? "On" : "Off");*/
 }
