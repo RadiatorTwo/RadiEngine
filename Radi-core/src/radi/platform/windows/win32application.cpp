@@ -16,7 +16,7 @@ namespace radi {
 
 	void Application::PlatformInit()
 	{
-		window = new graphics::Window(m_name, m_width, m_height);
+		window = new Window(m_name, m_width, m_height);
 		window->SetEventCallback(METHOD(&Application::OnEvent));
 	}
 
@@ -55,8 +55,7 @@ namespace radi {
 		{
 			window->Clear();
 			if (m_Timer->Elapsed() - updateTimer > updateTick)
-			{
-				window->UpdateInput();
+			{				
 				OnUpdate();
 				updates++;
 				updateTimer += updateTick;

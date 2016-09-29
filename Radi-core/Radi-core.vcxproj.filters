@@ -153,21 +153,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\platform\windows\win32log.cpp">
-      <Filter>Quelldateien\platform\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\windows\win32application.cpp">
-      <Filter>Quelldateien\platform\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\windows\win32window.cpp">
-      <Filter>Quelldateien\platform\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\opengl\radi_opengl_render_api.cpp">
-      <Filter>Quelldateien\platform\opengl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\opengl\radi_opengl_buffer.cpp">
-      <Filter>Quelldateien\platform\opengl</Filter>
-    </ClCompile>
     <ClCompile Include="src\radi\app\application.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -279,9 +264,6 @@
     <ClCompile Include="src\radi\graphics\texture_manager.cpp">
       <Filter>Quelldateien\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\radi\graphics\window.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\radi\events\event.cpp">
       <Filter>Quelldateien\events</Filter>
     </ClCompile>
@@ -309,34 +291,55 @@
     <ClCompile Include="src\radi\rd.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\platform\posix\posix_timer.cpp">
-      <Filter>Quelldateien\platform\posix</Filter>
-    </ClCompile>
     <ClCompile Include="src\radi\utils\image_load.cpp">
       <Filter>Quelldateien\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\opengl\radi_opengl_error.cpp">
-      <Filter>Quelldateien\platform\opengl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\windows\win32timer.cpp">
-      <Filter>Quelldateien\platform\windows</Filter>
     </ClCompile>
     <ClCompile Include="src\radi\radi_string.cpp">
       <Filter>Quelldateien\utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\radi\debug\debug_menu.cpp">
+    <ClCompile Include="src\radi\app\window.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\app\input.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\radi\debug\debug_layer.cpp">
+    <ClCompile Include="src\radi\platform\opengl\radi_opengl_buffer.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\radi_opengl_error.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\radi_opengl_render_api.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\posix\posix_timer.cpp">
+      <Filter>Quelldateien\platform\posix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\windows\win32application.cpp">
+      <Filter>Quelldateien\platform\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\windows\win32log.cpp">
+      <Filter>Quelldateien\platform\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\windows\win32timer.cpp">
+      <Filter>Quelldateien\platform\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\windows\win32window.cpp">
+      <Filter>Quelldateien\platform\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\rddebug\debug_layer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\rddebug\debug_menu.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\windows\win32input.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\radi.h">
       <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="src\platform\opengl\radi_opengl_buffer.h">
-      <Filter>Headerdateien\platform\opengl</Filter>
     </ClInclude>
     <ClInclude Include="src\radi\app\application.h">
       <Filter>Headerdateien</Filter>
@@ -497,9 +500,6 @@
     <ClInclude Include="src\radi\graphics\texture_manager.h">
       <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\radi\graphics\window.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\radi\events\event.h">
       <Filter>Headerdateien\graphics\events</Filter>
     </ClInclude>
@@ -536,9 +536,6 @@
     <ClInclude Include="src\radi\common.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\platform\opengl\radi_opengl_types.h">
-      <Filter>Headerdateien\platform\opengl</Filter>
-    </ClInclude>
     <ClInclude Include="src\radi\radi_string.h">
       <Filter>Headerdateien\utils</Filter>
     </ClInclude>
@@ -551,19 +548,31 @@
     <ClInclude Include="src\radi\events\event_dispatcher.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\radi\debug\debug_menu.h">
+    <ClInclude Include="src\radi\app\window.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\app\input.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\radi\debug\debug_layer.h">
+    <ClInclude Include="src\radi\platform\opengl\radi_opengl_buffer.h">
+      <Filter>Headerdateien\platform\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\radi_opengl_types.h">
+      <Filter>Headerdateien\platform\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\rddebug\debug_layer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\rddebug\debug_menu.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\platform\opengl\radi_opengl_render_api.inl">
-      <Filter>Headerdateien\platform\opengl</Filter>
-    </None>
     <None Include="src\radi\embedded\files\SourceSansPro-Light.embed">
       <Filter>Ressourcendateien\embedded</Filter>
+    </None>
+    <None Include="src\radi\platform\opengl\radi_opengl_render_api.inl">
+      <Filter>Headerdateien\platform\opengl</Filter>
     </None>
   </ItemGroup>
 </Project>

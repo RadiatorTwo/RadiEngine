@@ -1,6 +1,8 @@
 #include "radi/rd.h"
 #include "application.h"
 
+#include "radi/rddebug/debug_layer.h"
+
 namespace radi {
 
 	using namespace graphics;

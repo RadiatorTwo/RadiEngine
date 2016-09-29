@@ -3,9 +3,10 @@
 #include "radi/rd.h"
 #include "radi/common.h"
 #include "radi/radi_types.h"
-#include <radi/maths/maths.h>
+#include "radi/maths/maths.h"
 
-#include "platform/opengl/radi_opengl_types.h"
+#include "radi/platform/opengl/radi_opengl_types.h"
+#include "radi/utils/log.h"
 
 namespace radi {
 	namespace graphics {

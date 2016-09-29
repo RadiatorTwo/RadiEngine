@@ -3,7 +3,7 @@
 #include "radi/common.h"
 #include "radi/radi_types.h"
 
-#include "platform/opengl/radi_opengl_buffer.h"
+#include "radi/platform/opengl/radi_opengl_buffer.h"
 
 namespace radi {
 	namespace graphics {

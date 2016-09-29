@@ -35,6 +35,7 @@ namespace radi
 		public:
 			Texture(uint width, uint height, uint bits = 24);
 			Texture(const String& name, const String& filename);
+			Texture(uint glID);
 			~Texture();
 			void bind() const;
 			void unbind() const;

@@ -25,12 +25,17 @@ namespace radi
 		{
 			m_tID = load();
 		}
+		
+		Texture::Texture(uint glID)
+			: m_name(std::to_string(glID)), m_filename("NULL")
+		{
+			m_tID = glID;
+		}
 
 		Texture::~Texture()
 		{
 			API::FreeTexture(m_tID);
 		}
-
 
 		GLuint Texture::load()
 		{
@@ -51,7 +56,7 @@ namespace radi
 			int internalFormat = m_bits == 32 ? GL_RGBA : GL_RGB;
 			uint format = m_bits == 32 ?
 
-			GL_BGRA: GL_BGR;
+				GL_BGRA : GL_BGR;
 
 			API::SetTextureData(GL_TEXTURE_2D, internalFormat, m_width, m_height, format, GL_UNSIGNED_BYTE, pixels ? pixels : NULL);
 			API::UnbindTexture(GL_TEXTURE_2D);

@@ -5,7 +5,7 @@
 
 #include "../../events/Event.h"
 #include "../../events/IEventListener.h"
-#include "../Window.h"
+#include "radi/app/Window.h"
 
 namespace radi
 {

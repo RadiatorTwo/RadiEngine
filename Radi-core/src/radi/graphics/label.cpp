@@ -8,37 +8,37 @@ namespace radi {
 			: Renderable2D(), text(text), position(m_position), m_font(FontManager::get("SourceSansPro"))
 		{
 			m_position = maths::vec3(x, y, 0.0f);
-			m_color = color;
+			m_Color = color;
 		}
 
 		Label::Label(const String& text, float x, float y, Font* font, uint color)
 			: Renderable2D(), text(text), position(m_position), m_font(font)
 		{
 			m_position = maths::vec3(x, y, 0.0f);
-			m_color = color;
+			m_Color = color;
 		}
 
 		Label::Label(const String& text, float x, float y, const String& font, uint color)
 			: Renderable2D(), text(text), position(m_position), m_font(FontManager::get(font))
 		{
 			m_position = maths::vec3(x, y, 0.0f);
-			m_color = color;
+			m_Color = color;
 
 			validateFont(font);
 		}
 
 		Label::Label(const String& text, float x, float y, const String& font, uint size, uint color)
-			: Renderable2D(), text(text), position(m_position), m_font(FontManager::get(font, size))
+			: Renderable2D(), text(text), position(m_position), m_font(FontManager::Get(font, size))
 		{
 			m_position = maths::vec3(x, y, 0.0f);
-			m_color = color;
+			m_Color = color;
 
 			validateFont(font, size);
 		}
 
 		void Label::submit(Renderer2D* renderer) const
 		{
-			renderer->drawString(text, position, *m_font, m_color);
+			renderer->DrawString(text, position, *m_font, m_Color);
 		}
 
 		void Label::validateFont(const String& name, int size)

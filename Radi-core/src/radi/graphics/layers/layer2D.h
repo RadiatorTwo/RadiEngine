@@ -16,6 +16,7 @@ namespace radi {
 			Renderer2D* m_renderer;
 		protected:
 			std::vector<Renderable2D*> m_renderables;
+			std::vector<Renderable2D*> m_SubmittedRenderables;
 			Shader* m_shader;
 			maths::mat4 m_projectionMatrix;
 		public:
@@ -29,6 +30,8 @@ namespace radi {
 			inline void SetMask(const Mask* mask) const { m_renderer->setMask(mask); }
 			virtual Renderable2D* Add(Renderable2D* renderable);
 			inline const std::vector<Renderable2D*>& GetRenderables() const { return m_renderables; }
+
+			virtual Renderable2D* Submit(Renderable2D* renderable);
 
 			virtual void OnRender(Renderer2D& renderer);
 			void OnRender() override;

@@ -68,6 +68,6 @@ namespace radi {
 }
 
 #ifdef RADI_PLATFORM_WINDOWS
-#include <platform/opengl/radi_opengl_render_api.inl>
-#include <platform/opengl/radi_opengl_buffer.h>
+#include "radi/platform/opengl/radi_opengl_render_api.inl"
+#include "radi/platform/opengl/radi_opengl_buffer.h"
 #endif

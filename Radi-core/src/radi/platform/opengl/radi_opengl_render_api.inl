@@ -1,9 +1,10 @@
-#include <radi/utils/log.h>
+#include "radi/utils/Log.h"
 
 #include <GL/glew.h>
 
-#define RADI_FLOAT GL_FLOAT
-#define RADI_UNSIGNED_SHORT GL_UNSIGNED_SHORT
+
+#define RD_FLOAT GL_FLOAT
+#define RD_UNSIGNED_SHORT GL_UNSIGNED_SHORT
 
 namespace radi {
 	namespace graphics {

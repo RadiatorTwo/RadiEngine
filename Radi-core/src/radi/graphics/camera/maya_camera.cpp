@@ -1,7 +1,8 @@
 #include "radi/rd.h"
 #include "maya_camera.h"
 
-#include "../Window.h"
+#include "radi/app/Window.h"
+#include "radi/app/Input.h"
 
 namespace radi {
 	namespace graphics {
@@ -28,22 +29,20 @@ namespace radi {
 
 		void MayaCamera::Update()
 		{
-			Window* window = Window::GetWindowClass(nullptr);
+			if (Input::IsKeyPressed(RD_KEY_ALT))
+			{
+				const vec2& mouse = Input::GetMousePosition();
+				vec2 delta = mouse - m_InitialMousePosition;
+				m_InitialMousePosition = mouse;
 
-			/*if (window->isKeyPressed(VK_CONTROL))
-			{*/
-			const vec2& mouse = window->GetMousePosition();
-			vec2 delta = mouse - m_InitialMousePosition;
-			m_InitialMousePosition = mouse;
+				if (Input::IsMouseButtonPressed(RD_MOUSE_MIDDLE))
+					MousePan(delta);
+				else if (Input::IsMouseButtonPressed(RD_MOUSE_LEFT))
+					MouseRotate(delta);
+				else if (Input::IsMouseButtonPressed(RD_MOUSE_RIGHT))
+					MouseZoom(delta.y);
 
-			if (window->IsMouseButtonPressed(RD_MOUSE_MIDDLE))
-				MousePan(delta);
-			else if (window->IsMouseButtonPressed(RD_MOUSE_LEFT))
-				MouseRotate(delta);
-			else if (window->IsMouseButtonPressed(RD_MOUSE_RIGHT))
-				MouseZoom(delta.y);
-
-			//}
+			}
 
 			// MouseZoom(window->GetMouseScrollPosition().y);
 

@@ -26,6 +26,13 @@ namespace radi {
 			this->z = 0.0f;
 		}
 
+		vec3::vec3(float x, float y)
+		{
+			this->x = x;
+			this->y = y;
+			this->z = 0.0f;
+		}
+
 		vec3 vec3::Up()
 		{
 			return vec3(0.0f, 1.0f, 0.0f);

@@ -17,12 +17,12 @@ namespace radi
 			m_texture = texture;
 		}
 
-		Sprite::Sprite(float x, float y, float width, float height, unsigned int color)
+		Sprite::Sprite(float x, float y, float width, float height, uint color)
 			: Renderable2D(maths::vec3(x, y, 0.0f), maths::vec2(width, height), color), position(m_position), size(m_size)
 		{
 		}
 
-		Sprite::Sprite(float x, float y, float width, float height, maths::vec4 color)
+		Sprite::Sprite(float x, float y, float width, float height, const maths::vec4& color)
 			: Renderable2D(maths::vec3(x, y, 0.0f), maths::vec2(width, height), 0xffffffff), position(m_position), size(m_size)
 		{
 			setColor(color);
@@ -36,7 +36,7 @@ namespace radi
 
 		void Sprite::setUV(const std::vector<maths::vec2>& uv)
 		{
-			m_uv = uv;
+			m_UVs = uv;
 		}
 	}
 }

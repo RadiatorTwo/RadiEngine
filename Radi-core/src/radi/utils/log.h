@@ -78,6 +78,12 @@ namespace radi {
 		}
 
 		template <>
+		static const char* to_string<bool>(const bool& t)
+		{
+			return t ? "true" : "false";
+		}
+
+		template <>
 		static const char* to_string<maths::vec2>(const maths::vec2& t)
 		{
 			// TODO: sprintf
@@ -262,7 +268,7 @@ namespace radi {
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_FATAL
-#define RADI_FATAL(...) radi::internal::log_message(RADI_LOG_LEVEL_FATAL, true, "SPARKY:    ", __VA_ARGS__)
+#define RADI_FATAL(...) radi::internal::log_message(RADI_LOG_LEVEL_FATAL, true, "RADI:    ", __VA_ARGS__)
 #define _RADI_FATAL(...) radi::internal::log_message(RADI_LOG_LEVEL_FATAL, false, __VA_ARGS__)
 #else
 #define RADI_FATAL(...)
@@ -270,7 +276,7 @@ namespace radi {
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_ERROR
-#define RADI_ERROR(...) radi::internal::log_message(RADI_LOG_LEVEL_ERROR, true, "SPARKY:    ", __VA_ARGS__)
+#define RADI_ERROR(...) radi::internal::log_message(RADI_LOG_LEVEL_ERROR, true, "RADI:    ", __VA_ARGS__)
 #define _RADI_ERROR(...) radi::internal::log_message(RADI_LOG_LEVEL_ERROR, false, __VA_ARGS__)
 #else
 #define RADI_ERROR(...)
@@ -278,7 +284,7 @@ namespace radi {
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_WARN
-#define RADI_WARN(...) radi::internal::log_message(RADI_LOG_LEVEL_WARN, true, "SPARKY:    ", __VA_ARGS__)
+#define RADI_WARN(...) radi::internal::log_message(RADI_LOG_LEVEL_WARN, true, "RADI:    ", __VA_ARGS__)
 #define _RADI_WARN(...) radi::internal::log_message(RADI_LOG_LEVEL_WARN, false, __VA_ARGS__)
 #else
 #define RADI_WARN(...)
@@ -286,7 +292,7 @@ namespace radi {
 #endif
 
 #if RADI_LOG_LEVEL >= RADI_LOG_LEVEL_INFO
-#define RADI_INFO(...) radi::internal::log_message(RADI_LOG_LEVEL_INFO, true, "SPARKY:    ", __VA_ARGS__)
+#define RADI_INFO(...) radi::internal::log_message(RADI_LOG_LEVEL_INFO, true, "RADI:    ", __VA_ARGS__)
 #define _RADI_INFO(...) radi::internal::log_message(RADI_LOG_LEVEL_INFO, false, __VA_ARGS__)
 #else
 #define RADI_INFO(...)

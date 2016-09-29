@@ -1,6 +1,6 @@
 #pragma once
 
-#include "radi/radi_types.h"
+#include <radi/radi_types.h>
 #include <radi/graphics/buffers/buffer_layout.h>
 
 namespace radi {

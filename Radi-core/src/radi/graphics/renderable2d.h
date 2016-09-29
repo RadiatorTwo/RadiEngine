@@ -33,16 +33,17 @@ namespace radi
 		protected:
 			maths::vec3 m_position;
 			maths::vec2 m_size;
-			unsigned int m_color;
-			std::vector<maths::vec2> m_uv;
+			uint m_Color;
+			std::vector<maths::vec2> m_UVs;
 			Texture* m_texture;
+			bool m_Visible;
 		protected:
-			Renderable2D() :m_texture(nullptr) { setUVDefaults(); }
+			Renderable2D() : m_texture(nullptr) { m_UVs = GetDefaultUVs(); }
 		public:
-			Renderable2D(maths::vec3 position, maths::vec2 size, unsigned int color)
-				: m_position(position), m_size(size), m_color(color), m_texture(nullptr)
+			Renderable2D(const maths::vec3& position, const maths::vec2& size, uint color)
+				: m_position(position), m_size(size), m_Color(color), m_texture(nullptr), m_Visible(true)
 			{
-				setUVDefaults();
+				m_UVs = GetDefaultUVs();
 			}
 
 			virtual ~Renderable2D() { }
@@ -52,7 +53,7 @@ namespace radi
 				renderer->submit(this);
 			}
 
-			void setColor(unsigned int color) { m_color = color; }
+			void setColor(unsigned int color) { m_Color = color; }
 			void setColor(const maths::vec4& color)
 			{
 				uint r = (uint)(color.x * 255.0f);
@@ -60,23 +61,31 @@ namespace radi
 				uint b = (uint)(color.z * 255.0f);
 				uint a = (uint)(color.w * 255.0f);
 
-				m_color = a << 24 | b << 16 | g << 8 | r;
+				m_Color = a << 24 | b << 16 | g << 8 | r;
 			}
 
 			inline const maths::vec3& getPosition() const { return m_position; }
 			inline const maths::vec2& getSize() const { return m_size; }
-			inline const unsigned int getColor() const { return m_color; }
-			inline const std::vector<maths::vec2>& getUV() const { return m_uv; }
+			inline const unsigned int getColor() const { return m_Color; }
+			inline const std::vector<maths::vec2>& GetUV() const { return m_UVs; }
 
 			inline const uint getTID() const { return m_texture == nullptr ? 0 : m_texture->getID(); }
 			inline const Texture* getTexture() const { return m_texture; }
-		private:
-			void setUVDefaults()
+
+			inline bool IsVisible() const { return m_Visible; }
+			inline void SetVisible(bool visible) { m_Visible = visible; }
+		public:
+			static std::vector<maths::vec2> GetDefaultUVs()
 			{
-				m_uv.push_back(maths::vec2(0, 0));
-				m_uv.push_back(maths::vec2(0, 1));
-				m_uv.push_back(maths::vec2(1, 1));
-				m_uv.push_back(maths::vec2(1, 0));
+				static std::vector<maths::vec2> results;
+				if (!results.size())
+				{
+					results.push_back(maths::vec2(0, 0));
+					results.push_back(maths::vec2(0, 1));
+					results.push_back(maths::vec2(1, 1));
+					results.push_back(maths::vec2(1, 0));
+				}
+				return results;
 			}
 		};
 	}

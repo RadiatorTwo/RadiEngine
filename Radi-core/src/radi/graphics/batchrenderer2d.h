@@ -7,6 +7,7 @@
 #include "renderer2d.h"
 #include "renderable2d.h"
 #include "Framebuffer.h"
+#include "font_manager.h"
 
 #include "buffers/VertexArray.h"
 #include "buffers/indexbuffer.h"
@@ -46,8 +47,11 @@ namespace radi
 
 			void Begin() override;
 			void submit(const Renderable2D* renderable) override;
+
 			void drawAABB(const maths::AABB& aabb, uint color = 0xffffffff);
-			void drawString(const String& text, const maths::vec3& position, const Font& font, unsigned int color) override;
+			void DrawString(const String& text, const maths::vec3& position, const Font& font = *FontManager::get(), uint color = 0xffffffff) override;
+			void FillRect(float x, float y, float width, float height, uint color = 0xffffffff) override;
+
 			void end() override;
 			void Present() override;
 
@@ -58,7 +62,9 @@ namespace radi
 
 		private:
 			void init();
+			// TODO: Deprecated. Only sp::graphics::Texture should be allowable.
 			float submitTexture(uint textureID);
+
 			float submitTexture(const Texture* texture);
 		};
 	}

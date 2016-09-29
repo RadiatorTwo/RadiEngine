@@ -10,7 +10,6 @@
 class TestLayer : public radi::graphics::Layer2D
 {
 private:
-	radi::graphics::Label* m_fps;
 	radi::graphics::Label** debugInfo;
 	radi::graphics::Sprite* m_mario;
 	radi::graphics::Renderer2D* m_Renderer;

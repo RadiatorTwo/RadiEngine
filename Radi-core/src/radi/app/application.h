@@ -4,21 +4,24 @@
 #include "radi/common.h"
 #include "radi/radi_types.h"
 
-#include <radi/graphics/window.h>
+#include <radi/app/window.h>
 #include <radi/graphics/layers/layer.h>
 #include <radi/utils/timer.h>
 
-#include "radi/debug/debug_layer.h"
 #include "radi/events/events.h"
 
 namespace radi {
+
+	namespace debug {
+		class DebugLayer;
+	}
 
 	class RD_API Application
 	{
 	private:
 		static Application* s_instance;
 	public:
-		graphics::Window* window;
+		Window* window;
 		debug::DebugLayer* m_DebugLayer;
 	private:
 		bool m_running, m_suspended;

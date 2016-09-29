@@ -2,7 +2,7 @@
 #include "Layer2D.h"
 
 #include "../batchrenderer2d.h"
-#include "../window.h"
+#include "radi/app/window.h"
 
 namespace radi {
 	namespace graphics {
@@ -49,6 +49,12 @@ namespace radi {
 			return renderable;
 		}
 
+		Renderable2D* Layer2D::Submit(Renderable2D* renderable)
+		{
+			m_SubmittedRenderables.push_back(renderable);
+			return renderable;
+		}
+
 		void Layer2D::OnRender()
 		{
 			m_shader->Bind();
@@ -57,10 +63,15 @@ namespace radi {
 			for (const Renderable2D* renderable : m_renderables)
 				renderable->submit(m_renderer);
 
+			for (const Renderable2D* renderable : m_SubmittedRenderables)
+				renderable->submit(m_renderer);
+
 			m_renderer->end();
 			m_renderer->Present();
 
 			OnRender(*m_renderer);
+
+			m_SubmittedRenderables.clear();
 		}
 
 		void Layer2D::OnRender(Renderer2D& renderer)

@@ -3,8 +3,10 @@
 #include <vector>
 
 #include "font.h"
+#include "font_manager.h"
 #include "texture.h"
 #include "Mask.h"
+
 #include "../maths/maths.h"
 #include "postfx/post_effects.h"
 
@@ -69,7 +71,11 @@ namespace radi
 
 			virtual void Begin() {}
 			virtual void submit(const Renderable2D* renderable) = 0;
-			virtual void drawString(const String& text, const maths::vec3& position, const Font& font, unsigned int color) { }
+
+			// Drawables
+			virtual void DrawString(const String& text, const maths::vec3& position, const Font& font = *FontManager::get(), uint color = 0xffffffff) { }
+			virtual void FillRect(float x, float y, float width, float height, uint color = 0xffffffff) { }
+
 			virtual void end() {}
 			virtual void Present() = 0;
 		};

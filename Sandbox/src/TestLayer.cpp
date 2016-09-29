@@ -33,8 +33,8 @@ void TestLayer::OnInit(Renderer2D& renderer, Shader& shader)
 	renderer.SetPostEffects(false);
 
 	Texture::SetFilter(TextureFilter::NEAREST);
-	m_mario = new Sprite(0.0f, 0.0f, 0.15f * 4, 0.2f * 4, new Texture("mario", "res/mario32.png"));
-	
+	m_mario = new Sprite(0.0f, 0.0f, 0.15f * 8, 0.2f * 8, new Texture("mario", "res/mario32.png"));
+
 
 	for (float i = -16; i < 16.0f; i += 0.16f * 4)
 	{
@@ -46,10 +46,7 @@ void TestLayer::OnInit(Renderer2D& renderer, Shader& shader)
 	//	Add(new Sprite(i, -9.0f + (0.16f * 4), 5.12f * 4, 4.32f * 4, new Texture("background", "res/background.png")));
 	//}
 
-Add(m_mario);
-
-	m_fps = new Label("", -15.5f, 7.8f, 0xff000000);
-	Add(m_fps);
+	Add(m_mario);
 
 	debugInfo = new Label*[10];
 	debugInfo[0] = new Label("", -15.5f, 6.8f, 0xff000000);
@@ -66,22 +63,21 @@ Add(m_mario);
 void TestLayer::OnTick()
 {
 	Application& app = Application::GetApplication();
-	m_fps->text = std::to_string(app.GetFPS()) + " fps";
 	RADI_INFO(app.GetUPS(), " ups, ", app.GetFPS(), " fps");
 }
 
 void TestLayer::OnUpdate()
 {
-	float speed = 0.15f;
-	if (m_window->IsKeyPressed(VK_LEFT))
-		m_mario->position.x -= speed;
-	else if (m_window->IsKeyPressed(VK_RIGHT))
-		m_mario->position.x += speed;
+	//float speed = 0.15f;
+	//if (m_window->IsKeyPressed(VK_LEFT))
+	//	m_mario->position.x -= speed;
+	//else if (m_window->IsKeyPressed(VK_RIGHT))
+	//	m_mario->position.x += speed;
 
-	if (m_window->IsKeyPressed(VK_UP))
-		m_mario->position.y += speed;
-	else if (m_window->IsKeyPressed(VK_DOWN))
-		m_mario->position.y -= speed;
+	//if (m_window->IsKeyPressed(VK_UP))
+	//	m_mario->position.y += speed;
+	//else if (m_window->IsKeyPressed(VK_DOWN))
+	//	m_mario->position.y -= speed;
 }
 
 bool TestLayer::OnKeyPressedEvent(KeyPressedEvent& event)
@@ -94,12 +90,12 @@ bool TestLayer::OnKeyPressedEvent(KeyPressedEvent& event)
 	if (event.GetRepeat())
 		return false;
 
-	if (event.GetKeyCode() == VK_T)
+	if (event.GetKeyCode() == RD_KEY_T)
 	{
 		renderer.SetRenderTarget(renderer.GetRenderTarget() == RenderTarget::SCREEN ? RenderTarget::BUFFER : RenderTarget::SCREEN);
 		return true;
 	}
-	if (event.GetKeyCode() == VK_P)
+	if (event.GetKeyCode() == RD_KEY_P)
 	{
 		renderer.SetPostEffects(!renderer.GetPostEffects());
 		return true;

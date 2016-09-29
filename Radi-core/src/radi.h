@@ -5,6 +5,7 @@
 //
 
 #include <radi/app/application.h>
+#include <radi/app/window.h>
 
 #include <radi/audio/sound.h>
 #include <radi/audio/sound_manager.h>
@@ -39,7 +40,6 @@
 #include <radi/graphics/sprite.h>
 #include <radi/graphics/texture.h>
 #include <radi/graphics/texture_manager.h>
-#include <radi/graphics/window.h>
 
 #include <radi/graphics/buffers/buffer.h>
 #include <radi/graphics/buffers/buffer_layout.h>
