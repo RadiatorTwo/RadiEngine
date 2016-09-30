@@ -1,9 +1,9 @@
 #pragma once
 
 #include "radi/rd.h"
-#include "radi/common.h"
+#include "radi/Common.h"
 
-#include "component/components.h"
+#include "component/Components.h"
 
 namespace radi {
 	namespace entity {
@@ -14,6 +14,7 @@ namespace radi {
 			std::vector<component::Component*> m_Components;
 		public:
 			Entity();
+			Entity(graphics::Mesh* mesh, const maths::mat4& transform = maths::mat4::Identity());
 
 			void AddComponent(component::Component* component);
 

@@ -1,11 +1,11 @@
 #pragma once
 
 #include "radi/rd.h"
-#include "radi/common.h"
+#include "radi/Common.h"
 
-#include "../framebuffer.h"
-#include "../buffers/vertexarray.h"
-#include "../buffers/indexbuffer.h"
+#include "radi/graphics/API/Framebuffer.h"
+#include "radi/graphics/API/VertexArray.h"
+#include "radi/graphics/API/IndexBuffer.h"
 #include "post_effect_pass.h"
 
 namespace radi {
@@ -22,7 +22,7 @@ namespace radi {
 			void Push(PostEffectsPass* pass);
 			void Pop();
 
-			void RenderPostEffects(Framebuffer* source, Framebuffer* target, VertexArray* quad, IndexBuffer* indices);
+			void RenderPostEffects(Framebuffer* source, Framebuffer* target, API::VertexArray* quad, API::IndexBuffer* indices);
 		};
 
 	}

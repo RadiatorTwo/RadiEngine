@@ -1,68 +1,77 @@
 #include "radi/rd.h"
-#include "application.h"
+#include "Application.h"
 
 #include "radi/rddebug/debug_layer.h"
+#include "radi/rddebug/debug_renderer.h"
+
+#include "radi/system/System.h"
+#include "radi/system/Memory.h"
 
 namespace radi {
 
 	using namespace graphics;
 
-	Application* Application::s_instance = nullptr;
+	Application* Application::s_Instance = nullptr;
 
 	void Application::Init()
 	{
+		internal::System::Init();
 		PlatformInit();
 
-		m_DebugLayer = new debug::DebugLayer();
+		debug::DebugMenu::Init();
+		//debug::DebugRenderer::Init();
+
+		m_DebugLayer = spnew debug::DebugLayer();
 		m_DebugLayer->Init();
 	}
 
 	void Application::PushLayer(Layer* layer)
 	{
-		m_layerStack.push_back(layer);
+		m_LayerStack.push_back(layer);
 		layer->Init();
 	}
 
 	Layer* Application::PopLayer()
 	{
-		Layer* layer = m_layerStack.back();
-		m_layerStack.pop_back();
+		Layer* layer = m_LayerStack.back();
+		m_LayerStack.pop_back();
 		return layer;
 	}
 
 	Layer* Application::PopLayer(Layer* layer)
 	{
-		for (uint i = 0; i < m_layerStack.size(); i++)
+		for (uint i = 0; i < m_LayerStack.size(); i++)
 		{
-			if (m_layerStack[i] == layer)
+			if (m_LayerStack[i] == layer)
 			{
-				m_layerStack.erase(m_layerStack.begin() + i);
+				m_LayerStack.erase(m_LayerStack.begin() + i);
 				break;
 			}
 		}
 		return layer;
 	}
 
+
 	void Application::PushOverlay(Layer* layer)
 	{
-		m_overlayStack.push_back(layer);
+		m_OverlayStack.push_back(layer);
 		layer->Init();
 	}
 
 	Layer* Application::PopOverlay()
 	{
-		Layer* layer = m_overlayStack.back();
-		m_overlayStack.pop_back();
+		Layer* layer = m_OverlayStack.back();
+		m_OverlayStack.pop_back();
 		return layer;
 	}
 
 	Layer* Application::PopOverlay(Layer* layer)
 	{
-		for (uint i = 0; i < m_overlayStack.size(); i++)
+		for (uint i = 0; i < m_OverlayStack.size(); i++)
 		{
-			if (m_overlayStack[i] == layer)
+			if (m_OverlayStack[i] == layer)
 			{
-				m_overlayStack.erase(m_overlayStack.begin() + i);
+				m_OverlayStack.erase(m_OverlayStack.begin() + i);
 				break;
 			}
 		}
@@ -75,16 +84,16 @@ namespace radi {
 		if (event.IsHandled()) // TODO(Yan): Maybe this shouldn't happen
 			return;
 
-		for (int i = m_overlayStack.size() - 1; i >= 0; i--)
+		for (int32 i = m_OverlayStack.size() - 1; i >= 0; i--)
 		{
-			m_overlayStack[i]->OnEvent(event);
+			m_OverlayStack[i]->OnEvent(event);
 			if (event.IsHandled())
 				return;
 		}
 
-		for (int i = m_layerStack.size() - 1; i >= 0; i--)
+		for (int32 i = m_LayerStack.size() - 1; i >= 0; i--)
 		{
-			m_layerStack[i]->OnEvent(event);
+			m_LayerStack[i]->OnEvent(event);
 			if (event.IsHandled())
 				return;
 		}
@@ -94,43 +103,43 @@ namespace radi {
 	{
 		m_DebugLayer->OnTick();
 
-		for (uint i = 0; i < m_overlayStack.size(); i++)
-			m_overlayStack[i]->OnTick();
+		for (uint i = 0; i < m_OverlayStack.size(); i++)
+			m_OverlayStack[i]->OnTick();
 
-		for (uint i = 0; i < m_layerStack.size(); i++)
-			m_layerStack[i]->OnTick();
+		for (uint i = 0; i < m_LayerStack.size(); i++)
+			m_LayerStack[i]->OnTick();
 	}
 
 	void Application::OnUpdate()
 	{
 		m_DebugLayer->OnUpdate();
 
-		for (uint i = 0; i < m_overlayStack.size(); i++)
-			m_overlayStack[i]->OnUpdate();
+		for (uint i = 0; i < m_OverlayStack.size(); i++)
+			m_OverlayStack[i]->OnUpdate();
 
-		for (uint i = 0; i < m_layerStack.size(); i++)
-			m_layerStack[i]->OnUpdate();
+		for (uint i = 0; i < m_LayerStack.size(); i++)
+			m_LayerStack[i]->OnUpdate();
 	}
 
 	void Application::OnRender()
 	{
-		for (uint i = 0; i < m_layerStack.size(); i++)
+		for (uint i = 0; i < m_LayerStack.size(); i++)
 		{
-			if (m_layerStack[i]->IsVisible())
-				m_layerStack[i]->OnRender();
-
+			if (m_LayerStack[i]->IsVisible())
+				m_LayerStack[i]->OnRender();
 		}
 
-		for (uint i = 0; i < m_overlayStack.size(); i++)
+		for (uint i = 0; i < m_OverlayStack.size(); i++)
 		{
-			if (m_overlayStack[i]->IsVisible())
-				m_overlayStack[i]->OnRender();
-
+			if (m_OverlayStack[i]->IsVisible())
+				m_OverlayStack[i]->OnRender();
 		}
 
 		Layer2D* debugLayer = (Layer2D*)m_DebugLayer;
 		if (debugLayer->IsVisible())
 			debugLayer->OnRender();
+
+		// debug::DebugRenderer::Present();
 	}
 
 }

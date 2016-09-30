@@ -1,11 +1,19 @@
 #include "radi/rd.h"
-#include "entity.h"
+#include "Entity.h"
 
 namespace radi {
 	namespace entity {
 
+		using namespace component;
+
 		Entity::Entity()
 		{
+		}
+
+		Entity::Entity(graphics::Mesh* mesh, const maths::mat4& transform)
+		{
+			AddComponent(new MeshComponent(mesh));
+			AddComponent(new TransformComponent(transform));
 		}
 
 		void Entity::AddComponent(component::Component* component)

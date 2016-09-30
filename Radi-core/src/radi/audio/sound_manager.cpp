@@ -2,51 +2,55 @@
 #include "sound_manager.h"
 
 #define GAU_THREAD_POLICY_MULTI 2
-#include <../../gorilla-audio/src/ga.h>
-#include <../../gorilla-audio/src/gau.h>
+#include <ga.h>
+#include <gau.h>
 
-namespace radi { namespace audio {
+#include "radi/system/Memory.h"
 
-	gau_Manager* SoundManager::m_Manager = nullptr;
-	ga_Mixer* SoundManager::m_Mixer = nullptr;
+namespace radi {
+	namespace audio {
 
-	std::vector<Sound*> SoundManager::m_Sounds;
+		gau_Manager* SoundManager::m_Manager = nullptr;
+		ga_Mixer* SoundManager::m_Mixer = nullptr;
 
-	void SoundManager::init()
-	{
-		gc_initialize(0);
-		m_Manager = gau_manager_create();
-		m_Mixer = gau_manager_mixer(m_Manager);
-	}
+		std::vector<Sound*> SoundManager::m_Sounds;
 
-	Sound* SoundManager::add(Sound* sound)
-	{
-		m_Sounds.push_back(sound);
-		return sound;
-	}
-
-	Sound* SoundManager::get(const String& name)
-	{
-		for (Sound* sound : m_Sounds)
+		void SoundManager::Init()
 		{
-			if (sound->getName() == name)
-				return sound;
+			gc_initialize(0);
+			m_Manager = gau_manager_create();
+			m_Mixer = gau_manager_mixer(m_Manager);
 		}
-		return nullptr;
+
+		Sound* SoundManager::Add(Sound* sound)
+		{
+			m_Sounds.push_back(sound);
+			return sound;
+		}
+
+		Sound* SoundManager::Get(const String& name)
+		{
+			for (Sound* sound : m_Sounds)
+			{
+				if (sound->GetName() == name)
+					return sound;
+			}
+			return nullptr;
+		}
+
+		void SoundManager::Clean()
+		{
+			for (uint i = 0; i < m_Sounds.size(); i++)
+				spdel m_Sounds[i];
+
+			gau_manager_destroy(m_Manager);
+			gc_shutdown();
+		}
+
+		void SoundManager::Update()
+		{
+			gau_manager_update(m_Manager);
+		}
+
 	}
-
-	void SoundManager::clean()
-	{
-		for (int i = 0; i < m_Sounds.size(); i++)
-			delete m_Sounds[i];
-
-		gau_manager_destroy(m_Manager);
-		gc_shutdown();
-	}
-
-	void SoundManager::update()
-	{
-		gau_manager_update(m_Manager);
-	}
-
-} }
+}

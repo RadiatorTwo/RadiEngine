@@ -1,5 +1,6 @@
 #include "radi/rd.h"
 #include "debug_menu_item.h"
+#include "debug_menu_action.h"
 
 #include "radi/graphics/font_manager.h"
 
@@ -18,7 +19,7 @@ namespace radi {
 		void DebugMenuItem::OnUpdate()
 		{
 			m_Label = m_Action->ToString();
-			m_Font = FontManager::Get(DebugMenu::Get()->GetSettings().fontSize);
+			m_Font = FontManager::Get((uint)DebugMenu::Get()->GetSettings().fontSize);
 		}
 
 	}

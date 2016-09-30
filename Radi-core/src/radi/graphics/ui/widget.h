@@ -1,7 +1,7 @@
 #pragma once
 
 #include "radi/rd.h"
-#include "panel.h"
+#include "Panel.h"
 
 #include "radi/maths/maths.h"
 

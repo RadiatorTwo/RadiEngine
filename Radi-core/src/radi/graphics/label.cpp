@@ -1,49 +1,49 @@
 #include "radi/rd.h"
-#include "label.h"
+#include "Label.h"
 
 namespace radi {
 	namespace graphics {
-		
+
 		Label::Label(const String& text, float x, float y, uint color)
-			: Renderable2D(), text(text), position(m_position), m_font(FontManager::get("SourceSansPro"))
+			: Renderable2D(), text(text), position(m_Position), m_Font(FontManager::Get("SourceSansPro"))
 		{
-			m_position = maths::vec3(x, y, 0.0f);
+			m_Position = maths::vec3(x, y, 0.0f);
 			m_Color = color;
 		}
 
 		Label::Label(const String& text, float x, float y, Font* font, uint color)
-			: Renderable2D(), text(text), position(m_position), m_font(font)
+			: Renderable2D(), text(text), position(m_Position), m_Font(font)
 		{
-			m_position = maths::vec3(x, y, 0.0f);
+			m_Position = maths::vec3(x, y, 0.0f);
 			m_Color = color;
 		}
 
 		Label::Label(const String& text, float x, float y, const String& font, uint color)
-			: Renderable2D(), text(text), position(m_position), m_font(FontManager::get(font))
+			: Renderable2D(), text(text), position(m_Position), m_Font(FontManager::Get(font))
 		{
-			m_position = maths::vec3(x, y, 0.0f);
+			m_Position = maths::vec3(x, y, 0.0f);
 			m_Color = color;
 
-			validateFont(font);
+			ValidateFont(font);
 		}
 
 		Label::Label(const String& text, float x, float y, const String& font, uint size, uint color)
-			: Renderable2D(), text(text), position(m_position), m_font(FontManager::Get(font, size))
+			: Renderable2D(), text(text), position(m_Position), m_Font(FontManager::Get(font, size))
 		{
-			m_position = maths::vec3(x, y, 0.0f);
+			m_Position = maths::vec3(x, y, 0.0f);
 			m_Color = color;
 
-			validateFont(font, size);
+			ValidateFont(font, size);
 		}
 
-		void Label::submit(Renderer2D* renderer) const
+		void Label::Submit(Renderer2D* renderer) const
 		{
-			renderer->DrawString(text, position, *m_font, m_Color);
+			renderer->DrawString(text, position, *m_Font, m_Color);
 		}
 
-		void Label::validateFont(const String& name, int size)
+		void Label::ValidateFont(const String& name, int32 size)
 		{
-			if (m_font != nullptr)
+			if (m_Font != nullptr)
 				return;
 
 			std::cout << "NULL FONT! Font=" << name;
@@ -51,8 +51,9 @@ namespace radi {
 				std::cout << ", Size=" << size;
 			std::cout << std::endl;
 
-			m_font = FontManager::get("SourceSansPro");
+			m_Font = FontManager::Get("SourceSansPro");
 		}
+
 
 	}
 }

@@ -3,10 +3,9 @@
 
 #include "radi/embedded/Embedded.h"
 
-namespace radi
-{
-	namespace graphics
-	{
+namespace radi {
+	namespace graphics {
+
 		std::vector<Font*> FontManager::s_Fonts;
 		maths::vec2 FontManager::s_Scale = maths::vec2(1, 1);
 
@@ -15,27 +14,25 @@ namespace radi
 			s_Scale = scale;
 		}
 
-		void FontManager::add(Font* font)
+		void FontManager::Add(Font* font)
 		{
 			font->SetScale(s_Scale);
 			s_Fonts.push_back(font);
 		}
 
-		Font* FontManager::get()
+		Font* FontManager::Get()
 		{
 			return s_Fonts[0];
 		}
 
-		Font* FontManager::get(const String& name)
+		Font* FontManager::Get(const String& name)
 		{
 			for (Font* font : s_Fonts)
 			{
 				if (font->GetName() == name)
-				{
 					return font;
-				}
 			}
-			//TODO: Default Font statt null
+			// TODO: Maybe return a default font instead?
 			return nullptr;
 		}
 
@@ -46,9 +43,9 @@ namespace radi
 				if (font->GetSize() == size)
 					return font;
 			}
-			Font* result = new Font("SourceSansPro", internal::DEFAULT_FONT, internal::DEFAULT_FONT_SIZE, size);
+			Font* result = new Font("SourceSansPro", internal::DEFAULT_FONT, internal::DEFAULT_FONT_SIZE, (float)size);
 			result->SetScale(s_Scale);
-			add(result);
+			Add(result);
 			return result;
 		}
 
@@ -57,18 +54,17 @@ namespace radi
 			for (Font* font : s_Fonts)
 			{
 				if (font->GetSize() == size && font->GetName() == name)
-				{
 					return font;
-				}
 			}
-			//TODO: Default Font statt null
+			// TODO: Maybe return a default font instead?
 			return nullptr;
 		}
 
-		void FontManager::clean()
+		void FontManager::Clean()
 		{
 			for (uint i = 0; i < s_Fonts.size(); i++)
 				delete s_Fonts[i];
 		}
+
 	}
 }

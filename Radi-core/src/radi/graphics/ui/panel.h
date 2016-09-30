@@ -1,8 +1,8 @@
 #pragma once
 
 #include "radi/rd.h"
-#include "radi/graphics/renderer2d.h"
-#include "radi/graphics/layers/layer2D.h"
+#include "radi/graphics/Renderer2D.h"
+#include "radi/graphics/layers/Layer2D.h"
 
 namespace radi {
 	namespace graphics {

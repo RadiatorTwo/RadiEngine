@@ -1,6 +1,6 @@
 #pragma once
 
-#include "radi/common.h"
+#include "radi/Common.h"
 #include "radi/radi_string.h"
 
 namespace radi {
@@ -24,16 +24,18 @@ namespace radi {
 
 				MOUSE_PRESSED = BIT(2),
 				MOUSE_RELEASED = BIT(3),
-				MOUSE_MOVED = BIT(4)
+				MOUSE_MOVED = BIT(4),
+
+				WINDOW_RESIZE = BIT(5)
 			};
 		protected:
-			bool m_handled;
-			Type m_type;
+			bool m_Handled;
+			Type m_Type;
 		protected:
 			Event(Type type);
-		public:			
-			inline Type GetType() const { return m_type; }
-			inline bool IsHandled() const { return m_handled; }
+		public:
+			inline Type GetType() const { return m_Type; }
+			inline bool IsHandled() const { return m_Handled; }
 
 			virtual String ToString() const;
 

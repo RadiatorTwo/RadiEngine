@@ -1,8 +1,8 @@
 #pragma once
 
 #include "radi/rd.h"
-#include <radi/radi_types.h>
-#include "radi/graphics/texture.h"
+#include "radi/radi_types.h"
+#include "radi/graphics/API/Texture.h"
 
 namespace radi {
 	namespace graphics {
@@ -10,11 +10,11 @@ namespace radi {
 		class RD_API TextureManager
 		{
 		private:
-			static std::vector<Texture*> m_textures;
+			static std::vector<API::Texture*> m_Textures;
 		public:
-			static void add(Texture* texture);
-			static Texture* get(const String& name);
-			static void clean();
+			static API::Texture* Add(API::Texture* texture);
+			static API::Texture* Get(const String& name);
+			static void Clean();
 		private:
 			TextureManager() { }
 		};

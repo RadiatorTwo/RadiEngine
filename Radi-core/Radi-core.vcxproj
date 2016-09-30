@@ -11,13 +11,55 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\radi\events\window_event.cpp" />
+    <ClCompile Include="src\radi\graphics\API\Context.cpp" />
+    <ClCompile Include="src\radi\graphics\API\Framebuffer2D.cpp" />
+    <ClCompile Include="src\radi\graphics\API\FramebufferDepth.cpp" />
+    <ClCompile Include="src\radi\graphics\API\Texture2D.cpp" />
+    <ClCompile Include="src\radi\graphics\API\TextureCube.cpp" />
+    <ClCompile Include="src\radi\graphics\API\TextureDepth.cpp" />
+    <ClCompile Include="src\radi\graphics\API\VertexBuffer.cpp" />
+    <ClCompile Include="src\radi\graphics\gbuffer.cpp" />
+    <ClCompile Include="src\radi\graphics\deferred_renderer.cpp" />
+    <ClCompile Include="src\radi\graphics\camera\fps_camera.cpp" />
     <ClCompile Include="src\radi\graphics\light.cpp" />
     <ClCompile Include="src\radi\graphics\light_setup.cpp" />
+    <ClCompile Include="src\radi\graphics\OBJModel.cpp" />
+    <ClCompile Include="src\radi\graphics\PBRMaterial.cpp" />
+    <ClCompile Include="src\radi\graphics\renderer.cpp" />
+    <ClCompile Include="src\radi\graphics\shaders\shader_manager.cpp" />
     <ClCompile Include="src\radi\graphics\ui\button.cpp" />
     <ClCompile Include="src\radi\graphics\ui\panel.cpp" />
     <ClCompile Include="src\radi\graphics\ui\slider.cpp" />
     <ClCompile Include="src\radi\graphics\ui\widget.cpp" />
     <ClCompile Include="src\radi\maths\rectangle.cpp" />
+    <ClCompile Include="src\radi\platform\directx\DXContext.cpp" />
+    <ClCompile Include="src\radi\platform\directx\DXFramebuffer2D.cpp" />
+    <ClCompile Include="src\radi\platform\directx\DXFramebufferDepth.cpp" />
+    <ClCompile Include="src\radi\platform\directx\DXIndexBuffer.cpp" />
+    <ClCompile Include="src\radi\platform\directx\DXRenderer.cpp" />
+    <ClCompile Include="src\radi\platform\directx\DXShader.cpp" />
+    <ClCompile Include="src\radi\platform\directx\DXShaderResource.cpp" />
+    <ClCompile Include="src\radi\platform\directx\DXShaderUniform.cpp" />
+    <ClCompile Include="src\radi\platform\directx\DXTexture2D.cpp" />
+    <ClCompile Include="src\radi\platform\directx\DXTextureCube.cpp" />
+    <ClCompile Include="src\radi\platform\directx\DXTextureDepth.cpp" />
+    <ClCompile Include="src\radi\platform\directx\DXVertexArray.cpp" />
+    <ClCompile Include="src\radi\platform\directx\DXVertexBuffer.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLContext.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLError.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLFramebuffer2D.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLFramebufferDepth.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLIndexBuffer.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLRenderer.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLShader.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLShaderResource.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLShaderUniform.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLTexture2D.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLTextureCube.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLTextureDepth.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLVertexArray.cpp" />
+    <ClCompile Include="src\radi\platform\opengl\GLVertexBuffer.cpp" />
     <ClCompile Include="src\radi\platform\posix\posix_timer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
@@ -27,6 +69,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\radi\platform\windows\win32input.cpp" />
+    <ClCompile Include="src\radi\platform\windows\win32memoryManager.cpp" />
     <ClCompile Include="src\radi\platform\windows\win32timer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
@@ -106,19 +149,19 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="src\radi\graphics\buffers\buffer_layout.cpp">
+    <ClCompile Include="src\radi\graphics\API\buffer_layout.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="src\radi\graphics\buffers\indexbuffer.cpp">
+    <ClCompile Include="src\radi\graphics\API\indexbuffer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="src\radi\graphics\buffers\vertexarray.cpp">
+    <ClCompile Include="src\radi\graphics\API\vertexarray.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
@@ -154,7 +197,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="src\radi\graphics\framebuffer.cpp">
+    <ClCompile Include="src\radi\graphics\API\framebuffer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
@@ -250,24 +293,6 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\radi_opengl_buffer.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\radi_opengl_error.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\radi_opengl_render_api.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
-    </ClCompile>
     <ClCompile Include="src\radi\platform\windows\win32window.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
@@ -292,7 +317,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="src\radi\graphics\texture.cpp">
+    <ClCompile Include="src\radi\graphics\API\texture.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
@@ -361,6 +386,12 @@
     </ClCompile>
     <ClCompile Include="src\radi\rddebug\debug_menu_item.cpp" />
     <ClCompile Include="src\radi\rddebug\debug_menu_slider.cpp" />
+    <ClCompile Include="src\radi\rddebug\debug_renderer.cpp" />
+    <ClCompile Include="src\radi\system\Allocator.cpp" />
+    <ClCompile Include="src\radi\system\Memory.cpp" />
+    <ClCompile Include="src\radi\system\memory_manager.cpp" />
+    <ClCompile Include="src\radi\system\System.cpp" />
+    <ClCompile Include="src\radi\utils\fileutils.cpp" />
     <ClCompile Include="src\radi\utils\image_load.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">radi/rd.h</PrecompiledHeaderFile>
@@ -374,13 +405,59 @@
     <ClInclude Include="src\radi\audio\sound.h" />
     <ClInclude Include="src\radi\audio\sound_manager.h" />
     <ClInclude Include="src\radi\common.h" />
+    <ClInclude Include="src\radi\events\window_event.h" />
+    <ClInclude Include="src\radi\graphics\API\Context.h" />
+    <ClInclude Include="src\radi\graphics\API\Framebuffer2D.h" />
+    <ClInclude Include="src\radi\graphics\API\FramebufferDepth.h" />
+    <ClInclude Include="src\radi\graphics\API\Texture2D.h" />
+    <ClInclude Include="src\radi\graphics\API\TextureCube.h" />
+    <ClInclude Include="src\radi\graphics\API\TextureDepth.h" />
+    <ClInclude Include="src\radi\graphics\API\VertexBuffer.h" />
+    <ClInclude Include="src\radi\graphics\gbuffer.h" />
+    <ClInclude Include="src\radi\graphics\deferred_renderer.h" />
+    <ClInclude Include="src\radi\graphics\camera\fps_camera.h" />
     <ClInclude Include="src\radi\graphics\light.h" />
     <ClInclude Include="src\radi\graphics\light_setup.h" />
+    <ClInclude Include="src\radi\graphics\PBRMaterial.h" />
+    <ClInclude Include="src\radi\graphics\renderer.h" />
+    <ClInclude Include="src\radi\graphics\shaders\shader_manager.h" />
+    <ClInclude Include="src\radi\graphics\shaders\shader_resource.h" />
     <ClInclude Include="src\radi\graphics\ui\button.h" />
     <ClInclude Include="src\radi\graphics\ui\panel.h" />
     <ClInclude Include="src\radi\graphics\ui\slider.h" />
     <ClInclude Include="src\radi\graphics\ui\widget.h" />
     <ClInclude Include="src\radi\maths\rectangle.h" />
+    <ClInclude Include="src\radi\platform\directx\DXCommon.h" />
+    <ClInclude Include="src\radi\platform\directx\DXContext.h" />
+    <ClInclude Include="src\radi\platform\directx\DXFramebuffer2D.h" />
+    <ClInclude Include="src\radi\platform\directx\DXFramebufferDepth.h" />
+    <ClInclude Include="src\radi\platform\directx\DXIndexBuffer.h" />
+    <ClInclude Include="src\radi\platform\directx\DXRenderer.h" />
+    <ClInclude Include="src\radi\platform\directx\DXShader.h" />
+    <ClInclude Include="src\radi\platform\directx\DXShaderResource.h" />
+    <ClInclude Include="src\radi\platform\directx\DXShaderUniform.h" />
+    <ClInclude Include="src\radi\platform\directx\DXTexture2D.h" />
+    <ClInclude Include="src\radi\platform\directx\DXTextureCube.h" />
+    <ClInclude Include="src\radi\platform\directx\DXTextureDepth.h" />
+    <ClInclude Include="src\radi\platform\directx\DXTextureHandle.h" />
+    <ClInclude Include="src\radi\platform\directx\DXTypes.h" />
+    <ClInclude Include="src\radi\platform\directx\DXVertexArray.h" />
+    <ClInclude Include="src\radi\platform\directx\DXVertexBuffer.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLCommon.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLContext.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLFramebuffer2D.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLFramebufferDepth.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLIndexBuffer.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLRenderer.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLShader.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLShaderResource.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLShaderUniform.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLTexture2D.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLTextureCube.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLTextureDepth.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLTypes.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLVertexArray.h" />
+    <ClInclude Include="src\radi\platform\opengl\GLVertexBuffer.h" />
     <ClInclude Include="src\radi\rddebug\debug_layer.h" />
     <ClInclude Include="src\radi\rddebug\debug_menu.h" />
     <ClInclude Include="src\radi\embedded\embedded.h" />
@@ -396,16 +473,15 @@
     <ClInclude Include="src\radi\events\key_event.h" />
     <ClInclude Include="src\radi\events\mouse_event.h" />
     <ClInclude Include="src\radi\graphics\batchrenderer2d.h" />
-    <ClInclude Include="src\radi\graphics\buffers\buffer.h" />
-    <ClInclude Include="src\radi\graphics\buffers\buffer_layout.h" />
-    <ClInclude Include="src\radi\graphics\buffers\indexbuffer.h" />
-    <ClInclude Include="src\radi\graphics\buffers\vertexarray.h" />
+    <ClInclude Include="src\radi\graphics\API\buffer_layout.h" />
+    <ClInclude Include="src\radi\graphics\API\indexbuffer.h" />
+    <ClInclude Include="src\radi\graphics\API\vertexarray.h" />
     <ClInclude Include="src\radi\graphics\camera\camera.h" />
     <ClInclude Include="src\radi\graphics\camera\maya_camera.h" />
     <ClInclude Include="src\radi\graphics\font.h" />
     <ClInclude Include="src\radi\graphics\font_manager.h" />
     <ClInclude Include="src\radi\graphics\forward_renderer.h" />
-    <ClInclude Include="src\radi\graphics\framebuffer.h" />
+    <ClInclude Include="src\radi\graphics\API\framebuffer.h" />
     <ClInclude Include="src\radi\graphics\iRenderable.h" />
     <ClInclude Include="src\radi\graphics\label.h" />
     <ClInclude Include="src\radi\graphics\layers\group.h" />
@@ -419,7 +495,6 @@
     <ClInclude Include="src\radi\graphics\model.h" />
     <ClInclude Include="src\radi\graphics\postfx\post_effects.h" />
     <ClInclude Include="src\radi\graphics\postfx\post_effect_pass.h" />
-    <ClInclude Include="src\radi\graphics\radi_render_api.h" />
     <ClInclude Include="src\radi\graphics\renderable2d.h" />
     <ClInclude Include="src\radi\graphics\renderer2d.h" />
     <ClInclude Include="src\radi\graphics\renderer3D.h" />
@@ -429,7 +504,7 @@
     <ClInclude Include="src\radi\graphics\shaders\shader_factory.h" />
     <ClInclude Include="src\radi\graphics\shaders\shader_uniform.h" />
     <ClInclude Include="src\radi\graphics\sprite.h" />
-    <ClInclude Include="src\radi\graphics\texture.h" />
+    <ClInclude Include="src\radi\graphics\API\texture.h" />
     <ClInclude Include="src\radi\graphics\texture_manager.h" />
     <ClInclude Include="src\radi\app\window.h" />
     <ClInclude Include="src\radi\maths\AABB.h" />
@@ -441,8 +516,6 @@
     <ClInclude Include="src\radi\maths\vec2.h" />
     <ClInclude Include="src\radi\maths\vec3.h" />
     <ClInclude Include="src\radi\maths\vec4.h" />
-    <ClInclude Include="src\radi\platform\opengl\radi_opengl_buffer.h" />
-    <ClInclude Include="src\radi\platform\opengl\radi_opengl_types.h" />
     <ClInclude Include="src\radi.h" />
     <ClInclude Include="src\radi\radi_string.h" />
     <ClInclude Include="src\radi\radi_types.h" />
@@ -450,19 +523,26 @@
     <ClInclude Include="src\radi\rddebug\debug_menu_action.h" />
     <ClInclude Include="src\radi\rddebug\debug_menu_item.h" />
     <ClInclude Include="src\radi\rddebug\debug_menu_slider.h" />
+    <ClInclude Include="src\radi\rddebug\debug_renderer.h" />
+    <ClInclude Include="src\radi\system\Allocator.h" />
+    <ClInclude Include="src\radi\system\Memory.h" />
+    <ClInclude Include="src\radi\system\memory_manager.h" />
+    <ClInclude Include="src\radi\system\System.h" />
     <ClInclude Include="src\radi\utils\fileutils.h" />
     <ClInclude Include="src\radi\utils\image_load.h" />
     <ClInclude Include="src\radi\utils\log.h" />
-    <ClInclude Include="src\radi\utils\stringutils.h" />
     <ClInclude Include="src\radi\utils\timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\radi\embedded\files\SourceSansPro-Light.embed" />
-    <None Include="src\radi\platform\opengl\radi_opengl_render_api.inl" />
+    <None Include="src\radi\platform\opengl\shaders\BatchRenderer.shader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dependencies\Box2D\Box2D.vcxproj">
       <Project>{98400d17-43a5-1a40-95be-c53ac78e7694}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\FreeImage\FreeImage.vcxproj">
+      <Project>{6f2ff135-e343-4138-a6fb-2d1f2540a3f8}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Dependencies\Freetype\freetype.vcxproj">
       <Project>{1b0bc2c5-1a09-4017-bdf5-9f9c1718bfe7}</Project>
@@ -515,7 +595,7 @@
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)Dependencies\Freetype;$(SolutionDir)Dependencies\gorilla-audio\src;$(SolutionDir)Dependencies\Box2D;$(SolutionDir)Dependencies\libvorbis\include;$(SolutionDir)Dependencies\OpenAL\include;$(SolutionDir)Dependencies\freetype\include;$(SolutionDir)Dependencies\FreeImage\include;$(SolutionDir)Dependencies\GLEW\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\Freetype;$(SolutionDir)Dependencies\gorilla-audio\src;$(SolutionDir)Dependencies\Box2D;$(SolutionDir)Dependencies\OpenAL\include;$(SolutionDir)Dependencies\freetype\include;$(SolutionDir)Dependencies\FreeImage\include;$(SolutionDir)Dependencies\GLEW\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\libogg\bin;$(SolutionDir)Dependencies\OpenAL\libs\Win32;$(SolutionDir)Dependencies\libvorbis\bin;$(SolutionDir)Dependencies\FreeImage\lib;$(SolutionDir)Dependencies\GLEW\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediates\$(ProjectName)\</IntDir>
@@ -527,7 +607,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>RADI_PLATFORM_WINDOWS;RADI_PLATFORM_WIN32;RADI_CORE_DLL;RADI_DEBUG;GLEW_STATIC;_WIN32;WIN32;_LIB;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RADI_PLATFORM_WINDOWS;RADI_RENDERAPI_OPENGL;NOGDI;RADI_PLATFORM_WIN32;RADI_CORE_DLL;RADI_DEBUG;FREEIMAGE_LIB;OPJ_STATIC;GLEW_STATIC;_WIN32;WIN32;_LIB;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
       <AdditionalIncludeDirectories>src</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -535,7 +615,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>FreeImage.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(SolutionDir)Dependencies\FreeImage\binaries\*.dll" "$(OutDir)"

@@ -3,9 +3,9 @@
 #include <vector>
 
 #include <radi/radi_types.h>
-#include <radi/entity/entity.h>
+#include <radi/entity/Entity.h>
 
-#include "camera/camera.h"
+#include "camera/Camera.h"
 #include "light_setup.h"
 
 namespace radi {
@@ -28,6 +28,7 @@ namespace radi {
 			void Add(entity::Entity* entity);
 			void PushLightSetup(LightSetup* lightSetup);
 			LightSetup* PopLightSetup();
+			void SetCamera(Camera* camera);
 
 			void Update();
 			void Render(Renderer3D& renderer);

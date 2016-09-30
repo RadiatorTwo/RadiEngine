@@ -1,13 +1,14 @@
 #pragma once
 
 #include "radi/rd.h"
-#include "debug_menu_action.h"
 
 #include "radi/graphics/ui/Button.h"
 #include "radi/maths/maths.h"
 
 namespace radi {
 	namespace debug {
+
+		struct IAction;
 
 		class DebugMenuItem : public graphics::ui::Button
 		{

@@ -1,11 +1,11 @@
 #include "radi/rd.h"
-#include "event.h"
+#include "Event.h"
 
 namespace radi {
 	namespace events {
 
 		Event::Event(Type type)
-			: m_type(type), m_handled(false)
+			: m_Type(type), m_Handled(false)
 		{
 		}
 
@@ -31,5 +31,6 @@ namespace radi {
 			}
 			return "INVALID";
 		}
+
 	}
 }

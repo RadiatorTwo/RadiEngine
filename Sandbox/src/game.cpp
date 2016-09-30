@@ -2,6 +2,7 @@
 
 #include "TestLayer.h"
 #include "Test3D.h"
+#include "../../Dependencies/GLEW/include/GL/glew.h"
 
 using namespace radi;
 using namespace graphics;
@@ -14,7 +15,7 @@ class Game : public Application
 {
 public:
 	Game()
-		: Application("Test Game", WIDTH, HEIGHT)
+		: Application("Sandbox", WIDTH, HEIGHT, radi::graphics::API::RenderAPI::DIRECT3D)
 	{
 	}
 
@@ -25,9 +26,8 @@ public:
 	void Init() override
 	{
 		Application::Init();
-
 		PushLayer(new Test3D());
-		//PushLayer(new TestLayer());
+		//PushLayer(new Test2D());
 	}
 };
 

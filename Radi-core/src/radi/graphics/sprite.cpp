@@ -1,42 +1,43 @@
 #include "radi/rd.h"
-#include "sprite.h"
+#include "Sprite.h"
 
-namespace radi
-{
-	namespace graphics
-	{
-		Sprite::Sprite(Texture* texture)
-			: Renderable2D(maths::vec3(0.0f, 0.0f, 0.0f), maths::vec2((float)texture->getWidth(), (float)texture->getHeight()), 0xffffffff), position(m_position), size(m_size)
+namespace radi {
+	namespace graphics {
+
+		Sprite::Sprite(API::Texture2D* texture)
+			: Renderable2D(maths::vec3(0.0f, 0.0f, 0.0f), maths::vec2((float)texture->GetWidth(), (float)texture->GetHeight()), 0xffffffff), position(m_Position), size(m_Size)
 		{
-			m_texture = texture;
+			m_Texture = texture;
 		}
 
-		Sprite::Sprite(float x, float y, Texture* texture)
-			: Renderable2D(maths::vec3(x, y, 0.0f), maths::vec2((float)texture->getWidth(), (float)texture->getHeight()), 0xffffffff), position(m_position), size(m_size)
+		Sprite::Sprite(float x, float y, API::Texture2D* texture)
+			: Renderable2D(maths::vec3(x, y, 0.0f), maths::vec2((float)texture->GetWidth(), (float)texture->GetHeight()), 0xffffffff), position(m_Position), size(m_Size)
 		{
-			m_texture = texture;
+			m_Texture = texture;
 		}
 
 		Sprite::Sprite(float x, float y, float width, float height, uint color)
-			: Renderable2D(maths::vec3(x, y, 0.0f), maths::vec2(width, height), color), position(m_position), size(m_size)
+			: Renderable2D(maths::vec3(x, y, 0.0f), maths::vec2(width, height), color), position(m_Position), size(m_Size)
 		{
+
 		}
 
 		Sprite::Sprite(float x, float y, float width, float height, const maths::vec4& color)
-			: Renderable2D(maths::vec3(x, y, 0.0f), maths::vec2(width, height), 0xffffffff), position(m_position), size(m_size)
+			: Renderable2D(maths::vec3(x, y, 0.0f), maths::vec2(width, height), 0xffffffff), position(m_Position), size(m_Size)
 		{
-			setColor(color);
+			SetColor(color);
 		}
 
-		Sprite::Sprite(float x, float y, float width, float height, Texture* texture)
-			: Renderable2D(maths::vec3(x, y, 0.0f), maths::vec2(width, height), 0xffffffff), position(m_position), size(m_size)
+		Sprite::Sprite(float x, float y, float width, float height, API::Texture* texture)
+			: Renderable2D(maths::vec3(x, y, 0.0f), maths::vec2(width, height), 0xffffffff), position(m_Position), size(m_Size)
 		{
-			m_texture = texture;
+			m_Texture = texture;
 		}
 
-		void Sprite::setUV(const std::vector<maths::vec2>& uv)
+		void Sprite::SetUV(const std::vector<maths::vec2>& uv)
 		{
 			m_UVs = uv;
 		}
+
 	}
 }

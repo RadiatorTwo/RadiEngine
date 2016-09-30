@@ -1,7 +1,7 @@
 #pragma once
 
 #include "radi/rd.h"
-#include "radi/common.h"
+#include "radi/Common.h"
 
 #include "vec2.h"
 #include "vec3.h"

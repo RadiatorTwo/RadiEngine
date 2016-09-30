@@ -3,7 +3,7 @@
 #include "radi/rd.h"
 #include "radi/maths/maths.h"
 
-#include "widget.h"
+#include "Widget.h"
 
 namespace radi {
 	namespace graphics {
@@ -37,6 +37,7 @@ namespace radi {
 				void OnRender(Renderer2D& renderer) override;
 
 				inline void SetCallback(const ValueChangedCallback& callback) { m_Callback = callback; }
+				inline const ValueChangedCallback& GetCallback() const { return m_Callback; }
 
 				inline float GetValue() const { return m_Value; }
 				void SetValue(float value);

@@ -1,36 +1,68 @@
 #include "radi/rd.h"
-#include "mesh.h"
+#include "Mesh.h"
 
-#include "renderer3D.h"
+#include "Renderer3D.h"
+
+#include <GL/glew.h>
+
+#include "radi/rddebug/debug_renderer.h"
 
 namespace radi {
 	namespace graphics {
 
-		Mesh::Mesh(VertexArray* vertexArray, IndexBuffer* indexBuffer, MaterialInstance* materialInstance)
-			: m_vertexArray(vertexArray), m_indexBuffer(indexBuffer), m_materialInstance(materialInstance)
+		Mesh::Mesh(API::VertexArray* vertexArray, API::IndexBuffer* indexBuffer, MaterialInstance* materialInstance)
+			: m_VertexArray(vertexArray), m_IndexBuffer(indexBuffer), m_MaterialInstance(materialInstance)
 		{
+#ifdef RADI_DEBUG
+			m_DebugVertexData = nullptr;
+			m_DebugVertexDataCount = 0;
+			m_DebugDraw = false;
+#endif
+		}
 
+		Mesh::Mesh(const Mesh* mesh)
+			: m_VertexArray(mesh->m_VertexArray), m_IndexBuffer(mesh->m_IndexBuffer), m_MaterialInstance(mesh->m_MaterialInstance)
+		{
+#ifdef RADI_DEBUG
+			m_DebugVertexData = mesh->m_DebugVertexData;
+			m_DebugVertexDataCount = mesh->m_DebugVertexDataCount;
+			m_DebugDraw = mesh->m_DebugDraw;
+#endif
 		}
 
 		Mesh::~Mesh()
 		{
-			delete m_vertexArray;
-			delete m_indexBuffer;
-			delete m_materialInstance;
+			delete m_VertexArray;
+			delete m_IndexBuffer;
+			delete m_MaterialInstance;
+
+#ifdef RADI_DEBUG
+			delete[] m_DebugVertexData;
+#endif
 		}
 
 		void Mesh::Render(Renderer3D& renderer)
 		{
-			m_materialInstance->Bind();
+			m_MaterialInstance->Bind();
 
-			m_vertexArray->Bind();
-			m_indexBuffer->Bind();
-			m_vertexArray->Draw(m_indexBuffer->GetCount());
-			m_indexBuffer->Unbind();
-			m_vertexArray->Unbind();
+			m_VertexArray->Bind();
+			m_IndexBuffer->Bind();
+			m_VertexArray->Draw(m_IndexBuffer->GetCount());
+			m_IndexBuffer->Unbind();
+			m_VertexArray->Unbind();
 
-			m_materialInstance->Unbind();
+			m_MaterialInstance->Unbind();
 		}
+
+#ifdef RADI_DEBUG
+		void Mesh::DebugRender(const maths::mat4& transform)
+		{
+			if (!m_DebugDraw)
+				return;
+
+			debug::DebugRenderer::DrawMesh(this, debug::DebugRenderMeshFlags::NONE, transform);
+		}
+#endif
 
 	}
 }

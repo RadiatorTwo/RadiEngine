@@ -3,20 +3,22 @@
 
 #include <sstream>
 
-namespace radi
-{
-	namespace maths
-	{
+namespace radi {
+	namespace maths {
+
 		vec2::vec2()
+			: x(0.0f), y(0.0f)
 		{
-			x = 0.0f;
-			y = 0.0f;
 		}
 
-		vec2::vec2(const float& x, const float& y)
+		vec2::vec2(float scalar)
+			: x(scalar), y(scalar)
 		{
-			this->x = x;
-			this->y = y;
+		}
+
+		vec2::vec2(float x, float y)
+			: x(x), y(y)
+		{
 		}
 
 		vec2::vec2(const vec3& vector)
@@ -25,7 +27,7 @@ namespace radi
 			this->y = vector.y;
 		}
 
-		vec2& vec2::add(const vec2& other)
+		vec2& vec2::Add(const vec2& other)
 		{
 			x += other.x;
 			y += other.y;
@@ -33,7 +35,7 @@ namespace radi
 			return *this;
 		}
 
-		vec2& vec2::subtract(const vec2& other)
+		vec2& vec2::Subtract(const vec2& other)
 		{
 			x -= other.x;
 			y -= other.y;
@@ -41,7 +43,7 @@ namespace radi
 			return *this;
 		}
 
-		vec2& vec2::multiply(const vec2& other)
+		vec2& vec2::Multiply(const vec2& other)
 		{
 			x *= other.x;
 			y *= other.y;
@@ -49,7 +51,7 @@ namespace radi
 			return *this;
 		}
 
-		vec2& vec2::divide(const vec2& other)
+		vec2& vec2::Divide(const vec2& other)
 		{
 			x /= other.x;
 			y /= other.y;
@@ -57,24 +59,56 @@ namespace radi
 			return *this;
 		}
 
+		vec2& vec2::Add(float value)
+		{
+			x += value;
+			y += value;
+
+			return *this;
+		}
+
+		vec2& vec2::Subtract(float value)
+		{
+			x -= value;
+			y -= value;
+
+			return *this;
+		}
+
+		vec2& vec2::Multiply(float value)
+		{
+			x *= value;
+			y *= value;
+
+			return *this;
+		}
+
+		vec2& vec2::Divide(float value)
+		{
+			x /= value;
+			y /= value;
+
+			return *this;
+		}
+
 		vec2 operator+(vec2 left, const vec2& right)
 		{
-			return left.add(right);
+			return left.Add(right);
 		}
 
 		vec2 operator-(vec2 left, const vec2& right)
 		{
-			return left.subtract(right);
+			return left.Subtract(right);
 		}
 
 		vec2 operator*(vec2 left, const vec2& right)
 		{
-			return left.multiply(right);
+			return left.Multiply(right);
 		}
 
 		vec2 operator/(vec2 left, const vec2& right)
 		{
-			return left.divide(right);
+			return left.Divide(right);
 		}
 
 		vec2 operator+(vec2 left, float value)
@@ -82,29 +116,59 @@ namespace radi
 			return vec2(left.x + value, left.y + value);
 		}
 
+		vec2 operator-(vec2 left, float value)
+		{
+			return vec2(left.x - value, left.y - value);
+		}
+
 		vec2 operator*(vec2 left, float value)
 		{
 			return vec2(left.x * value, left.y * value);
 		}
 
+		vec2 operator/(vec2 left, float value)
+		{
+			return vec2(left.x / value, left.y / value);
+		}
+
 		vec2& vec2::operator+=(const vec2& other)
 		{
-			return add(other);
+			return Add(other);
 		}
 
 		vec2& vec2::operator-=(const vec2& other)
 		{
-			return subtract(other);
+			return Subtract(other);
 		}
 
 		vec2& vec2::operator*=(const vec2& other)
 		{
-			return multiply(other);
+			return Multiply(other);
 		}
 
 		vec2& vec2::operator/=(const vec2& other)
 		{
-			return divide(other);
+			return Divide(other);
+		}
+
+		vec2& vec2::operator+=(float value)
+		{
+			return Add(value);
+		}
+
+		vec2& vec2::operator-=(float value)
+		{
+			return Subtract(value);
+		}
+
+		vec2& vec2::operator*=(float value)
+		{
+			return Multiply(value);
+		}
+
+		vec2& vec2::operator/=(float value)
+		{
+			return Divide(value);
 		}
 
 		bool vec2::operator==(const vec2& other) const
@@ -137,26 +201,26 @@ namespace radi
 			return x >= other.x && y >= other.y;
 		}
 
-		float vec2::distance(const vec2& other) const
+		float vec2::Distance(const vec2& other) const
 		{
 			float a = x - other.x;
 			float b = y - other.y;
 			return sqrt(a * a + b * b);
 		}
 
-		float vec2::dot(const vec2& other) const
+		float vec2::Dot(const vec2& other) const
 		{
 			return x * other.x + y * other.y;
 		}
 
-		float vec2::magnitude() const
+		float vec2::Magnitude() const
 		{
 			return sqrt(x * x + y * y);
 		}
 
-		vec2 vec2::normalise() const
+		vec2 vec2::Normalise() const
 		{
-			float length = magnitude();
+			float length = Magnitude();
 			return vec2(x / length, y / length);
 		}
 
@@ -172,5 +236,6 @@ namespace radi
 			stream << vector.ToString();
 			return stream;
 		}
+
 	}
 }

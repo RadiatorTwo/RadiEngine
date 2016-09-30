@@ -18,7 +18,7 @@ namespace radi {
 			void Dispatch(std::function<bool(T&)> func)
 			{
 				if ((int)m_Event.GetType() & (int)T::GetStaticType())
-					m_Event.m_handled = func(*(T*)&m_Event);
+					m_Event.m_Handled = func(*(T*)&m_Event);
 			}
 		};
 

@@ -1,5 +1,5 @@
 #include "radi/rd.h"
-#include "light_setup.h"
+#include "Light_Setup.h"
 
 namespace radi {
 	namespace graphics {

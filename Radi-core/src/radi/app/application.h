@@ -1,14 +1,16 @@
 #pragma once
 
 #include "radi/rd.h"
-#include "radi/common.h"
+#include "radi/Common.h"
 #include "radi/radi_types.h"
 
-#include <radi/app/window.h>
-#include <radi/graphics/layers/layer.h>
-#include <radi/utils/timer.h>
+#include "radi/app/Window.h"
+#include "radi/graphics/layers/Layer.h"
+#include "radi/utils/Timer.h"
 
-#include "radi/events/events.h"
+#include "radi/events/Events.h"
+
+#include "radi/graphics/API/Context.h"
 
 namespace radi {
 
@@ -19,22 +21,23 @@ namespace radi {
 	class RD_API Application
 	{
 	private:
-		static Application* s_instance;
+		static Application* s_Instance;
 	public:
 		Window* window;
 		debug::DebugLayer* m_DebugLayer;
 	private:
-		bool m_running, m_suspended;
+		bool m_Running, m_Suspended;
 		Timer* m_Timer;
-		uint m_updatesPerSecond, m_framesPerSecond;
+		uint m_UpdatesPerSecond, m_FramesPerSecond;
+		float m_Frametime;
 
-		const char* m_name;
-		uint m_width, m_height;
+		const char* m_Name;
+		uint m_InitialWidth, m_InitialHeight;
 
-		std::vector<graphics::Layer*> m_layerStack;
-		std::vector<graphics::Layer*> m_overlayStack;
+		std::vector<graphics::Layer*> m_LayerStack;
+		std::vector<graphics::Layer*> m_OverlayStack;
 	public:
-		Application(const char* name, uint width, uint height);
+		Application(const char* name, uint width, uint height, graphics::API::RenderAPI api = graphics::API::RenderAPI::OPENGL);
 		virtual ~Application();
 
 		virtual void Init();
@@ -52,9 +55,13 @@ namespace radi {
 		void Resume();
 		void Stop();
 
-		const uint GetFPS() const { return m_framesPerSecond; }
-		const uint GetUPS() const { return m_updatesPerSecond; }
+		inline uint GetFPS() const { return m_FramesPerSecond; }
+		inline uint GetUPS() const { return m_UpdatesPerSecond; }
+		inline float GetFrametime() const { return m_Frametime; }
 
+		inline uint GetWindowWidth() const { return window->GetWidth(); }
+		inline uint GetWindowHeight() const { return window->GetHeight(); }
+		inline maths::vec2 GetWindowSize() const { return maths::vec2((float)window->GetWidth(), (float)window->GetHeight()); }
 	private:
 		void PlatformInit();
 		void Run();
@@ -65,7 +72,7 @@ namespace radi {
 	private:
 		void OnEvent(events::Event& event);
 	public:
-		inline static Application& GetApplication() { return *s_instance; }
+		inline static Application& GetApplication() { return *s_Instance; }
 	};
 
 

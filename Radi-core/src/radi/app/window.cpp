@@ -1,19 +1,21 @@
 #include "radi/rd.h"
-#include "window.h"
+#include "Window.h"
 
-#include "radi/utils/log.h"
+#include "radi/graphics/Renderer.h"
+
+#include "radi/utils/Log.h"
 
 #include "radi/embedded/Embedded.h"
-#include <GL/glew.h>
+#include <FreeImage.h>
 
-namespace radi
-{
+namespace radi {
+
 	using namespace graphics;
 
 	std::map<void*, Window*> Window::s_Handles;
 
-	Window::Window(const char *title, uint width, uint height)
-		: m_Title(title), m_Width(width), m_Height(height), m_Handle(nullptr), m_Closed(false), m_EventCallback(nullptr)
+	Window::Window(const char *title, uint width, uint height, bool fullscreen)
+		: m_Properties({ String(title), width, height, fullscreen }), m_Handle(nullptr), m_Closed(false), m_EventCallback(nullptr)
 	{
 		if (!Init())
 		{
@@ -21,18 +23,20 @@ namespace radi
 			return;
 		}
 
-		FontManager::SetScale(maths::vec2(m_Width / 32.0f, m_Height / 18.0f));
-		FontManager::add(new Font("SourceSansPro", internal::DEFAULT_FONT, internal::DEFAULT_FONT_SIZE, 32));
+		FontManager::SetScale(maths::vec2(m_Properties.width / 32.0f, m_Properties.height / 18.0f)); // TODO: Seriously
+		FontManager::Add(new Font("SourceSansPro", internal::DEFAULT_FONT, internal::DEFAULT_FONT_SIZE, 32));
 
-		audio::SoundManager::init();
+		FreeImage_Initialise();
+
+		audio::SoundManager::Init();
 		m_InputManager = new InputManager();
 	}
 
 	Window::~Window()
 	{
-		FontManager::clean();
-		TextureManager::clean();
-		audio::SoundManager::clean();
+		FontManager::Clean();
+		TextureManager::Clean();
+		audio::SoundManager::Clean();
 	}
 
 	bool Window::Init()
@@ -43,16 +47,9 @@ namespace radi
 			return false;
 		}
 
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		Renderer::Init();
 
-		RADI_WARN("----------------------------------");
-		RADI_WARN(" OpenGL:");
-		RADI_WARN("    ", glGetString(GL_VERSION));
-		RADI_WARN("    ", glGetString(GL_VENDOR));
-		RADI_WARN("    ", glGetString(GL_RENDERER));
-		RADI_WARN("----------------------------------");
+		SetTitle(m_Properties.title);
 		return true;
 	}
 
@@ -64,13 +61,13 @@ namespace radi
 
 	void Window::Clear() const
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		Renderer::Clear(RENDERER_BUFFER_COLOR | RENDERER_BUFFER_DEPTH);
 	}
 
 	void Window::Update()
 	{
 		PlatformUpdate();
-		audio::SoundManager::update();
+		audio::SoundManager::Update();
 	}
 
 	bool Window::Closed() const
@@ -96,4 +93,5 @@ namespace radi
 
 		return s_Handles[handle];
 	}
+
 }

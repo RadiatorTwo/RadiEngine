@@ -1,128 +1,257 @@
 #include "radi/rd.h"
-#include "material.h"
+#include "Material.h"
+
+#include "radi/graphics/API/Texture2D.h"
+
+#include "radi/system/Memory.h"
+#include "radi/graphics/shaders/shader_resource.h"
 
 #include <sstream>
 
 namespace radi {
 	namespace graphics {
 
-		Material::Material(Shader* shader)
-			: m_shader(shader)
+		using namespace API;
+
+		Material::Material(API::Shader* shader)
+			: m_Shader(shader)
 		{
-			InitUniformStorage();
+			AllocateStorage();
+			m_Resources = &shader->GetResources();
 		}
 
 		Material::~Material()
 		{
-			delete m_shader;
+			spdel[] m_VSUserUniformBuffer;
+			spdel[] m_PSUserUniformBuffer;
 		}
 
-		void Material::InitUniformStorage()
+		void Material::AllocateStorage()
 		{
-			m_uniformDataSize = 0;
-			const std::vector<ShaderUniformDeclaration*>& uniforms = m_shader->GetUniformDeclarations();
-			for (ShaderUniformDeclaration* uniform : uniforms)
-				m_uniformDataSize += uniform->GetSize();
+			m_VSUserUniformBuffer = nullptr;
+			m_VSUserUniformBufferSize = 0;
 
-			m_uniformData = new byte[m_uniformDataSize];
-			memset(m_uniformData, 0, m_uniformDataSize);
-		}
+			m_PSUserUniformBuffer = nullptr;
+			m_PSUserUniformBufferSize = 0;
 
-		const ShaderUniformDeclaration* Material::GetUniformDeclaration(const String& name) const
-		{
-			for (ShaderUniformDeclaration* uniform : m_shader->GetUniformDeclarations())
+			m_VSUserUniforms = nullptr;
+			m_PSUserUniforms = nullptr;
+
+			const ShaderUniformBufferDeclaration* vsBuffer = m_Shader->GetVSUserUniformBuffer();
+			if (vsBuffer)
 			{
-				if (uniform->GetName() == name)
-					return uniform;
+				m_VSUserUniformBufferSize = vsBuffer->GetSize();
+				m_VSUserUniformBuffer = spnew byte[m_VSUserUniformBufferSize];
+				memset(m_VSUserUniformBuffer, 0, m_VSUserUniformBufferSize);
+				m_VSUserUniforms = &vsBuffer->GetUniformDeclarations();
+			}
+
+			const ShaderUniformBufferDeclaration* psBuffer = m_Shader->GetPSUserUniformBuffer();
+			if (psBuffer)
+			{
+				m_PSUserUniformBufferSize = psBuffer->GetSize();
+				m_PSUserUniformBuffer = spnew byte[m_PSUserUniformBufferSize];
+				memset(m_PSUserUniformBuffer, 0, m_PSUserUniformBufferSize);
+				m_PSUserUniforms = &psBuffer->GetUniformDeclarations();
+			}
+		}
+
+		void Material::Bind()
+		{
+			m_Shader->Bind();
+
+			// TODO: Don't do this if a MaterialInstance is being used
+			if (m_VSUserUniformBuffer)
+				m_Shader->SetVSUserUniformBuffer(m_VSUserUniformBuffer, m_VSUserUniformBufferSize);
+			if (m_PSUserUniformBuffer)
+				m_Shader->SetPSUserUniformBuffer(m_PSUserUniformBuffer, m_PSUserUniformBufferSize);
+
+			for (uint i = 0; i < m_Textures.size(); i++)
+			{
+				Texture* texture = m_Textures[i];
+				if (texture)
+					texture->Bind(i);
+			}
+		}
+
+		void Material::Unbind()
+		{
+			for (uint i = 0; i < m_Textures.size(); i++)
+			{
+				Texture* texture = m_Textures[i];
+				if (texture)
+					texture->Unbind(i);
+			}
+		}
+
+		void Material::SetUniformData(const String& uniform, byte* data)
+		{
+			byte* buffer;
+			ShaderUniformDeclaration* declaration = FindUniformDeclaration(uniform, &buffer);
+			memcpy(buffer + declaration->GetOffset(), data, declaration->GetSize());
+		}
+
+		void Material::SetTexture(const String& name, Texture* texture)
+		{
+			ShaderResourceDeclaration* declaration = FindResourceDeclaration(name);
+			RADI_ASSERT(declaration);
+			uint slot = declaration->GetRegister();
+			if (m_Textures.size() <= slot)
+				m_Textures.resize(slot + 1);
+			m_Textures[slot] = texture;
+		}
+
+		ShaderUniformDeclaration* Material::FindUniformDeclaration(const String& name, byte** outBuffer)
+		{
+			if (m_VSUserUniforms)
+			{
+				for (ShaderUniformDeclaration* uniform : *m_VSUserUniforms)
+				{
+					if (uniform->GetName() == name)
+					{
+						*outBuffer = m_VSUserUniformBuffer;
+						return uniform;
+					}
+				}
+			}
+			if (m_PSUserUniforms)
+			{
+				for (ShaderUniformDeclaration* uniform : *m_PSUserUniforms)
+				{
+					if (uniform->GetName() == name)
+					{
+						*outBuffer = m_PSUserUniformBuffer;
+						return uniform;
+					}
+				}
 			}
 			return nullptr;
 		}
 
-		void Material::DumpUniformData() const
+		ShaderResourceDeclaration* Material::FindResourceDeclaration(const String& name)
 		{
-			RADI_INFO("Dumping uniforms for Material ", (long)this);
-			const std::vector<ShaderUniformDeclaration*>& uniforms = m_shader->GetUniformDeclarations();
-			for (uint i = 0; i < uniforms.size(); i++)
+			for (ShaderResourceDeclaration* resource : *m_Resources)
 			{
-				ShaderUniformDeclaration* declaration = uniforms[i];
-				switch (declaration->GetType())
-				{
-				case ShaderUniformDeclaration::Type::MAT4:
-					RADI_INFO(declaration->GetName(), " = ", GetUniform<maths::mat4>(declaration)->ToString());
-					break;
-				}
+				if (resource->GetName() == name)
+					return resource;
 			}
+			return nullptr;
 		}
 
-		void Material::Bind() const
-		{
-			// TODO: Textures. This needs to be resolved by the renderer.
-
-			m_shader->Bind();
-			m_shader->ResolveAndSetUniforms(m_uniformData, m_uniformDataSize);
-		}
-
-		void Material::Unbind() const
-		{
-			m_shader->Unbind();
-		}
 
 		MaterialInstance::MaterialInstance(Material* material)
-			: m_material(material), m_setUniforms(0)
+			: m_Material(material)
 		{
-			InitUniformStorage();
+			AllocateStorage();
+			memcpy(m_VSUserUniformBuffer, m_Material->m_VSUserUniformBuffer, m_VSUserUniformBufferSize);
+			memcpy(m_PSUserUniformBuffer, m_Material->m_PSUserUniformBuffer, m_PSUserUniformBufferSize);
+
+			m_Resources = &m_Material->GetShader()->GetResources();
+			m_RenderFlags = material->m_RenderFlags;
 		}
 
-		void MaterialInstance::InitUniformStorage()
+		void MaterialInstance::AllocateStorage()
 		{
-			m_uniformDataSize = 0;
-			const std::vector<ShaderUniformDeclaration*>& uniforms = m_material->m_shader->GetUniformDeclarations();
-			for (ShaderUniformDeclaration* uniform : uniforms)
-				m_uniformDataSize += uniform->GetSize();
-
-			m_uniformData = new byte[m_uniformDataSize];
-			memset(m_uniformData, 0, m_uniformDataSize);
-		}
-
-		int MaterialInstance::GetUniformDeclarationIndex(const String& name) const
-		{
-			std::vector<ShaderUniformDeclaration*> uniforms = m_material->m_shader->GetUniformDeclarations();
-			for (uint i = 0; i < uniforms.size(); i++)
+			const ShaderUniformBufferDeclaration* vsBuffer = m_Material->m_Shader->GetVSUserUniformBuffer();
+			if (vsBuffer)
 			{
-				if (uniforms[i]->GetName() == name)
-					return i;
+				m_VSUserUniformBufferSize = vsBuffer->GetSize();
+				m_VSUserUniformBuffer = new byte[m_VSUserUniformBufferSize];
+				m_VSUserUniforms = &vsBuffer->GetUniformDeclarations();
 			}
-			return -1;
-		}
 
-		void MaterialInstance::UnsetUniform(const String& name)
-		{
-			int index = GetUniformDeclarationIndex(name);
-			uint mask = !(1 << index);
-			m_setUniforms &= mask;
-		}
-
-		void MaterialInstance::Bind() const
-		{
-			// TODO: Textures. This needs to be resolved by the renderer.
-
-			m_material->Bind();
-
-			uint overrides = m_setUniforms;
-			uint index = 0;
-			while (overrides > 0)
+			const ShaderUniformBufferDeclaration* psBuffer = m_Material->m_Shader->GetPSUserUniformBuffer();
+			if (psBuffer)
 			{
-				if (overrides & 1)
-					m_material->m_shader->ResolveAndSetUniform(index, m_uniformData);
-
-				overrides >>= 1;
-				index++;
+				m_PSUserUniformBufferSize = psBuffer->GetSize();
+				m_PSUserUniformBuffer = new byte[m_PSUserUniformBufferSize];
+				m_PSUserUniforms = &psBuffer->GetUniformDeclarations();
 			}
 		}
 
-		void MaterialInstance::Unbind() const
+		void MaterialInstance::Bind()
 		{
-			m_material->m_shader->Unbind();
+			m_Material->Bind();
+
+			if (m_VSUserUniformBuffer)
+				m_Material->m_Shader->SetVSUserUniformBuffer(m_VSUserUniformBuffer, m_VSUserUniformBufferSize);
+			if (m_PSUserUniformBuffer)
+				m_Material->m_Shader->SetPSUserUniformBuffer(m_PSUserUniformBuffer, m_PSUserUniformBufferSize);
+
+			for (uint i = 0; i < m_Textures.size(); i++)
+			{
+				Texture* texture = m_Textures[i];
+				if (texture)
+					texture->Bind(i);
+			}
 		}
+
+		void MaterialInstance::Unbind()
+		{
+			m_Material->Unbind();
+
+			for (uint i = 0; i < m_Textures.size(); i++)
+			{
+				Texture* texture = m_Textures[i];
+				if (texture)
+					texture->Unbind(i);
+			}
+		}
+
+		void MaterialInstance::SetUniformData(const String& uniform, byte* data)
+		{
+			byte* buffer;
+			ShaderUniformDeclaration* declaration = FindUniformDeclaration(uniform, &buffer);
+			RADI_ASSERT(buffer);
+			memcpy(buffer + declaration->GetOffset(), data, declaration->GetSize());
+		}
+
+		void MaterialInstance::SetTexture(const String& name, Texture* texture)
+		{
+			ShaderResourceDeclaration* declaration = FindResourceDeclaration(name);
+			uint slot = declaration->GetRegister();
+			if (m_Textures.size() <= slot)
+				m_Textures.resize(slot + 1);
+			m_Textures[slot] = texture;
+		}
+
+		ShaderUniformDeclaration* MaterialInstance::FindUniformDeclaration(const String& name, byte** outBuffer)
+		{
+			if (m_VSUserUniforms)
+			{
+				for (ShaderUniformDeclaration* uniform : *m_VSUserUniforms)
+				{
+					if (uniform->GetName() == name)
+					{
+						*outBuffer = m_VSUserUniformBuffer;
+						return uniform;
+					}
+				}
+			}
+			if (m_PSUserUniforms)
+			{
+				for (ShaderUniformDeclaration* uniform : *m_PSUserUniforms)
+				{
+					if (uniform->GetName() == name)
+					{
+						*outBuffer = m_PSUserUniformBuffer;
+						return uniform;
+					}
+				}
+			}
+			return nullptr;
+		}
+
+		ShaderResourceDeclaration* MaterialInstance::FindResourceDeclaration(const String& name)
+		{
+			for (ShaderResourceDeclaration* resource : *m_Resources)
+			{
+				if (resource->GetName() == name)
+					return resource;
+			}
+			return nullptr;
+		}
+
+
 	}
 }

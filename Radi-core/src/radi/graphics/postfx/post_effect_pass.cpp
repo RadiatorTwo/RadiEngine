@@ -1,17 +1,21 @@
 #include "radi/rd.h"
 #include "post_effect_pass.h"
 
-#include <radi/graphics/radi_render_api.h>
+#include "radi/system/Memory.h"
 
 namespace radi {
 	namespace graphics {
 
-		PostEffectsPass::PostEffectsPass(Shader* shader)
-			: m_shader(shader)
+		struct PostEffectsPassShader
 		{
-			m_shader->Bind();
-			m_shader->SetUniform1i("tex", 0);
-			m_shader->Unbind();
+			maths::mat4 pr_matrix;
+			API::Texture* texture;
+		};
+
+		PostEffectsPass::PostEffectsPass(API::Shader* shader)
+		{
+			m_Material = spnew Material(shader);
+			// m_Material->SetTexture("tex", 0);
 		}
 
 		PostEffectsPass::~PostEffectsPass()
@@ -21,10 +25,9 @@ namespace radi {
 
 		void PostEffectsPass::RenderPass(Framebuffer* target)
 		{
-			m_shader->Bind();
-			m_shader->SetUniformMat4("pr_matrix", maths::mat4::Orthographic(0, target->GetWidth(), target->GetHeight(), 0, -1.0f, 1.0f));
-			API::DrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
-			m_shader->Unbind();
+			m_Material->SetUniform("pr_matrix", maths::mat4::Orthographic(0.0f, (float)target->GetWidth(), (float)target->GetHeight(), 0.0f, -1.0f, 1.0f));
+			m_Material->Bind();
+			// API::DrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
 		}
 
 	}

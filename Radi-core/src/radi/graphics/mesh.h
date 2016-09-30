@@ -1,11 +1,11 @@
 #pragma once
 
-#include "radi/rd.h"
-#include "buffers/VertexArray.h"
-#include "buffers/IndexBuffer.h"
-#include "material.h"
+#include "radi/Common.h"
+#include "API/VertexArray.h"
+#include "API/IndexBuffer.h"
+#include "Material.h"
 
-#include "iRenderable.h"
+#include "IRenderable.h"
 
 namespace radi {
 	namespace graphics {
@@ -17,22 +17,40 @@ namespace radi {
 			maths::vec3 position;
 			maths::vec3 normal;
 			maths::vec2 uv;
+			maths::vec3 binormal;
+			maths::vec3 tangent;
 		};
 
 		class RD_API Mesh : public IRenderable
 		{
 		private:
-			VertexArray* m_vertexArray;
-			IndexBuffer* m_indexBuffer;
-			MaterialInstance* m_materialInstance;
+			API::VertexArray* m_VertexArray;
+			API::IndexBuffer* m_IndexBuffer;
+			MaterialInstance* m_MaterialInstance;
+
+#ifdef RADI_DEBUG
+			Vertex* m_DebugVertexData;
+			uint m_DebugVertexDataCount;
+			bool m_DebugDraw;
+#endif
 		public:
-			Mesh(VertexArray* vertexArray, IndexBuffer* indexBuffer, MaterialInstance* materialInstance);
+			Mesh(API::VertexArray* vertexArray, API::IndexBuffer* indexBuffer, MaterialInstance* materialInstance);
+			Mesh(const Mesh* mesh);
 			~Mesh();
 
-			inline void SetMaterial(MaterialInstance* materialInstance) { m_materialInstance = materialInstance; }
-			inline MaterialInstance* GetMaterialInstance() const { return m_materialInstance; }
+			inline void SetMaterial(MaterialInstance* materialInstance) { m_MaterialInstance = materialInstance; }
+			inline MaterialInstance* GetMaterialInstance() const { return m_MaterialInstance; }
 
 			void Render(Renderer3D& renderer) override;
+
+#ifdef RADI_DEBUG
+			void DebugRender(const maths::mat4& transform);
+
+			inline void SetDebugData(Vertex* vertices, uint count) { m_DebugVertexData = vertices; m_DebugVertexDataCount = count; }
+			inline uint GetDebugData(Vertex*& vertices) const { vertices = m_DebugVertexData; return m_DebugVertexDataCount; }
+
+			inline void SetDebugDraw(bool debug) { m_DebugDraw = debug; }
+#endif
 		};
 
 	}

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "light.h"
+#include "Light.h"
 
 namespace radi {
 	namespace graphics {

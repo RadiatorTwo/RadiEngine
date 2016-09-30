@@ -1,7 +1,7 @@
 #pragma once
 
 #include "radi/rd.h"
-#include "radi/common.h"
+#include "radi/Common.h"
 
 #include "radi/radi_types.h"
 
@@ -9,12 +9,14 @@ namespace radi {
 	namespace maths {
 
 		struct vec2;
+		struct mat4;
 
 		struct RD_API vec3
 		{
 			float x, y, z;
 
 			vec3();
+			vec3(float scalar);
 			vec3(float x, float y, float z);
 			vec3(const vec2& other);
 			vec3(float x, float y);
@@ -38,6 +40,8 @@ namespace radi {
 			vec3& Subtract(float other);
 			vec3& Multiply(float other);
 			vec3& Divide(float other);
+
+			vec3 Multiply(const mat4& transform) const;
 
 			friend vec3 operator+(vec3 left, const vec3& right);
 			friend vec3 operator-(vec3 left, const vec3& right);

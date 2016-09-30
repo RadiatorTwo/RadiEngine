@@ -1,9 +1,9 @@
 #include "radi/rd.h"
-#include "panel.h"
+#include "Panel.h"
 
-#include "widget.h"
+#include "Widget.h"
 
-#include "radi/app/application.h"
+#include "radi/app/Application.h"
 #include "radi/maths/maths.h"
 #include "radi/graphics/shaders/shader_factory.h"
 
@@ -15,7 +15,7 @@ namespace radi {
 			using namespace maths;
 
 			Panel::Panel()
-				: Layer2D(ShaderFactory::DefaultShader(), maths::mat4::Orthographic(0.0f, 32.0f, 0.0f, 18.0f, -1.0f, 1.0f))
+				: Layer2D(maths::mat4::Orthographic(0.0f, 32.0f, 0.0f, 18.0f, -1.0f, 1.0f))
 			{
 				Application::GetApplication().PushOverlay(this);
 			}
@@ -36,7 +36,7 @@ namespace radi {
 
 			void Panel::Remove(Widget* widget)
 			{
-				int index = 0;
+				int32 index = 0;
 				for (uint i = 0; i < m_Widgets.size(); i++)
 				{
 					if (m_Widgets[i] == widget)
@@ -62,6 +62,9 @@ namespace radi {
 				dispatcher.Dispatch<MousePressedEvent>(METHOD(&Panel::OnMousePressedEvent));
 				dispatcher.Dispatch<MouseReleasedEvent>(METHOD(&Panel::OnMouseReleasedEvent));
 				dispatcher.Dispatch<MouseMovedEvent>(METHOD(&Panel::OnMouseMovedEvent));
+
+				// TODO: Temporary fix
+				dispatcher.Dispatch<ResizeWindowEvent>([this](events::ResizeWindowEvent& e) { return Layer2D::OnResize(e.GetWidth(), e.GetHeight());  });
 			}
 
 			bool Panel::OnMousePressedEvent(events::MousePressedEvent& e)

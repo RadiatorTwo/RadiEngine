@@ -3,8 +3,9 @@
 
 #include "radi/maths/maths.h"
 #include "radi/graphics/shaders/shader_factory.h"
-#include "radi/graphics/label.h"
-#include "radi/graphics/sprite.h"
+#include "radi/graphics/Label.h"
+#include "radi/graphics/Sprite.h"
+#include "radi/system/memory_manager.h"
 
 #include "radi/embedded/Embedded.h"
 
@@ -14,33 +15,43 @@ namespace radi {
 		using namespace maths;
 		using namespace graphics;
 		using namespace events;
+		using namespace internal;
+
+		DebugLayer* DebugLayer::s_Instance = nullptr;
 
 		DebugLayer::DebugLayer()
-			: Layer2D(ShaderFactory::DefaultShader(), mat4::Orthographic(0.0f, 32.0f, 0.0f, 18.0f, -1.0f, 1.0f)), m_application(Application::GetApplication())
+			: Layer2D(mat4::Orthographic(0.0f, 32.0f, 0.0f, 18.0f, -1.0f, 1.0f)), m_Application(Application::GetApplication())
 		{
+			s_Instance = this;
 		}
 
 		DebugLayer::~DebugLayer()
 		{
 		}
 
-		void DebugLayer::OnInit(graphics::Renderer2D& renderer, graphics::Shader& shader)
+		void DebugLayer::OnInit(graphics::Renderer2D& renderer, graphics::Material& material)
 		{
 			renderer.SetRenderTarget(RenderTarget::SCREEN);
 			m_FPSLabel = new Label("", 30.0f, 17.2f, FontManager::Get(24), 0xffffffff);
+			m_MemoryUsageLabel = new Label("", 29.5f, 16.5f, FontManager::Get(24), 0xffffffff);
+			m_FrametimeLabel = new Label("", 30.0f, 15.8f, FontManager::Get(24), 0xffffffff);
+
 			Add(m_FPSLabel);
+			Add(m_MemoryUsageLabel);
+			Add(m_FrametimeLabel);
 		}
 
 		void DebugLayer::OnTick()
 		{
-			m_FPSLabel->text = std::to_string(m_application.GetFPS()) + " fps";
-
-			RADI_INFO(m_application.GetUPS(), " ups, ", m_application.GetFPS(), " fps");
+			m_FPSLabel->text = StringFormat::ToString(m_Application.GetFPS()) + " fps";
+			m_MemoryUsageLabel->text = MemoryManager::BytesToString(MemoryManager().Get()->GetMemoryStats().currentUsed);
 		}
 
 		void DebugLayer::OnUpdate()
 		{
 			DebugMenu::Get()->OnUpdate();
+
+			m_FrametimeLabel->text = StringFormat::Float(m_Application.GetFrametime()) + " ms";
 		}
 
 		void DebugLayer::OnEvent(Event& e)
@@ -50,6 +61,8 @@ namespace radi {
 			dispatcher.Dispatch<MousePressedEvent>(METHOD(&DebugLayer::OnMousePressedEvent));
 			dispatcher.Dispatch<MouseReleasedEvent>(METHOD(&DebugLayer::OnMouseReleasedEvent));
 			dispatcher.Dispatch<MouseMovedEvent>(METHOD(&DebugLayer::OnMouseMovedEvent));
+
+			Layer::OnEvent(e);
 		}
 
 		bool DebugLayer::OnMousePressedEvent(events::MousePressedEvent& e)
@@ -72,6 +85,7 @@ namespace radi {
 				DebugMenu::SetVisible(!DebugMenu::IsVisible());
 				return true;
 			}
+			return false;
 		}
 
 		bool DebugLayer::OnMouseMovedEvent(MouseMovedEvent& e)
@@ -83,6 +97,23 @@ namespace radi {
 		{
 			if (DebugMenu::IsVisible())
 				DebugMenu::Get()->OnRender(renderer);
+
+			for (uint i = 0; i < m_TempSprites.size(); i++)
+				spdel m_TempSprites[i];
+
+			m_TempSprites.clear();
+		}
+
+		void DebugLayer::DrawSprite(Sprite* sprite)
+		{
+			s_Instance->Submit(sprite);
+		}
+
+		void DebugLayer::DrawTexture(API::Texture* texture, const maths::vec2& position, const maths::vec2& size)
+		{
+			Sprite* sprite = spnew Sprite(position.x, position.y, size.x, size.y, texture);
+			s_Instance->m_TempSprites.push_back(sprite);
+			s_Instance->Submit(sprite);
 		}
 
 	}

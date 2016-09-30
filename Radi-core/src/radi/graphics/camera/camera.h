@@ -1,7 +1,7 @@
 #pragma once
 
-#include "radi/common.h"
-#include <radi/maths/maths.h>
+#include "radi/Common.h"
+#include "radi/maths/maths.h"
 
 namespace radi {
 	namespace graphics {
@@ -14,6 +14,7 @@ namespace radi {
 		public:
 			Camera(const maths::mat4& projectionMatrix);
 
+			virtual void Focus() { }
 			virtual void Update() { }
 
 			inline const maths::vec3& GetPosition() const { return m_Position; }

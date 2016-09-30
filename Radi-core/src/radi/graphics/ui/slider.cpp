@@ -1,5 +1,5 @@
 #include "radi/rd.h"
-#include "slider.h"
+#include "Slider.h"
 
 namespace radi {
 	namespace graphics {

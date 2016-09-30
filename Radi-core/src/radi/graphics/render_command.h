@@ -1,6 +1,6 @@
 #pragma once
 
-#include "radi/rd.h"
+#include "radi/Common.h"
 #include "Mesh.h"
 
 namespace radi {
@@ -15,6 +15,8 @@ namespace radi {
 		struct RD_API RenderCommand
 		{
 			Mesh* mesh;
+			maths::mat4 transform;
+			API::Shader* shader;
 			std::vector<RendererUniform> uniforms;
 		};
 

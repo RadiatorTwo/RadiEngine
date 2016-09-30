@@ -1,35 +1,42 @@
 #pragma once
 
 #include "radi/rd.h"
-#include "radi/common.h"
+#include "radi/Common.h"
 #include "radi/radi_string.h"
 
 #include "vec3.h"
 
-namespace radi
-{
-	namespace maths
-	{
-		struct vec2
+namespace radi {
+	namespace maths {
+
+		struct RD_API vec2
 		{
 			float x, y;
 
 			vec2();
-			vec2(const float& x, const float& y);
+			vec2(float scalar);
+			vec2(float x, float y);
 			vec2(const vec3& vector);
 
-			vec2& add(const vec2& other);
-			vec2& subtract(const vec2& other);
-			vec2& multiply(const vec2& other);
-			vec2& divide(const vec2& other);
+			vec2& Add(const vec2& other);
+			vec2& Subtract(const vec2& other);
+			vec2& Multiply(const vec2& other);
+			vec2& Divide(const vec2& other);
 
-	    	friend vec2 operator+(vec2 left, const vec2& right);
-	    	friend vec2 operator-(vec2 left, const vec2& right);
-	    	friend vec2 operator*(vec2 left, const vec2& right);
-	    	friend vec2 operator/(vec2 left, const vec2& right);
+			vec2& Add(float value);
+			vec2& Subtract(float value);
+			vec2& Multiply(float value);
+			vec2& Divide(float value);
+
+			friend vec2 operator+(vec2 left, const vec2& right);
+			friend vec2 operator-(vec2 left, const vec2& right);
+			friend vec2 operator*(vec2 left, const vec2& right);
+			friend vec2 operator/(vec2 left, const vec2& right);
 
 			friend vec2 operator+(vec2 left, float value);
+			friend vec2 operator-(vec2 left, float value);
 			friend vec2 operator*(vec2 left, float value);
+			friend vec2 operator/(vec2 left, float value);
 
 			bool operator==(const vec2& other) const;
 			bool operator!=(const vec2& other) const;
@@ -39,19 +46,25 @@ namespace radi
 			vec2& operator*=(const vec2& other);
 			vec2& operator/=(const vec2& other);
 
+			vec2& operator+=(float value);
+			vec2& operator-=(float value);
+			vec2& operator*=(float value);
+			vec2& operator/=(float value);
+
 			bool operator<(const vec2& other) const;
 			bool operator<=(const vec2& other) const;
 			bool operator>(const vec2& other) const;
 			bool operator>=(const vec2& other) const;
 
-			float magnitude() const;
-			vec2 normalise() const;
-			float distance(const vec2& other) const;
-			float dot(const vec2& other) const;
+			float Magnitude() const;
+			vec2 Normalise() const;
+			float Distance(const vec2& other) const;
+			float Dot(const vec2& other) const;
 
 			String ToString() const;
 
 			friend std::ostream& operator<<(std::ostream& stream, const vec2& vector);
 		};
+
 	}
 }

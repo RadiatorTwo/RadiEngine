@@ -1,5 +1,5 @@
 #include "radi/rd.h"
-#include "camera.h"
+#include "Camera.h"
 
 namespace radi {
 	namespace graphics {

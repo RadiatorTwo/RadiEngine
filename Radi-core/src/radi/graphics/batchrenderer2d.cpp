@@ -1,65 +1,100 @@
 #include "radi/rd.h"
-#include "batchrenderer2d.h"
+#include "BatchRenderer2D.h"
 
 #include "shaders/shader_factory.h"
 #include "mesh_factory.h"
 
-#include "buffers/buffer.h"
-#include "buffers/buffer_layout.h"
+#include "API/VertexBuffer.h"
+#include "API/VertexArray.h"
+#include "API/buffer_layout.h"
 
-#include "radi/utils/log.h"
+#include "radi/utils/Log.h"
 
-#include "radi_render_api.h"
+#include "Renderer.h"
 
-#include <../freetype-gl/freetype-gl.h>
+#include <freetype-gl/freetype-gl.h>
 
-namespace radi
-{
-	namespace graphics
-	{
+namespace radi {
+	namespace graphics {
+
 		using namespace maths;
 
-		BatchRenderer2D::BatchRenderer2D(uint width, uint height)
-			: m_indexCount(0), m_screenSize(tvec2<uint>(width, height)), m_viewportSize(tvec2<uint>(width, height))
+		const uint g_RequiredSystemUniformsCount = 2;
+		const String g_RequiredSystemUniforms[g_RequiredSystemUniformsCount] =
 		{
-			init();
+			"sys_ProjectionMatrix",
+			"sys_ViewMatrix"
+		};
+
+		const uint sys_ProjectionMatrixIndex = 0;
+		const uint sys_ViewMatrixIndex = 1;
+
+		BatchRenderer2D::BatchRenderer2D(uint width, uint height)
+			: m_IndexCount(0), m_ScreenSize(tvec2<uint>(width, height)), m_ViewportSize(tvec2<uint>(width, height))
+		{
+			Init();
 		}
 
-		BatchRenderer2D::BatchRenderer2D(const maths::tvec2<uint>& screenSize)
-			: m_indexCount(0), m_screenSize(screenSize), m_viewportSize(screenSize)
+		BatchRenderer2D::BatchRenderer2D(const tvec2<uint>& screenSize)
+			: m_IndexCount(0), m_ScreenSize(screenSize), m_ViewportSize(screenSize)
 		{
-			init();
+			Init();
 		}
 
 		BatchRenderer2D::~BatchRenderer2D()
 		{
-			delete m_screenQuad;
-			delete m_IBO;
-			API::FreeBuffer(m_VBO);
-			API::FreeVertexArray(m_VAO);
+			spdel m_IndexBuffer;
+			spdel m_VertexArray;
+			spdel m_ScreenQuad;
 		}
 
-		void BatchRenderer2D::init()
+		void BatchRenderer2D::Init()
 		{
-			API::Buffer* buffer = new API::Buffer(GL_ARRAY_BUFFER, GL_DYNAMIC_DRAW);
-			buffer->Bind();
+			m_PostEffectsEnabled = false;
+
+			m_SystemUniforms.resize(g_RequiredSystemUniformsCount);
+
+			m_Shader = ShaderFactory::BatchRendererShader();
+			const API::ShaderUniformBufferList& vssu = m_Shader->GetVSSystemUniforms();
+			RADI_ASSERT(vssu.size());
+			for (uint i = 0; i < vssu.size(); i++)
+			{
+				API::ShaderUniformBufferDeclaration* ub = vssu[i];
+				UniformBuffer buffer(spnew byte[ub->GetSize()], ub->GetSize());
+				m_SystemUniformBuffers.push_back(buffer);
+				for (API::ShaderUniformDeclaration* decl : ub->GetUniformDeclarations())
+				{
+					for (uint j = 0; j < g_RequiredSystemUniformsCount; j++)
+					{
+						if (decl->GetName() == g_RequiredSystemUniforms[j])
+							m_SystemUniforms[j] = BR2DSystemUniform(buffer, decl->GetOffset());
+					}
+				}
+			}
+
+			SetCamera(spnew Camera(mat4::Orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f)));
+
+			m_Shader->Bind();
+
+			API::VertexBuffer* buffer = API::VertexBuffer::Create(API::BufferUsage::DYNAMIC);
 			buffer->Resize(RENDERER_BUFFER_SIZE);
 
-			buffer->layout.Push<vec3>("position");
-			buffer->layout.Push<vec2>("uv");
-			buffer->layout.Push<vec2>("mask_uv");
-			buffer->layout.Push<float>("tid");
-			buffer->layout.Push<float>("mid");
-			buffer->layout.Push<byte>("color", 4, true);
+			API::BufferLayout layout;
+			layout.Push<vec3>("POSITION"); // Position
+			layout.Push<vec2>("TEXCOORD"); // UV
+			layout.Push<vec2>("MASKUV"); // Mask UV
+			layout.Push<float>("ID"); // Texture Index
+			layout.Push<float>("MASKID"); // Mask Index
+			layout.Push<byte>("COLOR", 4, true); // Color
+			buffer->SetLayout(layout);
 
-			m_vertexArray = new VertexArray();
-			m_vertexArray->Bind();
-			m_vertexArray->PushBuffer(buffer);
+			m_VertexArray = API::VertexArray::Create();
+			m_VertexArray->PushBuffer(buffer);
 
 			uint* indices = new uint[RENDERER_INDICES_SIZE];
 
-			int offset = 0;
-			for (int i = 0; i < RENDERER_INDICES_SIZE; i += 6)
+			int32 offset = 0;
+			for (int32 i = 0; i < RENDERER_INDICES_SIZE; i += 6)
 			{
 				indices[i] = offset + 0;
 				indices[i + 1] = offset + 1;
@@ -72,36 +107,34 @@ namespace radi
 				offset += 4;
 			}
 
-			m_IBO = new IndexBuffer(indices, RENDERER_INDICES_SIZE);
-
-			m_vertexArray->Unbind();
+			m_IndexBuffer = API::IndexBuffer::Create(indices, RENDERER_INDICES_SIZE);
+			m_VertexArray->Unbind();
 
 			// Setup Framebuffer
-			m_screenBuffer = API::GetScreenBuffer();
-			RADI_ASSERT(m_screenBuffer == 0);
 
-			m_framebuffer = new Framebuffer(m_viewportSize);
-			m_simpleShader = ShaderFactory::SimpleShader();
-			m_simpleShader->Bind();
-			m_simpleShader->SetUniformMat4("pr_matrix", maths::mat4::Orthographic(0, m_screenSize.x, m_screenSize.y, 0, -1.0f, 1.0f));
-			m_simpleShader->SetUniform1i("tex", 0);
-			m_simpleShader->Unbind();
-			m_screenQuad = meshfactory::CreateQuad(0, 0, m_screenSize.x, m_screenSize.y);
+#if 0
+			m_Framebuffer = Framebuffer2D::Create(m_ViewportSize.x, m_ViewportSize.y);
+			m_FramebufferMaterial = new Material(ShaderFactory::SimpleShader());
+			m_FramebufferMaterial->SetUniform("pr_matrix", maths::mat4::Orthographic(0, (float)m_ScreenSize.x, (float)m_ScreenSize.y, 0, -1.0f, 1.0f));
+			m_FramebufferMaterial->SetTexture("u_Texture", m_Framebuffer->GetTexture());
+			m_ScreenQuad = MeshFactory::CreateQuad(0, 0, (float)m_ScreenSize.x, (float)m_ScreenSize.y);
 
-			m_postEffects = new PostEffects();
-			m_postEffectsBuffer = new Framebuffer(m_viewportSize);
+			m_PostEffects = new PostEffects();
+			m_PostEffectsBuffer = Framebuffer2D::Create(m_ViewportSize.x, m_ViewportSize.y);
+#endif
 		}
 
-		float BatchRenderer2D::submitTexture(uint textureID)
+		float BatchRenderer2D::SubmitTexture(API::Texture* texture)
 		{
+#if 0
 			if (!textureID)
-				RADI_WARN("Invalid texture ID submitted!");
-
+				SP_WARN("Invalid texture ID submitted!");
+#endif
 			float result = 0.0f;
 			bool found = false;
-			for (uint i = 0; i < m_textureSlots.size(); i++)
+			for (uint i = 0; i < m_Textures.size(); i++)
 			{
-				if (m_textureSlots[i] == textureID)
+				if (m_Textures[i] == texture)
 				{
 					result = (float)(i + 1);
 					found = true;
@@ -111,121 +144,126 @@ namespace radi
 
 			if (!found)
 			{
-				if (m_textureSlots.size() >= RENDERER_MAX_TEXTURES)
+				if (m_Textures.size() >= RENDERER_MAX_TEXTURES)
 				{
-					end();
+					End();
 					Present();
 					Begin();
 				}
-				m_textureSlots.push_back(textureID);
-				result = (float)(m_textureSlots.size());
+				m_Textures.push_back(texture);
+				result = (float)(m_Textures.size());
 			}
 			return result;
 		}
 
-		float BatchRenderer2D::submitTexture(const Texture* texture)
+		void BatchRenderer2D::SetCamera(Camera* camera)
 		{
-			return submitTexture(texture->getID());
+			m_Camera = camera;
+
+			memcpy(m_SystemUniforms[sys_ProjectionMatrixIndex].buffer.buffer + m_SystemUniforms[sys_ProjectionMatrixIndex].offset, &camera->GetProjectionMatrix(), sizeof(mat4));
+			memcpy(m_SystemUniforms[sys_ViewMatrixIndex].buffer.buffer + m_SystemUniforms[sys_ViewMatrixIndex].offset, &camera->GetViewMatrix(), sizeof(mat4));
 		}
 
 		void BatchRenderer2D::Begin()
 		{
-			if (m_target == RenderTarget::BUFFER)
+			if (m_Target == RenderTarget::BUFFER)
 			{
-				if (m_viewportSize != m_framebuffer->GetSize())
+				RADI_ASSERT(false); // Currently Unsupported
+#if 0
+				if (m_ViewportSize != m_Framebuffer->GetSize())
 				{
-					delete m_framebuffer;
-					m_framebuffer = new Framebuffer(m_viewportSize);
-					if (m_postEffectsEnabled)
+					delete m_Framebuffer;
+					m_Framebuffer = new API::Framebuffer2D(m_ViewportSize);
+
+					if (m_PostEffectsEnabled)
 					{
-						delete m_postEffectsBuffer;
-						m_postEffectsBuffer = new Framebuffer(m_viewportSize);
+						delete m_PostEffectsBuffer;
+						m_PostEffectsBuffer = new API::Framebuffer2D(m_ViewportSize);
 					}
 				}
 
-				if (m_postEffectsEnabled)
+				if (m_PostEffectsEnabled)
 				{
-					m_postEffectsBuffer->Bind();
-					m_postEffectsBuffer->Clear();
+					m_PostEffectsBuffer->Bind();
+					m_PostEffectsBuffer->Clear();
 				}
 
-				m_framebuffer->Bind();
-				m_framebuffer->Clear();
-
-				glBlendFunc(GL_ONE, GL_ZERO);
+				m_Framebuffer->Bind();
+				m_Framebuffer->Clear(); // TODO: Clear somewhere else, since this basically limits to one draw call
+				Renderer::SetBlendFunction(RendererBlendFunction::ONE, RendererBlendFunction::ZERO);
+#endif
 			}
 			else
 			{
-				API::BindFramebuffer(GL_FRAMEBUFFER, m_screenBuffer);
-				API::SetViewport(0, 0, m_screenSize.x, m_screenSize.y);
+				// GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_ScreenBuffer));
+				Renderer::SetViewport(0, 0, m_ScreenSize.x, m_ScreenSize.y);
 			}
-
-			m_vertexArray->GetBuffer()->Bind();
-			m_buffer = m_vertexArray->GetBuffer()->GetPointer<VertexData>();
+			m_VertexArray->Bind();
+			m_Buffer = m_VertexArray->GetBuffer()->GetPointer<VertexData>();
 		}
 
-		void BatchRenderer2D::submit(const Renderable2D* renderable)
+		void BatchRenderer2D::Submit(const Renderable2D* renderable)
 		{
 			if (!renderable->IsVisible())
 				return;
 
-			const vec3& position = renderable->getPosition();
-			const vec2& size = renderable->getSize();
-			const uint color = renderable->getColor();
+			const vec3& position = renderable->GetPosition();
+			const vec2& size = renderable->GetSize();
+			const uint color = renderable->GetColor();
 			const std::vector<vec2>& uv = renderable->GetUV();
-			const GLuint tid = renderable->getTID();
+			const API::Texture* texture = renderable->GetTexture();
 
-			float ts = 0.0f;
-			if (tid > 0)
-				ts = submitTexture(renderable->getTexture());
+			float textureSlot = 0.0f;
+			if (texture)
+				textureSlot = SubmitTexture(renderable->GetTexture());
 
 			mat4 maskTransform = mat4::Identity();
-			const uint mid = m_mask ? m_mask->texture->getID() : 0;
+			float mid = m_Mask ? SubmitTexture(m_Mask->texture) : 0.0f;
 			float ms = 0.0f;
 
-			if (m_mask != nullptr)
+			if (m_Mask != nullptr)
 			{
-				maskTransform = mat4::Invert(m_mask->transform);
-				ms = submitTexture(m_mask->texture);
+				maskTransform = mat4::Invert(m_Mask->transform);
+				ms = SubmitTexture(m_Mask->texture);
 			}
 
-			vec3 vertex = *m_transformationBack * position;
-			m_buffer->vertex = vertex;
-			m_buffer->uv = uv[0];
-			m_buffer->mask_uv = maskTransform * vertex;
-			m_buffer->tid = ts;
-			m_buffer->mid = ms;
-			m_buffer->color = color;
-			m_buffer++;
+			vec3 vertex = *m_TransformationBack * position;
+			m_Buffer->vertex = vertex;
+			m_Buffer->uv = uv[0];
+			m_Buffer->mask_uv = maskTransform * vertex;
+			m_Buffer->tid = textureSlot;
+			m_Buffer->mid = ms;
+			m_Buffer->color = color;
+			m_Buffer++;
 
-			vertex = *m_transformationBack * vec3(position.x, position.y + size.y, position.z);
-			m_buffer->vertex = vertex;
-			m_buffer->uv = uv[1];
-			m_buffer->mask_uv = maskTransform * vertex;
-			m_buffer->tid = ts;
-			m_buffer->mid = ms;
-			m_buffer->color = color;
-			m_buffer++;
+			vertex = *m_TransformationBack * vec3(position.x + size.x, position.y, position.z);
+			m_Buffer->vertex = vertex;
+			m_Buffer->uv = uv[1];
+			m_Buffer->mask_uv = maskTransform * vertex;
+			m_Buffer->tid = textureSlot;
+			m_Buffer->mid = ms;
+			m_Buffer->color = color;
+			m_Buffer++;
 
-			vertex = *m_transformationBack * vec3(position.x + size.x, position.y + size.y, position.z);
-			m_buffer->vertex = vertex;
-			m_buffer->uv = uv[2];
-			m_buffer->mask_uv = maskTransform * vertex;
-			m_buffer->tid = ts;
-			m_buffer->mid = ms;
-			m_buffer->color = color;
-			m_buffer++;
+			vertex = *m_TransformationBack * vec3(position.x + size.x, position.y + size.y, position.z);
+			m_Buffer->vertex = vertex;
+			m_Buffer->uv = uv[2];
+			m_Buffer->mask_uv = maskTransform * vertex;
+			m_Buffer->tid = textureSlot;
+			m_Buffer->mid = ms;
+			m_Buffer->color = color;
+			m_Buffer++;
 
-			vertex = *m_transformationBack * vec3(position.x + size.x, position.y, position.z);
-			m_buffer->vertex = vertex;
-			m_buffer->uv = uv[3];
-			m_buffer->mask_uv = maskTransform * vertex;
-			m_buffer->tid = ts;
-			m_buffer->mid = ms;
-			m_buffer->color = color;
-			m_buffer++;
+			vertex = *m_TransformationBack * vec3(position.x, position.y + size.y, position.z);
+			m_Buffer->vertex = vertex;
+			m_Buffer->uv = uv[3];
+			m_Buffer->mask_uv = maskTransform * vertex;
+			m_Buffer->tid = textureSlot;
+			m_Buffer->mid = ms;
+			m_Buffer->color = color;
+			m_Buffer++;
 
-			m_indexCount += 6;
+			m_IndexCount += 6;
 		}
 
 		void BatchRenderer2D::DrawLine(float x0, float y0, float x1, float y1, float thickness, uint color)
@@ -233,54 +271,54 @@ namespace radi
 			const std::vector<vec2>& uv = Renderable2D::GetDefaultUVs();
 			float ts = 0.0f;
 			mat4 maskTransform = mat4::Identity();
-			uint mid = m_mask ? m_mask->texture->getID() : 0;
+			float mid = m_Mask ? SubmitTexture(m_Mask->texture) : 0.0f;
 
 			float ms = 0.0f;
-			if (m_mask != nullptr)
+			if (m_Mask != nullptr)
 			{
-				maskTransform = mat4::Invert(m_mask->transform);
-				ms = submitTexture(m_mask->texture);
+				maskTransform = mat4::Invert(m_Mask->transform);
+				ms = SubmitTexture(m_Mask->texture);
 			}
 
-			vec2 normal = vec2(y1 - y0, -(x1 - x0)).normalise() * thickness;
+			vec2 normal = vec2(y1 - y0, -(x1 - x0)).Normalise() * thickness;
 
-			vec3 vertex = *m_transformationBack * vec3(x0 + normal.x, y0 + normal.y, 0.0f);
-			m_buffer->vertex = vertex;
-			m_buffer->uv = uv[0];
-			m_buffer->mask_uv = maskTransform * vertex;
-			m_buffer->tid = ts;
-			m_buffer->mid = ms;
-			m_buffer->color = color;
-			m_buffer++;
+			vec3 vertex = *m_TransformationBack * vec3(x0 + normal.x, y0 + normal.y, 0.0f);
+			m_Buffer->vertex = vertex;
+			m_Buffer->uv = uv[0];
+			m_Buffer->mask_uv = maskTransform * vertex;
+			m_Buffer->tid = ts;
+			m_Buffer->mid = ms;
+			m_Buffer->color = color;
+			m_Buffer++;
 
-			vertex = *m_transformationBack * vec3(x1 + normal.x, y1 + normal.y, 0.0f);
-			m_buffer->vertex = vertex;
-			m_buffer->uv = uv[1];
-			m_buffer->mask_uv = maskTransform * vertex;
-			m_buffer->tid = ts;
-			m_buffer->mid = ms;
-			m_buffer->color = color;
-			m_buffer++;
+			vertex = *m_TransformationBack * vec3(x1 + normal.x, y1 + normal.y, 0.0f);
+			m_Buffer->vertex = vertex;
+			m_Buffer->uv = uv[1];
+			m_Buffer->mask_uv = maskTransform * vertex;
+			m_Buffer->tid = ts;
+			m_Buffer->mid = ms;
+			m_Buffer->color = color;
+			m_Buffer++;
 
-			vertex = *m_transformationBack * vec3(x1 - normal.x, y1 - normal.y, 0.0f);
-			m_buffer->vertex = vertex;
-			m_buffer->uv = uv[2];
-			m_buffer->mask_uv = maskTransform * vertex;
-			m_buffer->tid = ts;
-			m_buffer->mid = ms;
-			m_buffer->color = color;
-			m_buffer++;
+			vertex = *m_TransformationBack * vec3(x1 - normal.x, y1 - normal.y, 0.0f);
+			m_Buffer->vertex = vertex;
+			m_Buffer->uv = uv[2];
+			m_Buffer->mask_uv = maskTransform * vertex;
+			m_Buffer->tid = ts;
+			m_Buffer->mid = ms;
+			m_Buffer->color = color;
+			m_Buffer++;
 
-			vertex = *m_transformationBack * vec3(x0 - normal.x, y0 - normal.y, 0.0f);
-			m_buffer->vertex = vertex;
-			m_buffer->uv = uv[3];
-			m_buffer->mask_uv = maskTransform * vertex;
-			m_buffer->tid = ts;
-			m_buffer->mid = ms;
-			m_buffer->color = color;
-			m_buffer++;
+			vertex = *m_TransformationBack * vec3(x0 - normal.x, y0 - normal.y, 0.0f);
+			m_Buffer->vertex = vertex;
+			m_Buffer->uv = uv[3];
+			m_Buffer->mask_uv = maskTransform * vertex;
+			m_Buffer->tid = ts;
+			m_Buffer->mid = ms;
+			m_Buffer->color = color;
+			m_Buffer++;
 
-			m_indexCount += 6;
+			m_IndexCount += 6;
 		}
 
 		void BatchRenderer2D::DrawLine(const maths::vec2& start, const maths::vec2& end, float thickness, uint color)
@@ -305,10 +343,11 @@ namespace radi
 		{
 			using namespace ftgl;
 
-			float ts = 0.0f;
-			ts = submitTexture(font.GetID());
+			API::Texture2D* texture = font.GetTexture();
+			RADI_ASSERT(texture);
+			float ts = SubmitTexture(texture);
 
-			const maths::vec2& scale = font.GetScale();
+			const maths::vec2& scale = font.GetScale(); // FontManager::GetScale();
 
 			float x = position.x;
 
@@ -320,7 +359,6 @@ namespace radi
 				texture_glyph_t* glyph = texture_font_get_glyph(ftFont, c);
 				if (glyph)
 				{
-
 					if (i > 0)
 					{
 						float kerning = texture_glyph_get_kerning(glyph, text[i - 1]);
@@ -337,35 +375,34 @@ namespace radi
 					float u1 = glyph->s1;
 					float v1 = glyph->t1;
 
-					m_buffer->vertex = *m_transformationBack * vec3(x0, y0, 0);
-					m_buffer->uv = vec2(u0, v0);
-					m_buffer->tid = ts;
-					m_buffer->color = color;
-					m_buffer++;
+					m_Buffer->vertex = *m_TransformationBack * vec3(x0, y0, 0);
+					m_Buffer->uv = vec2(u0, v0);
+					m_Buffer->tid = ts;
+					m_Buffer->color = color;
+					m_Buffer++;
 
-					m_buffer->vertex = *m_transformationBack * vec3(x0, y1, 0);
-					m_buffer->uv = vec2(u0, v1);
-					m_buffer->tid = ts;
-					m_buffer->color = color;
-					m_buffer++;
+					m_Buffer->vertex = *m_TransformationBack * vec3(x0, y1, 0);
+					m_Buffer->uv = vec2(u0, v1);
+					m_Buffer->tid = ts;
+					m_Buffer->color = color;
+					m_Buffer++;
 
-					m_buffer->vertex = *m_transformationBack * vec3(x1, y1, 0);
-					m_buffer->uv = vec2(u1, v1);
-					m_buffer->tid = ts;
-					m_buffer->color = color;
-					m_buffer++;
+					m_Buffer->vertex = *m_TransformationBack * vec3(x1, y1, 0);
+					m_Buffer->uv = vec2(u1, v1);
+					m_Buffer->tid = ts;
+					m_Buffer->color = color;
+					m_Buffer++;
 
-					m_buffer->vertex = *m_transformationBack * vec3(x1, y0, 0);
-					m_buffer->uv = vec2(u1, v0);
-					m_buffer->tid = ts;
-					m_buffer->color = color;
-					m_buffer++;
+					m_Buffer->vertex = *m_TransformationBack * vec3(x1, y0, 0);
+					m_Buffer->uv = vec2(u1, v0);
+					m_Buffer->tid = ts;
+					m_Buffer->color = color;
+					m_Buffer++;
 
-					m_indexCount += 6;
+					m_IndexCount += 6;
 
 					x += glyph->advance_x / scale.x;
 				}
-
 			}
 		}
 
@@ -376,52 +413,52 @@ namespace radi
 			const std::vector<vec2>& uv = Renderable2D::GetDefaultUVs();
 			float ts = 0.0f;
 			mat4 maskTransform = mat4::Identity();
-			uint mid = m_mask ? m_mask->texture->getID() : 0;
+			float mid = m_Mask ? SubmitTexture(m_Mask->texture) : 0.0f;
 
 			float ms = 0.0f;
-			if (m_mask != nullptr)
+			if (m_Mask != nullptr)
 			{
-				maskTransform = mat4::Invert(m_mask->transform);
-				ms = submitTexture(m_mask->texture);
+				maskTransform = mat4::Invert(m_Mask->transform);
+				ms = SubmitTexture(m_Mask->texture);
 			}
 
-			vec3 vertex = *m_transformationBack * position;
-			m_buffer->vertex = vertex;
-			m_buffer->uv = uv[0];
-			m_buffer->mask_uv = maskTransform * vertex;
-			m_buffer->tid = ts;
-			m_buffer->mid = ms;
-			m_buffer->color = color;
-			m_buffer++;
+			vec3 vertex = *m_TransformationBack * position;
+			m_Buffer->vertex = vertex;
+			m_Buffer->uv = uv[0];
+			m_Buffer->mask_uv = maskTransform * vertex;
+			m_Buffer->tid = ts;
+			m_Buffer->mid = ms;
+			m_Buffer->color = color;
+			m_Buffer++;
 
-			vertex = *m_transformationBack * vec3(position.x, position.y + size.y, position.z);
-			m_buffer->vertex = vertex;
-			m_buffer->uv = uv[1];
-			m_buffer->mask_uv = maskTransform * vertex;
-			m_buffer->tid = ts;
-			m_buffer->mid = ms;
-			m_buffer->color = color;
-			m_buffer++;
+			vertex = *m_TransformationBack * vec3(position.x + size.x, position.y, position.z);
+			m_Buffer->vertex = vertex;
+			m_Buffer->uv = uv[1];
+			m_Buffer->mask_uv = maskTransform * vertex;
+			m_Buffer->tid = ts;
+			m_Buffer->mid = ms;
+			m_Buffer->color = color;
+			m_Buffer++;
 
-			vertex = *m_transformationBack * vec3(position.x + size.x, position.y + size.y, position.z);
-			m_buffer->vertex = vertex;
-			m_buffer->uv = uv[2];
-			m_buffer->mask_uv = maskTransform * vertex;
-			m_buffer->tid = ts;
-			m_buffer->mid = ms;
-			m_buffer->color = color;
-			m_buffer++;
+			vertex = *m_TransformationBack * vec3(position.x + size.x, position.y + size.y, position.z);
+			m_Buffer->vertex = vertex;
+			m_Buffer->uv = uv[2];
+			m_Buffer->mask_uv = maskTransform * vertex;
+			m_Buffer->tid = ts;
+			m_Buffer->mid = ms;
+			m_Buffer->color = color;
+			m_Buffer++;
 
-			vertex = *m_transformationBack * vec3(position.x + size.x, position.y, position.z);
-			m_buffer->vertex = vertex;
-			m_buffer->uv = uv[3];
-			m_buffer->mask_uv = maskTransform * vertex;
-			m_buffer->tid = ts;
-			m_buffer->mid = ms;
-			m_buffer->color = color;
-			m_buffer++;
+			vertex = *m_TransformationBack * vec3(position.x, position.y + size.y, position.z);
+			m_Buffer->vertex = vertex;
+			m_Buffer->uv = uv[3];
+			m_Buffer->mask_uv = maskTransform * vertex;
+			m_Buffer->tid = ts;
+			m_Buffer->mid = ms;
+			m_Buffer->color = color;
+			m_Buffer++;
 
-			m_indexCount += 6;
+			m_IndexCount += 6;
 		}
 
 		void BatchRenderer2D::FillRect(const Rectangle& rectangle, uint color)
@@ -429,64 +466,64 @@ namespace radi
 			FillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height, color);
 		}
 
-		void BatchRenderer2D::end()
+		void BatchRenderer2D::End()
 		{
-			m_vertexArray->GetBuffer()->ReleasePointer();
-			m_vertexArray->GetBuffer()->Unbind();
+			m_VertexArray->GetBuffer()->ReleasePointer();
+			m_VertexArray->Unbind();
 		}
 
 		void BatchRenderer2D::Present()
 		{
-			GLCall(glDepthFunc(GL_NEVER));
-			GLCall(glDisable(GL_DEPTH_TEST));
+			Renderer::SetDepthTesting(false);
 
-			for (uint i = 0; i < m_textureSlots.size(); i++)
+			m_Shader->Bind();
+			for (uint i = 0; i < m_SystemUniformBuffers.size(); i++)
+				m_Shader->SetVSSystemUniformBuffer(m_SystemUniformBuffers[i].buffer, m_SystemUniformBuffers[i].size, i);
+
+			for (uint i = 0; i < m_Textures.size(); i++)
+				m_Textures[i]->Bind(i);
+
+			m_VertexArray->Bind();
+			m_IndexBuffer->Bind();
+			m_VertexArray->Draw(m_IndexCount);
+			m_IndexBuffer->Unbind();
+			m_VertexArray->Unbind();
+
+			for (uint i = 0; i < m_Textures.size(); i++)
+				m_Textures[i]->Unbind(i);
+
+			m_IndexCount = 0;
+			m_Textures.clear();
+
+			if (m_Target == RenderTarget::BUFFER)
 			{
-				API::SetActiveTexture(GL_TEXTURE0 + i);
-				API::BindTexture(GL_TEXTURE_2D, m_textureSlots[i]);
-			}
-
-			// Draw buffers here
-			{
-				m_vertexArray->Bind();
-				m_IBO->Bind();
-
-				API::DrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, NULL);
-
-				m_IBO->Unbind();
-				m_vertexArray->Unbind();
-			}
-
-			m_indexCount = 0;
-			m_textureSlots.clear();
-
-			if (m_target == RenderTarget::BUFFER)
-			{
-				// Post Effects pass should go here!
-				if (m_postEffectsEnabled)
-					m_postEffects->RenderPostEffects(m_framebuffer, m_postEffectsBuffer, m_screenQuad, m_IBO);
+				RADI_ASSERT(false); // Currently unsupported
+#if 0
+								  // Post Effects pass should go here!
+				if (m_PostEffectsEnabled)
+					m_PostEffects->RenderPostEffects(m_Framebuffer, m_PostEffectsBuffer, m_ScreenQuad, m_IBO);
 
 				// Display Framebuffer - potentially move to Framebuffer class
-				API::BindFramebuffer(GL_FRAMEBUFFER, m_screenBuffer);
-				API::SetViewport(0, 0, m_screenSize.x, m_screenSize.y);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				m_simpleShader->Bind();
+				GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_ScreenBuffer));
+				Renderer::SetViewport(0, 0, m_ScreenSize.x, m_ScreenSize.y);
+				Renderer::SetBlendFunction(RendererBlendFunction::SOURCE_ALPHA, RendererBlendFunction::ONE_MINUS_SOURCE_ALPHA));
+				m_FramebufferMaterial->Bind();
 
-				API::SetActiveTexture(GL_TEXTURE0);
-
-				if (m_postEffectsEnabled)
-					m_postEffectsBuffer->GetTexture()->bind();
+				// TODO: None of this should be done here
+				GLCall(glActiveTexture(GL_TEXTURE0));
+				if (m_PostEffectsEnabled)
+					m_PostEffectsBuffer->GetTexture()->Bind(m_FramebufferMaterial->GetShader());
 				else
-					m_framebuffer->GetTexture()->bind();
+					m_Framebuffer->GetTexture()->Bind(m_FramebufferMaterial->GetShader());
 
-				m_screenQuad->Bind();
-
+				m_ScreenQuad->Bind();
 				m_IBO->Bind();
-				API::DrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
+				GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL));
 				m_IBO->Unbind();
-				m_screenQuad->Unbind();
-				m_simpleShader->Unbind();
+				m_ScreenQuad->Unbind();
+#endif
 			}
 		}
+
 	}
 }

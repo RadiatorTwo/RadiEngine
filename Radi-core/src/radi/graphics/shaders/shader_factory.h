@@ -1,15 +1,19 @@
 #pragma once
 
-#include "radi/common.h"
-#include "shader.h"
+#include "radi/Common.h"
+#include "Shader.h"
 
 namespace radi {
 	namespace graphics {
 		namespace ShaderFactory {
 
-			RD_API Shader* DefaultShader();
-			RD_API Shader* SimpleShader();
-			RD_API Shader* BasicLightShader();
+			RD_API API::Shader* BatchRendererShader();
+			RD_API API::Shader* SimpleShader();
+			RD_API API::Shader* BasicLightShader();
+
+			RD_API API::Shader* GeometryPassShader();
+
+			RD_API API::Shader* DebugShader();
 
 		}
 	}

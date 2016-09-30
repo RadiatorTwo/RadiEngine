@@ -1,9 +1,9 @@
 #pragma once
 
 #include "radi/rd.h"
-#include "radi/common.h"
+#include "radi/Common.h"
 #include "radi/radi_types.h"
-#include <radi/maths/maths.h>
+#include "radi/maths/maths.h"
 
 #include "Mesh.h"
 
@@ -16,7 +16,7 @@ namespace radi {
 			Mesh* m_Mesh;
 		public:
 			// This eventually needs to be replaced by a global Asset Server.
-			Model(const String& path, MaterialInstance* materialInstance);
+			Model(const String& path, MaterialInstance* materialInstance = nullptr);
 			~Model();
 
 			void Render(Renderer3D& renderer) override;
@@ -38,14 +38,14 @@ namespace radi {
 
 				bool operator==(const IndexSet& other) const
 				{
-					return position == other.position && uv == other.uv && normal == other.uv;
+					return position == other.position && uv == other.uv && normal == other.normal;
 				}
 			};
 
 			friend struct std::hash<IndexSet>;
 
 			void Load(const String& path);
-			void Model::InsertVertex(std::vector<Vertex>& vertices, std::vector<uint>& indices, std::unordered_map<IndexSet, int>& mapping, VertexSet& inputVertices, IndexSet& indexSet);
+			void InsertVertex(std::vector<Vertex>& vertices, std::vector<uint>& indices, std::unordered_map<IndexSet, int32>& mapping, VertexSet& inputVertices, IndexSet& indexSet);
 		};
 
 	}

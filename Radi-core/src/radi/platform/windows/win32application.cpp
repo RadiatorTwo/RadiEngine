@@ -1,12 +1,13 @@
 #include "radi/rd.h"
-#include <radi/app/Application.h>
+#include "radi/app/Application.h"
 
 namespace radi {
 
-	Application::Application(const char* name, uint width, uint height)
-		: m_name(name), m_width(width), m_height(height)
+	Application::Application(const char* name, uint width, uint height, graphics::API::RenderAPI api)
+		: m_Name(name), m_InitialWidth(width), m_InitialHeight(height), m_Frametime(0.0f)
 	{
-		s_instance = this;
+		s_Instance = this;
+		graphics::API::Context::SetRenderAPI(api);
 	}
 
 	Application::~Application()
@@ -16,32 +17,32 @@ namespace radi {
 
 	void Application::PlatformInit()
 	{
-		window = new Window(m_name, m_width, m_height);
+		window = new Window(m_Name, m_InitialWidth, m_InitialHeight);
 		window->SetEventCallback(METHOD(&Application::OnEvent));
 	}
 
 	void Application::Start()
 	{
 		Init();
-		m_running = true;
-		m_suspended = false;
+		m_Running = true;
+		m_Suspended = false;
 		Run();
 	}
 
 	void Application::Suspend()
 	{
-		m_suspended = true;
+		m_Suspended = true;
 	}
 
 	void Application::Resume()
 	{
-		m_suspended = false;
+		m_Suspended = false;
 	}
 
 	void Application::Stop()
 	{
-		m_running = false;
-	}	
+		m_Running = false;
+	}
 
 	void Application::Run()
 	{
@@ -49,31 +50,35 @@ namespace radi {
 		float timer = 0.0f;
 		float updateTimer = 0.0f;
 		float updateTick = 1.0f / 60.0f;
-		unsigned int frames = 0;
-		unsigned int updates = 0;
-		while (m_running)
+		uint frames = 0;
+		uint updates = 0;
+		while (m_Running)
 		{
 			window->Clear();
 			if (m_Timer->Elapsed() - updateTimer > updateTick)
-			{				
+			{
 				OnUpdate();
 				updates++;
 				updateTimer += updateTick;
+				{
+					Timer frametime;
+					OnRender();
+					frames++;
+					m_Frametime = frametime.ElapsedMillis();
+				}
+				window->Update();
 			}
-			OnRender();
-			frames++;
-			window->Update();
 			if (m_Timer->Elapsed() - timer > 1.0f)
 			{
 				timer += 1.0f;
-				m_framesPerSecond = frames;
-				m_updatesPerSecond = updates;
+				m_FramesPerSecond = frames;
+				m_UpdatesPerSecond = updates;
 				frames = 0;
 				updates = 0;
 				OnTick();
 			}
 			if (window->Closed())
-				m_running = false;
+				m_Running = false;
 		}
 	}
 

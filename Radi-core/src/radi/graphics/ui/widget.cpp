@@ -1,5 +1,5 @@
 #include "radi/rd.h"
-#include "widget.h"
+#include "Widget.h"
 
 namespace radi {
 	namespace graphics {

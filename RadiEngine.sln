@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freetype", "Dependencies\Fr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gorilla-audio", "Dependencies\gorilla-audio\gorilla-audio.vcxproj", "{E9A0F826-3688-4461-8E49-7CCC543F9E40}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FreeImage", "Dependencies\FreeImage\FreeImage.vcxproj", "{6F2FF135-E343-4138-A6FB-2D1F2540A3F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -37,6 +39,12 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Debug|Win32.Build.0 = Debug|Win32
+		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Debug|x64.ActiveCfg = Debug|Win32
+		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Release|Win32.ActiveCfg = Release|Win32
+		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Release|Win32.Build.0 = Release|Win32
+		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Release|x64.ActiveCfg = Release|Win32
 		{B57948D4-6640-4360-A225-37C2DA886D9A}.Debug|Win32.ActiveCfg = Debug|Win32
 		{B57948D4-6640-4360-A225-37C2DA886D9A}.Debug|Win32.Build.0 = Debug|Win32
 		{B57948D4-6640-4360-A225-37C2DA886D9A}.Debug|x64.ActiveCfg = Debug|Win32
@@ -55,12 +63,6 @@ Global
 		{54CE06E0-6313-4F5E-8BDA-4E7815C8743C}.Release|Win32.ActiveCfg = Release|Win32
 		{54CE06E0-6313-4F5E-8BDA-4E7815C8743C}.Release|Win32.Build.0 = Release|Win32
 		{54CE06E0-6313-4F5E-8BDA-4E7815C8743C}.Release|x64.ActiveCfg = Release|Win32
-		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Debug|Win32.ActiveCfg = Debug|Win32
-		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Debug|Win32.Build.0 = Debug|Win32
-		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Debug|x64.ActiveCfg = Debug|Win32
-		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Release|Win32.ActiveCfg = Release|Win32
-		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Release|Win32.Build.0 = Release|Win32
-		{5F4EB5BE-2BE1-4B25-A9B0-2D8CAB1D2291}.Release|x64.ActiveCfg = Release|Win32
 		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Debug|Win32.ActiveCfg = Debug|Win32
 		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Debug|Win32.Build.0 = Debug|Win32
 		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Debug|x64.ActiveCfg = Debug|Win32
@@ -83,6 +85,14 @@ Global
 		{E9A0F826-3688-4461-8E49-7CCC543F9E40}.Release|Win32.Build.0 = Release|Win32
 		{E9A0F826-3688-4461-8E49-7CCC543F9E40}.Release|x64.ActiveCfg = Release|x64
 		{E9A0F826-3688-4461-8E49-7CCC543F9E40}.Release|x64.Build.0 = Release|x64
+		{6F2FF135-E343-4138-A6FB-2D1F2540A3F8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6F2FF135-E343-4138-A6FB-2D1F2540A3F8}.Debug|Win32.Build.0 = Debug|Win32
+		{6F2FF135-E343-4138-A6FB-2D1F2540A3F8}.Debug|x64.ActiveCfg = Debug|x64
+		{6F2FF135-E343-4138-A6FB-2D1F2540A3F8}.Debug|x64.Build.0 = Debug|x64
+		{6F2FF135-E343-4138-A6FB-2D1F2540A3F8}.Release|Win32.ActiveCfg = Release|Win32
+		{6F2FF135-E343-4138-A6FB-2D1F2540A3F8}.Release|Win32.Build.0 = Release|Win32
+		{6F2FF135-E343-4138-A6FB-2D1F2540A3F8}.Release|x64.ActiveCfg = Release|x64
+		{6F2FF135-E343-4138-A6FB-2D1F2540A3F8}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,5 +103,6 @@ Global
 		{98400D17-43A5-1A40-95BE-C53AC78E7694} = {6F155A3E-0860-445F-82EE-6D762CC70AF9}
 		{1B0BC2C5-1A09-4017-BDF5-9F9C1718BFE7} = {6F155A3E-0860-445F-82EE-6D762CC70AF9}
 		{E9A0F826-3688-4461-8E49-7CCC543F9E40} = {6F155A3E-0860-445F-82EE-6D762CC70AF9}
+		{6F2FF135-E343-4138-A6FB-2D1F2540A3F8} = {6F155A3E-0860-445F-82EE-6D762CC70AF9}
 	EndGlobalSection
 EndGlobal

@@ -1,5 +1,5 @@
 #include "radi/rd.h"
-#include "button.h"
+#include "Button.h"
 
 #include "radi/graphics/font_manager.h"
 

@@ -1,31 +1,33 @@
 #include "radi/rd.h"
-#include "radi/common.h"
+#include "radi/Common.h"
+
 #include "texture_manager.h"
 
 namespace radi {
 	namespace graphics {
 
-		std::vector<Texture*> TextureManager::m_textures;
+		std::vector<API::Texture*> TextureManager::m_Textures;
 
-		void TextureManager::add(Texture* texture)
+		API::Texture* TextureManager::Add(API::Texture* texture)
 		{
-			m_textures.push_back(texture);
+			m_Textures.push_back(texture);
+			return texture;
 		}
 
-		Texture* TextureManager::get(const String& name)
+		API::Texture* TextureManager::Get(const String& name)
 		{
-			for (Texture* texture : m_textures)
+			for (API::Texture* texture : m_Textures)
 			{
-				if (texture->getName() == name)
+				if (texture->GetName() == name)
 					return texture;
 			}
 			return nullptr;
 		}
 
-		void TextureManager::clean()
+		void TextureManager::Clean()
 		{
-			for (uint i = 0; i < m_textures.size(); i++)
-				delete m_textures[i];
+			for (uint i = 0; i < m_Textures.size(); i++)
+				delete m_Textures[i];
 		}
 
 	}

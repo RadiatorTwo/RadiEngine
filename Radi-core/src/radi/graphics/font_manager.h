@@ -1,16 +1,14 @@
 #pragma once
 
-
 #include "radi/rd.h"
-#include "radi/common.h"
+#include "radi/Common.h"
 #include "radi/radi_types.h"
 
-#include "font.h"
+#include "Font.h"
 
-namespace radi
-{
-	namespace graphics
-	{
+namespace radi {
+	namespace graphics {
+
 		class RD_API FontManager
 		{
 		private:
@@ -18,15 +16,17 @@ namespace radi
 			static maths::vec2 s_Scale;
 		public:
 			static void SetScale(const maths::vec2& scale);
+			static inline const maths::vec2& GetScale() { return s_Scale; }
 
-			static void add(Font* font);
-			static Font* get();
-			static Font* get(const String& name);
+			static void Add(Font* font);
+			static Font* Get();
+			static Font* Get(const String& name);
 			static Font* Get(uint size);
 			static Font* Get(const String& name, uint size);
-			static void clean();
+			static void Clean();
 		private:
-			FontManager() {}
+			FontManager() { }
 		};
+
 	}
 }

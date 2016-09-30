@@ -1,76 +1,100 @@
 #pragma once
 
 #include "radi/rd.h"
-#include "radi/common.h"
+#include "radi/Common.h"
 #include "radi/radi_types.h"
 
-#include "renderer2d.h"
-#include "renderable2d.h"
-#include "Framebuffer.h"
+#include "Renderer2D.h"
+#include "Renderable2D.h"
+#include "API/Framebuffer2D.h"
 #include "font_manager.h"
 
-#include "buffers/VertexArray.h"
-#include "buffers/indexbuffer.h"
+#include "API/VertexArray.h"
+#include "API/IndexBuffer.h"
 
-namespace radi
-{
-	namespace graphics
-	{
-#define RENDERER_MAX_SPRITES  60000
-#define RENDERER_SPRITE_SIZE  RENDERER_VERTEX_SIZE * 4
-#define RENDERER_BUFFER_SIZE  RENDERER_SPRITE_SIZE * RENDERER_MAX_SPRITES
-#define RENDERER_INDICES_SIZE RENDERER_MAX_SPRITES * 6
-#define RENDERER_MAX_TEXTURES 32 - 1
+namespace radi {
+	namespace graphics {
+
+#define RENDERER_MAX_SPRITES	60000
+#define RENDERER_SPRITE_SIZE	RENDERER_VERTEX_SIZE * 4
+#define RENDERER_BUFFER_SIZE	RENDERER_SPRITE_SIZE * RENDERER_MAX_SPRITES
+#define RENDERER_INDICES_SIZE	RENDERER_MAX_SPRITES * 6
+#define RENDERER_MAX_TEXTURES	32 - 1
+
+		struct UniformBuffer
+		{
+			byte* buffer;
+			uint size;
+
+			UniformBuffer() {}
+			UniformBuffer(byte* buffer, uint size)
+				: buffer(buffer), size(size)
+			{
+				memset(buffer, 0, size);
+			}
+		};
+
+		struct BR2DSystemUniform
+		{
+			UniformBuffer buffer;
+			uint offset;
+
+			BR2DSystemUniform() {}
+			BR2DSystemUniform(const UniformBuffer& buffer, uint offset)
+				: buffer(buffer), offset(offset)
+			{
+			}
+		};
 
 		class RD_API BatchRenderer2D : public Renderer2D
 		{
 		private:
-			VertexArray* m_vertexArray;
-			uint m_VAO;
-			uint m_VBO;
-			IndexBuffer* m_IBO;
-			IndexBuffer* m_lineIBO;
-			uint m_indexCount, m_lineIndexCount;
-			VertexData* m_buffer;
+			API::Shader* m_Shader;
+			std::vector<BR2DSystemUniform> m_SystemUniforms;
+			std::vector<UniformBuffer> m_SystemUniformBuffers;
 
-			std::vector<uint> m_textureSlots;
-			Framebuffer* m_framebuffer;
-			Framebuffer* m_postEffectsBuffer;
-			int m_screenBuffer;
-			maths::tvec2<uint> m_viewportSize, m_screenSize;
-			Shader* m_simpleShader;
-			VertexArray* m_screenQuad;
+			API::VertexArray* m_VertexArray;
+			API::IndexBuffer* m_IndexBuffer;
+			API::IndexBuffer* m_LineIBO;
+			uint m_IndexCount, m_LineIndexCount;
+			VertexData* m_Buffer;
+			std::vector<API::Texture*> m_Textures;
+			Framebuffer2D* m_Framebuffer;
+			Framebuffer2D* m_PostEffectsBuffer;
+			maths::tvec2<uint> m_ViewportSize, m_ScreenSize;
+			Material* m_FramebufferMaterial;
+			API::VertexArray* m_ScreenQuad;
+			Camera* m_Camera;
 		public:
 			BatchRenderer2D(uint width, uint height);
 			BatchRenderer2D(const maths::tvec2<uint>& screenSize);
 			~BatchRenderer2D();
 
+			void SetCamera(Camera* camera) override;
+
 			void Begin() override;
-			void submit(const Renderable2D* renderable) override;
+			void Submit(const Renderable2D* renderable) override;
 
 			void DrawLine(float x0, float y0, float x1, float y1, float thickness = 0.02f, uint color = 0xffffffff) override;
 			void DrawLine(const maths::vec2& start, const maths::vec2& end, float thickness = 0.02f, uint color = 0xffffffff) override;
 			void DrawRect(float x, float y, float width, float height, uint color = 0xffffffff) override;
 			void DrawRect(const maths::Rectangle& rectangle, uint color = 0xffffffff) override;
-			void DrawString(const String& text, const maths::vec2& position, const Font& font = *FontManager::get(), uint color = 0xffffffff) override;
-			
+			void DrawString(const String& text, const maths::vec2& position, const Font& font = *FontManager::Get(), uint color = 0xffffffff) override;
+
 			void FillRect(float x, float y, float width, float height, uint color = 0xffffffff) override;
 			void FillRect(const maths::Rectangle& rectangle, uint color = 0xffffffff) override;
 
-			void end() override;
+			void End() override;
 			void Present() override;
 
-			inline void SetScreenSize(const maths::tvec2<uint>& size) { m_screenSize = size; }
-			inline const maths::tvec2<uint>& GetScreenSize() const { return m_screenSize; }
-			inline void SetViewportSize(const maths::tvec2<uint>& size) { m_viewportSize = size; }
-			inline const maths::tvec2<uint>& GetViewportSize() const { return m_viewportSize; }
-
+			inline void SetScreenSize(const maths::tvec2<uint>& size) { m_ScreenSize = size; }
+			inline const maths::tvec2<uint>& GetScreenSize() const { return m_ScreenSize; }
+			inline void SetViewportSize(const maths::tvec2<uint>& size) { m_ViewportSize = size; }
+			inline const maths::tvec2<uint>& GetViewportSize() const { return m_ViewportSize; }
 		private:
-			void init();
-			// TODO: Deprecated. Only sp::graphics::Texture should be allowable.
-			float submitTexture(uint textureID);
-
-			float submitTexture(const Texture* texture);
+			void Init();
+			float SubmitTexture(API::Texture* texture);
 		};
+
 	}
 }

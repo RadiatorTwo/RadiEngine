@@ -3,7 +3,7 @@
 #include "radi/rd.h"
 #include "radi/radi_string.h"
 
-#include "widget.h"
+#include "Widget.h"
 
 namespace radi {
 	namespace graphics {

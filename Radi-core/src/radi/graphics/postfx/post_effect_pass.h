@@ -1,9 +1,8 @@
 #pragma once
 
-#include "radi/common.h"
-
-#include "../Framebuffer.h"
-#include "../shaders/Shader.h"
+#include "radi/Common.h"
+#include "radi/graphics/API/Framebuffer.h"
+#include "../Material.h"
 
 namespace radi {
 	namespace graphics {
@@ -11,9 +10,9 @@ namespace radi {
 		class RD_API PostEffectsPass
 		{
 		private:
-			Shader* m_shader;
+			Material* m_Material;
 		public:
-			PostEffectsPass(Shader* shader);
+			PostEffectsPass(API::Shader* shader);
 			~PostEffectsPass();
 
 			void RenderPass(Framebuffer* target);

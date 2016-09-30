@@ -1,40 +1,84 @@
 #pragma once
 
-#include "radi/common.h"
+#include "radi/Common.h"
 #include "radi/radi_types.h"
 #include "radi/radi_string.h"
+#include "radi/utils/Log.h"
 
 namespace radi {
 	namespace graphics {
+		namespace API {
 
-
-		class RD_API ShaderUniformDeclaration
-		{
-		public:
-			enum class Type
+			class RD_API ShaderUniformDeclaration
 			{
-				NONE, FLOAT32, INT32, VEC2, VEC3, VEC4, MAT3, MAT4, SAMPLER2D
+			private:
+				friend class Shader;
+				friend class GLShader;
+				friend class DXShader;
+				friend class ShaderStruct;
+			public:
+				virtual const String& GetName() const = 0;
+				virtual uint GetSize() const = 0;
+				virtual uint GetCount() const = 0;
+				virtual uint GetOffset() const = 0;
+			protected:
+				virtual void SetOffset(uint offset) = 0;
 			};
-		private:
-			friend class Shader;
 
-			Type m_type;
-			String m_name;
-			uint m_size;
-			uint m_count;
-			uint m_offset;
-			const Shader* m_shader;
-			mutable int m_location;
-		public:
-			ShaderUniformDeclaration(Type type, const String& name, const Shader* shader, uint count = 1);
-			uint GetSize() const;
-			int GetLocation() const;
-			inline int GetOffset() const { return m_offset; }
-			inline const String& GetName() const { return m_name; }
-			inline Type GetType() const { return m_type; }
-		private:
-			uint SizeOfUniformType(Type type);
-		};
+			typedef std::vector<ShaderUniformDeclaration*> ShaderUniformList;
 
+			class ShaderUniformBufferDeclaration
+			{
+			public:
+				virtual const String& GetName() const = 0;
+				virtual uint GetRegister() const = 0;
+				virtual uint GetShaderType() const = 0;
+				virtual uint GetSize() const = 0;
+				virtual const ShaderUniformList& GetUniformDeclarations() const = 0;
+
+				virtual ShaderUniformDeclaration* FindUniform(const String& name) = 0;
+			};
+
+			typedef std::vector<ShaderUniformBufferDeclaration*> ShaderUniformBufferList;
+
+			class ShaderStruct
+			{
+			private:
+				friend class Shader;
+			private:
+				String m_Name;
+				std::vector<ShaderUniformDeclaration*> m_Fields;
+				uint m_Size;
+				uint m_Offset;
+			public:
+				ShaderStruct(const String& name)
+					: m_Name(name), m_Size(0), m_Offset(0)
+				{
+				}
+
+				void AddField(ShaderUniformDeclaration* field)
+				{
+					m_Size += field->GetSize();
+					uint offset = 0;
+					if (m_Fields.size())
+					{
+						ShaderUniformDeclaration* previous = m_Fields.back();
+						offset = previous->GetOffset() + previous->GetSize();
+					}
+					field->SetOffset(offset);
+					m_Fields.push_back(field);
+				}
+
+				inline void SetOffset(uint offset) { m_Offset = offset; }
+
+				inline const String& GetName() const { return m_Name; }
+				inline uint GetSize() const { return m_Size; }
+				inline uint GetOffset() const { return m_Offset; }
+				inline const std::vector<ShaderUniformDeclaration*>& GetFields() const { return m_Fields; }
+			};
+
+			typedef std::vector<ShaderStruct*> ShaderStructList;
+
+		}
 	}
 }

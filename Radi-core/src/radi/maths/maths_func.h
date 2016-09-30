@@ -1,79 +1,80 @@
 #pragma once
 
-#define _USE_MATH_DEFINES
+#include "radi/Common.h"
 
-#include "radi/common.h"
 #include <math.h>
+
+#define RD_PI 3.14159265358f
 
 namespace radi {
 	namespace maths {
 
-		inline float toRadians(float degrees)
+		RD_API inline float toRadians(float degrees)
 		{
-			return (float)(degrees * (M_PI / 180.0));
+			return (float)(degrees * (RD_PI / 180.0f));
 		}
 
-		inline float toDegrees(float radians)
+		RD_API inline float toDegrees(float radians)
 		{
-			return (float)(radians * (180.0f / M_PI));
+			return (float)(radians * (180.0f / RD_PI));
 		}
 
-		inline int sign(float value)
+		RD_API inline int32 sign(float value)
 		{
 			return (value > 0) - (value < 0);
 		}
 
-		inline float sin(float angle)
+		RD_API inline float sin(float angle)
 		{
 			return ::sin(angle);
 		}
 
-		inline float cos(float angle)
+		RD_API inline float cos(float angle)
 		{
 			return ::cos(angle);
 		}
 
-		inline float tan(float angle)
+		RD_API inline float tan(float angle)
 		{
 			return ::tan(angle);
 		}
 
-		inline float sqrt(float value)
+		RD_API inline float sqrt(float value)
 		{
 			return ::sqrt(value);
 		}
 
-		inline float rsqrt(float value)
+		RD_API inline float rsqrt(float value)
 		{
 			return 1.0f / ::sqrt(value);
 		}
 
-		inline float asin(float value)
+		RD_API inline float asin(float value)
 		{
 			return ::asin(value);
 		}
 
-		inline float acos(float value)
+		RD_API inline float acos(float value)
 		{
 			return ::acos(value);
 		}
 
-		inline float atan(float value)
+		RD_API inline float atan(float value)
 		{
 			return ::atan(value);
 		}
 
-		inline float atan2(float y, float x)
+		RD_API inline float atan2(float y, float x)
 		{
 			return ::atan2(y, x);
 		}
 
-		RD_API inline float min(float value, float minimum)
+		RD_API inline float _min(float value, float minimum)
 		{
 			return (value < minimum) ? minimum : value;
 		}
 
-		RD_API inline float max(float value, float maximum)
+		RD_API inline float _max(float value, float maximum)
 		{
 			return (value > maximum) ? maximum : value;
 		}
@@ -82,5 +83,6 @@ namespace radi {
 		{
 			return (value > minimum) ? (value < maximum) ? value : maximum : minimum;
 		}
+
 	}
 }

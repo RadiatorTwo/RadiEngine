@@ -1,13 +1,13 @@
 #pragma once
 
 //
-// Radi Engine header file
+// Sparky Engine header file
 //
 
-#include <radi/app/application.h>
-#include <radi/app/window.h>
+#include <radi/app/Application.h>
+#include <radi/app/Window.h>
 
-#include <radi/audio/sound.h>
+#include <radi/audio/Sound.h>
 #include <radi/audio/sound_manager.h>
 
 #include <radi/rddebug/debug_layer.h>
@@ -15,71 +15,80 @@
 #include <radi/rddebug/debug_menu_action.h>
 #include <radi/rddebug/debug_menu_item.h>
 
-#include <radi/entity/entity.h>
-#include <radi/entity/component/component.h>
+#include <radi/entity/Entity.h>
+#include <radi/entity/component/Component.h>
 #include <radi/entity/component/mesh_component.h>
 #include <radi/entity/component/transform_component.h>
 
-#include <radi/events/event.h>
+#include <radi/events/Event.h>
 #include <radi/events/key_event.h>
 #include <radi/events/mouse_event.h>
 
-#include <radi/graphics/renderer2d.h>
-#include <radi/graphics/batchrenderer2d.h>
-#include <radi/graphics/renderer3d.h>
+#include <radi/graphics/Renderer.h>
+#include <radi/graphics/Renderer2D.h>
+#include <radi/graphics/Batchrenderer2D.h>
+#include <radi/graphics/Renderer3D.h>
 #include <radi/graphics/forward_renderer.h>
+#include <radi/graphics/deferred_renderer.h>
 
-#include <radi/graphics/font.h>
+#include <radi/graphics/Font.h>
 #include <radi/graphics/font_manager.h>
-#include <radi/graphics/framebuffer.h>
-#include <radi/graphics/irenderable.h>
-#include <radi/graphics/label.h>
-#include <radi/graphics/mask.h>
-#include <radi/graphics/material.h>
-#include <radi/graphics/mesh.h>
+#include <radi/graphics/GBuffer.h>
+#include <radi/graphics/IRenderable.h>
+#include <radi/graphics/Label.h>
+#include <radi/graphics/Mask.h>
+#include <radi/graphics/Material.h>
+#include <radi/graphics/PBRMaterial.h>
+#include <radi/graphics/Mesh.h>
 #include <radi/graphics/mesh_factory.h>
-#include <radi/graphics/model.h>
-#include <radi/graphics/renderable2d.h>
+#include <radi/graphics/Model.h>
+#include <radi/graphics/Renderable2D.h>
 #include <radi/graphics/render_command.h>
-#include <radi/graphics/scene.h>
-#include <radi/graphics/sprite.h>
-#include <radi/graphics/texture.h>
+#include <radi/graphics/Scene.h>
+#include <radi/graphics/Sprite.h>
 #include <radi/graphics/texture_manager.h>
 
-#include <radi/graphics/buffers/buffer.h>
-#include <radi/graphics/buffers/buffer_layout.h>
-#include <radi/graphics/buffers/indexbuffer.h>
-#include <radi/graphics/buffers/vertexarray.h>
-
-#include <radi/graphics/camera/camera.h>
+#include <radi/graphics/camera/Camera.h>
 #include <radi/graphics/camera/maya_camera.h>
+#include <radi/graphics/camera/fps_camera.h>
 
-#include <radi/graphics/layers/group.h>
-#include <radi/graphics/layers/layer.h>
-#include <radi/graphics/layers/layer2d.h>
-#include <radi/graphics/layers/layer3d.h>
+#include <radi/graphics/layers/Group.h>
+#include <radi/graphics/layers/Layer.h>
+#include <radi/graphics/layers/Layer2D.h>
+#include <radi/graphics/layers/Layer3D.h>
 
 #include <radi/graphics/postfx/post_effects.h>
 #include <radi/graphics/postfx/post_effect_pass.h>
 
-#include <radi/graphics/shaders/shader.h>
+#include <radi/graphics/shaders/Shader.h>
 #include <radi/graphics/shaders/shader_factory.h>
+#include <radi/graphics/shaders/shader_manager.h>
 #include <radi/graphics/shaders/shader_uniform.h>
 
-#include <radi/maths/aabb.h>
+#include <radi/graphics/API/Texture.h>
+#include <radi/graphics/API/Texture2D.h>
+#include <radi/graphics/API/TextureCube.h>
+#include <radi/graphics/API/TextureDepth.h>
+#include <radi/graphics/API/Framebuffer.h>
+#include <radi/graphics/API/Framebuffer2D.h>
+#include <radi/graphics/API/FramebufferDepth.h>
+
+#include <radi/maths/AABB.h>
 #include <radi/maths/mat4.h>
 #include <radi/maths/maths_func.h>
-#include <radi/maths/quaternion.h>
+#include <radi/maths/Quaternion.h>
 #include <radi/maths/tvec2.h>
 #include <radi/maths/vec2.h>
 #include <radi/maths/vec3.h>
 #include <radi/maths/vec4.h>
 
-#include <radi/utils/fileutils.h>
+#include <radi/utils/FileUtils.h>
 #include <radi/utils/image_load.h>
-#include <radi/utils/log.h>
-#include <radi/utils/stringutils.h>
-#include <radi/utils/timer.h>
+#include <radi/utils/Log.h>
+#include <radi/utils/Timer.h>
+
+#include <radi/system/Memory.h>
+#include <radi/system/memory_manager.h>
 
 #include <radi/radi_string.h>
 #include <radi/radi_types.h>

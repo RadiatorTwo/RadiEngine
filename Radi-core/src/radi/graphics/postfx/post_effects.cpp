@@ -1,8 +1,6 @@
 #include "radi/rd.h"
 #include "post_effects.h"
 
-#include <radi/graphics/radi_render_api.h>
-
 namespace radi {
 	namespace graphics {
 
@@ -26,11 +24,11 @@ namespace radi {
 			m_Passes.pop_back();
 		}
 
-		void PostEffects::RenderPostEffects(Framebuffer* source, Framebuffer* target, VertexArray* quad, IndexBuffer* indices)
+		void PostEffects::RenderPostEffects(Framebuffer* source, Framebuffer* target, API::VertexArray* quad, API::IndexBuffer* indices)
 		{
 			target->Bind();
-			API::SetActiveTexture(GL_TEXTURE0);
-			source->GetTexture()->bind();
+			// API::SetActiveTexture(GL_TEXTURE0);
+			// source->GetTexture()->Bind(nullptr);
 
 			quad->Bind();
 			indices->Bind();

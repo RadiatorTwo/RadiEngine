@@ -1,5 +1,5 @@
 #include "radi/rd.h"
-#include "rectangle.h"
+#include "Rectangle.h"
 
 namespace radi {
 	namespace maths {

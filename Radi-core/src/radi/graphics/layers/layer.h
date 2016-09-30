@@ -1,23 +1,19 @@
 #pragma once
 
-#include "radi/common.h"
+#include "radi/Common.h"
 #include "radi/radi_types.h"
 
 #include "../../events/Event.h"
 #include "../../events/IEventListener.h"
 #include "radi/app/Window.h"
 
-namespace radi
-{
-	namespace graphics
-	{
-		using namespace graphics;
-		using namespace maths;
+namespace radi {
+	namespace graphics {
 
 		class RD_API Layer : public events::IEventListener
 		{
 		protected:
-			Window* m_window;
+			Window* m_Window;
 			bool m_Visible;
 		public:
 			Layer();
@@ -31,6 +27,8 @@ namespace radi
 			virtual void OnTick();
 			virtual void OnUpdate();
 			virtual void OnRender();
+		protected:
+			virtual bool OnResize(uint width, uint height);
 		};
 
 	}

@@ -7,6 +7,6 @@ namespace radi
 	namespace internal
 	{
 		extern byte* DEFAULT_FONT;
-		extern unsigned int DEFAULT_FONT_SIZE;
+		extern uint DEFAULT_FONT_SIZE;
 	}
 }

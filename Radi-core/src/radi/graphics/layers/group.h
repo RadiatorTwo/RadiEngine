@@ -1,24 +1,24 @@
 #pragma once
 
-#include "../renderable2d.h"
-#include "radi/common.h"
+#include "../Renderable2D.h"
+#include "radi/Common.h"
 
-namespace radi
-{
-	namespace graphics
-	{
+namespace radi {
+	namespace graphics {
+
 		class RD_API Group : public Renderable2D
 		{
 		private:
-			std::vector<Renderable2D*> m_renderables;
-			maths::mat4 m_transformationMatrix;
+			std::vector<Renderable2D*> m_Renderables;
+			maths::mat4 m_TransformationMatrix;
 		public:
 			Group(const maths::mat4& transform);
 			~Group();
-			void add(Renderable2D* renderable);
-			void submit(Renderer2D* renderer) const override;
+			void Add(Renderable2D* renderable);
+			void Submit(Renderer2D* renderer) const override;
 
-			maths::mat4& getTransformRef() { return m_transformationMatrix; }
+			maths::mat4& GetTransformRef() { return m_TransformationMatrix; }
 		};
+
 	}
 }

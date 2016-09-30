@@ -180,15 +180,6 @@
     <ClCompile Include="src\radi\audio\sound_manager.cpp">
       <Filter>Quelldateien\audio</Filter>
     </ClCompile>
-    <ClCompile Include="src\radi\graphics\buffers\buffer_layout.cpp">
-      <Filter>Quelldateien\graphics\buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\graphics\buffers\indexbuffer.cpp">
-      <Filter>Quelldateien\graphics\buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\graphics\buffers\vertexarray.cpp">
-      <Filter>Quelldateien\graphics\buffers</Filter>
-    </ClCompile>
     <ClCompile Include="src\radi\graphics\camera\camera.cpp">
       <Filter>Quelldateien\camera</Filter>
     </ClCompile>
@@ -234,9 +225,6 @@
     <ClCompile Include="src\radi\graphics\forward_renderer.cpp">
       <Filter>Quelldateien\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\radi\graphics\framebuffer.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\radi\graphics\label.cpp">
       <Filter>Quelldateien\graphics\renderables</Filter>
     </ClCompile>
@@ -257,9 +245,6 @@
     </ClCompile>
     <ClCompile Include="src\radi\graphics\sprite.cpp">
       <Filter>Quelldateien\graphics\renderables</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\graphics\texture.cpp">
-      <Filter>Quelldateien\graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\radi\graphics\texture_manager.cpp">
       <Filter>Quelldateien\graphics</Filter>
@@ -302,15 +287,6 @@
     </ClCompile>
     <ClCompile Include="src\radi\app\input.cpp">
       <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\radi_opengl_buffer.cpp">
-      <Filter>Quelldateien\platform\opengl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\radi_opengl_error.cpp">
-      <Filter>Quelldateien\platform\opengl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\radi_opengl_render_api.cpp">
-      <Filter>Quelldateien\platform\opengl</Filter>
     </ClCompile>
     <ClCompile Include="src\radi\platform\posix\posix_timer.cpp">
       <Filter>Quelldateien\platform\posix</Filter>
@@ -363,6 +339,168 @@
     <ClCompile Include="src\radi\graphics\light.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\radi\graphics\API\framebuffer.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\API\Framebuffer2D.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\API\FramebufferDepth.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\API\Context.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\system\Allocator.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\system\Memory.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\system\memory_manager.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\system\System.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXContext.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXFramebuffer2D.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXFramebufferDepth.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXIndexBuffer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXRenderer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXShader.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXShaderResource.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXShaderUniform.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXTexture2D.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXTextureCube.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXTextureDepth.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXVertexArray.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXVertexBuffer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\API\buffer_layout.cpp">
+      <Filter>Quelldateien\graphics\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\API\indexbuffer.cpp">
+      <Filter>Quelldateien\graphics\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\API\vertexarray.cpp">
+      <Filter>Quelldateien\graphics\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\API\texture.cpp">
+      <Filter>Quelldateien\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\API\Texture2D.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\API\TextureCube.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\API\TextureDepth.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\API\VertexBuffer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLContext.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLError.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLFramebuffer2D.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLFramebufferDepth.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLIndexBuffer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLRenderer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLShader.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLShaderResource.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLShaderUniform.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLTexture2D.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLTextureCube.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLTextureDepth.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLVertexArray.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLVertexBuffer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\windows\win32memoryManager.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\renderer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\rddebug\debug_renderer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\shaders\shader_manager.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\events\window_event.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\camera\fps_camera.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\deferred_renderer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\gbuffer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\OBJModel.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\graphics\PBRMaterial.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\utils\fileutils.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\radi.h">
@@ -378,9 +516,6 @@
       <Filter>Headerdateien\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\radi\utils\log.h">
-      <Filter>Headerdateien\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\radi\utils\stringutils.h">
       <Filter>Headerdateien\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\radi\utils\timer.h">
@@ -418,18 +553,6 @@
     </ClInclude>
     <ClInclude Include="src\radi\audio\sound_manager.h">
       <Filter>Headerdateien\audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\radi\graphics\buffers\buffer.h">
-      <Filter>Headerdateien\graphics\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\radi\graphics\buffers\buffer_layout.h">
-      <Filter>Headerdateien\graphics\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\radi\graphics\buffers\indexbuffer.h">
-      <Filter>Headerdateien\graphics\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\radi\graphics\buffers\vertexarray.h">
-      <Filter>Headerdateien\graphics\buffers</Filter>
     </ClInclude>
     <ClInclude Include="src\radi\graphics\camera\camera.h">
       <Filter>Headerdateien\graphics\camera</Filter>
@@ -476,9 +599,6 @@
     <ClInclude Include="src\radi\graphics\forward_renderer.h">
       <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\radi\graphics\framebuffer.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\radi\graphics\iRenderable.h">
       <Filter>Headerdateien\graphics\renderables</Filter>
     </ClInclude>
@@ -500,9 +620,6 @@
     <ClInclude Include="src\radi\graphics\model.h">
       <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\radi\graphics\radi_render_api.h">
-      <Filter>Headerdateien\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\radi\graphics\render_command.h">
       <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
@@ -520,9 +637,6 @@
     </ClInclude>
     <ClInclude Include="src\radi\graphics\sprite.h">
       <Filter>Headerdateien\graphics\renderables</Filter>
-    </ClInclude>
-    <ClInclude Include="src\radi\graphics\texture.h">
-      <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\radi\graphics\texture_manager.h">
       <Filter>Headerdateien\graphics</Filter>
@@ -581,12 +695,6 @@
     <ClInclude Include="src\radi\app\input.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\radi\platform\opengl\radi_opengl_buffer.h">
-      <Filter>Headerdateien\platform\opengl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\radi\platform\opengl\radi_opengl_types.h">
-      <Filter>Headerdateien\platform\opengl</Filter>
-    </ClInclude>
     <ClInclude Include="src\radi\rddebug\debug_layer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -623,13 +731,179 @@
     <ClInclude Include="src\radi\graphics\light.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="src\radi\events\window_event.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\API\framebuffer.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\API\FramebufferDepth.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\API\Framebuffer2D.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\API\Context.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\system\Allocator.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\system\Memory.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\system\memory_manager.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\system\System.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXCommon.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXContext.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXFramebuffer2D.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXFramebufferDepth.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXIndexBuffer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXRenderer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXShader.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXShaderResource.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXShaderUniform.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXTexture2D.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXTextureCube.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXTextureDepth.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXTextureHandle.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXTypes.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXVertexArray.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\directx\DXVertexBuffer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\API\buffer_layout.h">
+      <Filter>Headerdateien\graphics\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\API\indexbuffer.h">
+      <Filter>Headerdateien\graphics\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\API\vertexarray.h">
+      <Filter>Headerdateien\graphics\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\API\texture.h">
+      <Filter>Headerdateien\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\API\Texture2D.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\API\TextureCube.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\API\TextureDepth.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\API\VertexBuffer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLCommon.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLContext.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLFramebuffer2D.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLFramebufferDepth.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLIndexBuffer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLRenderer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLShader.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLShaderResource.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLShaderUniform.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLTexture2D.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLTextureCube.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLTextureDepth.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLTypes.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLVertexArray.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\platform\opengl\GLVertexBuffer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\renderer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\shaders\shader_resource.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\rddebug\debug_renderer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\shaders\shader_manager.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\camera\fps_camera.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\deferred_renderer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\gbuffer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\graphics\PBRMaterial.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\radi\embedded\files\SourceSansPro-Light.embed">
       <Filter>Ressourcendateien\embedded</Filter>
     </None>
-    <None Include="src\radi\platform\opengl\radi_opengl_render_api.inl">
-      <Filter>Headerdateien\platform\opengl</Filter>
-    </None>
+    <None Include="src\radi\platform\opengl\shaders\BatchRenderer.shader" />
   </ItemGroup>
 </Project>
