@@ -5,7 +5,7 @@
 #include "radi/radi_types.h"
 
 #include "radi/maths/maths.h"
-#include "radi/utils/FileUtils.h"
+#include "radi/system/vfs.h"
 
 #include "shader_uniform.h"
 #include "shader_resource.h"

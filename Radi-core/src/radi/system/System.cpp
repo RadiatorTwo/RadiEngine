@@ -2,6 +2,7 @@
 #include "System.h"
 
 #include "memory_manager.h"
+#include "vfs.h"
 
 #include "radi/utils/Log.h"
 
@@ -13,6 +14,7 @@ namespace radi { namespace internal {
 	{
 		RADI_INFO("Initializing RadiEngine System...");
 		MemoryManager::Init();
+		VFS::Init();
 
 		s_SystemInfo.memoryInfo = MemoryManager::Get()->GetSystemInfo();
 		LogSystemInfo();
@@ -21,6 +23,8 @@ namespace radi { namespace internal {
 	void System::Shutdown()
 	{
 		RADI_INFO("Shutting down RadiEngine System...");
+		VFS::Shutdown();
+		MemoryManager::Shutdown();
 	}
 
 	SystemInfo System::GetSystemInfo()

@@ -54,7 +54,7 @@ namespace radi {
 				vec2 mouse = Input::GetInputManager()->GetMousePosition();
 				mouse.x -= windowCenter.x;
 				mouse.y -= windowCenter.y;
-				RADI_WARN(mouse);
+				
 				if (m_MouseWasGrabbed)
 				{
 					m_Yaw += mouse.x * m_MouseSensitivity;

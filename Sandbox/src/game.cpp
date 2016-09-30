@@ -9,8 +9,8 @@ using namespace radi;
 using namespace graphics;
 using namespace maths;
 
-#define WIDTH	3440
-#define HEIGHT	1440
+#define WIDTH	1280
+#define HEIGHT	720
 
 class Game : public Application
 {
@@ -27,9 +27,14 @@ public:
 	void Init() override
 	{
 		Application::Init();
-		PushLayer(new Test3D());
+
+		VFS::Get()->Mount("models", "res/models");
+		VFS::Get()->Mount("pbr", "res/pbr");
+		VFS::Get()->Mount("shaders", "shaders");
+
+		//PushLayer(new Test3D());
 		//PushLayer(new Test2D());
-		//PushLayer(new Sponza());
+		PushLayer(new Sponza());
 	}
 };
 

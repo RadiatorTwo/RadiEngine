@@ -5,6 +5,7 @@
 
 #include "radi/system/Memory.h"
 #include "radi/graphics/shaders/shader_manager.h"
+#include "radi/system/VFS.h"
 
 namespace radi {
 	namespace graphics {
@@ -52,8 +53,12 @@ namespace radi {
 
 		void Model::Load(const String& path)
 		{
+			// TODO: Change to VFS::OpenMemoryMap()
+			String physicalPath;
+			VFS::Get()->ResolvePhysicalPath(path, physicalPath);
+
 			RDMFormat format;
-			FILE* f = fopen(path.c_str(), "rb");
+			FILE* f = fopen(physicalPath.c_str(), "rb");
 			RADI_ASSERT(f);
 			{
 				byte header[4];

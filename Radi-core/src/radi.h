@@ -82,13 +82,14 @@
 #include <radi/maths/vec3.h>
 #include <radi/maths/vec4.h>
 
-#include <radi/utils/FileUtils.h>
 #include <radi/utils/image_load.h>
 #include <radi/utils/Log.h>
 #include <radi/utils/Timer.h>
 
+#include <radi/system/FileSystem.h>
 #include <radi/system/Memory.h>
 #include <radi/system/memory_manager.h>
+#include <radi/system/VFS.h>
 
 #include <radi/radi_string.h>
 #include <radi/radi_types.h>

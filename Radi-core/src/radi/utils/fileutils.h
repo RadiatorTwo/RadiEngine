@@ -8,7 +8,7 @@
 namespace radi {
 	namespace utils {
 
-		String ReadFile(const String& filepath);
+		//String ReadFile(const String& filepath);
 
 	}
 }

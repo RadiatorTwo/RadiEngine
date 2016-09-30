@@ -151,6 +151,9 @@
     <Filter Include="Quelldateien\utils">
       <UniqueIdentifier>{2511bf72-6d10-4cd1-89ee-6256928a044c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\platform\directx">
+      <UniqueIdentifier>{67566f2c-20f6-49c3-acbf-685ddd68537d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\radi\app\application.cpp">
@@ -363,45 +366,6 @@
     <ClCompile Include="src\radi\system\System.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\radi\platform\directx\DXContext.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\directx\DXFramebuffer2D.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\directx\DXFramebufferDepth.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\directx\DXIndexBuffer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\directx\DXRenderer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\directx\DXShader.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\directx\DXShaderResource.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\directx\DXShaderUniform.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\directx\DXTexture2D.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\directx\DXTextureCube.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\directx\DXTextureDepth.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\directx\DXVertexArray.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\directx\DXVertexBuffer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="src\radi\graphics\API\buffer_layout.cpp">
       <Filter>Quelldateien\graphics\buffers</Filter>
     </ClCompile>
@@ -424,48 +388,6 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="src\radi\graphics\API\VertexBuffer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLContext.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLError.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLFramebuffer2D.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLFramebufferDepth.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLIndexBuffer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLRenderer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLShader.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLShaderResource.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLShaderUniform.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLTexture2D.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLTextureCube.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLTextureDepth.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLVertexArray.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\radi\platform\opengl\GLVertexBuffer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="src\radi\platform\windows\win32memoryManager.cpp">
@@ -499,6 +421,96 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="src\radi\utils\fileutils.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXContext.cpp">
+      <Filter>Quelldateien\platform\directx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXFramebuffer2D.cpp">
+      <Filter>Quelldateien\platform\directx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXFramebufferDepth.cpp">
+      <Filter>Quelldateien\platform\directx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXIndexBuffer.cpp">
+      <Filter>Quelldateien\platform\directx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXRenderer.cpp">
+      <Filter>Quelldateien\platform\directx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXShader.cpp">
+      <Filter>Quelldateien\platform\directx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXShaderResource.cpp">
+      <Filter>Quelldateien\platform\directx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXShaderUniform.cpp">
+      <Filter>Quelldateien\platform\directx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXTexture2D.cpp">
+      <Filter>Quelldateien\platform\directx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXTextureCube.cpp">
+      <Filter>Quelldateien\platform\directx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXTextureDepth.cpp">
+      <Filter>Quelldateien\platform\directx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXVertexArray.cpp">
+      <Filter>Quelldateien\platform\directx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\directx\DXVertexBuffer.cpp">
+      <Filter>Quelldateien\platform\directx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLContext.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLError.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLFramebuffer2D.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLFramebufferDepth.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLIndexBuffer.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLRenderer.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLShader.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLShaderResource.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLShaderUniform.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLTexture2D.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLTextureCube.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLTextureDepth.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLVertexArray.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\opengl\GLVertexBuffer.cpp">
+      <Filter>Quelldateien\platform\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\system\vfs.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\system\filesystem.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\platform\windows\win32filesystem.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -897,6 +909,12 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="src\radi\graphics\PBRMaterial.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\system\vfs.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\system\filesystem.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

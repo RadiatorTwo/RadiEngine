@@ -68,6 +68,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="src\radi\platform\windows\win32filesystem.cpp" />
     <ClCompile Include="src\radi\platform\windows\win32input.cpp" />
     <ClCompile Include="src\radi\platform\windows\win32memoryManager.cpp" />
     <ClCompile Include="src\radi\platform\windows\win32timer.cpp">
@@ -388,9 +389,11 @@
     <ClCompile Include="src\radi\rddebug\debug_menu_slider.cpp" />
     <ClCompile Include="src\radi\rddebug\debug_renderer.cpp" />
     <ClCompile Include="src\radi\system\Allocator.cpp" />
+    <ClCompile Include="src\radi\system\filesystem.cpp" />
     <ClCompile Include="src\radi\system\Memory.cpp" />
     <ClCompile Include="src\radi\system\memory_manager.cpp" />
     <ClCompile Include="src\radi\system\System.cpp" />
+    <ClCompile Include="src\radi\system\vfs.cpp" />
     <ClCompile Include="src\radi\utils\fileutils.cpp" />
     <ClCompile Include="src\radi\utils\image_load.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
@@ -525,9 +528,11 @@
     <ClInclude Include="src\radi\rddebug\debug_menu_slider.h" />
     <ClInclude Include="src\radi\rddebug\debug_renderer.h" />
     <ClInclude Include="src\radi\system\Allocator.h" />
+    <ClInclude Include="src\radi\system\filesystem.h" />
     <ClInclude Include="src\radi\system\Memory.h" />
     <ClInclude Include="src\radi\system\memory_manager.h" />
     <ClInclude Include="src\radi\system\System.h" />
+    <ClInclude Include="src\radi\system\vfs.h" />
     <ClInclude Include="src\radi\utils\fileutils.h" />
     <ClInclude Include="src\radi\utils\image_load.h" />
     <ClInclude Include="src\radi\utils\log.h" />
