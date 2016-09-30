@@ -25,7 +25,7 @@ namespace radi { namespace graphics {
 		GLCall(glGenRenderbuffers(1, &m_DepthbufferHandle));
 
 		TextureParameters params(TextureFormat::RGBA, TextureFilter::LINEAR, TextureWrap::CLAMP);
-		m_Texture = spnew GLTexture2D(m_Width, m_Height, params);
+		m_Texture = rdnew GLTexture2D(m_Width, m_Height, params);
 
 		GLCall(glBindRenderbuffer(GL_RENDERBUFFER, m_DepthbufferHandle));
 		GLCall(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, m_Width, m_Height));

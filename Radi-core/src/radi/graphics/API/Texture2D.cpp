@@ -14,8 +14,8 @@ namespace radi { namespace graphics { namespace API {
 	{
 		switch (Context::GetRenderAPI())
 		{
-			case RenderAPI::OPENGL:		return spnew GLTexture2D(width, height, parameters, loadOptions);
-			case RenderAPI::DIRECT3D:	return spnew D3DTexture2D(width, height, parameters, loadOptions);
+			case RenderAPI::OPENGL:		return rdnew GLTexture2D(width, height, parameters, loadOptions);
+			case RenderAPI::DIRECT3D:	return rdnew D3DTexture2D(width, height, parameters, loadOptions);
 		}
 		return nullptr;
 	}
@@ -24,8 +24,8 @@ namespace radi { namespace graphics { namespace API {
 	{
 		switch (Context::GetRenderAPI())
 		{
-			case RenderAPI::OPENGL:		return spnew GLTexture2D(filepath, filepath, parameters, loadOptions);
-			case RenderAPI::DIRECT3D:	return spnew D3DTexture2D(filepath, filepath, parameters, loadOptions);
+			case RenderAPI::OPENGL:		return rdnew GLTexture2D(filepath, filepath, parameters, loadOptions);
+			case RenderAPI::DIRECT3D:	return rdnew D3DTexture2D(filepath, filepath, parameters, loadOptions);
 		}
 		return nullptr;
 	}
@@ -34,8 +34,8 @@ namespace radi { namespace graphics { namespace API {
 	{
 		switch (Context::GetRenderAPI())
 		{
-		case RenderAPI::OPENGL:		return spnew GLTexture2D(filepath, filepath, TextureParameters(), loadOptions);
-		case RenderAPI::DIRECT3D:	return spnew D3DTexture2D(filepath, filepath, TextureParameters(), loadOptions);
+		case RenderAPI::OPENGL:		return rdnew GLTexture2D(filepath, filepath, TextureParameters(), loadOptions);
+		case RenderAPI::DIRECT3D:	return rdnew D3DTexture2D(filepath, filepath, TextureParameters(), loadOptions);
 		}
 		return nullptr;
 	}
@@ -44,8 +44,8 @@ namespace radi { namespace graphics { namespace API {
 	{
 		switch (Context::GetRenderAPI())
 		{
-			case RenderAPI::OPENGL:		return spnew GLTexture2D(name, filepath, parameters, loadOptions);
-			case RenderAPI::DIRECT3D:	return spnew D3DTexture2D(name, filepath, parameters, loadOptions);
+			case RenderAPI::OPENGL:		return rdnew GLTexture2D(name, filepath, parameters, loadOptions);
+			case RenderAPI::DIRECT3D:	return rdnew D3DTexture2D(name, filepath, parameters, loadOptions);
 		}
 		return nullptr;
 	}
@@ -54,8 +54,8 @@ namespace radi { namespace graphics { namespace API {
 	{
 		switch (Context::GetRenderAPI())
 		{
-		case RenderAPI::OPENGL:		return spnew GLTexture2D(name, filepath, TextureParameters(), loadOptions);
-		case RenderAPI::DIRECT3D:	return spnew D3DTexture2D(name, filepath, TextureParameters(), loadOptions);
+		case RenderAPI::OPENGL:		return rdnew GLTexture2D(name, filepath, TextureParameters(), loadOptions);
+		case RenderAPI::DIRECT3D:	return rdnew D3DTexture2D(name, filepath, TextureParameters(), loadOptions);
 		}
 		return nullptr;
 	}

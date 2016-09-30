@@ -14,8 +14,8 @@ namespace radi { namespace graphics {
 	{
 		switch (API::Context::GetRenderAPI())
 		{
-			case API::RenderAPI::OPENGL:	return spnew GLFramebuffer2D(width, height);
-			case API::RenderAPI::DIRECT3D:	return spnew D3DFramebuffer2D(width, height);
+			case API::RenderAPI::OPENGL:	return rdnew GLFramebuffer2D(width, height);
+			case API::RenderAPI::DIRECT3D:	return rdnew D3DFramebuffer2D(width, height);
 		}
 		return nullptr;
 	}

@@ -44,7 +44,7 @@ namespace radi {
 			// Vertex shader system uniforms
 			//
 			m_VSSystemUniformBufferSize = sizeof(mat4) + sizeof(mat4) + sizeof(vec3) + sizeof(mat4);
-			m_VSSystemUniformBuffer = spnew byte[m_VSSystemUniformBufferSize];
+			m_VSSystemUniformBuffer = rdnew byte[m_VSSystemUniformBufferSize];
 			memset(m_VSSystemUniformBuffer, 0, m_VSSystemUniformBufferSize);
 			m_VSSystemUniformBufferOffsets.resize(VSSystemUniformIndex_Size);
 
@@ -61,7 +61,7 @@ namespace radi {
 			// Pixel/fragment shader system uniforms
 			//
 			m_PSSystemUniformBufferSize = sizeof(Light);
-			m_PSSystemUniformBuffer = spnew byte[m_PSSystemUniformBufferSize];
+			m_PSSystemUniformBuffer = rdnew byte[m_PSSystemUniformBufferSize];
 			memset(m_PSSystemUniformBuffer, 0, m_PSSystemUniformBufferSize);
 			m_PSSystemUniformBufferOffsets.resize(PSSystemUniformIndex_Size);
 

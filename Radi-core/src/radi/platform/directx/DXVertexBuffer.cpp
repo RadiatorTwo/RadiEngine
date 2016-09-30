@@ -41,7 +41,7 @@ namespace radi { namespace graphics { namespace API {
 	{
 		m_Layout = bufferLayout;
 		const std::vector<BufferElement>& layout = bufferLayout.GetLayout();
-		D3D11_INPUT_ELEMENT_DESC* desc = spnew D3D11_INPUT_ELEMENT_DESC[layout.size()];
+		D3D11_INPUT_ELEMENT_DESC* desc = rdnew D3D11_INPUT_ELEMENT_DESC[layout.size()];
 		for (uint i = 0; i < layout.size(); i++)
 		{
 			const BufferElement& element = layout[i];
@@ -50,7 +50,7 @@ namespace radi { namespace graphics { namespace API {
 		const D3DShader* shader = D3DShader::CurrentlyBound();
 		RADI_ASSERT(shader);
 		DXCall(D3DContext::GetDevice()->CreateInputLayout(desc, layout.size(), shader->GetData().vs->GetBufferPointer(), shader->GetData().vs->GetBufferSize(), &m_InputLayout));
-		spdel desc;
+		rddel desc;
 	}
 
 	void D3DVertexBuffer::SetData(uint size, const void* data)

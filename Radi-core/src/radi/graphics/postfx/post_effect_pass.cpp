@@ -14,7 +14,7 @@ namespace radi {
 
 		PostEffectsPass::PostEffectsPass(API::Shader* shader)
 		{
-			m_Material = spnew Material(shader);
+			m_Material = rdnew Material(shader);
 			// m_Material->SetTexture("tex", 0);
 		}
 

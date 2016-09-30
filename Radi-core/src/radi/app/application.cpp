@@ -21,7 +21,7 @@ namespace radi {
 		debug::DebugMenu::Init();
 		//debug::DebugRenderer::Init();
 
-		m_DebugLayer = spnew debug::DebugLayer();
+		m_DebugLayer = rdnew debug::DebugLayer();
 		m_DebugLayer->Init();
 	}
 

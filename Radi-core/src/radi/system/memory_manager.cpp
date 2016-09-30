@@ -18,7 +18,7 @@ namespace radi { namespace internal {
 
 	void MemoryManager::Shutdown()
 	{
-		spdel s_Instance;
+		rddel s_Instance;
 	}
 
 	MemoryManager* MemoryManager::Get()

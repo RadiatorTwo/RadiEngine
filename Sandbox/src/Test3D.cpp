@@ -12,10 +12,10 @@ using namespace component;
 using namespace API;
 
 Test3D::Test3D()
-	: Layer3D(spnew Scene())
+	: Layer3D(rdnew Scene())
 {
 	m_MayaCamera = m_Scene->GetCamera();
-	m_FPSCamera = spnew FPSCamera(maths::mat4::Perspective(65.0f, 16.0f / 9.0f, 0.1f, 1000.0f));
+	m_FPSCamera = rdnew FPSCamera(maths::mat4::Perspective(65.0f, 16.0f / 9.0f, 0.1f, 1000.0f));
 
 	m_Rotation = 0.0f;
 	m_SetUniforms[0] = true;
@@ -90,19 +90,19 @@ void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 
 	TextureCube* environment = TextureCube::CreateFromVCross(environmentFiles, 11);
 	Shader* skybox = Shader::CreateFromFile("Skybox", String("shaders/Skybox") + (API::Context::GetRenderAPI() == RenderAPI::OPENGL ? ".shader" : ".hlsl"));
-	Material* skyboxMaterial = spnew Material(skybox);
+	Material* skyboxMaterial = rdnew Material(skybox);
 	skyboxMaterial->SetRenderFlag(Material::RenderFlags::DISABLE_DEPTH_TEST);
 	skybox->Bind();
-	m_SkyboxMaterial = spnew MaterialInstance(skyboxMaterial);
+	m_SkyboxMaterial = rdnew MaterialInstance(skyboxMaterial);
 	m_SkyboxMaterial->SetTexture("u_EnvironmentMap", environment);
-	Entity* skyboxEntity = spnew Entity(MeshFactory::CreateQuad(-1, -1, 2, 2, m_SkyboxMaterial));
+	Entity* skyboxEntity = rdnew Entity(MeshFactory::CreateQuad(-1, -1, 2, 2, m_SkyboxMaterial));
 	m_Scene->Add(skyboxEntity);
 
 	Shader* pbrShader = Shader::CreateFromFile("AdvancedLighting", String("shaders/AdvancedLighting") + (API::Context::GetRenderAPI() == RenderAPI::OPENGL ? ".shader" : ".hlsl"));
 	ShaderManager::Add(pbrShader);
-	PBRMaterial* material = spnew PBRMaterial(pbrShader);
+	PBRMaterial* material = rdnew PBRMaterial(pbrShader);
 
-	PBRMaterial* castIron = spnew PBRMaterial(pbrShader);
+	PBRMaterial* castIron = rdnew PBRMaterial(pbrShader);
 	castIron->SetEnviromentMap(environment);
 	{
 		String path = materialInputs[CAST_IRON] + "/" + materialInputs[CAST_IRON];
@@ -113,7 +113,7 @@ void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 	}
 	m_Materials.push_back(castIron);
 
-	PBRMaterial* wornWood = spnew PBRMaterial(pbrShader);
+	PBRMaterial* wornWood = rdnew PBRMaterial(pbrShader);
 	wornWood->SetEnviromentMap(environment);
 	{
 		String path = materialInputs[WORN_WOOD] + "/" + materialInputs[WORN_WOOD];
@@ -124,7 +124,7 @@ void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 	}
 	m_Materials.push_back(wornWood);
 
-	PBRMaterial* gunMetal = spnew PBRMaterial(pbrShader);
+	PBRMaterial* gunMetal = rdnew PBRMaterial(pbrShader);
 	gunMetal->SetEnviromentMap(environment);
 	{
 		String path = materialInputs[GUN_METAL] + "/" + materialInputs[GUN_METAL];
@@ -136,7 +136,7 @@ void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 	m_Materials.push_back(gunMetal);
 
 
-	PBRMaterial* absRed = spnew PBRMaterial(pbrShader);
+	PBRMaterial* absRed = rdnew PBRMaterial(pbrShader);
 	absRed->SetEnviromentMap(environment);
 	{
 		String path = materialInputs[ABS_RED] + "/" + materialInputs[ABS_RED];
@@ -147,7 +147,7 @@ void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 	}
 	m_Materials.push_back(absRed);
 
-	PBRMaterial* custom = spnew PBRMaterial(pbrShader);
+	PBRMaterial* custom = rdnew PBRMaterial(pbrShader);
 	custom->SetEnviromentMap(environment);
 	{
 		String path = materialInputs[CUSTOM] + "/" + materialInputs[CUSTOM];
@@ -159,7 +159,7 @@ void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 	m_Materials.push_back(custom);
 
 	// Texture::SetLoadParameters(0);
-	m_DaggerMaterial = spnew PBRMaterial(pbrShader);
+	m_DaggerMaterial = rdnew PBRMaterial(pbrShader);
 	m_DaggerMaterial->SetEnviromentMap(environment);
 	{
 		TextureLoadOptions options(false, true);
@@ -168,18 +168,18 @@ void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 		m_DaggerMaterial->SetGlossMap(Texture2D::CreateFromFile("res/Dagger/Textures/Dagger_Gloss.tga", options));
 		m_DaggerMaterial->SetNormalMap(Texture2D::CreateFromFile("res/Dagger/Textures/Dagger_Normals.tga", options));
 	}
-
-	Model* daggerModel = spnew Model("res/models/Dagger.spm", spnew MaterialInstance(m_DaggerMaterial));
-	m_Dagger = spnew Entity(daggerModel->GetMesh(), mat4::Translate(g_DaggerTransform));
+	
+	Model* daggerModel = rdnew Model("res/models/Dagger.spm", rdnew MaterialInstance(m_DaggerMaterial));
+	m_Dagger = rdnew Entity(daggerModel->GetMesh(), mat4::Translate(g_DaggerTransform));
 	m_Scene->Add(m_Dagger);
 
-	PBRMaterial* cubeMaterial = spnew PBRMaterial(pbrShader);
+	PBRMaterial* cubeMaterial = rdnew PBRMaterial(pbrShader);
 	cubeMaterial->SetEnviromentMap(environment);
-	Model* cubeModel = spnew Model("res/models/RoundedCube.spm", spnew MaterialInstance(cubeMaterial));
-	m_Cube = spnew Entity(cubeModel->GetMesh(), mat4::Rotate(90.0f, vec3(0, 0, 1)) * mat4::Translate(g_CubeTransform));
+	Model* cubeModel = rdnew Model("res/models/RoundedCube.spm", rdnew MaterialInstance(cubeMaterial));
+	m_Cube = rdnew Entity(cubeModel->GetMesh(), mat4::Rotate(90.0f, vec3(0, 0, 1)) * mat4::Translate(g_CubeTransform));
 	m_Scene->Add(m_Cube);
 
-	Model* sphereModel = spnew Model("res/models/Sphere.spm");
+	Model* sphereModel = rdnew Model("res/models/Sphere.spm");
 
 	// Plastics
 	for (uint x = 0; x < 10; x++)
@@ -191,16 +191,16 @@ void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 		vec3 spec(0.04f);
 		vec4 diffuse(vec3(1.0f, 0.0f, 0.0f), 1.0f);
 
-		PBRMaterialInstance* m = spnew PBRMaterialInstance(m_Materials[CAST_IRON]);
+		PBRMaterialInstance* m = rdnew PBRMaterialInstance(m_Materials[CAST_IRON]);
 		m->SetAlbedo(diffuse);
 		m->SetSpecular(spec);
 		m->SetGloss(1.0f - roughness);
 		m->UsingNormalMap(false);
 
-		Mesh* mesh = spnew Mesh(sphereModel->GetMesh());
+		Mesh* mesh = rdnew Mesh(sphereModel->GetMesh());
 		mesh->SetMaterial(m);
 
-		Entity* sphere = spnew Entity(mesh, mat4::Translate(vec3(-60 + xx, 2.5f, 90 + zz)) * mat4::Scale(vec3(2.0f)));
+		Entity* sphere = rdnew Entity(mesh, mat4::Translate(vec3(-60 + xx, 2.5f, 90 + zz)) * mat4::Scale(vec3(2.0f)));
 		m_Spheres.push_back(sphere);
 		m_Scene->Add(sphere);
 	}
@@ -215,25 +215,25 @@ void Test3D::OnInit(Renderer3D& renderer, Scene& scene)
 		vec3 spec(1.0f);
 		vec4 diffuse(0.0f, 0.0f, 0.0f, 1.0f);
 
-		PBRMaterialInstance* m = spnew PBRMaterialInstance(m_Materials[CAST_IRON]);
+		PBRMaterialInstance* m = rdnew PBRMaterialInstance(m_Materials[CAST_IRON]);
 		m->SetAlbedo(diffuse);
 		m->SetSpecular(spec);
 		m->SetGloss(1.0f - roughness);
 		m->UsingNormalMap(false);
 
-		Mesh* mesh = spnew Mesh(sphereModel->GetMesh());
+		Mesh* mesh = rdnew Mesh(sphereModel->GetMesh());
 		mesh->SetMaterial(m);
 
-		Entity* sphere = spnew Entity(mesh, mat4::Translate(vec3(-60 + xx, 2.5f, 80 + zz)) * mat4::Scale(vec3(2.0)));
+		Entity* sphere = rdnew Entity(mesh, mat4::Translate(vec3(-60 + xx, 2.5f, 80 + zz)) * mat4::Scale(vec3(2.0)));
 		m_Spheres.push_back(sphere);
 		m_Scene->Add(sphere);
 	}
 
-	m_Plane = spnew Entity(MeshFactory::CreatePlane(128, 128, vec3(0, 1, 0), spnew PBRMaterialInstance(m_Materials[CUSTOM])));
+	m_Plane = rdnew Entity(MeshFactory::CreatePlane(128, 128, vec3(0, 1, 0), rdnew PBRMaterialInstance(m_Materials[CUSTOM])));
 	m_Scene->Add(m_Plane);
 
-	LightSetup* lights = spnew LightSetup();
-	m_Light = spnew Light(vec3(0.8f));
+	LightSetup* lights = rdnew LightSetup();
+	m_Light = rdnew Light(vec3(0.8f));
 	lights->Add(m_Light);
 	m_Scene->PushLightSetup(lights);
 

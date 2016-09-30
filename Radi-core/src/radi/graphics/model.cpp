@@ -20,7 +20,7 @@ namespace radi {
 			TANGENT = BIT(4),
 		};
 
-		struct SPMFormat
+		struct RDMFormat
 		{
 			char* header = "SPMF";
 			byte nameLength;
@@ -52,7 +52,7 @@ namespace radi {
 
 		void Model::Load(const String& path)
 		{
-			SPMFormat format;
+			RDMFormat format;
 			FILE* f = fopen(path.c_str(), "rb");
 			RADI_ASSERT(f);
 			{
@@ -86,7 +86,7 @@ namespace radi {
 			}
 
 			{
-				format.vertexData = spnew byte[format.vertexBufferSize];
+				format.vertexData = rdnew byte[format.vertexBufferSize];
 				ReadBytes(f, format.vertexData, format.vertexBufferSize);
 			}
 
@@ -97,7 +97,7 @@ namespace radi {
 			}
 
 			{
-				format.indexData = spnew byte[format.indexBufferSize];
+				format.indexData = rdnew byte[format.indexBufferSize];
 				ReadBytes(f, format.indexData, format.indexBufferSize);
 			}
 
@@ -126,7 +126,7 @@ namespace radi {
 			va->PushBuffer(buffer);
 
 			API::IndexBuffer* ib = API::IndexBuffer::Create((uint*)format.indexData, format.indexBufferSize / sizeof(uint));
-			m_Mesh = spnew Mesh(va, ib, nullptr);
+			m_Mesh = rdnew Mesh(va, ib, nullptr);
 
 #ifdef SP_DEBUG
 			m_Mesh->SetDebugData((Vertex*)format.vertexData, format.vertexBufferSize / sizeof(Vertex));

@@ -15,8 +15,8 @@ namespace radi {
 			{
 				switch (Context::GetRenderAPI())
 				{
-				case RenderAPI::OPENGL:		return spnew GLVertexArray();
-				case RenderAPI::DIRECT3D:	return spnew D3DVertexArray();
+				case RenderAPI::OPENGL:		return rdnew GLVertexArray();
+				case RenderAPI::DIRECT3D:	return rdnew D3DVertexArray();
 				}
 				return nullptr;
 			}

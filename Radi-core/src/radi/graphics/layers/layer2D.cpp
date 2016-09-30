@@ -8,20 +8,20 @@ namespace radi {
 	namespace graphics {
 
 		Layer2D::Layer2D(const maths::mat4& projectionMatrix)
-			: m_Renderer(spnew BatchRenderer2D(Window::GetWindowClass(nullptr)->GetWidth(), Window::GetWindowClass(nullptr)->GetHeight())), m_ProjectionMatrix(projectionMatrix)
+			: m_Renderer(rdnew BatchRenderer2D(Window::GetWindowClass(nullptr)->GetWidth(), Window::GetWindowClass(nullptr)->GetHeight())), m_ProjectionMatrix(projectionMatrix)
 		{
-			m_Renderer->SetCamera(spnew Camera(projectionMatrix));
+			m_Renderer->SetCamera(rdnew Camera(projectionMatrix));
 			// m_Material = spnew Material(shader);
 			// m_Material->SetUniform("sys_ProjectionMatrix", m_ProjectionMatrix);
 		}
 
 		Layer2D::~Layer2D()
 		{
-			spdel m_Material;
-			spdel m_Renderer;
+			rddel m_Material;
+			rddel m_Renderer;
 
 			for (uint i = 0; i < m_Renderables.size(); i++)
-				spdel m_Renderables[i];
+				rddel m_Renderables[i];
 		}
 
 		void Layer2D::Init()

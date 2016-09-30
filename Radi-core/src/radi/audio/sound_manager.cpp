@@ -41,7 +41,7 @@ namespace radi {
 		void SoundManager::Clean()
 		{
 			for (uint i = 0; i < m_Sounds.size(); i++)
-				spdel m_Sounds[i];
+				rddel m_Sounds[i];
 
 			gau_manager_destroy(m_Manager);
 			gc_shutdown();

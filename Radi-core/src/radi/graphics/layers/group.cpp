@@ -12,7 +12,7 @@ namespace radi {
 		Group::~Group()
 		{
 			for (uint i = 0; i < m_Renderables.size(); i++)
-				spdel m_Renderables[i];
+				rddel m_Renderables[i];
 		}
 
 		void Group::Add(Renderable2D* renderable)

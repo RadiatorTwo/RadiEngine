@@ -27,8 +27,8 @@ namespace radi {
 			Add("Padding", &m_Settings.padding, 0.0f, 2.0f);
 			Add("Font Size", &m_Settings.fontSize, 8.0f, 48.0f);
 
-			m_Slider = spnew Slider*[4];
-			m_Panel = spnew Panel();
+			m_Slider = rdnew Slider*[4];
+			m_Panel = rdnew Panel();
 		}
 
 		DebugMenu* DebugMenu::Get()
@@ -76,6 +76,20 @@ namespace radi {
 			s_Instance->m_ActionList.push_back(new Vec4Action(name, [value]() { return *value; }, [value](vec4 v) { *value = v; }, vec4(minimum), vec4(maximum)));
 		}
 
+		void DebugMenu::Remove(const String& name)
+		{
+			auto& actions = s_Instance->m_ActionList;
+			for (uint i = 0; i < actions.size(); i++)
+			{
+				if (actions[i]->name == name)
+				{
+					rddel actions[i];
+					actions.erase(actions.begin() + i);
+					break;
+				}
+			}
+		}
+
 		bool DebugMenu::IsVisible()
 		{
 			return s_Instance->m_Visible;
@@ -113,13 +127,13 @@ namespace radi {
 			for (IAction* action : m_ActionList)
 			{
 				float y = 18.0f - yOffset;
-				m_Panel->Add(spnew DebugMenuItem(action, Rectangle(0.0f, y, width, height)));
+				m_Panel->Add(rdnew DebugMenuItem(action, Rectangle(0.0f, y, width, height)));
 				yOffset += height;
 			}
 
 			for (uint i = 0; i < 4; i++)
 			{
-				m_Slider[i] = spnew Slider({ width + i * 1.5f, 0.0f, 1.5f, 18.0f }, true);
+				m_Slider[i] = rdnew Slider({ width + i * 1.5f, 0.0f, 1.5f, 18.0f }, true);
 				m_Panel->Add(m_Slider[i])->SetActive(false);
 			}
 		}

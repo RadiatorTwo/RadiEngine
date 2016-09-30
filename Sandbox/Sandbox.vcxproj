@@ -88,6 +88,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\Sponza.cpp" />
     <ClCompile Include="src\Test3D.cpp" />
     <ClCompile Include="src\TestLayer.cpp" />
   </ItemGroup>
@@ -97,6 +98,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Sponza.h" />
     <ClInclude Include="src\Test3D.h" />
     <ClInclude Include="src\TestLayer.h" />
   </ItemGroup>

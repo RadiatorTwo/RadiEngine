@@ -26,7 +26,7 @@ namespace radi {
 		void ShaderManager::Clean()
 		{
 			for (uint i = 0; i < s_Shaders.size(); i++)
-				spdel s_Shaders[i];
+				rddel s_Shaders[i];
 		}
 
 		void ShaderManager::Reload(const String& name)
@@ -45,6 +45,7 @@ namespace radi {
 					{
 						s_Shaders[i]->~Shader();
 						s_Shaders[i] = API::Shader::CreateFromFile(name, path, s_Shaders[i]);
+						RADI_INFO("Reloaded shader: " + name);
 					}
 					return;
 				}

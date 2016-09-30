@@ -14,8 +14,8 @@ namespace radi { namespace graphics { namespace API {
 	{
 		switch (Context::GetRenderAPI())
 		{
-			case RenderAPI::OPENGL:		return spnew GLTextureCube(filepath, filepath);
-			case RenderAPI::DIRECT3D:	return spnew D3DTextureCube(filepath, filepath);
+			case RenderAPI::OPENGL:		return rdnew GLTextureCube(filepath, filepath);
+			case RenderAPI::DIRECT3D:	return rdnew D3DTextureCube(filepath, filepath);
 		}
 		return nullptr;
 	}
@@ -24,8 +24,8 @@ namespace radi { namespace graphics { namespace API {
 	{
 		switch (Context::GetRenderAPI())
 		{
-			case RenderAPI::OPENGL:		return spnew GLTextureCube(files[0], files);
-			case RenderAPI::DIRECT3D:	return spnew D3DTextureCube(files[0], files);
+			case RenderAPI::OPENGL:		return rdnew GLTextureCube(files[0], files);
+			case RenderAPI::DIRECT3D:	return rdnew D3DTextureCube(files[0], files);
 		}
 		return nullptr;
 	}
@@ -34,8 +34,8 @@ namespace radi { namespace graphics { namespace API {
 	{
 		switch (Context::GetRenderAPI())
 		{
-			case RenderAPI::OPENGL:		return spnew GLTextureCube(files[0], files, mips, InputFormat::VERTICAL_CROSS);
-			case RenderAPI::DIRECT3D:	return spnew D3DTextureCube(files[0], files, mips, InputFormat::VERTICAL_CROSS);
+			case RenderAPI::OPENGL:		return rdnew GLTextureCube(files[0], files, mips, InputFormat::VERTICAL_CROSS);
+			case RenderAPI::DIRECT3D:	return rdnew D3DTextureCube(files[0], files, mips, InputFormat::VERTICAL_CROSS);
 		}
 		return nullptr;
 	}

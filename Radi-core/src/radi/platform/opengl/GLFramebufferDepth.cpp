@@ -24,7 +24,7 @@ namespace radi { namespace graphics {
 		GLCall(glGenFramebuffers(1, &m_FramebufferID));
 		GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_FramebufferID));
 
-		m_Texture = spnew API::GLTextureDepth(m_Width, m_Height);
+		m_Texture = rdnew API::GLTextureDepth(m_Width, m_Height);
 
 		GLCall(glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, ((API::GLTextureDepth*)m_Texture)->GetHandle(), 0));
 		GLCall(glDrawBuffer(GL_NONE));

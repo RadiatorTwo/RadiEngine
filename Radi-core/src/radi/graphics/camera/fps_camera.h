@@ -14,6 +14,7 @@ namespace radi {
 			bool m_MouseWasGrabbed;
 		public:
 			FPSCamera(const maths::mat4& projectionMatrix);
+			~FPSCamera();
 			void Focus() override;
 			void Update() override;
 		private:

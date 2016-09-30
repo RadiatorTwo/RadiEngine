@@ -15,8 +15,8 @@ namespace radi { namespace graphics { namespace API {
 	{
 		switch (GetRenderAPI())
 		{
-			case RenderAPI::OPENGL:		s_Context = spnew GLContext(properties, deviceContext); break;
-			case RenderAPI::DIRECT3D:	s_Context = spnew D3DContext(properties, deviceContext); break;
+			case RenderAPI::OPENGL:		s_Context = rdnew GLContext(properties, deviceContext); break;
+			case RenderAPI::DIRECT3D:	s_Context = rdnew D3DContext(properties, deviceContext); break;
 		}
 	}
 

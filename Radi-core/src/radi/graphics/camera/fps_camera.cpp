@@ -5,6 +5,7 @@
 #include "radi/utils/Log.h"
 
 #include "radi/app/Application.h"
+#include "radi/rddebug/debug_menu.h"
 
 namespace radi {
 	namespace graphics {
@@ -12,12 +13,21 @@ namespace radi {
 		using namespace maths;
 
 		FPSCamera::FPSCamera(const maths::mat4& projectionMatrix)
-			: Camera(projectionMatrix), m_MouseSensitivity(0.002f), m_Speed(0.4f), m_SprintSpeed(m_Speed * 4.0f), m_MouseWasGrabbed(false)
+			: Camera(projectionMatrix), m_MouseSensitivity(0.002f), m_Speed(4.0f), m_SprintSpeed(m_Speed * 16.0f), m_MouseWasGrabbed(false)
 		{
 			m_Position = vec3(0.0f, 25.0f, -25.0f);
 			m_Rotation = vec3(90.0f, 0.0f, 0.0f);
 			m_Yaw = 2.4f;
 			m_Pitch = 0.7f;
+
+			debug::DebugMenu::Add("FPS Camera Speed", &m_Speed);
+			debug::DebugMenu::Add("FPS Camera Sprint Speed", &m_SprintSpeed);
+		}
+		
+		FPSCamera::~FPSCamera()
+		{
+			debug::DebugMenu::Remove("FPS Camera Speed");
+			debug::DebugMenu::Remove("FPS Camera Sprint Speed");
 		}
 
 		void FPSCamera::Focus()

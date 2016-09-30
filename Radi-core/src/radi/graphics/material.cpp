@@ -22,8 +22,8 @@ namespace radi {
 
 		Material::~Material()
 		{
-			spdel[] m_VSUserUniformBuffer;
-			spdel[] m_PSUserUniformBuffer;
+			rddel[] m_VSUserUniformBuffer;
+			rddel[] m_PSUserUniformBuffer;
 		}
 
 		void Material::AllocateStorage()
@@ -41,7 +41,7 @@ namespace radi {
 			if (vsBuffer)
 			{
 				m_VSUserUniformBufferSize = vsBuffer->GetSize();
-				m_VSUserUniformBuffer = spnew byte[m_VSUserUniformBufferSize];
+				m_VSUserUniformBuffer = rdnew byte[m_VSUserUniformBufferSize];
 				memset(m_VSUserUniformBuffer, 0, m_VSUserUniformBufferSize);
 				m_VSUserUniforms = &vsBuffer->GetUniformDeclarations();
 			}
@@ -50,7 +50,7 @@ namespace radi {
 			if (psBuffer)
 			{
 				m_PSUserUniformBufferSize = psBuffer->GetSize();
-				m_PSUserUniformBuffer = spnew byte[m_PSUserUniformBufferSize];
+				m_PSUserUniformBuffer = rdnew byte[m_PSUserUniformBufferSize];
 				memset(m_PSUserUniformBuffer, 0, m_PSUserUniformBufferSize);
 				m_PSUserUniforms = &psBuffer->GetUniformDeclarations();
 			}

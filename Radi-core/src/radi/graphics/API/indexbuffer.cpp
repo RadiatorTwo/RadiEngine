@@ -14,8 +14,8 @@ namespace radi {
 			{
 				switch (Context::GetRenderAPI())
 				{
-				case RenderAPI::OPENGL:		return spnew GLIndexBuffer(data, count);
-				case RenderAPI::DIRECT3D:	return spnew D3DIndexBuffer(data, count);
+				case RenderAPI::OPENGL:		return rdnew GLIndexBuffer(data, count);
+				case RenderAPI::DIRECT3D:	return rdnew D3DIndexBuffer(data, count);
 				}
 				return nullptr;
 			}
@@ -24,8 +24,8 @@ namespace radi {
 			{
 				switch (Context::GetRenderAPI())
 				{
-				case RenderAPI::OPENGL:		return spnew GLIndexBuffer(data, count);
-				case RenderAPI::DIRECT3D:	return spnew D3DIndexBuffer(data, count);
+				case RenderAPI::OPENGL:		return rdnew GLIndexBuffer(data, count);
+				case RenderAPI::DIRECT3D:	return rdnew D3DIndexBuffer(data, count);
 				}
 				return nullptr;
 			}

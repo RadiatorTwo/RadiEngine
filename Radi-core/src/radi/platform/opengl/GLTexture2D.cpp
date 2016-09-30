@@ -72,7 +72,7 @@ namespace radi { namespace graphics { namespace API {
 		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 
 		if (pixels != nullptr)
-			spdel[] pixels;
+			rddel[] pixels;
 
 		return handle;
 	}
@@ -99,7 +99,7 @@ namespace radi { namespace graphics { namespace API {
 		}
 
 		SetData(data);
-		spdel[] data;
+		rddel[] data;
 	}
 
 	void GLTexture2D::Bind(uint slot) const

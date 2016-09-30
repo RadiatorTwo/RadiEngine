@@ -49,7 +49,7 @@ namespace radi { namespace graphics { namespace API {
 	D3DTexture2D* D3DTexture2D::FromFile(const String& filepath)
 	{
 		// TODO: Set name to filename
-		return spnew D3DTexture2D(filepath, filepath);
+		return rdnew D3DTexture2D(filepath, filepath);
 	}
 
 	void D3DTexture2D::Load()
@@ -65,7 +65,7 @@ namespace radi { namespace graphics { namespace API {
 		D3D11_SUBRESOURCE_DATA* initData = nullptr;
 		if (data)
 		{
-			initData = spnew D3D11_SUBRESOURCE_DATA[1]; // TODO: Mips
+			initData = rdnew D3D11_SUBRESOURCE_DATA[1]; // TODO: Mips
 			initData[0].pSysMem = data;
 			initData[0].SysMemPitch = stride * m_Width;
 			initData[0].SysMemSlicePitch = m_Width * m_Height * stride;
@@ -120,7 +120,7 @@ namespace radi { namespace graphics { namespace API {
 		DXCall(D3DContext::GetDevice()->CreateSamplerState(&m_SamplerDesc, &m_SamplerState));
 
 		if (data != nullptr)
-			spdel[] data;
+			rddel[] data;
 	}
 
 	void D3DTexture2D::Bind(uint slot) const

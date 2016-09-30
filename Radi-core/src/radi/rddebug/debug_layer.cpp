@@ -99,7 +99,7 @@ namespace radi {
 				DebugMenu::Get()->OnRender(renderer);
 
 			for (uint i = 0; i < m_TempSprites.size(); i++)
-				spdel m_TempSprites[i];
+				rddel m_TempSprites[i];
 
 			m_TempSprites.clear();
 		}
@@ -111,7 +111,7 @@ namespace radi {
 
 		void DebugLayer::DrawTexture(API::Texture* texture, const maths::vec2& position, const maths::vec2& size)
 		{
-			Sprite* sprite = spnew Sprite(position.x, position.y, size.x, size.y, texture);
+			Sprite* sprite = rdnew Sprite(position.x, position.y, size.x, size.y, texture);
 			s_Instance->m_TempSprites.push_back(sprite);
 			s_Instance->Submit(sprite);
 		}

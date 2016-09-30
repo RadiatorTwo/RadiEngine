@@ -36,7 +36,7 @@ namespace radi {
 
 		PBRMaterial::~PBRMaterial()
 		{
-			spdel m_Shader;
+			rddel m_Shader;
 		}
 
 		void PBRMaterial::SetEnviromentMap(API::TextureCube* texture)

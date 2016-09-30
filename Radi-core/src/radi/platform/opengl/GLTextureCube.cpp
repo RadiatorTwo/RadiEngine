@@ -22,7 +22,7 @@ namespace radi { namespace graphics { namespace API {
 	GLTextureCube::GLTextureCube(const String& name, const String* files)
 	{
 		m_Name = name;
-		m_Files = spnew String[6];
+		m_Files = rdnew String[6];
 		for (uint i = 0; i < 6; i++)
 			m_Files[i] = files[i];
 		m_Handle = LoadFromMultipleFiles();
@@ -31,7 +31,7 @@ namespace radi { namespace graphics { namespace API {
 	GLTextureCube::GLTextureCube(const String& name, const String* files, uint mips, InputFormat format)
 	{
 		m_Name = name;
-		m_Files = spnew String[mips];
+		m_Files = rdnew String[mips];
 		for (uint i = 0; i < mips; i++)
 			m_Files[i] = files[i];
 		if (format == InputFormat::VERTICAL_CROSS)
@@ -108,12 +108,12 @@ namespace radi { namespace graphics { namespace API {
 	uint GLTextureCube::LoadFromVCross(uint mips)
 	{
 		uint srcWidth, srcHeight, bits;
-		byte*** cubeTextureData = spnew byte**[mips];
+		byte*** cubeTextureData = rdnew byte**[mips];
 		for (uint i = 0; i < mips; i++)
-			cubeTextureData[i] = spnew byte*[6];
+			cubeTextureData[i] = rdnew byte*[6];
 
-		uint* faceWidths = spnew uint[mips];
-		uint* faceHeights = spnew uint[mips];
+		uint* faceWidths = rdnew uint[mips];
+		uint* faceHeights = rdnew uint[mips];
 
 		m_Parameters.format = TextureFormat::RGBA;
 		for (uint m = 0; m < mips; m++)
@@ -136,7 +136,7 @@ namespace radi { namespace graphics { namespace API {
 							continue;
 					}
 
-					cubeTextureData[m][face] = spnew byte[faceWidth * faceHeight * stride];
+					cubeTextureData[m][face] = rdnew byte[faceWidth * faceHeight * stride];
 					uint index = 0;
 					for (uint y = 0; y < faceHeight; y++)
 					{
@@ -160,7 +160,7 @@ namespace radi { namespace graphics { namespace API {
 					face++;
 				}
 			}
-			spdel[] data;
+			rddel[] data;
 		}
 
 		uint result;
@@ -192,11 +192,11 @@ namespace radi { namespace graphics { namespace API {
 		{
 			for (uint f = 0; f < 6; f++)
 			{
-				spdel[] cubeTextureData[m][f];
+				rddel[] cubeTextureData[m][f];
 			}
-			spdel[] cubeTextureData[m];
+			rddel[] cubeTextureData[m];
 		}
-		spdel[] cubeTextureData;
+		rddel[] cubeTextureData;
 
 		return result;
 	}

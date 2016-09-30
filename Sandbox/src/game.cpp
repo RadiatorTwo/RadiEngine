@@ -2,14 +2,15 @@
 
 #include "TestLayer.h"
 #include "Test3D.h"
+#include "Sponza.h"
 #include "../../Dependencies/GLEW/include/GL/glew.h"
 
 using namespace radi;
 using namespace graphics;
 using namespace maths;
 
-#define WIDTH	1280
-#define HEIGHT	720
+#define WIDTH	3440
+#define HEIGHT	1440
 
 class Game : public Application
 {
@@ -28,6 +29,7 @@ public:
 		Application::Init();
 		PushLayer(new Test3D());
 		//PushLayer(new Test2D());
+		//PushLayer(new Sponza());
 	}
 };
 

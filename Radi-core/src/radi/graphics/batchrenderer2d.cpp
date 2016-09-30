@@ -43,9 +43,9 @@ namespace radi {
 
 		BatchRenderer2D::~BatchRenderer2D()
 		{
-			spdel m_IndexBuffer;
-			spdel m_VertexArray;
-			spdel m_ScreenQuad;
+			rddel m_IndexBuffer;
+			rddel m_VertexArray;
+			rddel m_ScreenQuad;
 		}
 
 		void BatchRenderer2D::Init()
@@ -60,7 +60,7 @@ namespace radi {
 			for (uint i = 0; i < vssu.size(); i++)
 			{
 				API::ShaderUniformBufferDeclaration* ub = vssu[i];
-				UniformBuffer buffer(spnew byte[ub->GetSize()], ub->GetSize());
+				UniformBuffer buffer(rdnew byte[ub->GetSize()], ub->GetSize());
 				m_SystemUniformBuffers.push_back(buffer);
 				for (API::ShaderUniformDeclaration* decl : ub->GetUniformDeclarations())
 				{
@@ -72,7 +72,7 @@ namespace radi {
 				}
 			}
 
-			SetCamera(spnew Camera(mat4::Orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f)));
+			SetCamera(rdnew Camera(mat4::Orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f)));
 
 			m_Shader->Bind();
 

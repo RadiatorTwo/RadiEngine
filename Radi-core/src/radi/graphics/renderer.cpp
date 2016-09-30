@@ -16,8 +16,8 @@ namespace radi {
 		{
 			switch (API::Context::GetRenderAPI())
 			{
-			case API::RenderAPI::OPENGL:	s_Instance = spnew GLRenderer(); break;
-			case API::RenderAPI::DIRECT3D:	s_Instance = spnew D3DRenderer(); break;
+			case API::RenderAPI::OPENGL:	s_Instance = rdnew GLRenderer(); break;
+			case API::RenderAPI::DIRECT3D:	s_Instance = rdnew D3DRenderer(); break;
 			}
 			s_Instance->InitInternal();
 		}

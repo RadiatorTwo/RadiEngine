@@ -15,7 +15,7 @@ namespace radi {
 		using namespace component;
 
 		Scene::Scene()
-			: m_Camera(spnew MayaCamera(maths::mat4::Perspective(65.0f, 16.0f / 9.0f, 0.1f, 1000.0f)))
+			: m_Camera(rdnew MayaCamera(maths::mat4::Perspective(65.0f, 16.0f / 9.0f, 0.1f, 1000.0f)))
 		{
 		}
 
@@ -27,10 +27,10 @@ namespace radi {
 		Scene::~Scene()
 		{
 			for (uint i = 0; i < m_Entities.size(); i++)
-				spdel m_Entities[i];
+				rddel m_Entities[i];
 
 			m_Entities.clear();
-			spdel m_Camera;
+			rddel m_Camera;
 		}
 
 		void Scene::Add(Entity* entity)

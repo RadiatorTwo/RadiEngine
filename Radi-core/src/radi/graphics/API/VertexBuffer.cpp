@@ -12,8 +12,8 @@ namespace radi { namespace graphics { namespace API {
 	{
 		switch (Context::GetRenderAPI())
 		{
-			case RenderAPI::OPENGL:		return spnew GLVertexBuffer(usage);
-			case RenderAPI::DIRECT3D:	return spnew D3DVertexBuffer(usage);
+			case RenderAPI::OPENGL:		return rdnew GLVertexBuffer(usage);
+			case RenderAPI::DIRECT3D:	return rdnew D3DVertexBuffer(usage);
 		}
 		return nullptr;
 	}

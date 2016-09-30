@@ -16,7 +16,7 @@ namespace radi { namespace graphics { namespace API {
 		String vert, frag;
 		String* shaders[2] = { &vert, &frag };
 		GLShader::PreProcess(source, shaders);
-		ShaderErrorInfo info;
+		GLShaderErrorInfo info;
 		if (!GLShader::Compile(shaders, info))
 		{
 			error = info.message[info.shader];
@@ -49,7 +49,7 @@ namespace radi { namespace graphics { namespace API {
 		String* shaders[2] = { &m_VertexSource, &m_FragmentSource };
 		PreProcess(m_Source, shaders);
 		Parse(m_VertexSource, m_FragmentSource);
-		ShaderErrorInfo error;
+		GLShaderErrorInfo error;
 		m_Handle = Compile(shaders, error);
 		if (!m_Handle)
 			RADI_ERROR(error.message[error.shader]);
@@ -86,7 +86,7 @@ namespace radi { namespace graphics { namespace API {
 		}
 	}
 
-	uint GLShader::Compile(String** shaders, ShaderErrorInfo& info)
+	uint GLShader::Compile(String** shaders, GLShaderErrorInfo& info)
 	{
 		const char* vertexSource = shaders[0]->c_str();
 		const char* fragmentSource = shaders[1]->c_str();
@@ -168,8 +168,8 @@ namespace radi { namespace graphics { namespace API {
 
 	void GLShader::Parse(const String& vertexSource, const String& fragmentSource)
 	{
-		m_VSUniformBuffers.push_back(spnew GLShaderUniformBufferDeclaration("Global", 0));
-		m_PSUniformBuffers.push_back(spnew GLShaderUniformBufferDeclaration("Global", 1));
+		m_VSUniformBuffers.push_back(rdnew GLShaderUniformBufferDeclaration("Global", 0));
+		m_PSUniformBuffers.push_back(rdnew GLShaderUniformBufferDeclaration("Global", 1));
 
 		const char* token;
 		const char* vstr;
@@ -274,7 +274,7 @@ namespace radi { namespace graphics { namespace API {
 		uint index = 0;
 		index++; // struct
 		String name = tokens[index++];
-		ShaderStruct* uniformStruct = spnew ShaderStruct(name);
+		ShaderStruct* uniformStruct = rdnew ShaderStruct(name);
 		index++; // {
 		while (index < tokens.size())
 		{
@@ -298,7 +298,7 @@ namespace radi { namespace graphics { namespace API {
 				String c(s + 1, end - s);
 				count = atoi(c.c_str());
 			}
-			ShaderUniformDeclaration* field = spnew GLShaderUniformDeclaration(GLShaderUniformDeclaration::StringToType(type), name, count);
+			ShaderUniformDeclaration* field = rdnew GLShaderUniformDeclaration(GLShaderUniformDeclaration::StringToType(type), name, count);
 			uniformStruct->AddField(field);
 		}
 		m_Structs.push_back(uniformStruct);
@@ -429,11 +429,11 @@ namespace radi { namespace graphics { namespace API {
 				{
 					resource->m_Register = 0;
 					uint count = resource->GetCount();
-					int32* samplers = spnew int32[count];
+					int32* samplers = rdnew int32[count];
 					for (uint s = 0; s < count; s++)
 						samplers[s] = s;
 					SetUniform1iv(resource->GetName(), samplers, count);
-					spdel[] samplers;
+					rddel[] samplers;
 				}
 			}
 			Unbind();

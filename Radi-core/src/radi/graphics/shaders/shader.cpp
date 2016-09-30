@@ -23,13 +23,13 @@ namespace radi {
 				{
 				case RenderAPI::OPENGL:
 				{
-					GLShader* result = address ? new(address) GLShader(name, source) : spnew GLShader(name, source);
+					GLShader* result = address ? new(address) GLShader(name, source) : rdnew GLShader(name, source);
 					result->m_Path = filepath;
 					return result;
 				}
 				case RenderAPI::DIRECT3D:
 				{
-					D3DShader* result = address ? new(address) D3DShader(name, source) : spnew D3DShader(name, source);
+					D3DShader* result = address ? new(address) D3DShader(name, source) : rdnew D3DShader(name, source);
 					result->m_FilePath = filepath;
 					return result;
 				}
@@ -41,8 +41,8 @@ namespace radi {
 			{
 				switch (Context::GetRenderAPI())
 				{
-				case RenderAPI::OPENGL:		return spnew GLShader(name, source);
-				case RenderAPI::DIRECT3D:	return spnew D3DShader(name, source);
+				case RenderAPI::OPENGL:		return rdnew GLShader(name, source);
+				case RenderAPI::DIRECT3D:	return rdnew D3DShader(name, source);
 				}
 				return nullptr;
 			}

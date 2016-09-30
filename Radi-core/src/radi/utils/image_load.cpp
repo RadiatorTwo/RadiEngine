@@ -45,7 +45,7 @@ namespace radi {
 			*bits = b;
 
 		int32 size = w * h * (b / 8);
-		byte* result = spnew byte[size];
+		byte* result = rdnew byte[size];
 		memcpy(result, pixels, size);
 		FreeImage_Unload(bitmap);
 		return result;

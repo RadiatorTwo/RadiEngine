@@ -14,8 +14,8 @@ namespace radi { namespace graphics { namespace API {
 	{
 		switch (Context::GetRenderAPI())
 		{
-			case RenderAPI::OPENGL:		return spnew GLTextureDepth(width, height);
-			case RenderAPI::DIRECT3D:	return spnew D3DTextureDepth(width, height);
+			case RenderAPI::OPENGL:		return rdnew GLTextureDepth(width, height);
+			case RenderAPI::DIRECT3D:	return rdnew D3DTextureDepth(width, height);
 		}
 		return nullptr;
 	}
