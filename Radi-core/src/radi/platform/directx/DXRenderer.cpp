@@ -2,6 +2,7 @@
 #include "DXRenderer.h"
 
 #include "radi/utils/Log.h"
+#include "radi/system/memory_manager.h"
 
 namespace radi { namespace graphics {
 
@@ -23,6 +24,18 @@ namespace radi { namespace graphics {
 		SetDepthTesting(true);
 		SetBlendFunction(RendererBlendFunction::SOURCE_ALPHA, RendererBlendFunction::ONE_MINUS_SOURCE_ALPHA);
 		SetBlend(true);
+
+		IDXGIDevice* dxgiDev;
+		D3DContext::GetDevice()->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDev);
+		IDXGIAdapter* adapter;
+		dxgiDev->GetAdapter(&adapter);
+		DXGI_ADAPTER_DESC desc;
+		adapter->GetDesc(&desc);
+		RADI_WARN("----------------------------------");
+		RADI_WARN(" Direct3D ", D3DContext::GetD3DVersionString(), ":");
+		RADI_WARN("    ", desc.Description);
+		RADI_WARN("    ", "VRAM: ", internal::MemoryManager::BytesToString(desc.DedicatedVideoMemory));
+		RADI_WARN("----------------------------------");
 
 		m_RendererTitle = "Direct3D " + D3DContext::GetD3DVersionString();
 	}

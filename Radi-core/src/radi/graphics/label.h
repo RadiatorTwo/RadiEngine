@@ -9,11 +9,11 @@ namespace radi {
 
 		class RD_API Label : public Renderable2D
 		{
-		public:
+		private:
 			Font* m_Font;
+		public:
 			String text;
 			maths::vec3& position;
-			float x, y;
 		public:
 			Label(const String& text, float x, float y, uint color);
 			Label(const String& text, float x, float y, Font* font, uint color);
@@ -21,6 +21,8 @@ namespace radi {
 			Label(const String& text, float x, float y, const String& font, uint size, uint color);
 			void Submit(Renderer2D* renderer) const override;
 			void ValidateFont(const String& name, int32 size = -1);
+
+			inline const Font& GetFont() const { return *m_Font; }
 		};
 
 	}

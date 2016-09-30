@@ -7,6 +7,7 @@
 #define NOGDI
 
 #include "radi/utils/Log.h"
+#include "radi/app/Application.h"
 #include "radi/app/Window.h"
 #include "radi/graphics/API/Context.h"
 #include "radi/graphics/Renderer.h"
@@ -66,7 +67,7 @@ namespace radi {
 		AdjustWindowRectEx(&size, WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, false, WS_EX_APPWINDOW | WS_EX_WINDOWEDGE);
 
 		hWnd = CreateWindowExA(WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,
-			winClass.lpszClassName, m_Properties.title.c_str(),
+			winClass.lpszClassName, m_Title.c_str(),
 			WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
 			GetSystemMetrics(SM_CXSCREEN) / 2 - m_Properties.width / 2,
 			GetSystemMetrics(SM_CYSCREEN) / 2 - m_Properties.height / 2,
@@ -127,8 +128,8 @@ namespace radi {
 
 	void Window::SetTitle(const String& title)
 	{
-		m_Properties.title = title + "  |  Renderer: " + Renderer::GetTitle();
-		SetWindowText(hWnd, m_Properties.title.c_str());
+		m_Title = title + "  |  " + Application::GetApplication().GetBuildConfiguration() + " " + Application::GetApplication().GetPlatform() + "  |  Renderer: " + Renderer::GetTitle();
+		SetWindowText(hWnd, m_Title.c_str());
 	}
 
 	void ResizeCallback(Window* window, int32 width, int32 height)

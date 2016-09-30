@@ -3,20 +3,16 @@
 #include "TestLayer.h"
 #include "Test3D.h"
 #include "Sponza.h"
-#include "../../Dependencies/GLEW/include/GL/glew.h"
 
 using namespace radi;
 using namespace graphics;
 using namespace maths;
 
-#define WIDTH	1280
-#define HEIGHT	720
-
 class Game : public Application
 {
 public:
 	Game()
-		: Application("Sandbox", WIDTH, HEIGHT, radi::graphics::API::RenderAPI::DIRECT3D)
+		: Application("Sandbox", { 3440, 1440, false, false }, API::RenderAPI::OPENGL)
 	{
 	}
 

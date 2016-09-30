@@ -60,6 +60,9 @@ namespace radi { namespace graphics { namespace API {
 		dxgiAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&dxgiFactory);
 		dxgiFactory->CreateSwapChain(dev, &scd, &swapchain);
 
+		//Start Fullscreen?
+		//swapchain->SetFullscreenState(TRUE, NULL);
+
 		dev->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&m_DebugLayer));
 		m_DebugLayer->ReportLiveDeviceObjects(D3D11_RLDO_SUMMARY);
 
@@ -118,7 +121,7 @@ namespace radi { namespace graphics { namespace API {
 		m_ScreenViewport.Width = (float)width;
 		m_ScreenViewport.Height = (float)height;
 		m_ScreenViewport.MinDepth = 0.0f;
-		m_ScreenViewport.MaxDepth = 1.0f;
+		m_ScreenViewport.MaxDepth = 1.0f;		
 		devcon->RSSetViewports(1, &m_ScreenViewport);
 
 		D3D11_RASTERIZER_DESC rasterDesc;
