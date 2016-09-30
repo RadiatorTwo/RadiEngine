@@ -18,6 +18,8 @@ namespace radi {
 			DebugMenuItem(IAction* action, const maths::Rectangle& bounds);
 
 			void OnUpdate() override;
+
+			inline const IAction* GetAction() const { return m_Action; }
 		};
 
 	}

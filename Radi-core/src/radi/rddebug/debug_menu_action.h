@@ -45,7 +45,7 @@ namespace radi {
 
 			String ToString() override
 			{
-				return name + "             " + (m_Getter() ? "v" : "x");
+				return name + "     " + (m_Getter() ? "v" : "x");
 			}
 		};
 
@@ -84,6 +84,12 @@ namespace radi {
 		}
 
 		template<>
+		String ValueAction<float>::ToString()
+		{
+			return name + " " + StringFormat::Float(m_Getter());
+		}
+
+		template<>
 		void ValueAction<maths::vec2>::OnAction()
 		{
 			float values[2] =
@@ -102,7 +108,7 @@ namespace radi {
 		template<>
 		String ValueAction<maths::vec2>::ToString()
 		{
-			return name + " " + StringFormat::ToString(m_Getter().x) + ", " + StringFormat::ToString(m_Getter().y);
+			return name + " " + StringFormat::Float(m_Getter().x) + ", " + StringFormat::Float(m_Getter().y);
 		}
 
 		template<>
@@ -126,7 +132,7 @@ namespace radi {
 		template<>
 		String ValueAction<maths::vec3>::ToString()
 		{
-			return name + " " + StringFormat::ToString(m_Getter().x) + ", " + StringFormat::ToString(m_Getter().y) + ", " + StringFormat::ToString(m_Getter().z);
+			return name + " " + StringFormat::Float(m_Getter().x) + ", " + StringFormat::Float(m_Getter().y) + ", " + StringFormat::Float(m_Getter().z);
 		}
 
 		template<>
@@ -152,7 +158,7 @@ namespace radi {
 		template<>
 		String ValueAction<maths::vec4>::ToString()
 		{
-			return name + " " + std::to_string(m_Getter().x) + ", " + std::to_string(m_Getter().y) + ", " + std::to_string(m_Getter().z) + ", " + std::to_string(m_Getter().w);
+			return name + " " + StringFormat::Float(m_Getter().x) + ", " + StringFormat::Float(m_Getter().y) + ", " + StringFormat::Float(m_Getter().z) + ", " + StringFormat::Float(m_Getter().w);
 		}
 
 		typedef ValueAction<int32> IntAction;

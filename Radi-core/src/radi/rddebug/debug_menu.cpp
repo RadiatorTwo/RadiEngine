@@ -12,7 +12,8 @@ namespace radi {
 	namespace debug {
 
 		using namespace maths;
-		using namespace graphics::ui;
+		using namespace graphics;
+		using namespace ui;
 
 		DebugMenu* DebugMenu::s_Instance = nullptr;
 
@@ -121,14 +122,27 @@ namespace radi {
 
 		void DebugMenu::OnActivate()
 		{
-			float width = 5.0f + m_Settings.padding;
+			float width = 0.0f;
 			float height = 1.0f + m_Settings.padding;
 			float yOffset = height;
 			for (IAction* action : m_ActionList)
 			{
 				float y = 18.0f - yOffset;
-				m_Panel->Add(rdnew DebugMenuItem(action, Rectangle(0.0f, y, width, height)));
+				DebugMenuItem* item = rdnew DebugMenuItem(action, Rectangle(0.0f, y, 0.0f, height));
+				m_Panel->Add(item);
 				yOffset += height;
+
+				const Font& font = item->GetFont();
+				float stringWidth = font.GetWidth(item->GetLabel());
+				if (stringWidth > width)
+					width = stringWidth;
+			}
+
+			width += m_Settings.padding;
+			for (Widget* widget : m_Panel->GetWidgets())
+			{
+				DebugMenuItem* item = (DebugMenuItem*)widget;
+				item->GetBounds().width = width;
 			}
 
 			for (uint i = 0; i < 4; i++)

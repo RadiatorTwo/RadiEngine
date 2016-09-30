@@ -3,7 +3,8 @@
 #include "radi/Common.h"
 #include "radi/radi_types.h"
 #include "radi/maths/vec2.h"
-#include "radi/graphics/API/Texture2D.h"
+#include "radi/maths/rectangle.h"
+#include "radi/graphics/API/texture2D.h"
 
 namespace ftgl {
 	struct texture_atlas_t;
@@ -36,6 +37,12 @@ namespace radi {
 			inline const String& GetName() const { return m_Name; }
 			inline const String& GetFileName() const { return m_Filename; }
 			inline float GetSize() const { return m_Size; }
+
+			maths::vec2 GetOffsets(const String& text) const;
+			float GetWidth(const String& text) const;
+			float GetHeight(const String& text) const;
+
+			maths::Rectangle GetBounds(const String& text) const;
 
 			API::Texture2D* GetTexture() const;
 		private:

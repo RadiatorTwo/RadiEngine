@@ -21,6 +21,9 @@ namespace radi {
 			MayaCamera(const maths::mat4& projectionMatrix);
 			void Focus() override;
 			void Update() override;
+
+			inline float GetDistance() const { return m_Distance; }
+			inline void SetDistance(float distance) { m_Distance = distance; }
 		private:
 			void MousePan(const maths::vec2& delta);
 			void MouseRotate(const maths::vec2& delta);
