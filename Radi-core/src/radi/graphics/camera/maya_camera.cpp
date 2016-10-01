@@ -38,9 +38,7 @@ namespace radi {
 		{
 			if (Input::IsKeyPressed(RD_KEY_ALT))
 			{
-				const vec2& mouse = Input::GetMousePosition();
-				vec2 delta = mouse - m_InitialMousePosition;
-				m_InitialMousePosition = mouse;
+				const vec2& delta = Input::GetMouseDelta();
 
 				if (Input::IsMouseButtonPressed(RD_MOUSE_MIDDLE))
 					MousePan(delta);
@@ -50,7 +48,7 @@ namespace radi {
 					MouseZoom(delta.y);
 			}
 
-			// MouseZoom(window->GetMouseScrollPosition().y);
+			MouseZoom(Input::GetMouseWheelDelta() * 10);
 
 			m_Position = CalculatePosition();
 

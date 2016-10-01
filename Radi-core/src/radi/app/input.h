@@ -25,9 +25,16 @@ namespace radi {
 		bool m_MouseState[MAX_BUTTONS];
 		bool m_MouseClicked[MAX_BUTTONS];
 		bool m_MouseGrabbed;
+		bool m_CursorVisible;
+
 		int32 m_KeyModifiers;
 
+		int32 m_MouseWheelDelta;
+		int32 m_MouseWheelDeltaCurrent;
+
 		maths::vec2 m_MousePosition;
+		maths::vec2 m_MouseDelta;
+		maths::vec2 m_MouseDeltaCurrent;
 		WindowEventCallback m_EventCallback;
 	public:
 		InputManager();
@@ -36,12 +43,16 @@ namespace radi {
 
 		void Update();
 		void PlatformUpdate();
+		void PlatformUpdateMessage();
+		void PlatformInit();
 
 		bool IsKeyPressed(uint keycode) const;
 		bool IsMouseButtonPressed(uint button) const;
 		bool IsMouseButtonClicked(uint button) const;
 
 		const maths::vec2& GetMousePosition() const;
+		const maths::vec2& GetMouseDelta() const;
+		int32 GetMouseWheelDelta() const;
 		void SetMousePosition(const maths::vec2& position);
 		const bool IsMouseGrabbed() const;
 		void SetMouseGrabbed(bool grabbed);
@@ -49,9 +60,6 @@ namespace radi {
 
 		void ClearKeys();
 		void ClearMouseButtons();
-	private:
-		friend void KeyCallback(InputManager* inputManager, int32 flags, int32 key, uint message);
-		friend void MouseButtonCallback(InputManager* inputManager, int32 button, int32 x, int32 y);
 	};
 
 	class RD_API Input
@@ -66,6 +74,8 @@ namespace radi {
 		inline static bool IsMouseButtonClicked(uint button) { return s_InputManager->IsMouseButtonClicked(button); }
 
 		inline static const maths::vec2& GetMousePosition() { return s_InputManager->GetMousePosition(); }
+		inline static const maths::vec2& GetMouseDelta() { return s_InputManager->GetMouseDelta(); }
+		inline static int32 GetMouseWheelDelta() { return s_InputManager->GetMouseWheelDelta(); }
 
 		inline static InputManager* GetInputManager() { return s_InputManager; }
 	};
@@ -76,6 +86,15 @@ namespace radi {
 #define RD_MOUSE_LEFT	  0x00
 #define RD_MOUSE_MIDDLE	  0x01
 #define RD_MOUSE_RIGHT    0x02
+
+#define RD_MOUSE_1		  RD_MOUSE_LEFT
+#define RD_MOUSE_2		  RD_MOUSE_RIGHT
+#define RD_MOUSE_3		  RD_MOUSE_MIDDLE
+#define RD_MOUSE_4		  0x03
+#define RD_MOUSE_5		  0x04
+
+#define RD_MWHEEL_UP	  0x05
+#define RD_MWHEEL_DOWN    0x06
 
 #define RD_NO_CURSOR	  NULL
 

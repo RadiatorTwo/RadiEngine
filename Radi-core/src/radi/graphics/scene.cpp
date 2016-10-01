@@ -63,12 +63,15 @@ namespace radi {
 
 		void Scene::Update()
 		{
-			Camera* camera = m_Camera;
-			camera->Update();
+			
 		}
 
 		void Scene::Render(Renderer3D& renderer)
 		{			
+			Camera* camera = m_Camera;
+			camera->Update();
+			debug::DebugRenderer::SetCamera(camera);
+
 			renderer.Begin();
 			renderer.BeginScene(m_Camera);
 			for (uint i = 0; i < m_LightSetupStack.size(); i++)
