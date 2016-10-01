@@ -14,7 +14,7 @@ namespace radi {
 			public:
 				graphics::Sprite* sprite;
 			public:
-				SpriteComponent(graphics::Sprite* sprite);
+				SpriteComponent(Entity* entity, graphics::Sprite* sprite);
 
 				static ComponentType* GetStaticType()
 				{

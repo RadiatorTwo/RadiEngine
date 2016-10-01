@@ -19,7 +19,7 @@ namespace radi {
 			Material* m_Material;
 			Scene2D* m_Scene;
 			std::vector<Renderable2D*> m_SubmittedRenderables;
-		public:			
+		public:
 			Layer2D(const maths::mat4& projectionMatrix);
 			Layer2D(Scene2D* scene);
 			virtual ~Layer2D();
@@ -33,6 +33,7 @@ namespace radi {
 
 			virtual Renderable2D* Submit(Renderable2D* renderable);
 
+			void OnUpdateInternal(const Timestep& ts) override;
 			virtual void OnRender(Renderer2D& renderer);
 			void OnRender() override;
 		protected:
@@ -41,4 +42,3 @@ namespace radi {
 
 	}
 }
-

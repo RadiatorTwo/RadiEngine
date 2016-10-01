@@ -1,11 +1,18 @@
 #include "radi/rd.h"
 #include "AABB.h"
 
+#include "Rectangle.h"
+
 namespace radi {
 	namespace maths {
 
 		AABB::AABB()
 			: min(vec3()), max(vec3())
+		{
+		}
+
+		AABB::AABB(const Rectangle& rectangle)
+			: min(rectangle.GetMinimumBound()), max(rectangle.GetMaximumBound())
 		{
 		}
 
@@ -46,7 +53,7 @@ namespace radi {
 
 		vec3 AABB::Center() const
 		{
-			return (min - max) * 0.5f;
+			return (max + min) * 0.5f;
 		}
 
 		bool AABB::operator==(const AABB& other) const

@@ -16,11 +16,11 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include <Dependencies/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h>
-#include <Dependencies/Box2D/Common/b2BlockAllocator.h>
-#include <Dependencies/Box2D/Dynamics/b2Fixture.h>
-#include <Dependencies/Box2D/Collision/Shapes/b2ChainShape.h>
-#include <Dependencies/Box2D/Collision/Shapes/b2EdgeShape.h>
+#include <Dynamics/Contacts/b2ChainAndPolygonContact.h>
+#include <Common/b2BlockAllocator.h>
+#include <Dynamics/b2Fixture.h>
+#include <Collision/Shapes/b2ChainShape.h>
+#include <Collision/Shapes/b2EdgeShape.h>
 
 #include <new>
 

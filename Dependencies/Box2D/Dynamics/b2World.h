@@ -19,12 +19,12 @@
 #ifndef B2_WORLD_H
 #define B2_WORLD_H
 
-#include <Dependencies/Box2D/Common/b2Math.h>
-#include <Dependencies/Box2D/Common/b2BlockAllocator.h>
-#include <Dependencies/Box2D/Common/b2StackAllocator.h>
-#include <Dependencies/Box2D/Dynamics/b2ContactManager.h>
-#include <Dependencies/Box2D/Dynamics/b2WorldCallbacks.h>
-#include <Dependencies/Box2D/Dynamics/b2TimeStep.h>
+#include <Common/b2Math.h>
+#include <Common/b2BlockAllocator.h>
+#include <Common/b2StackAllocator.h>
+#include <Dynamics/b2ContactManager.h>
+#include <Dynamics/b2WorldCallbacks.h>
+#include <Dynamics/b2TimeStep.h>
 
 struct b2AABB;
 struct b2BodyDef;

@@ -1,6 +1,8 @@
 #include "radi/rd.h"
 #include "vec3.h"
+
 #include "vec2.h"
+#include "vec4.h"
 #include "mat4.h"
 
 namespace radi {
@@ -28,6 +30,11 @@ namespace radi {
 
 		vec3::vec3(float x, float y)
 			: x(x), y(y), z(0.0f)
+		{
+		}
+
+		vec3::vec3(const vec4& other)
+			: x(other.x), y(other.y), z(other.z)
 		{
 		}
 

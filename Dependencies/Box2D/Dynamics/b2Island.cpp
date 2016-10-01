@@ -16,16 +16,16 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include <Dependencies/Box2D/Collision/b2Distance.h>
-#include <Dependencies/Box2D/Dynamics/b2Island.h>
-#include <Dependencies/Box2D/Dynamics/b2Body.h>
-#include <Dependencies/Box2D/Dynamics/b2Fixture.h>
-#include <Dependencies/Box2D/Dynamics/b2World.h>
-#include <Dependencies/Box2D/Dynamics/Contacts/b2Contact.h>
-#include <Dependencies/Box2D/Dynamics/Contacts/b2ContactSolver.h>
-#include <Dependencies/Box2D/Dynamics/Joints/b2Joint.h>
-#include <Dependencies/Box2D/Common/b2StackAllocator.h>
-#include <Dependencies/Box2D/Common/b2Timer.h>
+#include <Collision/b2Distance.h>
+#include <Dynamics/b2Island.h>
+#include <Dynamics/b2Body.h>
+#include <Dynamics/b2Fixture.h>
+#include <Dynamics/b2World.h>
+#include <Dynamics/Contacts/b2Contact.h>
+#include <Dynamics/Contacts/b2ContactSolver.h>
+#include <Dynamics/Joints/b2Joint.h>
+#include <Common/b2StackAllocator.h>
+#include <Common/b2Timer.h>
 
 /*
 Position Correction Notes

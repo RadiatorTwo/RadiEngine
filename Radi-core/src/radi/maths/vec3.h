@@ -9,6 +9,7 @@ namespace radi {
 	namespace maths {
 
 		struct vec2;
+		struct vec4;
 		struct mat4;
 
 		struct RD_API vec3
@@ -20,6 +21,7 @@ namespace radi {
 			vec3(float x, float y, float z);
 			vec3(const vec2& other);
 			vec3(float x, float y);
+			vec3(const vec4& other);
 
 			static vec3 Up();
 			static vec3 Down();

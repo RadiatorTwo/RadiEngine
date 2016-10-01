@@ -15,9 +15,9 @@
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
-#include <Dependencies/Box2D/Dynamics/Joints/b2WheelJoint.h>
-#include <Dependencies/Box2D/Dynamics/b2Body.h>
-#include <Dependencies/Box2D/Dynamics/b2TimeStep.h>
+#include <Dynamics/Joints/b2WheelJoint.h>
+#include <Dynamics/b2Body.h>
+#include <Dynamics/b2TimeStep.h>
 
 // Linear constraint (point-to-line)
 // d = pB - pA = xB + rB - xA - rA

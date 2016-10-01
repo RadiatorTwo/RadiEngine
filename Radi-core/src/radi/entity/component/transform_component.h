@@ -14,7 +14,7 @@ namespace radi {
 			public:
 				maths::mat4 transform;
 			public:
-				TransformComponent(const maths::mat4& transform);
+				TransformComponent(Entity* entity, const maths::mat4& transform);
 
 				static ComponentType* GetStaticType()
 				{

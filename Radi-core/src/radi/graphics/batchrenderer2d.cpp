@@ -207,10 +207,12 @@ namespace radi {
 			if (!renderable->IsVisible())
 				return;
 
-			const vec3& position = renderable->GetPosition();
-			const vec2& size = renderable->GetSize();
+			const Rectangle& bounds = renderable->GetBounds();
+			const vec3 min = bounds.GetMinimumBound();
+			const vec3 max = bounds.GetMaximumBound();
+
 			const uint color = renderable->GetColor();
-			const std::vector<vec2>& uv = renderable->GetUV();
+			const std::vector<vec2>& uv = renderable->GetUVs();
 			const API::Texture* texture = renderable->GetTexture();
 
 			float textureSlot = 0.0f;
@@ -227,7 +229,7 @@ namespace radi {
 				ms = SubmitTexture(m_Mask->texture);
 			}
 
-			vec3 vertex = *m_TransformationBack * position;
+			vec3 vertex = *m_TransformationBack * min;
 			m_Buffer->vertex = vertex;
 			m_Buffer->uv = uv[0];
 			m_Buffer->mask_uv = maskTransform * vertex;
@@ -236,7 +238,7 @@ namespace radi {
 			m_Buffer->color = color;
 			m_Buffer++;
 
-			vertex = *m_TransformationBack * vec3(position.x + size.x, position.y, position.z);
+			vertex = *m_TransformationBack * vec3(max.x, min.y);
 			m_Buffer->vertex = vertex;
 			m_Buffer->uv = uv[1];
 			m_Buffer->mask_uv = maskTransform * vertex;
@@ -245,7 +247,7 @@ namespace radi {
 			m_Buffer->color = color;
 			m_Buffer++;
 
-			vertex = *m_TransformationBack * vec3(position.x + size.x, position.y + size.y, position.z);
+			vertex = *m_TransformationBack * max;
 			m_Buffer->vertex = vertex;
 			m_Buffer->uv = uv[2];
 			m_Buffer->mask_uv = maskTransform * vertex;
@@ -254,7 +256,7 @@ namespace radi {
 			m_Buffer->color = color;
 			m_Buffer++;
 
-			vertex = *m_TransformationBack * vec3(position.x, position.y + size.y, position.z);
+			vertex = *m_TransformationBack * vec3(min.x, max.y);
 			m_Buffer->vertex = vertex;
 			m_Buffer->uv = uv[3];
 			m_Buffer->mask_uv = maskTransform * vertex;
@@ -326,6 +328,11 @@ namespace radi {
 			DrawLine(start.x, start.y, end.x, end.y, color, thickness);
 		}
 
+		void BatchRenderer2D::DrawRect(const maths::vec2& position, const maths::vec2& size, uint color)
+		{
+			DrawRect(position.x, position.y, size.x, size.y, color);
+		}
+
 		void BatchRenderer2D::DrawRect(float x, float y, float width, float height, uint color)
 		{
 			DrawLine(x, y, x + width, y, color);
@@ -336,7 +343,7 @@ namespace radi {
 
 		void BatchRenderer2D::DrawRect(const Rectangle& rectangle, uint color)
 		{
-			DrawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height, color);
+			DrawRect(rectangle.GetMinimumBound(), rectangle.size * 2.0f, color);
 		}
 
 		void BatchRenderer2D::DrawString(const String& text, const maths::vec2& position, const Font& font, uint color)
@@ -461,9 +468,14 @@ namespace radi {
 			m_IndexCount += 6;
 		}
 
+		void BatchRenderer2D::FillRect(const maths::vec2& position, const maths::vec2& size, uint color)
+		{
+			FillRect(position.x, position.y, size.x, size.y, color);
+		}
+
 		void BatchRenderer2D::FillRect(const Rectangle& rectangle, uint color)
 		{
-			FillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height, color);
+			FillRect(rectangle.GetMinimumBound(), rectangle.size * 2.0f, color);
 		}
 
 		void BatchRenderer2D::End()
@@ -522,8 +534,8 @@ namespace radi {
 				m_IBO->Unbind();
 				m_ScreenQuad->Unbind();
 #endif
-			}
 		}
-
 	}
+
+}
 }

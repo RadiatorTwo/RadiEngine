@@ -2,6 +2,7 @@
 
 #include "radi/rd.h"
 #include "radi/Common.h"
+#include "radi/utils/Timestep.h"
 
 #include "component/Components.h"
 
@@ -12,12 +13,35 @@ namespace radi {
 		{
 		protected:
 			std::vector<component::Component*> m_Components;
+			const maths::AABB* m_BoundingBox;
+		public:
+			component::TransformComponent* transform;
 		public:
 			Entity();
 			Entity(graphics::Sprite* sprite, const maths::mat4& transform = maths::mat4::Identity());
 			Entity(graphics::Mesh* mesh, const maths::mat4& transform = maths::mat4::Identity());
 
 			void AddComponent(component::Component* component);
+			void OnUpdate(const Timestep& ts);
+			void OnRender(graphics::Renderer2D& renderer);
+
+			inline const maths::AABB& GetBoundingBox() const { return *m_BoundingBox; }
+
+			template<typename T>
+			T& CreateComponent()
+			{
+				T* c = rdnew T(this);
+				m_Components.push_back(c);
+				return *c;
+			}
+
+			template<typename T, typename Param>
+			T& CreateComponent(Param* p)
+			{
+				T* c = rdnew T(this, p);
+				m_Components.push_back(c);
+				return *c;
+			}
 
 			template <typename T>
 			const T* GetComponent() const
@@ -31,6 +55,8 @@ namespace radi {
 				return (T*)GetComponentInternal<T>();
 			}
 		private:
+			void Init();
+
 			template <typename T>
 			const T* GetComponentInternal() const
 			{
@@ -42,6 +68,8 @@ namespace radi {
 				}
 				return nullptr;
 			}
+		private:
+			static void StaticInit();
 		};
 
 	}

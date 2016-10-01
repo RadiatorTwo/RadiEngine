@@ -14,7 +14,7 @@ namespace radi {
 			public:
 				graphics::Mesh* mesh;
 			public:
-				MeshComponent(graphics::Mesh* mesh);
+				MeshComponent(Entity* entity, graphics::Mesh* mesh = nullptr);
 
 				static ComponentType* GetStaticType()
 				{

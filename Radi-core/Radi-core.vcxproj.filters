@@ -516,10 +516,16 @@
     <ClCompile Include="src\radi\graphics\camera\orthographic_camera.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\radi\scene2D.cpp">
+    <ClCompile Include="src\radi\entity\component\sprite_component.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\radi\entity\component\sprite_component.cpp">
+    <ClCompile Include="src\radi\graphics\renderable2D.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\entity\component\physics2Dcomponent.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radi\scene2D.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -929,10 +935,16 @@
     <ClInclude Include="src\radi\graphics\camera\orthographic_camera.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\radi\scene2D.h">
+    <ClInclude Include="src\radi\entity\component\sprite_component.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\radi\entity\component\sprite_component.h">
+    <ClInclude Include="src\radi\utils\timestep.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\entity\component\physics2Dcomponent.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radi\scene2D.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

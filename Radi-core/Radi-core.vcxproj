@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\radi\entity\component\physics2Dcomponent.cpp" />
     <ClCompile Include="src\radi\entity\component\sprite_component.cpp" />
     <ClCompile Include="src\radi\events\window_event.cpp" />
     <ClCompile Include="src\radi\graphics\API\Context.cpp" />
@@ -28,6 +29,7 @@
     <ClCompile Include="src\radi\graphics\light_setup.cpp" />
     <ClCompile Include="src\radi\graphics\OBJModel.cpp" />
     <ClCompile Include="src\radi\graphics\PBRMaterial.cpp" />
+    <ClCompile Include="src\radi\graphics\renderable2D.cpp" />
     <ClCompile Include="src\radi\graphics\renderer.cpp" />
     <ClCompile Include="src\radi\graphics\shaders\shader_manager.cpp" />
     <ClCompile Include="src\radi\graphics\ui\button.cpp" />
@@ -411,6 +413,7 @@
     <ClInclude Include="src\radi\audio\sound.h" />
     <ClInclude Include="src\radi\audio\sound_manager.h" />
     <ClInclude Include="src\radi\common.h" />
+    <ClInclude Include="src\radi\entity\component\physics2Dcomponent.h" />
     <ClInclude Include="src\radi\entity\component\sprite_component.h" />
     <ClInclude Include="src\radi\events\window_event.h" />
     <ClInclude Include="src\radi\graphics\API\Context.h" />
@@ -543,6 +546,7 @@
     <ClInclude Include="src\radi\utils\image_load.h" />
     <ClInclude Include="src\radi\utils\log.h" />
     <ClInclude Include="src\radi\utils\timer.h" />
+    <ClInclude Include="src\radi\utils\timestep.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\radi\embedded\files\SourceSansPro-Light.embed" />

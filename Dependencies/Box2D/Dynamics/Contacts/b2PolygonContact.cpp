@@ -16,12 +16,12 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include <Dependencies/Box2D/Dynamics/Contacts/b2PolygonContact.h>
-#include <Dependencies/Box2D/Common/b2BlockAllocator.h>
-#include <Dependencies/Box2D/Collision/b2TimeOfImpact.h>
-#include <Dependencies/Box2D/Dynamics/b2Body.h>
-#include <Dependencies/Box2D/Dynamics/b2Fixture.h>
-#include <Dependencies/Box2D/Dynamics/b2WorldCallbacks.h>
+#include <Dynamics/Contacts/b2PolygonContact.h>
+#include <Common/b2BlockAllocator.h>
+#include <Collision/b2TimeOfImpact.h>
+#include <Dynamics/b2Body.h>
+#include <Dynamics/b2Fixture.h>
+#include <Dynamics/b2WorldCallbacks.h>
 
 #include <new>
 

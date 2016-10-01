@@ -16,9 +16,9 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include <Dependencies/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h>
-#include <Dependencies/Box2D/Common/b2BlockAllocator.h>
-#include <Dependencies/Box2D/Dynamics/b2Fixture.h>
+#include <Dynamics/Contacts/b2EdgeAndCircleContact.h>
+#include <Common/b2BlockAllocator.h>
+#include <Dynamics/b2Fixture.h>
 
 #include <new>
 
