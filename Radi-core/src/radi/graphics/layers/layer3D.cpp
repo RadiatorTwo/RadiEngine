@@ -34,6 +34,7 @@ namespace radi {
 
 		void Layer3D::OnUpdateInternal(const Timestep& ts)
 		{
+			m_Scene->Update();
 			OnUpdate(ts);
 		}
 

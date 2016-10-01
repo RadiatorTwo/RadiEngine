@@ -29,8 +29,8 @@ public:
 		VFS::Get()->Mount("shaders", "shaders");
 
 		//PushLayer(new Test3D());
-		PushLayer(new Test2D());
-		//PushLayer(new Sponza());
+		//PushLayer(new Test2D());
+		PushLayer(new Sponza());
 	}
 };
 

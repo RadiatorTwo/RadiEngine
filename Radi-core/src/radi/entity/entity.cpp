@@ -28,13 +28,15 @@ namespace radi {
 		Entity::Entity(graphics::Mesh* mesh, const maths::mat4& transform)
 		{
 			AddComponent(rdnew MeshComponent(this, mesh));
-			Init();
+			if (this->transform)
+				Init();
+			else
+				AddComponent(rdnew TransformComponent(this, transform));
 		}
 
 		void Entity::Init()
 		{
 			StaticInit();
-
 			AddComponent(this->transform);
 		}
 

@@ -92,6 +92,8 @@ void Sponza::OnInit(Renderer3D& renderer, Scene& scene)
 
 void Sponza::OnTick()
 {
+	Application& app = Application::GetApplication();
+	RADI_INFO(app.GetUPS(), " ups, ", app.GetFPS(), " fps");
 }
 
 void Sponza::OnUpdate(const Timestep& ts)
