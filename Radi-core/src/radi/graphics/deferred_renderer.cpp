@@ -43,13 +43,13 @@ namespace radi {
 		void DeferredRenderer::SubmitMesh(Mesh* mesh, const maths::mat4& transform)
 		{
 			// Not implemented
-			SP_ASSERT(false);
+			RADI_ASSERT(false);
 		}
 
 		void DeferredRenderer::SubmitLightSetup(const LightSetup& lightSetup)
 		{
 			auto lights = lightSetup.GetLights();
-			SP_ASSERT(lights.size() <= 1, "Only one light is supported at the moment!");
+			RADI_ASSERT(lights.size() <= 1, "Only one light is supported at the moment!");
 			for (uint i = 0; i < lights.size(); i++)
 				m_SystemUniforms.push_back({ "u_Light",  (byte*)lights[i] });
 		}

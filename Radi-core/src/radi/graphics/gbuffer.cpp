@@ -46,7 +46,7 @@ namespace radi {
 			};
 
 			API::SetDrawBuffers(drawBuffers, 4);
-			SP_ASSERT(API::CheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+			RADI_ASSERT(API::CheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 			API::BindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 		}
 

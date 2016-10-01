@@ -9,6 +9,8 @@ using namespace maths;
 using namespace API;
 
 static float s_BoxSize = 0.1f;
+static bool s_run = false;
+static int s_count = 0;
 
 Test2D::Test2D()
 	: Layer2D(rdnew Scene2D(mat4::Orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f)))
@@ -70,14 +72,14 @@ void Test2D::OnInit(Renderer2D& renderer, Material& material)
 	mask->transform = mat4::Translate(vec3(-16.0f, -9.0f, 0.0f)) * mat4::Scale(vec3(32, 18, 1));
 	SetMask(mask);
 
-	for (int i = 0; i < 100; i++)
+	/*for (int i = 0; i < 100; i++)
 	{
 		Entity* entity = rdnew Entity(rdnew Sprite(0.0f, 9.0f, s_BoxSize, s_BoxSize, vec4((rand() % 1000) / 1000.0f, 0.5f, 0.5f, 1.0f)));
 		Physics2DComponent& p = entity->CreateComponent<Physics2DComponent>();
 		m_Scene->Add(entity);
 
 		p.ApplyForce(((rand() % 1000) - 500) * 0.005f);
-	}
+	}*/
 
 	debug::DebugMenu::Add("Box Size", &s_BoxSize, 0.0f, 1.0f);
 }
@@ -88,6 +90,7 @@ void Test2D::OnTick()
 
 	Application& app = Application::GetApplication();
 	RADI_INFO(app.GetUPS(), " ups, ", app.GetFPS(), " fps");
+	RADI_INFO(s_count, "cubes");
 
 	debugInfo[2]->SetText("Total Allocs: " + StringFormat::ToString(MemoryManager::Get()->GetMemoryStats().totalAllocations));
 	debugInfo[3]->SetText("Total Allocated: " + MemoryManager::BytesToString(MemoryManager::Get()->GetMemoryStats().totalAllocated));
@@ -96,6 +99,16 @@ void Test2D::OnTick()
 
 void Test2D::OnUpdate(const Timestep& ts)
 {
+	if (s_run)
+	{
+		Entity* entity = rdnew Entity(rdnew Sprite(0.0f, 9.0f, s_BoxSize, s_BoxSize, vec4((rand() % 1000) / 1000.0f, 0.5f, 0.5f, 1.0f)));
+		Physics2DComponent& p = entity->CreateComponent<Physics2DComponent>();
+		m_Scene->Add(entity);
+
+		p.ApplyForce(((rand() % 1000) - 500) * 0.005f);
+
+		s_count++;
+	}
 }
 
 bool Test2D::OnKeyPressedEvent(KeyPressedEvent& event)
@@ -121,14 +134,7 @@ bool Test2D::OnKeyPressedEvent(KeyPressedEvent& event)
 
 	if (event.GetKeyCode() == RD_KEY_SPACE)
 	{
-		for (int i = 0; i < 100; i++)
-		{
-			Entity* entity = rdnew Entity(rdnew Sprite(0.0f, 9.0f, s_BoxSize, s_BoxSize, vec4((rand() % 1000) / 1000.0f, 0.5f, 0.5f, 1.0f)));
-			Physics2DComponent& p = entity->CreateComponent<Physics2DComponent>();
-			m_Scene->Add(entity);
-
-			p.ApplyForce(((rand() % 1000) - 500) * 0.005f);
-		}
+		s_run = !s_run;
 		return true;
 	}
 

@@ -58,7 +58,7 @@ namespace radi {
 		{
 			window->Clear();
 			float now = m_Timer->ElapsedMillis();
-			if (now - updateTimer > updateTick)
+			if (m_Timer->Elapsed() - updateTimer > updateTick)
 			{
 				timestep.Update(now);
 				OnUpdate(timestep);
