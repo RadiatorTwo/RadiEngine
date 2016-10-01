@@ -1,24 +1,24 @@
 #pragma once
 
-#include "component.h"
+#include "Component.h"
 
 #include "radi/common.h"
-#include "radi/graphics/mesh.h"
+#include "radi/graphics/Sprite.h"
 
 namespace radi {
 	namespace entity {
 		namespace component {
 
-			class RD_API MeshComponent : public Component
+			class RD_API SpriteComponent : public Component
 			{
 			public:
-				graphics::Mesh* mesh;
+				graphics::Sprite* sprite;
 			public:
-				MeshComponent(graphics::Mesh* mesh);
+				SpriteComponent(graphics::Sprite* sprite);
 
 				static ComponentType* GetStaticType()
 				{
-					static ComponentType type({ "Mesh" });
+					static ComponentType type({ "Sprite" });
 					return &type;
 				}
 

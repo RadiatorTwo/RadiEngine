@@ -2,8 +2,8 @@
 
 #include "Allocator.h"
 
-#define spnew		new(__FILE__, __LINE__)
-#define spdel		delete
+#define rdnew		new(__FILE__, __LINE__)
+#define rddel		delete
 
 #pragma warning(disable : 4595)
 

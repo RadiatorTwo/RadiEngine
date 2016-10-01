@@ -10,6 +10,8 @@ namespace radi {
 		public:
 			maths::vec3& position;
 			maths::vec2& size;
+		protected:
+			Sprite();
 		public:
 			Sprite(API::Texture2D* texture);
 			Sprite(float x, float y, API::Texture2D* texture);

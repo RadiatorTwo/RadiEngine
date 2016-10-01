@@ -10,6 +10,12 @@ namespace radi {
 		{
 		}
 
+		Entity::Entity(graphics::Sprite* sprite, const maths::mat4& transform)
+		{
+			AddComponent(new SpriteComponent(sprite));
+			AddComponent(new TransformComponent(transform));
+		}
+
 		Entity::Entity(graphics::Mesh* mesh, const maths::mat4& transform)
 		{
 			AddComponent(new MeshComponent(mesh));

@@ -1,19 +1,18 @@
 #pragma once
 
 #include "radi/Common.h"
-#include "Renderable2D.h"
+#include "Sprite.h"
 #include "font_manager.h"
 
 namespace radi {
 	namespace graphics {
 
-		class RD_API Label : public Renderable2D
+		class RD_API Label : public Sprite
 		{
 		private:
 			Font* m_Font;
 		public:
 			String text;
-			maths::vec3& position;
 		public:
 			Label(const String& text, float x, float y, uint color);
 			Label(const String& text, float x, float y, Font* font, uint color);

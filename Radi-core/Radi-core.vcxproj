@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\radi\entity\component\sprite_component.cpp" />
     <ClCompile Include="src\radi\events\window_event.cpp" />
     <ClCompile Include="src\radi\graphics\API\Context.cpp" />
     <ClCompile Include="src\radi\graphics\API\Framebuffer2D.cpp" />
@@ -19,6 +20,7 @@
     <ClCompile Include="src\radi\graphics\API\TextureCube.cpp" />
     <ClCompile Include="src\radi\graphics\API\TextureDepth.cpp" />
     <ClCompile Include="src\radi\graphics\API\VertexBuffer.cpp" />
+    <ClCompile Include="src\radi\graphics\camera\orthographic_camera.cpp" />
     <ClCompile Include="src\radi\graphics\gbuffer.cpp" />
     <ClCompile Include="src\radi\graphics\deferred_renderer.cpp" />
     <ClCompile Include="src\radi\graphics\camera\fps_camera.cpp" />
@@ -388,6 +390,7 @@
     <ClCompile Include="src\radi\rddebug\debug_menu_item.cpp" />
     <ClCompile Include="src\radi\rddebug\debug_menu_slider.cpp" />
     <ClCompile Include="src\radi\rddebug\debug_renderer.cpp" />
+    <ClCompile Include="src\radi\scene2D.cpp" />
     <ClCompile Include="src\radi\system\Allocator.cpp" />
     <ClCompile Include="src\radi\system\filesystem.cpp" />
     <ClCompile Include="src\radi\system\Memory.cpp" />
@@ -408,6 +411,7 @@
     <ClInclude Include="src\radi\audio\sound.h" />
     <ClInclude Include="src\radi\audio\sound_manager.h" />
     <ClInclude Include="src\radi\common.h" />
+    <ClInclude Include="src\radi\entity\component\sprite_component.h" />
     <ClInclude Include="src\radi\events\window_event.h" />
     <ClInclude Include="src\radi\graphics\API\Context.h" />
     <ClInclude Include="src\radi\graphics\API\Framebuffer2D.h" />
@@ -416,6 +420,7 @@
     <ClInclude Include="src\radi\graphics\API\TextureCube.h" />
     <ClInclude Include="src\radi\graphics\API\TextureDepth.h" />
     <ClInclude Include="src\radi\graphics\API\VertexBuffer.h" />
+    <ClInclude Include="src\radi\graphics\camera\orthographic_camera.h" />
     <ClInclude Include="src\radi\graphics\gbuffer.h" />
     <ClInclude Include="src\radi\graphics\deferred_renderer.h" />
     <ClInclude Include="src\radi\graphics\camera\fps_camera.h" />
@@ -527,6 +532,7 @@
     <ClInclude Include="src\radi\rddebug\debug_menu_item.h" />
     <ClInclude Include="src\radi\rddebug\debug_menu_slider.h" />
     <ClInclude Include="src\radi\rddebug\debug_renderer.h" />
+    <ClInclude Include="src\radi\scene2D.h" />
     <ClInclude Include="src\radi\system\Allocator.h" />
     <ClInclude Include="src\radi\system\filesystem.h" />
     <ClInclude Include="src\radi\system\Memory.h" />

@@ -1,7 +1,7 @@
 #include <radi.h>
 
-#include "TestLayer.h"
 #include "Test3D.h"
+#include "Test2D.h"
 #include "Sponza.h"
 
 using namespace radi;
@@ -29,8 +29,8 @@ public:
 		VFS::Get()->Mount("shaders", "shaders");
 
 		//PushLayer(new Test3D());
-		//PushLayer(new Test2D());
-		PushLayer(new Sponza());
+		PushLayer(new Test2D());
+		//PushLayer(new Sponza());
 	}
 };
 

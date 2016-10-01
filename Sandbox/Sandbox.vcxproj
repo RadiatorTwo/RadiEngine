@@ -89,8 +89,8 @@
   <ItemGroup>
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\Sponza.cpp" />
+    <ClCompile Include="src\Test2D.cpp" />
     <ClCompile Include="src\Test3D.cpp" />
-    <ClCompile Include="src\TestLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Radi-core\Radi-core.vcxproj">
@@ -99,8 +99,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Sponza.h" />
+    <ClInclude Include="src\Test2D.h" />
     <ClInclude Include="src\Test3D.h" />
-    <ClInclude Include="src\TestLayer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
