@@ -87,7 +87,7 @@ void Sponza::OnInit(Renderer3D& renderer, Scene& scene)
 	m_Scene->PushLightSetup(lights);
 
 	DebugMenu::Add("Light Direction", &lights->GetLights()[0]->direction, -1.0f, 1.0f);
-	DebugMenu::Add("Light Intensity", &lights->GetLights()[0]->intensity, 0, 100);
+	DebugMenu::Add("Light Intensity", &lights->GetLights()[0]->intensity, 0, 10);
 }
 
 void Sponza::OnTick()

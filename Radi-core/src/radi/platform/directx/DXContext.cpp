@@ -16,6 +16,7 @@ namespace radi { namespace graphics { namespace API {
 	}
 
 	D3DContext::D3DContext(WindowProperties properties, void* deviceContext)
+		: m_DebugLayerEnabled(true)
 	{
 		m_RenderTargetView = nullptr;
 		m_DepthStencilView = nullptr;
@@ -29,7 +30,7 @@ namespace radi { namespace graphics { namespace API {
 	{
 		m_MSAAEnabled = true;
 
-		HRESULT hr = D3D11CreateDevice(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, D3D11_CREATE_DEVICE_DEBUG, NULL, NULL, D3D11_SDK_VERSION, &dev, &m_D3DFeatureLevel, &devcon);
+		HRESULT hr = D3D11CreateDevice(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, m_DebugLayerEnabled ? D3D11_CREATE_DEVICE_DEBUG : D3D11_CREATE_DEVICE_SINGLETHREADED, NULL, NULL, D3D11_SDK_VERSION, &dev, &m_D3DFeatureLevel, &devcon);
 		dev->CheckMultisampleQualityLevels(DXGI_FORMAT_R8G8B8A8_UNORM, 4, &m_MSAAQuality);
 		// assert(m_MSAAQuality > 0);
 
@@ -38,7 +39,7 @@ namespace radi { namespace graphics { namespace API {
 
 		scd.BufferDesc.Width = m_Properties.width;
 		scd.BufferDesc.Height = m_Properties.height;
-		scd.BufferDesc.RefreshRate.Numerator = 60;
+		scd.BufferDesc.RefreshRate.Numerator = 0;
 		scd.BufferDesc.RefreshRate.Denominator = 1;
 		scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
@@ -61,23 +62,26 @@ namespace radi { namespace graphics { namespace API {
 		dxgiFactory->CreateSwapChain(dev, &scd, &swapchain);
 
 		//Start Fullscreen?
-		//swapchain->SetFullscreenState(TRUE, NULL);
-
-		dev->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&m_DebugLayer));
-		m_DebugLayer->ReportLiveDeviceObjects(D3D11_RLDO_SUMMARY);
-
-		ID3D11InfoQueue* infoQueue;
-		dev->QueryInterface(__uuidof(ID3D11InfoQueue), reinterpret_cast<void**>(&infoQueue));
-		D3D11_MESSAGE_ID hide[] = { D3D11_MESSAGE_ID_DEVICE_DRAW_SAMPLER_NOT_SET };
-		D3D11_INFO_QUEUE_FILTER filter;
-		memset(&filter, 0, sizeof(filter));
-		filter.DenyList.NumIDs = 1;
-		filter.DenyList.pIDList = hide;
-		infoQueue->AddStorageFilterEntries(&filter);
+		//swapchain->SetFullscreenState(TRUE, NULL);		
 
 		dxgiFactory->Release();
 		dxgiAdapter->Release();
 		dxgiDevice->Release();
+
+		if (m_DebugLayerEnabled)
+		{
+			dev->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&m_DebugLayer));
+			m_DebugLayer->ReportLiveDeviceObjects(D3D11_RLDO_SUMMARY);
+
+			ID3D11InfoQueue* infoQueue;
+			dev->QueryInterface(__uuidof(ID3D11InfoQueue), reinterpret_cast<void**>(&infoQueue));
+			D3D11_MESSAGE_ID hide[] = { D3D11_MESSAGE_ID_DEVICE_DRAW_SAMPLER_NOT_SET };
+			D3D11_INFO_QUEUE_FILTER filter;
+			memset(&filter, 0, sizeof(filter));
+			filter.DenyList.NumIDs = 1;
+			filter.DenyList.pIDList = hide;
+			infoQueue->AddStorageFilterEntries(&filter);
+		}
 
 		Resize();
 	}

@@ -12,7 +12,7 @@ class Game : public Application
 {
 public:
 	Game()
-		: Application("Sandbox", { 3440, 1440, false, false }, API::RenderAPI::OPENGL)
+		: Application("Sandbox", { 1280, 720, false, false }, API::RenderAPI::DIRECT3D)
 	{
 	}
 

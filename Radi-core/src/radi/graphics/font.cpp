@@ -51,7 +51,9 @@ namespace radi {
 		void Font::UpdateAtlas() const
 		{
 			if (m_FTAtlas->dirty)
+			{
 				m_Texture->SetData(m_FTAtlas->data);
+			}
 		}
 
 		maths::vec2 Font::GetOffsets(const String& text) const
