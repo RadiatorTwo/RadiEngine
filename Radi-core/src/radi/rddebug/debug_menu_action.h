@@ -13,16 +13,115 @@ namespace radi {
 
 		struct IAction
 		{
+			enum class Type
+			{
+				NONE = 0, EMPTY, PATH, BOOLEAN, VALUE, VEC2, VEC3, VEC4
+			};
+
 			String name;
+			Type type;
+
 			virtual void OnAction() = 0;
-			virtual String ToString() = 0;
+			virtual String ToString() const = 0;
 		};
+
+		typedef std::vector<IAction*> ActionList;
 
 		struct EmptyAction : public IAction
 		{
-			EmptyAction(const String& name) { this->name = name; }
+			EmptyAction(const String& name)
+			{
+				this->name = name;
+				type = Type::EMPTY;
+			}
+
 			void OnAction() override {}
-			String ToString() override { return name; }
+			String ToString() const override { return name; }
+		};
+
+		struct BackAction : public IAction
+		{
+			PathAction* destination;
+
+			BackAction(PathAction* destination)
+			{
+				this->name = "..  ";
+				this->destination = destination;
+				type = Type::PATH;
+			}
+
+			void OnAction() override
+			{
+				DebugMenu::SetPath(destination);
+			}
+
+			String ToString() const override
+			{
+				return name;
+			}
+		};
+
+		struct PathAction : public IAction
+		{
+			ActionList actionList;
+			PathAction* parent;
+
+			PathAction(const String& name, PathAction* parent)
+			{
+				this->name = name;
+				this->parent = parent;
+				type = Type::PATH;
+			}
+
+			void OnAction() override
+			{
+				DebugMenu::SetPath(this);
+			}
+
+			String ToString() const override
+			{
+				return name + "  >";
+			}
+
+			bool ContainsAction(const String& name)
+			{
+				for (IAction* action : actionList)
+				{
+					if (action->name == name)
+						return true;
+				}
+				return false;
+			}
+
+			PathAction* FindPath(const String& name)
+			{
+				for (IAction* action : actionList)
+				{
+					if (action->type == IAction::Type::PATH)
+					{
+						PathAction* a = (PathAction*)action;
+						if (a->name == name)
+							return a;
+						else
+							a->FindPath(name);
+					}
+				}
+				return nullptr;
+			}
+
+			bool DeleteChild(PathAction* child)
+			{
+				for (uint i = 0; i < actionList.size(); i++)
+				{
+					if (actionList[i] == child)
+					{
+						rddel actionList[i];
+						actionList.erase(actionList.begin() + i);
+						return true;
+					}
+				}
+				return false;
+			}
 		};
 
 		struct BooleanAction : public IAction
@@ -43,7 +142,7 @@ namespace radi {
 				m_Setter(!m_Getter());
 			}
 
-			String ToString() override
+			String ToString() const override
 			{
 				return name + "     " + (m_Getter() ? "v" : "x");
 			}
@@ -66,10 +165,10 @@ namespace radi {
 
 			void OnAction() override
 			{
-				RADI_ASSERT(false, "Not implemented!");
+				SP_ASSERT(false, "Not implemented!");
 			}
 
-			String ToString() override
+			String ToString() const override
 			{
 				return name + " " + StringFormat::ToString(m_Getter());
 			}
@@ -84,7 +183,7 @@ namespace radi {
 		}
 
 		template<>
-		String ValueAction<float>::ToString()
+		String ValueAction<float>::ToString() const
 		{
 			return name + " " + StringFormat::Float(m_Getter());
 		}
@@ -106,7 +205,7 @@ namespace radi {
 		}
 
 		template<>
-		String ValueAction<maths::vec2>::ToString()
+		String ValueAction<maths::vec2>::ToString() const
 		{
 			return name + " " + StringFormat::Float(m_Getter().x) + ", " + StringFormat::Float(m_Getter().y);
 		}
@@ -130,7 +229,7 @@ namespace radi {
 		}
 
 		template<>
-		String ValueAction<maths::vec3>::ToString()
+		String ValueAction<maths::vec3>::ToString() const
 		{
 			return name + " " + StringFormat::Float(m_Getter().x) + ", " + StringFormat::Float(m_Getter().y) + ", " + StringFormat::Float(m_Getter().z);
 		}
@@ -156,7 +255,7 @@ namespace radi {
 		}
 
 		template<>
-		String ValueAction<maths::vec4>::ToString()
+		String ValueAction<maths::vec4>::ToString() const
 		{
 			return name + " " + StringFormat::Float(m_Getter().x) + ", " + StringFormat::Float(m_Getter().y) + ", " + StringFormat::Float(m_Getter().z) + ", " + StringFormat::Float(m_Getter().w);
 		}
