@@ -2,7 +2,7 @@
 
 #include "radi/rd.h"
 #include "graphics/camera/orthographic_camera.h"
-#include "graphics/batchrenderer2d.h"
+#include "graphics/renderer2d.h"
 #include "entity/entity.h"
 
 #include "radi/utils/Timestep.h"
@@ -15,7 +15,7 @@ namespace radi {
 	{
 	private:
 		graphics::OrthographicCamera* m_Camera;
-		graphics::BatchRenderer2D* m_Renderer;
+		graphics::Renderer2D* m_Renderer;
 
 		std::vector<entity::Entity*> m_Entities;
 		b2World* m_PhysicsWorld;
@@ -29,11 +29,11 @@ namespace radi {
 
 		//virtual void OnUpdate();
 		virtual void OnUpdate(const Timestep& ts);
-		virtual void OnRender(graphics::BatchRenderer2D& renderer);
+		virtual void OnRender(graphics::Renderer2D& renderer);
 
 		void OnRender();
 
-		inline graphics::BatchRenderer2D* GetRenderer() { return m_Renderer; }
+		inline graphics::Renderer2D* GetRenderer() { return m_Renderer; }
 		inline graphics::OrthographicCamera* GetCamera() { return m_Camera; }
 	};
 

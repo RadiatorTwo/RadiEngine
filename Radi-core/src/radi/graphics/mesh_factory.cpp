@@ -1,7 +1,7 @@
 #include "radi/rd.h"
 #include "mesh_factory.h"
 
-#include "radi/graphics/BatchRenderer2D.h"
+#include "radi/graphics/renderer2d.h"
 
 #include "radi/graphics/Renderable2D.h"
 #include "radi/graphics/shaders/Shader.h"

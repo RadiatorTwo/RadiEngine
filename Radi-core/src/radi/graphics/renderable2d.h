@@ -3,7 +3,6 @@
 #include "radi/Common.h"
 #include "radi/radi_types.h"
 
-#include "Renderer2D.h"
 #include "API/Texture.h"
 
 #include "API/VertexBuffer.h"
@@ -14,6 +13,8 @@
 
 namespace radi {
 	namespace graphics {
+
+		class Renderer2D;
 
 		struct RD_API VertexData
 		{

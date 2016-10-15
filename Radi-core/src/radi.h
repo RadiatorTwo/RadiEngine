@@ -26,7 +26,6 @@
 
 #include <radi/graphics/Renderer.h>
 #include <radi/graphics/Renderer2D.h>
-#include <radi/graphics/Batchrenderer2D.h>
 #include <radi/graphics/Renderer3D.h>
 #include <radi/graphics/forward_renderer.h>
 #include <radi/graphics/deferred_renderer.h>

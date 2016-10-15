@@ -1,6 +1,8 @@
 #include "radi/rd.h"
 #include "Renderable2D.h"
 
+#include "Renderer2D.h"
+
 namespace radi {
 	namespace graphics {
 

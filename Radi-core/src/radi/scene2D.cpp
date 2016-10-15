@@ -21,7 +21,7 @@ namespace radi {
 		float aspect = width / height;
 
 		m_Camera = rdnew OrthographicCamera(mat4::Orthographic(-10.0f * aspect, 10.0f * aspect, -10.0f, 10.0f, -1.0f, 1.0f));
-		m_Renderer = rdnew BatchRenderer2D(width, height);
+		m_Renderer = rdnew Renderer2D(width, height);
 		m_Renderer->SetCamera(m_Camera);
 	}
 
@@ -31,7 +31,7 @@ namespace radi {
 		float width = Application::GetApplication().GetWindowWidth();
 		float height = Application::GetApplication().GetWindowHeight();
 
-		m_Renderer = rdnew BatchRenderer2D(width, height);
+		m_Renderer = rdnew Renderer2D(width, height);
 		m_Renderer->SetCamera(m_Camera);
 	}
 
@@ -70,7 +70,7 @@ namespace radi {
 			m_Entities[i]->OnUpdate(ts);
 	}
 
-	void Scene2D::OnRender(BatchRenderer2D& renderer)
+	void Scene2D::OnRender(Renderer2D& renderer)
 	{
 	}
 

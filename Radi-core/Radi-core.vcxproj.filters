@@ -216,9 +216,6 @@
     <ClCompile Include="src\radi\graphics\shaders\shader_uniform.cpp">
       <Filter>Quelldateien\graphics\shaders</Filter>
     </ClCompile>
-    <ClCompile Include="src\radi\graphics\batchrenderer2d.cpp">
-      <Filter>Quelldateien\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\radi\graphics\font.cpp">
       <Filter>Quelldateien\graphics\fonts</Filter>
     </ClCompile>
@@ -616,9 +613,6 @@
     </ClInclude>
     <ClInclude Include="src\radi\graphics\shaders\shader_uniform.h">
       <Filter>Headerdateien\graphics\shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="src\radi\graphics\batchrenderer2d.h">
-      <Filter>Headerdateien\graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\radi\graphics\font.h">
       <Filter>Headerdateien\graphics\fonts</Filter>

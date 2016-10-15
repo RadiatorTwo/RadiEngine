@@ -1,6 +1,8 @@
 #include "radi/rd.h"
 #include "Group.h"
 
+#include "radi/graphics/renderer2d.h"
+
 namespace radi {
 	namespace graphics {
 

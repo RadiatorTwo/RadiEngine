@@ -1,7 +1,7 @@
 #include "radi/rd.h"
 #include "Layer2D.h"
 
-#include "../BatchRenderer2D.h"
+#include "../Renderer2D.h"
 #include "radi/app/Window.h"
 #include "radi/app/Application.h"
 
@@ -13,7 +13,7 @@ namespace radi {
 			float width = Application::GetApplication().GetWindowWidth();
 			float height = Application::GetApplication().GetWindowHeight();
 
-			m_Renderer = rdnew BatchRenderer2D(width, height);
+			m_Renderer = rdnew Renderer2D(width, height);
 			m_Scene = rdnew Scene2D(projectionMatrix);
 			m_Renderer->SetCamera(m_Scene->GetCamera());
 		}
@@ -24,7 +24,7 @@ namespace radi {
 			float width = Application::GetApplication().GetWindowWidth();
 			float height = Application::GetApplication().GetWindowHeight();
 
-			m_Renderer = rdnew BatchRenderer2D(width, height);
+			m_Renderer = rdnew Renderer2D(width, height);
 			m_Renderer->SetCamera(m_Scene->GetCamera());
 		}
 
@@ -58,7 +58,7 @@ namespace radi {
 
 		bool Layer2D::OnResize(uint width, uint height)
 		{
-			((BatchRenderer2D*)m_Renderer)->SetScreenSize(maths::tvec2<uint>(width, height));
+			m_Renderer->SetScreenSize(maths::tvec2<uint>(width, height));
 			m_Scene->GetRenderer()->SetScreenSize(maths::tvec2<uint>(width, height));
 			return false;
 		}
