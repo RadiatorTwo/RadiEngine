@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\radi\graphics\renderer2D.cpp" />
     <ClCompile Include="src\radi\entity\component\physics2Dcomponent.cpp" />
     <ClCompile Include="src\radi\entity\component\sprite_component.cpp" />
     <ClCompile Include="src\radi\events\window_event.cpp" />

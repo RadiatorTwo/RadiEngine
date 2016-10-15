@@ -528,6 +528,9 @@
     <ClCompile Include="src\radi\scene2D.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\radi\graphics\renderer2D.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\radi.h">

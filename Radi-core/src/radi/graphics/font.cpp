@@ -53,7 +53,7 @@ namespace radi {
 			if (m_FTAtlas->dirty)
 			{
 				m_Texture->SetData(m_FTAtlas->data);
-				//m_FTAtlas->dirty = false;
+				m_FTAtlas->dirty = false;
 			}
 		}
 
