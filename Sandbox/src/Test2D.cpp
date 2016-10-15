@@ -39,13 +39,13 @@ void Test2D::OnInit(Renderer2D& renderer, Material& material)
 	middleSquare->CreateComponent<Physics2DComponent>();
 	m_Scene->Add(middleSquare);
 
-	Entity* leftSquare = rdnew Entity(rdnew Sprite(-16.0f, -8.0f, 0.5f, 16.0f, 0xffffffff));
+	/*Entity* leftSquare = rdnew Entity(rdnew Sprite(-16.0f, -8.0f, 0.5f, 16.0f, 0xffffffff));
 	leftSquare->CreateComponent<Physics2DComponent>();
 	m_Scene->Add(leftSquare);
 
 	Entity* rightSquare = rdnew Entity(rdnew Sprite(16.0f, -8.0f, 0.5f, 16.0f, 0xffffffff));
 	rightSquare->CreateComponent<Physics2DComponent>();
-	m_Scene->Add(rightSquare);
+	m_Scene->Add(rightSquare);*/
 
 
 

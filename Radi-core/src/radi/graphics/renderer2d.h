@@ -2,15 +2,15 @@
 
 #include <vector>
 
-#include "Font.h"
+#include "font.h"
 #include "font_manager.h"
-#include "API/Texture.h"
-#include "Mask.h"
+#include "API/texture.h"
+#include "mask.h"
 
 #include "../maths/maths.h"
 #include "postfx/post_effects.h"
 
-#include "radi/graphics/camera/Camera.h"
+#include "radi/graphics/camera/camera.h"
 
 namespace radi {
 	namespace graphics {
@@ -23,8 +23,12 @@ namespace radi {
 			BUFFER = 1
 		};
 
+		// TODO: Put BatchRenderer2D into this class
 		class RD_API Renderer2D
 		{
+		protected:
+			static bool s_PostEffectsEnabled;
+			static bool s_MaskEnabled;
 		protected:
 			std::vector<maths::mat4> m_TransformationStack;
 			const maths::mat4* m_TransformationBack;

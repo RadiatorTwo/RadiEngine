@@ -39,6 +39,28 @@ namespace radi {
 			String ToString() const override { return name; }
 		};
 
+		struct CustomAction : public IAction
+		{
+		private:
+			std::function<void()> m_Function;
+		public:
+			CustomAction(const String& name, const std::function<void()>& function)
+				: m_Function(function)
+			{
+				this->name = name;
+			}
+
+			void OnAction() override
+			{
+				m_Function();
+			}
+
+			String ToString() const override
+			{
+				return name;
+			}
+		};
+
 		struct BackAction : public IAction
 		{
 			PathAction* destination;

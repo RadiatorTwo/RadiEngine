@@ -4,8 +4,8 @@
 #include "radi/Common.h"
 #include "radi/radi_types.h"
 
-#include "Renderer2D.h"
-#include "Renderable2D.h"
+#include "renderer2d.h"
+#include "renderable2d.h"
 #include "API/Framebuffer2D.h"
 #include "font_manager.h"
 

@@ -1,5 +1,5 @@
 #include "radi/rd.h"
-#include "BatchRenderer2D.h"
+#include "batchrenderer2d.h"
 
 #include "shaders/shader_factory.h"
 #include "mesh_factory.h"
@@ -10,7 +10,8 @@
 
 #include "radi/utils/Log.h"
 
-#include "Renderer.h"
+#include "renderer.h"
+#include "radi/rddebug/debug_menu.h"
 
 #include <freetype-gl/freetype-gl.h>
 
@@ -122,6 +123,9 @@ namespace radi {
 			m_PostEffects = new PostEffects();
 			m_PostEffectsBuffer = Framebuffer2D::Create(m_ViewportSize.x, m_ViewportSize.y);
 #endif
+
+			debug::DebugMenu::Add(String("Renderer2D/Post Effects"), &s_PostEffectsEnabled);
+			debug::DebugMenu::Add(String("Renderer2D/Mask"), &s_MaskEnabled);
 		}
 
 		float BatchRenderer2D::SubmitTexture(API::Texture* texture)
@@ -223,7 +227,7 @@ namespace radi {
 			float mid = m_Mask ? SubmitTexture(m_Mask->texture) : 0.0f;
 			float ms = 0.0f;
 
-			if (m_Mask != nullptr)
+			if (s_MaskEnabled && m_Mask != nullptr)
 			{
 				maskTransform = mat4::Invert(m_Mask->transform);
 				ms = SubmitTexture(m_Mask->texture);
@@ -276,7 +280,7 @@ namespace radi {
 			float mid = m_Mask ? SubmitTexture(m_Mask->texture) : 0.0f;
 
 			float ms = 0.0f;
-			if (m_Mask != nullptr)
+			if (s_MaskEnabled && m_Mask != nullptr)
 			{
 				maskTransform = mat4::Invert(m_Mask->transform);
 				ms = SubmitTexture(m_Mask->texture);
@@ -328,17 +332,17 @@ namespace radi {
 			DrawLine(start.x, start.y, end.x, end.y, color, thickness);
 		}
 
-		void BatchRenderer2D::DrawRect(const maths::vec2& position, const maths::vec2& size, uint color)
-		{
-			DrawRect(position.x, position.y, size.x, size.y, color);
-		}
-
 		void BatchRenderer2D::DrawRect(float x, float y, float width, float height, uint color)
 		{
 			DrawLine(x, y, x + width, y, color);
 			DrawLine(x + width, y, x + width, y + height, color);
 			DrawLine(x + width, y + height, x, y + height, color);
 			DrawLine(x, y + height, x, y, color);
+		}
+
+		void BatchRenderer2D::DrawRect(const maths::vec2& position, const maths::vec2& size, uint color)
+		{
+			DrawRect(position.x, position.y, size.x, size.y, color);
 		}
 
 		void BatchRenderer2D::DrawRect(const Rectangle& rectangle, uint color)
@@ -423,7 +427,7 @@ namespace radi {
 			float mid = m_Mask ? SubmitTexture(m_Mask->texture) : 0.0f;
 
 			float ms = 0.0f;
-			if (m_Mask != nullptr)
+			if (s_MaskEnabled && m_Mask != nullptr)
 			{
 				maskTransform = mat4::Invert(m_Mask->transform);
 				ms = SubmitTexture(m_Mask->texture);
@@ -512,7 +516,7 @@ namespace radi {
 				RADI_ASSERT(false); // Currently unsupported
 #if 0
 								  // Post Effects pass should go here!
-				if (m_PostEffectsEnabled)
+				if (s_PostEffectsEnabled && m_PostEffectsEnabled)
 					m_PostEffects->RenderPostEffects(m_Framebuffer, m_PostEffectsBuffer, m_ScreenQuad, m_IBO);
 
 				// Display Framebuffer - potentially move to Framebuffer class
@@ -534,8 +538,8 @@ namespace radi {
 				m_IBO->Unbind();
 				m_ScreenQuad->Unbind();
 #endif
+			}
 		}
-	}
 
-}
+	}
 }

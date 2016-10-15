@@ -48,12 +48,17 @@ namespace radi {
 
 		void DebugMenu::Add(const String& path)
 		{
-			s_Instance->Add(path, rdnew EmptyAction(path));
+			Add(path, rdnew EmptyAction(path));
+		}
+
+		void DebugMenu::Add(const String& path, const std::function<void()>& function)
+		{
+			Add(path, rdnew CustomAction(path, function));
 		}
 
 		void DebugMenu::Add(const String& path, bool* value)
 		{
-			s_Instance->Add(path, rdnew BooleanAction(path, [value]() { return *value; }, [value](bool v) { *value = v; }));
+			Add(path, rdnew BooleanAction(path, [value]() { return *value; }, [value](bool v) { *value = v; }));
 		}
 
 		void DebugMenu::Add(const String& path, float* value)
@@ -63,22 +68,22 @@ namespace radi {
 
 		void DebugMenu::Add(const String& path, float* value, float minimum, float maximum)
 		{
-			s_Instance->Add(path, rdnew FloatAction(path, [value]() { return *value; }, [value](float v) { *value = v; }, minimum, maximum));
+			Add(path, rdnew FloatAction(path, [value]() { return *value; }, [value](float v) { *value = v; }, minimum, maximum));
 		}
 
 		void DebugMenu::Add(const String& path, vec2* value, float minimum, float maximum)
 		{
-			s_Instance->Add(path, rdnew Vec2Action(path, [value]() { return *value; }, [value](vec2 v) { *value = v; }, vec2(minimum), vec2(maximum)));
+			Add(path, rdnew Vec2Action(path, [value]() { return *value; }, [value](vec2 v) { *value = v; }, vec2(minimum), vec2(maximum)));
 		}
 
 		void DebugMenu::Add(const String& path, vec3* value, float minimum, float maximum)
 		{
-			s_Instance->Add(path, rdnew Vec3Action(path, [value]() { return *value; }, [value](vec3 v) { *value = v; }, vec3(minimum), vec3(maximum)));
+			Add(path, rdnew Vec3Action(path, [value]() { return *value; }, [value](vec3 v) { *value = v; }, vec3(minimum), vec3(maximum)));
 		}
 
 		void DebugMenu::Add(const String& path, vec4* value, float minimum, float maximum)
 		{
-			s_Instance->Add(path, rdnew Vec4Action(path, [value]() { return *value; }, [value](vec4 v) { *value = v; }, vec4(minimum), vec4(maximum)));
+			Add(path, rdnew Vec4Action(path, [value]() { return *value; }, [value](vec4 v) { *value = v; }, vec4(minimum), vec4(maximum)));
 		}
 
 		void DebugMenu::Add(const String& path, IAction* action)
@@ -88,7 +93,7 @@ namespace radi {
 				std::vector<String> paths = SplitString(path, "/");
 				action->name = paths.back();
 				paths.pop_back();
-				PathAction* pathAction = CreateOrFindPaths(paths);
+				PathAction* pathAction = s_Instance->CreateOrFindPaths(paths);
 				RADI_ASSERT(pathAction);
 				if (!pathAction->ContainsAction(action->name))
 					pathAction->actionList.push_back(action);
@@ -97,9 +102,9 @@ namespace radi {
 			}
 			else
 			{
-				m_ActionList.push_back(action);
+				s_Instance->m_ActionList.push_back(action);
 			}
-			Refresh();
+			s_Instance->Refresh();
 		}
 
 		PathAction* DebugMenu::CreateOrFindPaths(std::vector<String>& paths, PathAction* action)

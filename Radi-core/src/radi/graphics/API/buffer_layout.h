@@ -9,7 +9,6 @@
 
 #include "radi/platform/opengl/GLTypes.h"
 #include "radi/platform/directx/DXTypes.h"
-#include "radi/utils/log.h"
 
 namespace radi {
 	namespace graphics {
@@ -36,7 +35,7 @@ namespace radi {
 				template<typename T>
 				void Push(const String& name, uint count = 1, bool normalized = false)
 				{
-					RADI_ASSERT(false, "Unkown type!");
+					RADI_ASSERT(false, "Unknown type!");
 				}
 
 				template<>
