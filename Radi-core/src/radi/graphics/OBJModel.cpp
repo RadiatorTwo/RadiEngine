@@ -88,10 +88,10 @@ namespace radi {
 					InsertVertex(vertices, indices, mapping, inputVertices, indexSet[2]);
 				}
 				if (i++ % 1000 == 0)
-					SP_INFO((int32)((i / (float)lines.size()) * 100.0f), "%");
+					RADI_INFO((int32)((i / (float)lines.size()) * 100.0f), "%");
 			}
-			SP_INFO("100%");
-			SP_INFO("Loaded ", path);
+			RADI_INFO("100%");
+			RADI_INFO("Loaded ", path);
 
 			API::Buffer* buffer = new API::Buffer(GL_ARRAY_BUFFER, GL_STATIC_DRAW);
 			buffer->Bind();

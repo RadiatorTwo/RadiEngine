@@ -144,9 +144,9 @@ namespace radi {
 
 	String Application::GetBuildConfiguration()
 	{
-#if defined(SP_DEBUG)
+#if defined(RADI_DEBUG)
 		return "Debug";
-#elif defined(SP_RELEASE)
+#elif defined(RADI_RELEASE)
 		return "Release";
 #else
 		return "Unknown Build Configuration";

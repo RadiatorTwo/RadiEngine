@@ -443,13 +443,13 @@ namespace radi { namespace graphics { namespace API {
 	void GLShader::ValidateUniforms()
 	{
 // 		if (!HasUniform(SHADER_UNIFORM_PROJECTION_MATRIX_NAME))
-// 			SP_WARN(m_Name, " shader does not contain pr_matrix uniform.");
+// 			RADI_WARN(m_Name, " shader does not contain pr_matrix uniform.");
 // 		if (!HasUniform(SHADER_UNIFORM_VIEW_MATRIX_NAME))
-// 			SP_WARN(m_Name, " shader does not contain vw_matrix uniform.");
+// 			RADI_WARN(m_Name, " shader does not contain vw_matrix uniform.");
 // 		if (!HasUniform(SHADER_UNIFORM_MODEL_MATRIX_NAME))
-// 			SP_WARN(m_Name, " shader does not contain ml_matrix uniform.");
+// 			RADI_WARN(m_Name, " shader does not contain ml_matrix uniform.");
 // 
-// 		SP_INFO(m_Name, " shader successfully validated.");
+// 		RADI_INFO(m_Name, " shader successfully validated.");
 	}
 
 	bool GLShader::IsSystemUniform(ShaderUniformDeclaration* uniform) const
@@ -459,7 +459,7 @@ namespace radi { namespace graphics { namespace API {
 
 	GLint GLShader::GetUniformLocation(const String& name)
 	{
-		// SP_INFO("Retrieving uniform location for '", name, "'");
+		// RADI_INFO("Retrieving uniform location for '", name, "'");
 		GLCall(GLint result = glGetUniformLocation(m_Handle, name.c_str()));
 		if (result == -1)
 			RADI_ERROR(m_Name, ": could not find uniform ", name, " in shader!");

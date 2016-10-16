@@ -160,7 +160,7 @@ namespace radi {
 		{
 #if 0
 			if (!textureID)
-				SP_WARN("Invalid texture ID submitted!");
+				RADI_WARN("Invalid texture ID submitted!");
 #endif
 			float result = 0.0f;
 			bool found = false;

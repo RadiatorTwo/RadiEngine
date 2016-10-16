@@ -136,7 +136,7 @@ namespace radi {
 				SetSystemUniforms(command.shader);
 				command.mesh->Render(*this);
 
-#if defined(SP_DEBUG) && 0
+#if defined(RADI_DEBUG) && 0
 				uint j;
 				for (j = 0; j < command.uniforms.size(); j++)
 				{

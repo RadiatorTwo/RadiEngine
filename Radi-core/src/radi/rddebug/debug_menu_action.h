@@ -187,7 +187,7 @@ namespace radi {
 
 			void OnAction() override
 			{
-				SP_ASSERT(false, "Not implemented!");
+				RADI_ASSERT(false, "Not implemented!");
 			}
 
 			String ToString() const override

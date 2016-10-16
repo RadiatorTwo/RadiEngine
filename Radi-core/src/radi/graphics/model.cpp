@@ -133,7 +133,7 @@ namespace radi {
 			API::IndexBuffer* ib = API::IndexBuffer::Create((uint*)format.indexData, format.indexBufferSize / sizeof(uint));
 			m_Mesh = rdnew Mesh(va, ib, nullptr);
 
-#ifdef SP_DEBUG
+#ifdef RADI_DEBUG
 			m_Mesh->SetDebugData((Vertex*)format.vertexData, format.vertexBufferSize / sizeof(Vertex));
 #else
 #endif
