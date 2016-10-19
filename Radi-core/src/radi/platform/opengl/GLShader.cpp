@@ -51,9 +51,7 @@ namespace radi { namespace graphics { namespace API {
 		Parse(m_VertexSource, m_FragmentSource);
 		GLShaderErrorInfo error;
 		m_Handle = Compile(shaders, error);
-		if (!m_Handle)
-			RADI_ERROR(error.message[error.shader]);
-		RADI_ASSERT(m_Handle);
+		RADI_ASSERT(m_Handle, error.shader, error.message[error.shader]);
 		ResolveUniforms();
 		ValidateUniforms();
 	}
