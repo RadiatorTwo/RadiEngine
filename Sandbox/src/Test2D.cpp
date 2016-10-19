@@ -24,13 +24,12 @@ Test2D::~Test2D()
 }
 
 void Test2D::OnInit(Renderer2D& renderer, Material& material)
-{
-	// m_Window->SetVsync(false);
+{	
 	m_Renderer = &renderer;
 
 	renderer.SetRenderTarget(RenderTarget::SCREEN);
 	//renderer.AddPostEffectsPass(new PostEffectsPass(Shader::CreateFromFile("Horizontal Blur", "shaders/postfx.shader")));
-	//renderer.SetPostEffects(false);
+	renderer.SetPostEffects(false);
 
 	TextureParameters params(TextureFilter::NEAREST);
 	//Add(new Sprite(0.0f, 0.0f, 4, 4, Texture2D::CreateFromFile("Tex", "res/tb.png", params)));
@@ -39,13 +38,13 @@ void Test2D::OnInit(Renderer2D& renderer, Material& material)
 	middleSquare->CreateComponent<Physics2DComponent>();
 	m_Scene->Add(middleSquare);
 
-	/*Entity* leftSquare = rdnew Entity(rdnew Sprite(-16.0f, -8.0f, 0.5f, 16.0f, 0xffffffff));
+	Entity* leftSquare = rdnew Entity(rdnew Sprite(-16.0f, -8.0f, 0.5f, 16.0f, 0xffffffff));
 	leftSquare->CreateComponent<Physics2DComponent>();
 	m_Scene->Add(leftSquare);
 
 	Entity* rightSquare = rdnew Entity(rdnew Sprite(16.0f, -8.0f, 0.5f, 16.0f, 0xffffffff));
 	rightSquare->CreateComponent<Physics2DComponent>();
-	m_Scene->Add(rightSquare);*/
+	m_Scene->Add(rightSquare);
 
 
 
@@ -68,9 +67,9 @@ void Test2D::OnInit(Renderer2D& renderer, Material& material)
 	Add(new Label("Brush Script", -15.5f, 2.0f, FontManager::Get("Brush Script"), 0xffffffff));
 
 	Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
-	Mask* mask = new Mask(Texture2D::CreateFromFile("Mask", "res/mask.png"));
+	/*Mask* mask = new Mask(Texture2D::CreateFromFile("Mask", "res/mask.png"));
 	mask->transform = mat4::Translate(vec3(-16.0f, -9.0f, 0.0f)) * mat4::Scale(vec3(32, 18, 1));
-	SetMask(mask);
+	SetMask(mask);*/
 
 	/*for (int i = 0; i < 100; i++)
 	{
