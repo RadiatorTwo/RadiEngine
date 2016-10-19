@@ -54,6 +54,8 @@ namespace radi {
 				{
 					m_Yaw += mouse.x * m_MouseSensitivity;
 					m_Pitch += mouse.y * m_MouseSensitivity;
+					if (m_Pitch < -1.5f) m_Pitch = -1.5f;
+					if (m_Pitch > 1.75f) m_Pitch = 1.75f;
 				}
 				m_MouseWasGrabbed = true;
 
