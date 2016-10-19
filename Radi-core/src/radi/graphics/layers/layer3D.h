@@ -24,7 +24,6 @@ namespace radi {
 
 			inline Scene* GetScene() const { return m_Scene; }
 
-			void OnUpdateInternal(const Timestep& ts) override;
 			void OnRender() override;
 			virtual void OnRender(Renderer3D& renderer);
 		protected:

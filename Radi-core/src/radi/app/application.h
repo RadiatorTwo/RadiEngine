@@ -7,7 +7,6 @@
 #include "radi/app/Window.h"
 #include "radi/graphics/layers/Layer.h"
 #include "radi/utils/Timer.h"
-#include "radi/utils/timestep.h"
 
 #include "radi/events/Events.h"
 
@@ -71,7 +70,7 @@ namespace radi {
 		void Run();
 
 		void OnTick();
-		void OnUpdate(const Timestep& ts);
+		void OnUpdate();
 		void OnRender();
 	private:
 		void OnEvent(events::Event& event);

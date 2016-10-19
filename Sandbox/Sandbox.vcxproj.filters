@@ -30,9 +30,6 @@
     <ClCompile Include="src\Test2D.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game2D.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Test3D.h">
@@ -42,9 +39,6 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="src\Test2D.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Game2D.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

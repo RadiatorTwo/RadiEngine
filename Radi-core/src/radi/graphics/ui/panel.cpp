@@ -108,7 +108,7 @@ namespace radi {
 				return false;
 			}
 
-			void Panel::OnUpdate(const Timestep& ts)
+			void Panel::OnUpdate()
 			{
 				for (Widget* widget : m_Widgets)
 				{

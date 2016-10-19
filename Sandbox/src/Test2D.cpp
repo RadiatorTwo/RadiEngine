@@ -8,10 +8,6 @@ using namespace component;
 using namespace maths;
 using namespace API;
 
-static float s_BoxSize = 0.1f;
-static bool s_run = false;
-static int s_count = 0;
-
 Test2D::Test2D()
 	: Layer2D(rdnew Scene2D(mat4::Orthographic(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f)))
 {
@@ -34,16 +30,16 @@ void Test2D::OnInit(Renderer2D& renderer, Material& material)
 	TextureParameters params(TextureFilter::NEAREST);
 	//Add(new Sprite(0.0f, 0.0f, 4, 4, Texture2D::CreateFromFile("Tex", "res/tb.png", params)));
 
-	Entity* middleSquare = rdnew Entity(rdnew Sprite(0.0f, -8.0f, 3, 3, 0xffffffff));
-	middleSquare->CreateComponent<Physics2DComponent>();
+	Entity* middleSquare = rdnew Entity(rdnew Sprite(5.0f, -8.0f, 3, 3, 0xff00ffff));
+	
 	m_Scene->Add(middleSquare);
 
 	Entity* leftSquare = rdnew Entity(rdnew Sprite(-16.0f, -8.0f, 0.5f, 16.0f, 0xffffffff));
-	leftSquare->CreateComponent<Physics2DComponent>();
+	
 	m_Scene->Add(leftSquare);
 
 	Entity* rightSquare = rdnew Entity(rdnew Sprite(16.0f, -8.0f, 0.5f, 16.0f, 0xffffffff));
-	rightSquare->CreateComponent<Physics2DComponent>();
+	
 	m_Scene->Add(rightSquare);
 
 
@@ -79,8 +75,6 @@ void Test2D::OnInit(Renderer2D& renderer, Material& material)
 
 		p.ApplyForce(((rand() % 1000) - 500) * 0.005f);
 	}*/
-
-	debug::DebugMenu::Add("Box Size", &s_BoxSize, 0.0f, 1.0f);
 }
 
 void Test2D::OnTick()
@@ -89,25 +83,14 @@ void Test2D::OnTick()
 
 	Application& app = Application::GetApplication();
 	RADI_INFO(app.GetUPS(), " ups, ", app.GetFPS(), " fps");
-	RADI_INFO(s_count, "cubes");
 
 	debugInfo[2]->SetText("Total Allocs: " + StringFormat::ToString(MemoryManager::Get()->GetMemoryStats().totalAllocations));
 	debugInfo[3]->SetText("Total Allocated: " + MemoryManager::BytesToString(MemoryManager::Get()->GetMemoryStats().totalAllocated));
 	debugInfo[4]->SetText("Total Freed: " + MemoryManager::BytesToString(MemoryManager::Get()->GetMemoryStats().totalFreed));
 }
 
-void Test2D::OnUpdate(const Timestep& ts)
-{
-	if (s_run)
-	{
-		Entity* entity = rdnew Entity(rdnew Sprite(0.0f, 9.0f, s_BoxSize, s_BoxSize, vec4((rand() % 1000) / 1000.0f, 0.5f, 0.5f, 1.0f)));
-		Physics2DComponent& p = entity->CreateComponent<Physics2DComponent>();
-		m_Scene->Add(entity);
-
-		p.ApplyForce(((rand() % 1000) - 500) * 0.005f);
-
-		s_count++;
-	}
+void Test2D::OnUpdate()
+{	
 }
 
 bool Test2D::OnKeyPressedEvent(KeyPressedEvent& event)
@@ -131,30 +114,11 @@ bool Test2D::OnKeyPressedEvent(KeyPressedEvent& event)
 		return true;
 	}
 
-	if (event.GetKeyCode() == RD_KEY_SPACE)
-	{
-		s_run = !s_run;
-		return true;
-	}
-
 	return false;
 }
 
 bool Test2D::OnMousePressedEvent(MousePressedEvent& event)
-{
-	if (event.GetButton() == RD_MOUSE_LEFT)
-	{
-		vec2 pos = event.GetPosition();
-		pos.x = pos.x / Application::GetApplication().GetWindowWidth() * 32.0f - 16.0f;
-		pos.y = 9.0f - pos.y / Application::GetApplication().GetWindowHeight() * 18.0f;
-
-		Entity* entity = rdnew Entity(new Sprite(pos.x, pos.y, s_BoxSize, s_BoxSize, vec4((rand() % 1000) / 1000.0f, 0.5f, 0.5f, 1.0f)));
-		Physics2DComponent& p = entity->CreateComponent<Physics2DComponent>();
-		m_Scene->Add(entity);
-		p.ApplyForce(((rand() % 1000) - 500) * 0.005f);
-
-		return true;
-	}
+{	
 	return false;
 }
 

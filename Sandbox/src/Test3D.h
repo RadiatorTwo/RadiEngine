@@ -25,7 +25,7 @@ public:
 	void OnInit(radi::graphics::Renderer3D& renderer, radi::graphics::Scene& scene) override;
 
 	void OnTick() override;
-	void OnUpdate(const radi::Timestep& ts) override;
+	void OnUpdate() override;
 	void OnEvent(radi::events::Event& event) override;
 
 	void OnRender(radi::graphics::Renderer3D& renderer);

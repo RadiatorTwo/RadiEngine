@@ -35,7 +35,7 @@ namespace radi {
 			void OnInit(graphics::Renderer2D& renderer, graphics::Material& material) override;
 
 			void OnTick() override;
-			void OnUpdate(const Timestep& ts) override;
+			void OnUpdate() override;
 
 			void OnEvent(events::Event& event) override;
 			bool OnMouseMovedEvent(events::MouseMovedEvent& e);

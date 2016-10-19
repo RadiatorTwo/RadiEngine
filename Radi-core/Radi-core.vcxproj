@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\radi\graphics\renderer2D.cpp" />
-    <ClCompile Include="src\radi\entity\component\physics2Dcomponent.cpp" />
     <ClCompile Include="src\radi\entity\component\sprite_component.cpp" />
     <ClCompile Include="src\radi\events\window_event.cpp" />
     <ClCompile Include="src\radi\graphics\API\Context.cpp" />
@@ -408,7 +407,6 @@
     <ClInclude Include="src\radi\audio\sound.h" />
     <ClInclude Include="src\radi\audio\sound_manager.h" />
     <ClInclude Include="src\radi\common.h" />
-    <ClInclude Include="src\radi\entity\component\physics2Dcomponent.h" />
     <ClInclude Include="src\radi\entity\component\sprite_component.h" />
     <ClInclude Include="src\radi\events\window_event.h" />
     <ClInclude Include="src\radi\graphics\API\Context.h" />
@@ -540,16 +538,12 @@
     <ClInclude Include="src\radi\utils\image_load.h" />
     <ClInclude Include="src\radi\utils\log.h" />
     <ClInclude Include="src\radi\utils\timer.h" />
-    <ClInclude Include="src\radi\utils\timestep.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\radi\embedded\files\SourceSansPro-Light.embed" />
     <None Include="src\radi\platform\opengl\shaders\BatchRenderer.shader" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dependencies\Box2D\Box2D.vcxproj">
-      <Project>{98400d17-43a5-1a40-95be-c53ac78e7694}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Dependencies\FreeImage\FreeImage.vcxproj">
       <Project>{6f2ff135-e343-4138-a6fb-2d1f2540a3f8}</Project>
     </ProjectReference>

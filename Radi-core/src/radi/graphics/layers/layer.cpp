@@ -35,11 +35,7 @@ namespace radi {
 		{
 		}
 
-		void Layer::OnUpdate(const Timestep& ts)
-		{
-		}
-
-		void Layer::OnUpdateInternal(const Timestep& ts)
+		void Layer::OnUpdate()
 		{
 		}
 

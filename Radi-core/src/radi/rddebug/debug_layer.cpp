@@ -47,7 +47,7 @@ namespace radi {
 			m_MemoryUsageLabel->SetText(MemoryManager::BytesToString(MemoryManager().Get()->GetMemoryStats().currentUsed));
 		}
 
-		void DebugLayer::OnUpdate(const Timestep& ts)
+		void DebugLayer::OnUpdate()
 		{
 			DebugMenu::Get()->OnUpdate();
 
