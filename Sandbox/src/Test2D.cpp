@@ -20,7 +20,7 @@ Test2D::~Test2D()
 }
 
 void Test2D::OnInit(Renderer2D& renderer, Material& material)
-{	
+{
 	m_Renderer = &renderer;
 
 	renderer.SetRenderTarget(RenderTarget::SCREEN);
@@ -30,22 +30,42 @@ void Test2D::OnInit(Renderer2D& renderer, Material& material)
 	TextureParameters params(TextureFilter::NEAREST);
 	//Add(new Sprite(0.0f, 0.0f, 4, 4, Texture2D::CreateFromFile("Tex", "res/tb.png", params)));
 
-	Entity* middleSquare = rdnew Entity(rdnew Sprite(5.0f, -8.0f, 3, 3, 0xff00ffff));
-	
-	m_Scene->Add(middleSquare);
+	m_texBackground1 = Texture2D::CreateFromFile("res/MarioGame/Background/Ghost1.png", params);
+	m_texBackground2 = Texture2D::CreateFromFile("res/MarioGame/Background/Ghost2.png", params);
+	m_texBackground3 = Texture2D::CreateFromFile("res/MarioGame/Background/Ghost3.png", params);
 
-	Entity* leftSquare = rdnew Entity(rdnew Sprite(-16.0f, -8.0f, 0.5f, 16.0f, 0xffffffff));
-	
-	m_Scene->Add(leftSquare);
+	m_texGroundTileLeft = Texture2D::CreateFromFile("res/MarioGame/Tiles/Ghost/GroundLeft.png", params);
+	m_texGroundTileMiddle = Texture2D::CreateFromFile("res/MarioGame/Tiles/Ghost/GroundMiddle.png", params);
+	m_texGroundTileRight = Texture2D::CreateFromFile("res/MarioGame/Tiles/Ghost/GroundRight.png", params);
 
-	Entity* rightSquare = rdnew Entity(rdnew Sprite(16.0f, -8.0f, 0.5f, 16.0f, 0xffffffff));
-	
-	m_Scene->Add(rightSquare);
+	int count = 0;
+	float widthBackground = 5.12f * 2;
 
+	float position = -16.0f;
+	for (float i = -16.0f; i < 16.0f; i += widthBackground)
+	{
+		m_backgroundArray.push_back(new Sprite(i + widthBackground, 0, 5.12f * 2, 4.32f * 2, m_texBackground1));
+		Add(m_backgroundArray[count]);
+		count++;
+	}
 
+	count = 0;
+	float widthGround = 0.16f * 2;
 
-	FontManager::Add(new Font("Consolas", "res/consola.ttf", 96));
-	FontManager::Add(new Font("Brush Script", "res/BrushScriptStd.otf", 96));
+	for (float i = -16.0f; i < 16.0f; i += widthGround)
+	{
+		m_groundTileArray.push_back(new Sprite(i + widthGround, -9.0f + (0.16f * 4), 0.16f * 2, 0.16f * 2, m_texGroundTileMiddle));
+		Add(m_groundTileArray[count]);
+		count++;
+	}
+
+	m_texMarioBigStill = Texture2D::CreateFromFile("res/MarioGame/Mario/MarioBigStill.png", params);
+	m_texMarioBigWalk = Texture2D::CreateFromFile("res/MarioGame/Mario/MarioBigWalk.png", params);
+	m_texMarioBigRun = Texture2D::CreateFromFile("res/MarioGame/Mario/MarioBigRun.png", params);
+
+	m_marioSprite = rdnew Sprite(0.0f, 0.0f, 0.15f * 2, 0.28f * 2, m_texMarioBigStill);
+	m_mario = rdnew Entity(m_marioSprite);
+	m_Scene->Add(m_mario);
 
 	debugInfo = new Label*[10];
 	debugInfo[0] = rdnew Label("", -15.5f, 8.5f, 0xffffffff);
@@ -58,9 +78,6 @@ void Test2D::OnInit(Renderer2D& renderer, Material& material)
 	Add(debugInfo[2]);
 	Add(debugInfo[3]);
 	Add(debugInfo[4]);
-
-	Add(new Label("Consolas", -15.5f, 0.0f, FontManager::Get("Consolas"), 0xffffffff));
-	Add(new Label("Brush Script", -15.5f, 2.0f, FontManager::Get("Brush Script"), 0xffffffff));
 
 	Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
 	/*Mask* mask = new Mask(Texture2D::CreateFromFile("Mask", "res/mask.png"));
@@ -89,8 +106,122 @@ void Test2D::OnTick()
 	debugInfo[4]->SetText("Total Freed: " + MemoryManager::BytesToString(MemoryManager::Get()->GetMemoryStats().totalFreed));
 }
 
+static float speed = 0.1f;
+static float gravity = 0.2f;
+int backgroundCounter = 0;
+int backgroundIndex = 1;
 void Test2D::OnUpdate()
-{	
+{
+	AABB mario = m_marioSprite->GetBoundingBox();
+	vec2 marioPosition = m_marioSprite->GetPosition();
+	bool intersects = false;
+	for (int i = 0; i < m_groundTileArray.size(); i++)
+	{
+		AABB tile = m_groundTileArray[i]->GetBoundingBox();
+		if (tile.Intersects(mario))
+		{
+			intersects = true;
+			break;
+		}
+	}
+
+	if (!intersects)
+	{
+		marioPosition.y -= gravity;
+		m_marioSprite->SetPosition(marioPosition);
+	}
+
+
+	backgroundCounter++;
+	if (backgroundCounter == 15)
+	{
+		if (backgroundIndex == 3)
+		{
+			backgroundIndex = 1;
+		}
+		else
+		{
+			backgroundIndex++;
+		}
+
+		for (int i = 0; i < m_backgroundArray.size(); i++)
+		{
+			switch (backgroundIndex)
+			{
+			case 1:
+				m_backgroundArray[i]->SetTexture(m_texBackground1);
+				break;
+			case 2:
+				m_backgroundArray[i]->SetTexture(m_texBackground2);
+				break;
+			case 3:
+				m_backgroundArray[i]->SetTexture(m_texBackground3);
+				break;
+			}
+		}
+
+		backgroundCounter = 0;
+	}
+
+	/*if (Input::IsKeyPressed(RD_KEY_LEFT))
+	{
+		for (int i = 0; i < m_backgroundArray.size(); i++)
+		{
+			vec2 pos = m_backgroundArray[i]->GetPosition();
+			pos.x += speed;
+			m_backgroundArray[i]->SetPosition(pos);
+		}
+
+		for (int i = 0; i < m_groundTileArray.size(); i++)
+		{
+			vec2 pos = m_groundTileArray[i]->GetPosition();
+			pos.x += speed;
+			m_groundTileArray[i]->SetPosition(pos);
+		}
+	}
+	else if (Input::IsKeyPressed(RD_KEY_RIGHT))
+	{
+		for (int i = 0; i < m_backgroundArray.size(); i++)
+		{
+			vec2 pos = m_backgroundArray[i]->GetPosition();
+			pos.x -= speed;
+			m_backgroundArray[i]->SetPosition(pos);
+		}
+
+		for (int i = 0; i < m_groundTileArray.size(); i++)
+		{
+			vec2 pos = m_groundTileArray[i]->GetPosition();
+			pos.x -= speed;
+			m_groundTileArray[i]->SetPosition(pos);
+		}
+
+		if (m_groundTileArray[m_groundTileArray.size()]->GetPosition().x + 0.8f < 16.0f)
+		{
+			vec2 posLastTile = m_groundTileArray[m_groundTileArray.size()]->GetPosition();
+
+			m_groundTileArray.erase(m_groundTileArray.begin());
+
+			m_groundTileArray.push_back(rdnew Sprite(posLastTile.x + 0.16f, posLastTile.y, 0.16f * 2, 0.16f * 2, m_texGroundTileMiddle));
+			Add(m_groundTileArray[m_groundTileArray.size()]);
+		}
+	}
+	else if (!Input::IsKeyPressed(RD_KEY_LEFT) && !Input::IsKeyPressed(RD_KEY_RIGHT))
+	{
+		m_marioSprite->SetTexture(m_texMarioBigStill);
+	}
+
+	if (Input::IsKeyPressed(RD_KEY_UP))
+	{
+		vec2 pos = m_marioSprite->GetPosition();
+		pos.y += speed;
+		m_marioSprite->SetPosition(pos);
+	}
+	else if (Input::IsKeyPressed(RD_KEY_DOWN))
+	{
+		vec2 pos = m_marioSprite->GetPosition();
+		pos.y -= speed;
+		m_marioSprite->SetPosition(pos);
+	}*/
 }
 
 bool Test2D::OnKeyPressedEvent(KeyPressedEvent& event)
@@ -98,12 +229,12 @@ bool Test2D::OnKeyPressedEvent(KeyPressedEvent& event)
 	if (!m_Renderer)
 		return false;
 
-	Renderer2D& renderer = *m_Renderer;
+	//Renderer2D& renderer = *m_Renderer;
 
 	if (event.GetRepeat())
 		return false;
 
-	if (event.GetKeyCode() == RD_KEY_T)
+	/*if (event.GetKeyCode() == RD_KEY_T)
 	{
 		renderer.SetRenderTarget(renderer.GetRenderTarget() == RenderTarget::SCREEN ? RenderTarget::BUFFER : RenderTarget::SCREEN);
 		return true;
@@ -112,13 +243,19 @@ bool Test2D::OnKeyPressedEvent(KeyPressedEvent& event)
 	{
 		renderer.SetPostEffects(!renderer.GetPostEffects());
 		return true;
+	}*/
+
+	if (event.GetKeyCode() == RD_KEY_DELETE)
+	{
+		Remove(m_backgroundArray[0]);
+		Remove(m_mario);
 	}
 
 	return false;
 }
 
 bool Test2D::OnMousePressedEvent(MousePressedEvent& event)
-{	
+{
 	return false;
 }
 

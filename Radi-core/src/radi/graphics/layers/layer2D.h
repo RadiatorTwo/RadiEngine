@@ -29,6 +29,8 @@ namespace radi {
 
 			inline void SetMask(const Mask* mask) const { m_Renderer->SetMask(mask); }
 			virtual Sprite* Add(Sprite* sprite);
+			virtual void Remove(entity::Entity* entity);
+			virtual void Remove(Sprite* sprite);
 			inline Scene2D* GetScene() { return m_Scene; }
 
 			virtual Renderable2D* Submit(Renderable2D* renderable);

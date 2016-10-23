@@ -43,6 +43,32 @@ namespace radi {
 		m_Entities.push_back(entity);
 	}
 
+	void Scene2D::Remove(entity::Entity* entity)
+	{
+		for (int i = 0; i < m_Entities.size(); i++)
+		{			
+			if (m_Entities[i] == entity)
+			{
+				m_Entities.erase(m_Entities.begin() + i);
+				break;
+			}
+		}
+	}
+
+	void Scene2D::Remove(graphics::Sprite* sprite)
+	{
+		for (int i = 0; i < m_Entities.size(); i++)
+		{
+			SpriteComponent* sprite_component = m_Entities[i]->GetComponent<SpriteComponent>();
+
+			if (sprite_component->sprite == sprite)
+			{
+				m_Entities.erase(m_Entities.begin() + i);
+				break;
+			}
+		}
+	}
+
 	void Scene2D::OnUpdate()
 	{
 		/*for (uint i = 0; i < m_Entities.size(); i++)

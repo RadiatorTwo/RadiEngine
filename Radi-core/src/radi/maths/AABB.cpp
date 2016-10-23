@@ -37,8 +37,14 @@ namespace radi {
 		}
 
 		bool AABB::Intersects(const AABB& other) const
-		{
-			return (max > other.min && min < other.max) || (min > other.max && max < other.min);
+		{		
+			if (max.x < other.min.x) return false; // a is left of b
+			if (min.x > other.max.x) return false; // a is right of b
+			if (max.y < other.min.y) return false; // a is above b
+			if (min.y > other.max.y) return false; // a is below b
+
+			return true; // boxes overlap
+			//			return (max > other.min && min < other.max) || (min > other.max && max < other.min);
 		}
 
 		bool AABB::Contains(const vec2& point) const

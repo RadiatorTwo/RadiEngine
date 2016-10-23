@@ -20,6 +20,8 @@ namespace radi {
 		~Scene2D();
 
 		void Add(entity::Entity* entity);
+		void Remove(entity::Entity* entity);
+		void Remove(graphics::Sprite* sprite);
 
 		//virtual void OnUpdate();
 		virtual void OnUpdate();

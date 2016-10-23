@@ -49,6 +49,16 @@ namespace radi {
 			return sprite;
 		}
 
+		void Layer2D::Remove(entity::Entity* entity)
+		{
+			m_Scene->Remove(entity);
+		}
+
+		void Layer2D::Remove(Sprite* sprite)
+		{
+			m_Scene->Remove(sprite);
+		}
+
 		Renderable2D* Layer2D::Submit(Renderable2D* renderable)
 		{
 			m_SubmittedRenderables.push_back(renderable);
