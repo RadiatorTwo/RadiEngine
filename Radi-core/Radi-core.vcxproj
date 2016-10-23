@@ -538,6 +538,7 @@
     <ClInclude Include="src\radi\utils\image_load.h" />
     <ClInclude Include="src\radi\utils\log.h" />
     <ClInclude Include="src\radi\utils\timer.h" />
+    <ClInclude Include="src\radi\utils\timestep.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\radi\embedded\files\SourceSansPro-Light.embed" />

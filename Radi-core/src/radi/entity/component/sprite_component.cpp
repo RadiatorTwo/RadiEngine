@@ -5,8 +5,8 @@ namespace radi {
 	namespace entity {
 		namespace component {
 
-			SpriteComponent::SpriteComponent(graphics::Sprite* sprite)
-				: sprite(sprite)
+			SpriteComponent::SpriteComponent(Entity* entity, graphics::Sprite* sprite)
+				: Component(entity), sprite(sprite)
 			{
 			}
 

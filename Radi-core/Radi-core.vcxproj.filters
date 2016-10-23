@@ -935,6 +935,9 @@
     <ClInclude Include="src\radi\scene2D.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="src\radi\utils\timestep.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\radi\embedded\files\SourceSansPro-Light.embed">

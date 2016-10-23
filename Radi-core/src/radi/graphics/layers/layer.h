@@ -7,6 +7,7 @@
 #include "../../events/IEventListener.h"
 
 #include "radi/app/Window.h"
+#include "radi/utils/Timestep.h"
 
 namespace radi {
 	namespace graphics {
@@ -26,7 +27,8 @@ namespace radi {
 			virtual void Init();
 			virtual void OnEvent(events::Event& event);
 			virtual void OnTick();
-			virtual void OnUpdate();
+			virtual void OnUpdate(const Timestep& ts);
+			virtual void OnUpdateInternal(const Timestep& ts);
 			virtual void OnRender();
 		protected:
 			virtual bool OnResize(uint width, uint height);

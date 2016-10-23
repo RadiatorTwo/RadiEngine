@@ -24,6 +24,8 @@ namespace radi {
 			protected:
 				Entity* m_Entity;
 			public:
+				Component(Entity* entity);
+
 				virtual Entity* GetEntity() { return m_Entity; }
 				virtual ComponentType* GetType() const { return nullptr; }
 			};

@@ -36,6 +36,7 @@ namespace radi {
 
 		void Layer2D::Init()
 		{
+			m_Scene->Init();
 			OnInit(*m_Renderer, *m_Material);
 		}
 
@@ -45,7 +46,8 @@ namespace radi {
 
 		Sprite* Layer2D::Add(Sprite* sprite)
 		{
-			m_Scene->Add(rdnew entity::Entity(sprite));
+			//m_Scene->Add(rdnew entity::Entity(sprite));
+			m_Scene->Add(rdnew entity::Entity(sprite, maths::mat4::Translate(sprite->GetPosition())));
 			return sprite;
 		}
 
@@ -70,6 +72,12 @@ namespace radi {
 			m_Renderer->SetScreenSize(maths::tvec2<uint>(width, height));
 			m_Scene->GetRenderer()->SetScreenSize(maths::tvec2<uint>(width, height));
 			return false;
+		}
+
+		void Layer2D::OnUpdateInternal(const Timestep& ts)
+		{
+			m_Scene->OnUpdate(ts);
+			OnUpdate(ts);
 		}
 
 		void Layer2D::OnRender()

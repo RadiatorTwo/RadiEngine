@@ -253,7 +253,7 @@ void Test3D::OnTick()
 	RADI_INFO(app.GetUPS(), " ups, ", app.GetFPS(), " fps");
 }
 
-void Test3D::OnUpdate()
+void Test3D::OnUpdate(const radi::Timestep& ts)
 {
 	TransformComponent* cubeTransform = m_Cube->GetComponent<TransformComponent>();
 

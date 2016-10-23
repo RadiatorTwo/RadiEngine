@@ -43,15 +43,34 @@ namespace radi {
 
 		void DebugLayer::OnTick()
 		{
-			m_FPSLabel->SetText(StringFormat::ToString(m_Application.GetFPS()) + " fps");
-			m_MemoryUsageLabel->SetText(MemoryManager::BytesToString(MemoryManager().Get()->GetMemoryStats().currentUsed));
+			//m_FPSLabel->SetText(StringFormat::ToString(m_Application.GetFPS()) + " fps");
+			//m_MemoryUsageLabel->SetText(MemoryManager::BytesToString(MemoryManager().Get()->GetMemoryStats().currentUsed));
+			{
+				m_FPSLabel->SetText(StringFormat::ToString(m_Application.GetFPS()) + " fps");
+
+				vec3 pos = m_FPSLabel->GetPosition();
+				pos.x = 32.0f - 0.5f - m_FPSLabel->GetBoundingBox().GetSize().x;
+				m_FPSLabel->SetPosition(pos);
+			}
+
+			{
+				m_MemoryUsageLabel->SetText(MemoryManager::BytesToString(MemoryManager().Get()->GetMemoryStats().currentUsed));
+
+				vec3 pos = m_MemoryUsageLabel->GetPosition();
+				pos.x = 32.0f - 0.5f - m_MemoryUsageLabel->GetBoundingBox().GetSize().x;
+				m_MemoryUsageLabel->SetPosition(pos);
+			}
 		}
 
-		void DebugLayer::OnUpdate()
+		void DebugLayer::OnUpdate(const Timestep& ts)
 		{
 			DebugMenu::Get()->OnUpdate();
 
-			m_FrametimeLabel->SetText(StringFormat::Float(m_Application.GetFrametime()) + " ms");			
+			//m_FrametimeLabel->SetText(StringFormat::Float(m_Application.GetFrametime()) + " ms");
+			m_FrametimeLabel->SetText(StringFormat::Float(m_Application.GetFrametime()) + " ms");
+			vec3 pos = m_FrametimeLabel->GetPosition();
+			pos.x = 32.0f - 0.5f - m_FrametimeLabel->GetBoundingBox().GetSize().x;
+			m_FrametimeLabel->SetPosition(pos);
 		}
 
 		void DebugLayer::OnEvent(Event& e)

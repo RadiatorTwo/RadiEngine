@@ -5,6 +5,8 @@
 #include "graphics/renderer2d.h"
 #include "entity/entity.h"
 
+#include "radi/utils/Timestep.h"
+
 namespace radi {
 
 	class RD_API Scene2D
@@ -19,12 +21,13 @@ namespace radi {
 		Scene2D(const maths::mat4& projectionMatrix);
 		~Scene2D();
 
+		void Init();
 		void Add(entity::Entity* entity);
 		void Remove(entity::Entity* entity);
 		void Remove(graphics::Sprite* sprite);
 
 		//virtual void OnUpdate();
-		virtual void OnUpdate();
+		virtual void OnUpdate(const Timestep& ts);
 		virtual void OnRender(graphics::Renderer2D& renderer);
 
 		void OnRender();

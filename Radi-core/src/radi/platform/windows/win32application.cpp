@@ -1,5 +1,6 @@
 #include "radi/rd.h"
 #include "radi/app/Application.h"
+#include "radi/utils/Log.h"
 
 namespace radi {
 
@@ -52,13 +53,16 @@ namespace radi {
 		float updateTick = 1.0f / 60.0f;
 		uint frames = 0;
 		uint updates = 0;
+		Timestep timestep(m_Timer->ElapsedMillis());
 		while (m_Running)
 		{
 			window->Clear();
-			
-			if (m_Timer->Elapsed() - updateTimer > updateTick)
-			{
-				OnUpdate();
+			float now = m_Timer->ElapsedMillis();
+
+			if (now - updateTimer > updateTick)
+			{				
+				timestep.Update(now);
+				OnUpdate(timestep);
 				updates++;
 				updateTimer += updateTick;
 			}

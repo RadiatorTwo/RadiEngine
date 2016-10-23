@@ -96,7 +96,7 @@ void Sponza::OnTick()
 	RADI_INFO(app.GetUPS(), " ups, ", app.GetFPS(), " fps");
 }
 
-void Sponza::OnUpdate()
+void Sponza::OnUpdate(const Timestep& ts)
 {
 	// Still OpenGL maths style (column-major)
 	mat4 vp = m_Scene->GetCamera()->GetProjectionMatrix() * m_Scene->GetCamera()->GetViewMatrix();

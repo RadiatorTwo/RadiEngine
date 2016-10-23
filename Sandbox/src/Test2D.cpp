@@ -110,7 +110,7 @@ static float speed = 0.1f;
 static float gravity = 0.2f;
 int backgroundCounter = 0;
 int backgroundIndex = 1;
-void Test2D::OnUpdate()
+void Test2D::OnUpdate(const Timestep& ts)
 {
 	AABB mario = m_marioSprite->GetBoundingBox();
 	vec2 marioPosition = m_marioSprite->GetPosition();
@@ -128,9 +128,8 @@ void Test2D::OnUpdate()
 	if (!intersects)
 	{
 		marioPosition.y -= gravity;
-		m_marioSprite->SetPosition(marioPosition);
+		m_marioSprite->SetPosition(marioPosition);		
 	}
-
 
 	backgroundCounter++;
 	if (backgroundCounter == 15)
@@ -244,12 +243,6 @@ bool Test2D::OnKeyPressedEvent(KeyPressedEvent& event)
 		renderer.SetPostEffects(!renderer.GetPostEffects());
 		return true;
 	}*/
-
-	if (event.GetKeyCode() == RD_KEY_DELETE)
-	{
-		Remove(m_backgroundArray[0]);
-		Remove(m_mario);
-	}
 
 	return false;
 }

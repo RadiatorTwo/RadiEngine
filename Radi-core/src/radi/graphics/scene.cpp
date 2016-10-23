@@ -39,7 +39,8 @@ namespace radi {
 			if (!entity->GetComponent<TransformComponent>())
 			{
 				RADI_WARN("Entity does not have Transform, creating...");
-				entity->AddComponent(rdnew TransformComponent(maths::mat4::Identity()));
+				//entity->AddComponent(rdnew TransformComponent(maths::mat4::Identity()));
+				entity->AddComponent(rdnew TransformComponent(entity, maths::mat4::Identity()));
 			}
 		}
 

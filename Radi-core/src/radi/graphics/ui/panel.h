@@ -27,7 +27,7 @@ namespace radi {
 				bool OnMouseReleasedEvent(events::MouseReleasedEvent& e);
 				bool OnMouseMovedEvent(events::MouseMovedEvent& e);
 
-				void OnUpdate() override;
+				void OnUpdate(const Timestep& ts) override;
 				void OnRender(Renderer2D& renderer) override;
 
 				inline const std::vector<Widget*>& GetWidgets() const { return m_Widgets; }

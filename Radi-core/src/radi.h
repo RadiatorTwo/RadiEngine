@@ -84,6 +84,7 @@
 #include <radi/utils/image_load.h>
 #include <radi/utils/Log.h>
 #include <radi/utils/Timer.h>
+#include <radi/utils/Timestep.h>
 
 #include <radi/system/FileSystem.h>
 #include <radi/system/Memory.h>

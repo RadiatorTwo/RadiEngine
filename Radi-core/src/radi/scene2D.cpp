@@ -38,15 +38,28 @@ namespace radi {
 		rddel m_Camera;
 	}
 
+	void Scene2D::Init()
+	{
+		//m_PhysicsWorld = new b2World(b2Vec2(0.0f, -10.0f));
+
+		//b2BodyDef groundBodyDef;
+		//groundBodyDef.position.Set(0.0f, -10.0f);
+
+		//b2PolygonShape groundBox;
+		//groundBox.SetAsBox(50.0f, 1.0f);
+		//b2Body* ground = m_PhysicsWorld->CreateBody(&groundBodyDef);
+		//ground->CreateFixture(&groundBox, 0.0f);
+	}
+
 	void Scene2D::Add(Entity* entity)
-	{		
+	{
 		m_Entities.push_back(entity);
 	}
 
 	void Scene2D::Remove(entity::Entity* entity)
 	{
 		for (int i = 0; i < m_Entities.size(); i++)
-		{			
+		{
 			if (m_Entities[i] == entity)
 			{
 				m_Entities.erase(m_Entities.begin() + i);
@@ -69,10 +82,10 @@ namespace radi {
 		}
 	}
 
-	void Scene2D::OnUpdate()
+	void Scene2D::OnUpdate(const Timestep& ts)
 	{
-		/*for (uint i = 0; i < m_Entities.size(); i++)
-			m_Entities[i]->OnUpdate();*/
+		for (uint i = 0; i < m_Entities.size(); i++)
+			m_Entities[i]->OnUpdate(ts);
 	}
 
 	void Scene2D::OnRender(Renderer2D& renderer)

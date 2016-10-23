@@ -32,7 +32,7 @@ public:
 	void OnInit(radi::graphics::Renderer2D& renderer, radi::graphics::Material& material) override;
 
 	void OnTick() override;
-	void OnUpdate() override;
+	void OnUpdate(const radi::Timestep& ts) override;
 
 	bool OnKeyPressedEvent(radi::events::KeyPressedEvent& event);
 	bool OnMousePressedEvent(radi::events::MousePressedEvent& event);
