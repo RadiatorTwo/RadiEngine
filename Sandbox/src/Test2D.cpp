@@ -19,10 +19,21 @@ Test2D::~Test2D()
 
 }
 
+static float speed = 0.1f;
+int backgroundCounter = 0;
+int backgroundIndex = 1;
+
+float dx = 0.01f;
+float dy = 0.0f;
+float gravity = 0.0005f;
+float drag = 0.001f;
+float jumpHeight = 0.1f;
+
 void Test2D::OnInit(Renderer2D& renderer, Material& material)
 {
 	m_Renderer = &renderer;
 
+	Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
 	renderer.SetRenderTarget(RenderTarget::SCREEN);
 	//renderer.AddPostEffectsPass(new PostEffectsPass(Shader::CreateFromFile("Horizontal Blur", "shaders/postfx.shader")));
 	renderer.SetPostEffects(false);
@@ -79,7 +90,11 @@ void Test2D::OnInit(Renderer2D& renderer, Material& material)
 	Add(debugInfo[3]);
 	Add(debugInfo[4]);
 
-	Texture::SetWrap(TextureWrap::CLAMP_TO_BORDER);
+	debug::DebugMenu::Add("Mario Speed X", &dx, 0.01f, 0.1f);
+	debug::DebugMenu::Add("Gravity", &gravity, 0.0001f, 0.001f);
+	debug::DebugMenu::Add("Drag", &drag, 0.001f, 0.1f);
+	debug::DebugMenu::Add("Jump Height", &jumpHeight, 0.1f, 1.0f);
+
 	/*Mask* mask = new Mask(Texture2D::CreateFromFile("Mask", "res/mask.png"));
 	mask->transform = mat4::Translate(vec3(-16.0f, -9.0f, 0.0f)) * mat4::Scale(vec3(32, 18, 1));
 	SetMask(mask);*/
@@ -106,15 +121,48 @@ void Test2D::OnTick()
 	debugInfo[4]->SetText("Total Freed: " + MemoryManager::BytesToString(MemoryManager::Get()->GetMemoryStats().totalFreed));
 }
 
-static float speed = 0.1f;
-static float gravity = 0.2f;
-int backgroundCounter = 0;
-int backgroundIndex = 1;
 void Test2D::OnUpdate(const Timestep& ts)
 {
 	AABB mario = m_marioSprite->GetBoundingBox();
 	vec2 marioPosition = m_marioSprite->GetPosition();
-	bool intersects = false;
+
+	if (Input::IsKeyPressed(RD_KEY_LEFT))
+	{
+		marioPosition.x -= dx * ts.GetMillis();
+	}
+	if (Input::IsKeyPressed(RD_KEY_RIGHT))
+	{
+		marioPosition.x += dx * ts.GetMillis();
+	}
+
+	/*if (marioPosition.x > 16.0f - mario.GetSize().x)
+	{
+		marioPosition.x = 16.0f - mario.GetSize().x;
+		dx = -dx;
+	}
+	else if (marioPosition.x < -16.0f)
+	{
+		marioPosition.x = -16.0f;
+		dx = -dx;
+	}*/
+
+	dy -= gravity * ts.GetMillis();
+	marioPosition.y += dy;
+	if (marioPosition.y < -9.0f + mario.GetSize().y)
+	{
+		marioPosition.y = -9.0f + mario.GetSize().y;
+		dy = 0.0f;
+	}
+	if (Input::IsKeyPressed(RD_KEY_UP) && marioPosition.y == -9.0f + mario.GetSize().y)
+	{
+		dy = jumpHeight;
+	}
+	if (!Input::IsKeyPressed(RD_KEY_UP) && dy > 0)
+	{
+		dy -= drag * ts.GetMillis();
+	}
+
+	/*bool intersects = false;
 	for (int i = 0; i < m_groundTileArray.size(); i++)
 	{
 		AABB tile = m_groundTileArray[i]->GetBoundingBox();
@@ -128,8 +176,9 @@ void Test2D::OnUpdate(const Timestep& ts)
 	if (!intersects)
 	{
 		marioPosition.y -= gravity;
-		m_marioSprite->SetPosition(marioPosition);		
-	}
+	}*/
+
+	m_marioSprite->SetPosition(marioPosition);
 
 	backgroundCounter++;
 	if (backgroundCounter == 15)
